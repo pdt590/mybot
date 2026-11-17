@@ -157,6 +157,18 @@ interface EmailCodeRequest {
 /** A Telegram bot username: 5 to 32 letters, digits and underscores. */
 const TELEGRAM_BOT_USERNAME = /^[A-Za-z0-9_]{5,32}$/u;
 
+/**
+ * Sign-in is disabled: with no OpenBot account signed in, the app runs as this local account. It
+ * owns the data on this computer like any account would, and has no session token, so features
+ * that need the account service (remote servers, mobile connect, billing) stay unavailable.
+ */
+export const LOCAL_ACCOUNT_USER: CentralAuthUser = {
+  id: "local",
+  email: "local@openbot.local",
+  name: "Local",
+  avatarUrl: null,
+};
+
 const STARTUP_RETRY_WINDOW_MS = 30_000;
 const STARTUP_REQUEST_TIMEOUT_MS = 3_000;
 const STARTUP_RETRY_DELAYS_MS = [250, 500, 1_000, 2_000] as const;
@@ -1594,7 +1606,7 @@ export class CentralAuthManager extends EventEmitter<CentralAuthEvents> {
       logger.warn("The stored account session was not read: secure storage is unavailable.");
     }
     if (!this.#sessionToken) {
-      yield* this.#startupRequestEffect("/health/live", { method: "GET" }, decodeRecordHealth);
+      // No account service check: the local account works offline.
       return this.#setState(
         keyringChanged ? { status: "signed_out", reason: "keyring_changed" } : { status: "signed_out" },
       );
@@ -2513,7 +2525,10 @@ export class CentralAuthManager extends EventEmitter<CentralAuthEvents> {
     }
   }
 
-  #setState(state: CentralAuthState): CentralAuthState {
+  #setState(next: CentralAuthState): CentralAuthState {
+    // Sign-in is disabled: every sign-out, at start or later, lands on the local account.
+    const state: CentralAuthState =
+      next.status === "signed_out" ? { status: "signed_in", user: structuredClone(LOCAL_ACCOUNT_USER) } : next;
     // Held apart from the state, which passes through `code_sent` on the way to another
     // account: this is whose credentials the store is holding, until they are cleared.
     if (state.status === "signed_in") {
