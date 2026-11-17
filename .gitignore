@@ -74,3 +74,4 @@ keys
 
 # Persistent local development identity and migration recovery.
 .openbot/
+graphify-out/
