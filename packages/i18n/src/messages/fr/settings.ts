@@ -521,7 +521,6 @@ export const messages = {
   "settings.profile.models.title": "Utilisation des modèles",
   "settings.profile.account.title": "Compte",
   "settings.profile.email.title": "E-mail",
-  "settings.profile.email.description": "Utilisé pour vous connecter à MyBot.",
   "settings.profile.sessions.title": "Sessions du compte",
   "settings.profile.sessions.description":
     "Les sessions restent connectées jusqu’à ce que vous vous déconnectiez ou que vous les déconnectiez. La déconnexion met aussi fin aux connexions distantes actives de ce compte.",

@@ -109,7 +109,6 @@ import {
   agentBrowserProfile,
   type ChannelCommand,
   DEFAULT_APP_LANGUAGE,
-  DEFAULT_DYNAMIC_ISLAND_PREFERENCE,
   decodeChannel,
   defaultVoiceSettings,
   IPC_ENDPOINTS,
@@ -249,7 +248,7 @@ import { type CustomAgentChanges, createCustomAgentChanges } from "./custom-agen
 import { CUSTOM_AGENTS_FILE, CustomAgentStore } from "./custom-agent-store";
 import { type CustomProviderChanges, createCustomProviderChanges } from "./custom-provider-changes";
 import { CustomProviderStore } from "./custom-provider-store";
-import { MCP_OAUTH_REDIRECT_URL } from "./deep-link-router";
+import { APP_LINK_SCHEME, MCP_OAUTH_REDIRECT_URL } from "./deep-link-router";
 import { desktopShowsAgentEvent } from "./desktop-notifications";
 import { shouldAutoStartHost } from "./development-profile";
 import {
@@ -561,7 +560,7 @@ const HERMES_IMPORT_LINKS_FILE = "openbot-hermes-imports-v1.json";
  * the Electron binary - which is also the name macOS shows in the Privacy & Security panes, and the
  * reason a dev grant does not carry over to a packaged build.
  */
-const PACKAGED_BUNDLE_IDENTIFIER = "app.openbot.desktop";
+const PACKAGED_BUNDLE_IDENTIFIER = "app.mybot.desktop";
 const DEVELOPMENT_BUNDLE_IDENTIFIER = "com.github.Electron";
 
 const TEARDOWN_ORDER = {
@@ -968,7 +967,7 @@ async function createMessagingServices({
     Effect.runPromise(signalIngress.dispose()),
   );
   // Development only: `bun run dev:slack` names this loopback port, so a Slack install returns to this
-  // dev app and not to an installed OpenBot that owns `openbot://`.
+  // dev app and not to an installed MyBot that owns `mybot://`.
   const developmentSlackCallbackPort = app.isPackaged ? 0 : Number(process.env.OPENBOT_DEV_SLACK_CALLBACK_PORT ?? 0);
   // The WhatsApp numbers linked as devices of this computer. Their keys stay in `<userData>/whatsapp`.
   const whatsapp = new WhatsAppRuntime({
@@ -1106,7 +1105,7 @@ async function createMessagingServices({
   );
   teardown.push(TEARDOWN_ORDER.messaging, "the messaging connections", () => Effect.runPromise(messaging.stop()));
   if (developmentSlackCallbackPort > 0) {
-    // As `openbot://` does for a packaged build, a finished install brings OpenBot to the front.
+    // As `mybot://` does for a packaged build, a finished install brings OpenBot to the front.
     const callback = await startSlackDevCallbackServer(developmentSlackCallbackPort, async (nonce, grant) => {
       const received = await runCauseEffect(messaging.completeSlackWorkspace(nonce, grant));
       if (received) app.focus({ steal: true });
@@ -1193,10 +1192,8 @@ export async function createApplicationServices({
   const dynamicIsland = new DynamicIslandWindowController({
     windowKind,
     preferencePath: join(app.getPath("userData"), DYNAMIC_ISLAND_PREFERENCE_FILE),
-    // Only the dev server build starts with the island off, the same builds as the agent dock default.
-    ...(process.env.ELECTRON_RENDERER_URL
-      ? { defaultPreference: { ...DEFAULT_DYNAMIC_ISLAND_PREFERENCE, enabled: false } }
-      : {}),
+    // MyBot: every build starts with the island off (DEFAULT_DYNAMIC_ISLAND_PREFERENCE.enabled is false),
+    // the same as the agent dock default.
     createWindow: createDynamicIslandWindow,
     loadWindow: (window, display) => loadDynamicIslandRenderer(window, display, appVariant),
     getDisplays: () => screen.getAllDisplays(),
@@ -1367,7 +1364,7 @@ export async function createApplicationServices({
     homedir(),
     new OpenBotDatabase(app.getPath("userData"), checkDatabaseIntegrityInHost),
     () => agentDefaults.get(),
-    // MyBot: `~/MyBot`, or `~/OpenBot` when its move failed (`app-folders.ts`).
+    // MyBot: `~/MyBot`, separate from OpenBot (`app-folders.ts`).
     localServerChild?.agentRoot ?? appWorkspaceRoot(homedir()),
   );
   // Phase marks for `dev:bench`, so a slow start shows which group of awaits it waited on. They
@@ -1900,7 +1897,7 @@ export async function createApplicationServices({
   }
   /*
    * Where a returning grant lands. The loopback listener is the address RFC 8252 gives a native
-   * app and the only one some authorization servers accept - Canva refuses `openbot://mcp-auth`
+   * app and the only one some authorization servers accept - Canva refuses `mybot://mcp-auth`
    * on its own authorization page, where OpenBot cannot see the failure or explain it.
    *
    * A port that cannot be bound is not fatal: the deep link is still registered with the
@@ -1915,9 +1912,9 @@ export async function createApplicationServices({
   // A joined server's sign-in can send its callback to this same port: the host's own listener
   // uses the same port number. A `state` that no local sign-in started goes to the relay.
   // A development build on macOS or Windows, and a Linux desktop that refused the scheme, do not
-  // open `openbot://` in this app (`presentApplication`), so their sign-ins keep the loopback names.
+  // open `mybot://` in this app (`presentApplication`), so their sign-ins keep the loopback names.
   const mcpOAuthDeepLink = () =>
-    (process.platform === "linux" || app.isPackaged) && app.isDefaultProtocolClient("openbot")
+    (process.platform === "linux" || app.isPackaged) && app.isDefaultProtocolClient(APP_LINK_SCHEME)
       ? MCP_OAUTH_REDIRECT_URL
       : undefined;
   const signInRelayClient = new SignInRelayClient({
@@ -1947,7 +1944,7 @@ export async function createApplicationServices({
     },
   }).catch((error: unknown) => {
     logger.warn(
-      "OpenBot could not listen for MCP sign-ins on this machine, so the openbot:// link is used instead. Servers that refuse it cannot be signed in to:",
+      "OpenBot could not listen for MCP sign-ins on this machine, so the mybot:// link is used instead. Servers that refuse it cannot be signed in to:",
       toLogValue(error),
     );
     return null;

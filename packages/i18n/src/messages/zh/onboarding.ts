@@ -91,8 +91,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "你可以随时在设置中更改。",
   "onboarding.consent.termsLink": "服务条款",
   "onboarding.consent.privacyLink": "隐私政策",
-  "onboarding.plan.title": "连接你的套餐",
-  "onboarding.plan.description": "登录一次，你的助手即可使用你的套餐。",
   "onboarding.computer.title": "MyBot 可能会控制你的电脑",
   "onboarding.opening": "正在打开 MyBot…",
   "onboarding.launch.downloading": "正在下载免费模型…",

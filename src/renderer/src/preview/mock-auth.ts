@@ -120,15 +120,14 @@ export function createMockAuth(options: MockAuthOptions, { emit }: MockRuntime) 
       return clone(authState);
     },
     createMobileConnect: async () => ({
-      qrData:
-        "openbot://mobile-connect?api=https%3A%2F%2Fapi.openbot.run&ticket=preview-mobile-ticket_1234567890abcdef",
+      qrData: "mybot://mobile-connect?api=https%3A%2F%2Fapi.openbot.run&ticket=preview-mobile-ticket_1234567890abcdef",
       expiresAt: Date.now() + 120_000,
     }),
     cancelMobileConnect: async () => undefined,
     getMobileConnectLink: async () => clone(mobileConnectLink),
     createMobileConnectLink: async () => {
       mobileConnectLink = {
-        url: `openbot://mobile-connect?api=https%3A%2F%2Fapi.openbot.run&ticket=preview-mobile-link_${crypto.randomUUID().replaceAll("-", "")}`,
+        url: `mybot://mobile-connect?api=https%3A%2F%2Fapi.openbot.run&ticket=preview-mobile-link_${crypto.randomUUID().replaceAll("-", "")}`,
         createdAt: Date.now(),
       };
       return clone(mobileConnectLink);

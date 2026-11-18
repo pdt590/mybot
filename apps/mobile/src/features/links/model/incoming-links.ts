@@ -36,7 +36,7 @@ function parseIncomingLink(value: string): IncomingLink {
 }
 
 /**
- * The session is not loaded when the system opens a link, so an `openbot://join` link for any
+ * The session is not loaded when the system opens a link, so an `mybot://join` link for any
  * self-hosted account service counts as an invitation here. The add-server screen checks it again
  * with the service of the session, and refuses a link for another service.
  */
@@ -49,7 +49,7 @@ function isInviteLink(value: string): boolean {
   }
   try {
     const url = new URL(value);
-    if (url.protocol !== "openbot:") return false;
+    if (url.protocol !== "mybot:") return false;
     parseInviteUrl(value, { selfHostedApiOrigin: selfHostedApiOrigin(url.searchParams.get("api") ?? undefined) });
     return true;
   } catch {
@@ -90,11 +90,11 @@ export function pendingSignInLinkId(): string | undefined {
 }
 
 /**
- * Other apps open a bare `openbot://` only to bring OpenBot back. In a running app, the route `/` resets
+ * Other apps open a bare `mybot://` only to bring OpenBot back. In a running app, the route `/` resets
  * the navigation and mounts the server connections again, so the running app stays where it is.
  */
 export function redirectIncomingLink(path: string, initial: boolean): string | null {
-  if (path === "openbot://" || path === "openbot:///" || path === "openbot:") return initial ? "/" : null;
+  if (path === "mybot://" || path === "mybot:///" || path === "mybot:") return initial ? "/" : null;
   // Expo Go and ordinary internal routes retain Expo Router's normal behavior.
   if (/^exps?:\/\//u.test(path)) return path;
   if (path.startsWith("/") && !path.startsWith("//")) {

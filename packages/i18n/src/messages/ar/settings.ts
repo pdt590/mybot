@@ -513,7 +513,6 @@ export const messages = {
   "settings.profile.models.title": "استخدام النماذج",
   "settings.profile.account.title": "الحساب",
   "settings.profile.email.title": "البريد الإلكتروني",
-  "settings.profile.email.description": "يُستخدم لتسجيل الدخول إلى MyBot.",
   "settings.profile.sessions.title": "جلسات الحساب",
   "settings.profile.sessions.description":
     "تبقى الجلسات مسجّلة الدخول حتى تسجّل الخروج أو تقطع اتصالها. يُنهي قطع الاتصال أيضًا الاتصالات البعيدة النشطة لهذا الحساب.",

@@ -164,7 +164,8 @@ const TELEGRAM_BOT_USERNAME = /^[A-Za-z0-9_]{5,32}$/u;
  */
 export const LOCAL_ACCOUNT_USER: CentralAuthUser = {
   id: "local",
-  email: "local@openbot.local",
+  // MyBot: the local account has a MyBot address.
+  email: "local@mybot.local",
   name: "Local",
   avatarUrl: null,
 };

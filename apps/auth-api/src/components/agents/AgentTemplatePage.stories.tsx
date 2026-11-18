@@ -84,7 +84,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** What `openbot.run/agents/<id>` shows. "Add to OpenBot" opens `openbot://agents/<id>`. */
+/** What `openbot.run/agents/<id>` shows. "Add to OpenBot" opens `mybot://agents/<id>`. */
 export const SharedAgent: Story = {};
 
 /** The owner uploaded a photo for the agent, so the page shows it instead of the generated avatar. */

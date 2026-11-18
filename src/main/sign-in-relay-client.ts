@@ -53,7 +53,7 @@ export interface SignInRelayClientDependencies {
   /** The MCP grant listener of this computer, which takes the callbacks on its port and paths by `state`. */
   ownListener: () => { port: number; paths: readonly string[] } | null;
   /**
-   * `openbot://mcp-auth` while the operating system opens it in this app, or `undefined`. Its
+   * `mybot://mcp-auth` while the operating system opens it in this app, or `undefined`. Its
    * callbacks reach `deliver` by `state` (`sign-in-relay-deep-link-v1`).
    */
   deepLinkRedirectUrl: () => string | undefined;
@@ -106,7 +106,7 @@ export class SignInRelayClient {
   }
 
   /**
-   * A callback that reached this computer's MCP grant listener or its `openbot://mcp-auth` link with
+   * A callback that reached this computer's MCP grant listener or its `mybot://mcp-auth` link with
    * a `state` that no local sign-in started. Answers whether a relayed sign-in took it.
    */
   deliver(state: string, query: string): boolean {
@@ -118,7 +118,7 @@ export class SignInRelayClient {
     return false;
   }
 
-  /** Whether a host's sign-in can return to this computer through `openbot://mcp-auth`. */
+  /** Whether a host's sign-in can return to this computer through `mybot://mcp-auth`. */
   receivesDeepLink(): boolean {
     return this.#dependencies.deepLinkRedirectUrl() !== undefined;
   }
@@ -202,7 +202,7 @@ export class SignInRelayClient {
         (server) => Effect.promise(() => server?.close() ?? Promise.resolve()),
       );
       const own = self.#dependencies.ownListener();
-      // A page that returns to `openbot://mcp-auth` comes back through `deliver` by itself.
+      // A page that returns to `mybot://mcp-auth` comes back through `deliver` by itself.
       const deepLink =
         callback === null && page.searchParams.get("redirect_uri") === self.#dependencies.deepLinkRedirectUrl();
       const routed =

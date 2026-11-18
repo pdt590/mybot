@@ -545,11 +545,12 @@ export function ProviderPicker(props: ProviderPickerProps) {
                     <ProviderLogo provider={option().id} class="provider-picker-logo" />
                     <span class="provider-picker-identity">
                       <span class="provider-picker-name">{option().name}</span>
+                      {/* MyBot: the signed-in account email (the account session) is not shown. */}
                       <Show
                         when={
                           listedAccounts()
                             ? t("provider.account.count", { count: listedAccounts()?.length ?? 0 })
-                            : (option().email ?? option().description ?? (props.versionInDetail ? version() : null))
+                            : (option().description ?? (props.versionInDetail ? version() : null))
                         }
                       >
                         {(detail) => <small class="provider-picker-email">{detail()}</small>}

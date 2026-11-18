@@ -1313,7 +1313,7 @@ export const IPC_ENDPOINTS = {
   },
   // The Slack workspaces, Discord guilds and Telegram chats where this computer's agents answer. Only
   // the host's own desktop can use these: a connect opens a Slack, Discord or Telegram page in this
-  // computer's browser, and a Slack or Discord page returns to this computer's `openbot://` link. A
+  // computer's browser, and a Slack or Discord page returns to this computer's `mybot://` link. A
   // token only travels towards the host; no result carries one.
   messaging: {
     getSlackOverview: request<undefined, SlackOverview>()("messaging:get-slack-overview"),
@@ -1373,7 +1373,7 @@ export const IPC_ENDPOINTS = {
     ),
     // The same for a joined server with `connectors-v1`, which an owner or admin manages from here.
     // The host opens no page: main opens it in this computer's browser. A Slack or Discord install
-    // returns to this computer's `openbot://` link, and main sends the sealed grant on to the host.
+    // returns to this computer's `mybot://` link, and main sends the sealed grant on to the host.
     hostOverview: scopedRequest<HostMessagingPlatformInput, MessagingOverview, "required">()("messaging:host-overview"),
     hostConnect: scopedRequest<HostMessagingConnectInput, void, "required">()("messaging:host-connect"),
     hostDisconnect: scopedRequest<HostMessagingWorkspaceInput, void, "required">()("messaging:host-disconnect"),
@@ -1708,7 +1708,7 @@ export const IPC_ENDPOINTS = {
     install: request<InstallMarketplaceAgentInput, InstallMarketplaceAgentResult>()("marketplace-agents:install"),
   },
   // Link-only agent templates. `takePendingLink` and `openLink` carry an id from an
-  // `openbot://agents/<id>` link; there is no endpoint that installs from a link without the dialog.
+  // `mybot://agents/<id>` link; there is no endpoint that installs from a link without the dialog.
   agentTemplates: {
     preview: request<string, AgentTemplatePreview>()("agent-templates:preview"),
     publish: request<PublishAgentTemplateInput, AgentTemplatePublication>()("agent-templates:publish"),

@@ -94,7 +94,7 @@ const teamInvite = {
   useCount: 0,
 } satisfies TeamInviteSummary;
 
-const invite = { ...teamInvite, inviteUrl: "openbot://join/invite-1" } satisfies InviteSummary;
+const invite = { ...teamInvite, inviteUrl: "mybot://join/invite-1" } satisfies InviteSummary;
 
 const session = {
   id: "session-1",
@@ -255,8 +255,8 @@ describe("team decoders", () => {
     ["hosted server with no restart", decodeServer, { ...remoteServer, hosted: true, restartAvailable: false }],
     ["server with a key change time", decodeServer, { ...remoteServer, keyChangedAt: 1_700_000_000_000 }],
     ["invite preview", decodeInvitePreview, invitePreview],
-    ["invite link", decodeInviteUrl, "openbot://join/invite-1"],
-    ["pending invite", decodePendingInvite, "openbot://join/invite-1"],
+    ["invite link", decodeInviteUrl, "mybot://join/invite-1"],
+    ["pending invite", decodePendingInvite, "mybot://join/invite-1"],
     ["missing pending invite", decodePendingInvite, null],
     [
       "server presence",

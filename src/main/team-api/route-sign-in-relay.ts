@@ -80,7 +80,7 @@ export async function routeSignInRelay(
     case SIGN_IN_RELAY_ROUTES.mcpStart: {
       const input = parseTestMcpServer(body);
       requireOwnMcpAddress(access, mcpServers?.listMcpServers() ?? [], input.config.url);
-      // The client's computer opens `openbot://mcp-auth` in OpenBot, and passes its callback on by `state`.
+      // The client's computer opens `mybot://mcp-auth` in MyBot, and passes its callback on by `state`.
       return json(
         200,
         await runCauseEffect(relay.startMcp(member.id, input, deepLink ? MCP_OAUTH_REDIRECT_URL : undefined)),

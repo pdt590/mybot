@@ -52,7 +52,8 @@ export function dynamicIslandCompactHeight(notchHeight: number | undefined, heig
 export type SetDynamicIslandPreferenceInput = DynamicIslandPreference;
 
 export const DEFAULT_DYNAMIC_ISLAND_PREFERENCE = {
-  enabled: true,
+  // MyBot: the Dynamic Island starts off; the user can turn it on in Settings.
+  enabled: false,
   hapticsEnabled: true,
   idleVisible: true,
   additionalDisplaysEnabled: true,

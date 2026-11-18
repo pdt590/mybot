@@ -18,7 +18,7 @@
 // path is one that it knows, such as `/callback`, and registers its loopback addresses with no port:
 // OpenBot must register the `/callback` form, send it, and use that registration again.
 // TradingView (#9209) blocks a sign-in page that returns to `127.0.0.1` or `localhost`. A joined
-// server's relayed sign-in for a client that opens `openbot://mcp-auth` must register and send that
+// server's relayed sign-in for a client that opens `mybot://mcp-auth` must register and send that
 // link after two pages got no grant back. A relay for a client without the link keeps the loopback names.
 // GitLab (#9372) answers 403 to the token of an account that may not use its MCP server, after the
 // sign-in and at each Test with the saved sign-in: the refusal must say that the server refused the
@@ -654,10 +654,10 @@ async function main(): Promise<void> {
       { name: "no-scope-in-resource-metadata", scopes: { resource: [], server: entraScopes }, expected: null },
       { name: "no-scope-anywhere", scopes: { resource: null }, expected: null },
     ];
-    // A joined server's relay (#9209). The host's own system does not open `openbot://`.
+    // A joined server's relay (#9209). The host's own system does not open `mybot://`.
     const loopback = "http://127.0.0.1:28417/mcp-auth";
     const localhost = "http://localhost:28417/mcp-auth";
-    const deepLink = "openbot://mcp-auth";
+    const deepLink = "mybot://mcp-auth";
     const pages = (entry: Case) =>
       entry.redirects.filter((line) => line.startsWith("page ")).map((line) => line.slice("page ".length));
     const relayed = await runCase("relay-with-deep-link", ["none"], 3, { relayDeepLink: deepLink });

@@ -10,7 +10,7 @@ export const WEB_APP_COMPANY_SIGN_IN_ERROR_PARAM = "companySignInError";
  * The phone app's return from a company sign-in. Only the browser session that the app opened takes
  * it. The code in it is useless without the verifier that the app keeps.
  */
-export const MOBILE_COMPANY_SIGN_IN_RETURN = "openbot://company-sign-in";
+export const MOBILE_COMPANY_SIGN_IN_RETURN = "mybot://company-sign-in";
 
 /** The catalog key of the text for each company sign-in error code. */
 const COMPANY_SIGN_IN_ERROR_KEYS = {

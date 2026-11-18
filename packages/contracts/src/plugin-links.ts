@@ -4,7 +4,7 @@
  *
  * ```
  * https://openbot.run/plugins/<slug>    the link a person shares and the app copies
- * openbot://plugins/<slug>              the link the page button opens
+ * mybot://plugins/<slug>              the link the page button opens
  * /app?plugin=<slug>                    the page's link to the browser client, on the same origin
  * ```
  *
@@ -59,7 +59,7 @@ export function pluginSlugFromWebAppSearch(search: string): string | null {
 /** The link the page's button opens, which raises the app on this listing. */
 export function createOpenBotPluginUrl(slug: string): string {
   assertPluginSlug(slug);
-  return `openbot://${OPENBOT_PLUGIN_HOST}/${slug}`;
+  return `mybot://${OPENBOT_PLUGIN_HOST}/${slug}`;
 }
 
 /**
@@ -94,7 +94,7 @@ export function parsePluginUrl(value: string): string {
     url.protocol === "https:" &&
     url.origin === OPENBOT_PLUGIN_ORIGIN &&
     url.pathname.startsWith(OPENBOT_PLUGIN_PATH_PREFIX);
-  const customScheme = url.protocol === "openbot:" && url.hostname === OPENBOT_PLUGIN_HOST;
+  const customScheme = url.protocol === "mybot:" && url.hostname === OPENBOT_PLUGIN_HOST;
   if (
     (!canonical && !customScheme) ||
     url.username !== "" ||

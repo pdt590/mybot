@@ -683,7 +683,7 @@ try {
       "shows the work of the agent's own chat",
       (props) => props.mode === "working" && props.tapUrl !== side.tapUrl,
     );
-    assert.equal(chat.tapUrl, `openbot://live-activity?${new URLSearchParams({ server: SERVER, agent: AGENT })}`);
+    assert.equal(chat.tapUrl, `mybot://live-activity?${new URLSearchParams({ server: SERVER, agent: AGENT })}`);
     state.workTurn = null;
     return { side: side.tapUrl, chat: chat.tapUrl };
   });
@@ -716,7 +716,7 @@ try {
     resetLiveActivityActions();
     const openedTargets: (OutsideTarget | null)[] = [];
     const chatOpened: boolean[] = [];
-    const link = `openbot://live-activity?${new URLSearchParams({ server: SERVER, agent: AGENT, thread: SIDE_THREAD })}`;
+    const link = `mybot://live-activity?${new URLSearchParams({ server: SERVER, agent: AGENT, thread: SIDE_THREAD })}`;
     // The link starts the app: its route is the agent's chat, and the thread opens when the app can navigate.
     assert.equal(liveActivityRoute(link, true), `/chat/${AGENT}`);
     const stop = setLiveActivityNavigator((opened, routeOpenedChat) => {
@@ -731,7 +731,7 @@ try {
     assert.deepEqual(openedTargets, [target(SIDE_THREAD), target(SIDE_THREAD)]);
     assert.deepEqual(chatOpened, [true, false]);
     // A link from an earlier host names no thread, and opens the agent's chat as before.
-    const plain = `openbot://live-activity?${new URLSearchParams({ server: SERVER, agent: AGENT })}`;
+    const plain = `mybot://live-activity?${new URLSearchParams({ server: SERVER, agent: AGENT })}`;
     assert.equal(liveActivityRoute(plain, true), `/chat/${AGENT}`);
     assert.equal(liveActivityRoute(plain, false), null);
     assert.deepEqual(openedTargets.at(-1), target(null));

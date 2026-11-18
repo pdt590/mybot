@@ -145,7 +145,8 @@ export const navItems: ReadonlyArray<SettingsNavItem> = [
     icon: UserRound,
     group: "settings.sections.group.account",
     rows: [
-      { titleKey: "settings.profile.email.title", descriptionKey: "settings.profile.email.description" },
+      // MyBot: no "Used to sign in" description.
+      { titleKey: "settings.profile.email.title" },
       { titleKey: "settings.profile.sessions.title", descriptionKey: "settings.profile.sessions.description" },
     ],
   },

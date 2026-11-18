@@ -96,8 +96,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "この設定は「設定」からいつでも変更できます。",
   "onboarding.consent.termsLink": "利用規約",
   "onboarding.consent.privacyLink": "プライバシーポリシー",
-  "onboarding.plan.title": "プランを接続",
-  "onboarding.plan.description": "一度サインインするだけ。エージェントがあなたのプランを使います。",
   "onboarding.computer.title": "MyBot がコンピューターを操作する場合があります",
   "onboarding.opening": "MyBot を起動中…",
   "onboarding.launch.downloading": "無料モデルをダウンロードしています…",

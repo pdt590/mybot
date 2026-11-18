@@ -1,5 +1,5 @@
 /**
- * What an `openbot://` or `https://openbot.run/...` link means.
+ * What an `mybot://` or `https://openbot.run/...` link means.
  *
  * The scheme carries more than one kind of link now, so the decision of which kind a URL is has one
  * home rather than one `try` per entry point. `src/main/index.ts` has four ways a link arrives -
@@ -41,7 +41,14 @@ export type DeepLink =
  * after they accept it at registration. This stays as the fallback, and for the servers that take
  * it, it is the shorter path: the operating system hands the link straight to the running app.
  */
-export const MCP_OAUTH_REDIRECT_URL = "openbot://mcp-auth";
+export const MCP_OAUTH_REDIRECT_URL = "mybot://mcp-auth";
+
+/**
+ * MyBot: the app's only link scheme, which it registers with the system. The parsers below and in
+ * `@openbot/contracts` read `mybot://` links only.
+ */
+export const APP_LINK_SCHEME = "mybot";
+const APP_LINK_PROTOCOL = `${APP_LINK_SCHEME}:`;
 
 const MCP_OAUTH_HOST = "mcp-auth";
 const SLACK_WORKSPACE_HOST = "slack-workspace";
@@ -78,8 +85,8 @@ export function parseDeepLink(value: string, options: InviteLinkOptions = {}): D
 
 /**
  * The return leg of the Slack install, from the page at `/slack/connect`:
- * `openbot://slack-workspace?nonce=…&grant=…`, and of the Discord install, from `/discord/connect`:
- * `openbot://discord-guild?nonce=…&grant=…`. As with `mcp-auth`, the waiting sign-in checks
+ * `mybot://slack-workspace?nonce=…&grant=…`, and of the Discord install, from `/discord/connect`:
+ * `mybot://discord-guild?nonce=…&grant=…`. As with `mcp-auth`, the waiting sign-in checks
  * `nonce`, so a link this run did not start does nothing.
  */
 function parseSlackUrl(value: string): DeepLink | null {
@@ -89,7 +96,7 @@ function parseSlackUrl(value: string): DeepLink | null {
   } catch {
     return null;
   }
-  if (url.protocol !== "openbot:") return null;
+  if (url.protocol !== APP_LINK_PROTOCOL) return null;
   if (url.hostname === SLACK_WORKSPACE_HOST) {
     const nonce = url.searchParams.get("nonce");
     const grant = url.searchParams.get("grant");
@@ -104,7 +111,7 @@ function parseSlackUrl(value: string): DeepLink | null {
 }
 
 /**
- * The return leg of an MCP sign-in: `openbot://mcp-auth?code=…&state=…`.
+ * The return leg of an MCP sign-in: `mybot://mcp-auth?code=…&state=…`.
  *
  * Both halves are required and neither is inspected here. `state` is what the waiting sign-in is
  * keyed by, so a link this run did not start finds nothing and does nothing - which is the check
@@ -119,7 +126,7 @@ function parseMcpAuthUrl(value: string): DeepLink | null {
   } catch {
     return null;
   }
-  if (url.protocol !== "openbot:" || url.hostname !== MCP_OAUTH_HOST) return null;
+  if (url.protocol !== APP_LINK_PROTOCOL || url.hostname !== MCP_OAUTH_HOST) return null;
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   if (!code || !state) return null;

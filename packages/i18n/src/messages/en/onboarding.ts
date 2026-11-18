@@ -92,8 +92,6 @@ export const messages = defineMessages("onboarding", {
   "onboarding.consent.thanksToastDetail": "You can change this at any time in Settings.",
   "onboarding.consent.termsLink": "Terms of Service",
   "onboarding.consent.privacyLink": "Privacy Policy",
-  "onboarding.plan.title": "Connect your plan",
-  "onboarding.plan.description": "Sign in once. Your agents use your plan.",
   "onboarding.computer.title": "MyBot might control your computer",
   "onboarding.opening": "Opening MyBot…",
   "onboarding.launch.downloading": "Downloading the free models…",

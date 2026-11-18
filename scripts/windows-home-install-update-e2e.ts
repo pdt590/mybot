@@ -49,7 +49,8 @@ const nestedFolder = join(defaultFolder, "OpenBot");
 // Missing on a computer where no program was installed for this user.
 const uninstallKey = "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
 const runKey = "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
-const loginItemName = "app.openbot.desktop";
+// MyBot: the Windows app ID is `app.mybot.desktop` (`appId` in electron-builder.yml).
+const loginItemName = "app.mybot.desktop";
 const reportPath = resolve(".openbot-build/windows-home-install-update-e2e.json");
 // An installer that waits for a dialog in a silent run does not exit. This limit makes that a failure.
 const installerLimitMs = 5 * 60_000;

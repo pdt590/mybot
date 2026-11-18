@@ -448,7 +448,7 @@ try {
       body: { config: { ...renamed, enabled: true } },
     });
     assert.equal(relayed.status, 200, `Relay returned ${relayed.status}: ${JSON.stringify(relayed.body)}`);
-    // A client whose computer opens `openbot://mcp-auth` lets the host return there (#9209).
+    // A client whose computer opens `mybot://mcp-auth` lets the host return there (#9209).
     const deepLinked = await call("POST", SIGN_IN_RELAY_DEEP_LINK_ROUTES.mcpStart, {
       token: memberToken,
       body: { config: { ...renamed, enabled: true } },
@@ -474,7 +474,7 @@ try {
     assert.deepEqual(calls, [
       `start ${MEMBER_URL}`,
       `relay ${MEMBER_URL}`,
-      `relay ${MEMBER_URL} openbot://mcp-auth`,
+      `relay ${MEMBER_URL} mybot://mcp-auth`,
       `save-app ${memberRow.id}`,
       `sign-out ${memberRow.id}`,
     ]);

@@ -30,7 +30,8 @@ export function createLoginItem(options: { appVariant: AppVariant; server: boole
   return linuxAutostartLoginItem({
     // The XDG Base Directory Specification ignores a relative path.
     configHome: configHome && isAbsolute(configHome) ? configHome : join(homedir(), ".config"),
-    fileName: options.appVariant === "production" ? "openbot.desktop" : `openbot-${options.appVariant}.desktop`,
+    // MyBot: the autostart entry has the MyBot name, as the desktop entry does (`linux-desktop-entry.ts`).
+    fileName: options.appVariant === "production" ? "mybot.desktop" : `mybot-${options.appVariant}.desktop`,
     // The AppImage runtime names its own file here. `execPath` is inside the mount, which ends with the run.
     executablePath: process.env.APPIMAGE || process.execPath,
   });

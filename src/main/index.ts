@@ -1,4 +1,4 @@
-import { homedir, uptime } from "node:os";
+import { uptime } from "node:os";
 import { join, resolve } from "node:path";
 import { parseInviteUrl, selfHostedApiOrigin } from "@openbot/contracts/invite-links";
 import {
@@ -38,7 +38,7 @@ import { runCauseEffect } from "../backend/effect-boundary";
 import { NewerDatabaseError } from "../backend/openbot-database-schema";
 import { OWNER_NOTIFICATION_KEY } from "./agent-notification-level-store";
 import { watchAppArchive } from "./app-archive-watch";
-import { moveAppFolders, rebaseMovedFolderPaths } from "./app-folders";
+import { appUserDataFolder, rebaseMovedFolderPaths } from "./app-folders";
 import { readAppVariant, resolveAppIconPath, resolveLogoColorIconPath, resolveMenuBarIconPath } from "./app-icon";
 import { readSavedTransparentWindow } from "./appearance-service";
 import {
@@ -48,7 +48,7 @@ import {
 } from "./application-services";
 import { type BackgroundTray, createBackgroundTray } from "./background-tray";
 import { removeClaudeCodeSessionEnvironment } from "./claude-session-environment";
-import { type DeepLink, findDeepLink, parseDeepLink } from "./deep-link-router";
+import { APP_LINK_SCHEME, type DeepLink, findDeepLink, parseDeepLink } from "./deep-link-router";
 import { requestNotificationPermission, showRetainedNotification } from "./desktop-notifications";
 import { guardDevelopmentOutput } from "./development-output";
 import {
@@ -317,10 +317,10 @@ if (commandLineUserDataDirectory) {
     ),
   );
 }
-// MyBot: the installed app moves its `OpenBot` folders to `MyBot` once, before anything opens them,
-// and then rewrites the paths that the databases keep (`app-folders.ts`).
+// MyBot: the installed app uses its own `MyBot` folders, separate from OpenBot, and finishes a path
+// rewrite that an earlier build left pending (`app-folders.ts`).
 if (!commandLineUserDataDirectory && app.isPackaged) {
-  const userData = moveAppFolders({ appData: app.getPath("appData"), home: homedir() });
+  const userData = appUserDataFolder({ appData: app.getPath("appData") });
   app.setPath("userData", userData);
   rebaseMovedFolderPaths(userData);
 }
@@ -331,7 +331,11 @@ const systemTimezone =
     ? applyServerTimezone(join(app.getPath("userData"), SERVER_TIMEZONE_PREFERENCE_FILE), process.env)
     : localTimezone;
 app.enableSandbox();
-if (process.platform === "win32") app.setAppUserModelId("app.openbot.desktop");
+// MyBot: the app ID is `app.mybot.desktop` (`appId` in electron-builder.yml), so an
+// OpenBot install keeps its own taskbar group, notifications and login item. A dev run from source
+// has its own app ID. With the release ID, Windows can keep a Start menu shortcut to `electron.exe`
+// for that ID, and the taskbar then shows the Electron icon for MyBot.
+if (process.platform === "win32") app.setAppUserModelId(app.isPackaged ? "app.mybot.desktop" : "app.mybot.desktop.dev");
 // Linux: on Wayland, Chromium waits until a monitor is on before it starts. With none, start again on
 // XWayland. Before the single-instance lock, so that the new process can take it. A parent process or
 // systemd watches the process, the output and the input of a headless server, so it does not restart.
@@ -1201,7 +1205,7 @@ function requestDesktopNotificationPermission(
 }
 
 /** `null` for every state but a signed-in one, matching what the two principal trackers store. */
-/** The Dock tile, the Linux desktop entry and the `openbot://` scheme. A local server has none of them. */
+/** The Dock tile, the Linux desktop entry and the `mybot://` scheme. A local server has none of them. */
 /**
  * Shows the recovery window when this version did not finish its start several times in a row.
  * Resolves with the window to close after "Try again", with "quit", or with null when no loop is
@@ -1236,8 +1240,8 @@ async function presentApplication(): Promise<void> {
   // (`build/installer.nsh`), and each start writes it again for installs from before that script.
   // A Windows development build does not register: the handler would be bare `electron.exe`.
   // A macOS development build does not register either: macOS ignores the path and arguments and
-  // names the `com.github.Electron` bundle, so the link took `openbot://` from an installed
-  // OpenBot and opened some worktree's bare Electron.app. `bun run dev:slack` has a loopback return.
+  // names the `com.github.Electron` bundle, so the link took `mybot://` from an installed
+  // MyBot and opened some worktree's bare Electron.app. `bun run dev:slack` has a loopback return.
   await Effect.runPromise(
     installLinuxDesktopEntry({ platform: process.platform, environment: process.env, iconPath: appIconPath }),
   );
@@ -1245,8 +1249,9 @@ async function presentApplication(): Promise<void> {
     process.platform === "linux" ||
     ((process.platform === "darwin" || process.platform === "win32") && app.isPackaged)
   ) {
-    if (!app.setAsDefaultProtocolClient("openbot")) {
-      logger.warn("Unable to register the openbot:// scheme. Invitation links will not open OpenBot.");
+    // MyBot: the app registers only `mybot://` (`APP_LINK_SCHEME`).
+    if (!app.setAsDefaultProtocolClient(APP_LINK_SCHEME)) {
+      logger.warn("Unable to register the mybot:// scheme. Invitation links will not open MyBot.");
     }
   }
 }

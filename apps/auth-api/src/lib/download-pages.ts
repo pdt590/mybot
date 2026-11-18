@@ -293,7 +293,7 @@ export const DOWNLOAD_PAGES: Record<DownloadPagePlatform, DownloadPageContent> =
       },
       { text: "Make the AppImage executable.", code: "chmod +x OpenBot-*.AppImage" },
       {
-        text: "Run it. On the first start, OpenBot adds itself to your app launcher, so that openbot:// links open it.",
+        text: "Run it. On the first start, OpenBot adds itself to your app launcher, so that mybot:// links open it.",
         code: "./OpenBot-*.AppImage",
       },
       CONNECT_STEP,

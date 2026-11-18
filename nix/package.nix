@@ -63,8 +63,9 @@ let
       targetPkgs = pkgs: appimageTools.defaultFhsEnvArgs.targetPkgs pkgs ++ [ pkgs.libsecret ];
       runScript = "${contents}/openbot";
       extraInstallCommands = ''
-        install -Dm444 ${contents}/openbot.desktop $out/share/applications/openbot.desktop
-        substituteInPlace $out/share/applications/openbot.desktop \
+        # MyBot: the AppImage names its entry by `desktopName` in package.json.
+        install -Dm444 ${contents}/mybot.desktop $out/share/applications/mybot.desktop
+        substituteInPlace $out/share/applications/mybot.desktop \
           --replace-fail 'Exec=AppRun --no-sandbox %U' 'Exec=openbot %U'
         # The AppImage has only a 1600x1600 icon, a size that no icon theme lists.
         install -Dm444 ${contents}/openbot.png $out/share/pixmaps/openbot.png

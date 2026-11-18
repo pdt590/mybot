@@ -186,12 +186,12 @@ export function platformPage(platform: keyof typeof PAGE_HOSTS, address: string 
 }
 
 /**
- * The `openbot://` link where a Slack or Discord install returns, from the page at `/slack/connect` or
+ * The `mybot://` link where a Slack or Discord install returns, from the page at `/slack/connect` or
  * `/discord/connect`. The phone takes it in the browser session that opened the install.
  */
 export const MESSAGING_INSTALL_RETURN = {
-  slack: "openbot://slack-workspace",
-  discord: "openbot://discord-guild",
+  slack: "mybot://slack-workspace",
+  discord: "mybot://discord-guild",
 } as const satisfies Record<WorkspacePlatform, string>;
 
 /** True for the return link of a Slack or Discord install, which only its browser session takes. */

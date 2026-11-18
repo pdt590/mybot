@@ -32,6 +32,9 @@ import {
 /** Where the desktop app lists servers: the rail beside the sidebar, or the menu on the server name. */
 export type ServerView = "rail" | "menu";
 
+// MyBot: hides "Add remote server", "New server on this computer" and "New server on another computer".
+const SERVER_ADD_ITEMS_HIDDEN: boolean = true;
+
 const SERVER_VIEWS: readonly ServerView[] = ["rail", "menu"];
 
 const SERVER_VIEW_LABELS = {
@@ -301,7 +304,9 @@ export function ServerMenu(props: ServerMenuProps) {
                   </DropdownMenu.Sub>
                 )}
               </For>
-              <Show when={props.onAdd}>
+              {/* MyBot: "Add remote server", "New server on this computer" and "New server on another
+                  computer" are hidden (SERVER_ADD_ITEMS_HIDDEN). */}
+              <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onAdd}>
                 <DropdownMenu.Item class="server-menu-add" onSelect={() => props.onAdd?.()}>
                   <span class="server-menu-add-circle" aria-hidden="true">
                     <Plus />
@@ -309,7 +314,7 @@ export function ServerMenu(props: ServerMenuProps) {
                   <span>{t(addServerLabel(props))}</span>
                 </DropdownMenu.Item>
               </Show>
-              <Show when={props.onCreateLocal}>
+              <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onCreateLocal}>
                 {(onCreateLocal) => (
                   <DropdownMenu.Item class="server-menu-add" onSelect={() => onCreateLocal()()}>
                     <span class="server-menu-add-circle" aria-hidden="true">
@@ -319,7 +324,7 @@ export function ServerMenu(props: ServerMenuProps) {
                   </DropdownMenu.Item>
                 )}
               </Show>
-              <Show when={props.onInstallServer}>
+              <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onInstallServer}>
                 {(onInstallServer) => (
                   <DropdownMenu.Item class="server-menu-add" onSelect={() => onInstallServer()()}>
                     <span class="server-menu-add-circle" aria-hidden="true">

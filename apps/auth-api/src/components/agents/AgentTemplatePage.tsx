@@ -31,7 +31,7 @@ export interface AgentTemplatePageProps {
  * One shared agent as a single card: the page a link on X or in a chat opens.
  *
  * The card is tinted with the agent's own avatar colour, so each shared agent looks like itself.
- * The button opens `openbot://agents/<id>`, built from the id, and the app then shows its own preview
+ * The button opens `mybot://agents/<id>`, built from the id, and the app then shows its own preview
  * with Install; nothing here installs. The button below the card links `/app?agent=<id>`, where the
  * browser client shows the same preview.
  */

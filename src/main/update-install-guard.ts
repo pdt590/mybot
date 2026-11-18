@@ -17,7 +17,7 @@ import { Effect, Option, Schema } from "effect";
 
 /** In user data. Written just before the handover to the installer. */
 export const UPDATE_HANDOVER_FILE = "update-handover.json";
-const SHIPIT_JOB_LABEL = "app.openbot.desktop.ShipIt";
+const SHIPIT_JOB_LABEL = "app.mybot.desktop.ShipIt";
 /** Squirrel stages the ZIP before the quit (up to `UPDATE_INSTALL_TIMEOUT_MS`), then ShipIt runs. A backstop only. */
 const HANDOVER_MAX_AGE_MS = 10 * 60 * 1_000;
 const LOG_TAIL_BYTES = 64 * 1024;

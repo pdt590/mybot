@@ -4,7 +4,7 @@
  *
  * ```
  * https://openbot.run/agents/<id>    the link a person shares and the app copies
- * openbot://agents/<id>              the link the page button opens
+ * mybot://agents/<id>              the link the page button opens
  * /app?agent=<id>                    the page's link to the browser client, on the same origin
  * ```
  *
@@ -74,7 +74,7 @@ export function agentTemplateIdFromWebAppSearch(search: string): string | null {
 
 export function createOpenBotAgentTemplateUrl(id: string): string {
   assertAgentTemplateId(id);
-  return `openbot://${OPENBOT_AGENT_TEMPLATE_HOST}/${id}`;
+  return `mybot://${OPENBOT_AGENT_TEMPLATE_HOST}/${id}`;
 }
 
 /** The template id a link names, in either form. Throws for anything else. */
@@ -91,7 +91,7 @@ export function parseAgentTemplateUrl(value: string): string {
     url.protocol === "https:" &&
     url.origin === OPENBOT_AGENT_TEMPLATE_ORIGIN &&
     url.pathname.startsWith(OPENBOT_AGENT_TEMPLATE_PATH_PREFIX);
-  const customScheme = url.protocol === "openbot:" && url.hostname === OPENBOT_AGENT_TEMPLATE_HOST;
+  const customScheme = url.protocol === "mybot:" && url.hostname === OPENBOT_AGENT_TEMPLATE_HOST;
   if (
     (!canonical && !customScheme) ||
     url.username !== "" ||

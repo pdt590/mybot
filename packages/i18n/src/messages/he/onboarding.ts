@@ -91,8 +91,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "אפשר לשנות זאת בכל עת בהגדרות.",
   "onboarding.consent.termsLink": "תנאי השירות",
   "onboarding.consent.privacyLink": "מדיניות הפרטיות",
-  "onboarding.plan.title": "חיבור התוכנית שלך",
-  "onboarding.plan.description": "מתחברים פעם אחת. הסוכנים שלך משתמשים בתוכנית שלך.",
   "onboarding.computer.title": "ייתכן ש-MyBot ישלוט במחשב שלך",
   "onboarding.opening": "פותח את MyBot…",
   "onboarding.launch.downloading": "מוריד את המודלים החינמיים…",

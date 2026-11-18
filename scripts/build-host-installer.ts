@@ -92,7 +92,7 @@ async function build(): Promise<void> {
         "--options",
         "runtime",
         "--identifier",
-        `app.openbot.host.${name}`,
+        `app.mybot.host.${name}`,
         ...(name === "create-tenants" ? [] : ["--entitlements", "build/macos/host-updates/entitlements.plist"]),
         binary,
       ]);
@@ -108,8 +108,8 @@ async function build(): Promise<void> {
     for (const [source, target] of [
       ["openbot-host", "/usr/local/bin/openbot-host"],
       ["openbot-relaunch.sh", `${HOST_MANAGER_DIRECTORY}/openbot-relaunch.sh`],
-      ["app.openbot.host-manager.plist", "/Library/LaunchDaemons/app.openbot.host-manager.plist"],
-      ["app.openbot.desktop.relaunch.plist", "/Library/LaunchAgents/app.openbot.desktop.relaunch.plist"],
+      ["app.mybot.host-manager.plist", "/Library/LaunchDaemons/app.mybot.host-manager.plist"],
+      ["app.mybot.desktop.relaunch.plist", "/Library/LaunchAgents/app.mybot.desktop.relaunch.plist"],
     ] as const) {
       await mkdir(dirname(join(payload, target)), { recursive: true });
       await copyFile(`build/macos/host-updates/${source}`, join(payload, target));

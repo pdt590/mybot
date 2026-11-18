@@ -146,7 +146,8 @@ type RailId = AgentProviderId | "custom";
 
 const CUSTOM_RAIL = "custom" as const;
 
-const PROVIDERS: readonly RailId[] = [...PICKER_PROVIDERS, CUSTOM_RAIL];
+// MyBot: the OpenCode provider has no rail of its own. Custom endpoints keep the custom rail.
+const PROVIDERS: readonly RailId[] = [...PICKER_PROVIDERS.filter((provider) => provider !== "opencode"), CUSTOM_RAIL];
 
 /**
  * A rail entry: a provider tab, or an account of it after the first. An account entry's key is the

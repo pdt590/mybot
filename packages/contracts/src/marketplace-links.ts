@@ -5,8 +5,8 @@
  * ```
  * https://openbot.run/marketplace/agents/<id>     the link a person shares and the app copies
  * https://openbot.run/marketplace/skills/<slug>
- * openbot://marketplace/agents/<id>               the link the page button opens
- * openbot://marketplace/skills/<slug>
+ * mybot://marketplace/agents/<id>               the link the page button opens
+ * mybot://marketplace/skills/<slug>
  * /app?marketplaceAgent=<id>                      the page's link to the browser client
  * /app?marketplaceSkill=<slug>
  * ```
@@ -101,7 +101,7 @@ function isMarketplaceShareOrigin(origin: string): boolean {
 /** The link the page's button opens, which raises the app on this listing. */
 export function createOpenBotMarketplaceUrl(link: MarketplaceListingLink): string {
   assertListing(link);
-  return `openbot://${OPENBOT_MARKETPLACE_HOST}/${LISTING_SEGMENTS[link.kind]}/${link.id}`;
+  return `mybot://${OPENBOT_MARKETPLACE_HOST}/${LISTING_SEGMENTS[link.kind]}/${link.id}`;
 }
 
 /**
@@ -140,7 +140,7 @@ export function parseMarketplaceUrl(value: string): MarketplaceListingLink {
   const prefix = `${OPENBOT_MARKETPLACE_PATH}/`;
   const canonical =
     url.protocol === "https:" && url.origin === OPENBOT_MARKETPLACE_ORIGIN && url.pathname.startsWith(prefix);
-  const customScheme = url.protocol === "openbot:" && url.hostname === OPENBOT_MARKETPLACE_HOST;
+  const customScheme = url.protocol === "mybot:" && url.hostname === OPENBOT_MARKETPLACE_HOST;
   if (
     (!canonical && !customScheme) ||
     url.username !== "" ||

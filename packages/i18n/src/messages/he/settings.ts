@@ -487,7 +487,6 @@ export const messages = {
   "settings.profile.models.title": "שימוש במודלים",
   "settings.profile.account.title": "חשבון",
   "settings.profile.email.title": "אימייל",
-  "settings.profile.email.description": "משמש להתחברות ל-MyBot.",
   "settings.profile.sessions.title": "סשנים של החשבון",
   "settings.profile.sessions.description":
     "סשנים נשארים מחוברים עד להתנתקות או לניתוק שלהם. ניתוק מסיים גם את החיבורים המרוחקים הפעילים של החשבון הזה.",

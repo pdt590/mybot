@@ -94,8 +94,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "Você pode mudar isso a qualquer momento nas Configurações.",
   "onboarding.consent.termsLink": "Termos de serviço",
   "onboarding.consent.privacyLink": "Política de privacidade",
-  "onboarding.plan.title": "Conecte seu plano",
-  "onboarding.plan.description": "Entre uma vez. Seus agentes usam seu plano.",
   "onboarding.computer.title": "O MyBot pode controlar seu computador",
   "onboarding.opening": "Abrindo o MyBot…",
   "onboarding.launch.downloading": "Baixando os modelos gratuitos…",

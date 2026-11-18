@@ -500,7 +500,6 @@ export const messages = {
   "settings.profile.models.title": "Model kullanımı",
   "settings.profile.account.title": "Hesap",
   "settings.profile.email.title": "E-posta",
-  "settings.profile.email.description": "MyBot'ta oturum açmak için kullanılır.",
   "settings.profile.sessions.title": "Hesap oturumları",
   "settings.profile.sessions.description":
     "Oturumlar siz oturumu kapatana veya bağlantılarını kesene kadar açık kalır. Bağlantıyı kesmek bu hesabın etkin uzak bağlantılarını da sonlandırır.",

@@ -95,8 +95,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "Bunu istediğiniz zaman Ayarlar'dan değiştirebilirsiniz.",
   "onboarding.consent.termsLink": "Hizmet Şartları",
   "onboarding.consent.privacyLink": "Gizlilik Politikası",
-  "onboarding.plan.title": "Planınızı bağlayın",
-  "onboarding.plan.description": "Bir kez oturum açın. Ajanlarınız planınızı kullanır.",
   "onboarding.computer.title": "MyBot bilgisayarınızı kontrol edebilir",
   "onboarding.opening": "MyBot açılıyor…",
   "onboarding.launch.downloading": "Ücretsiz modeller indiriliyor…",

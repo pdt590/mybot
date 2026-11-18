@@ -12,9 +12,8 @@ export interface FirstRunPlanStepProps {
 export function FirstRunPlanStep(props: FirstRunPlanStepProps) {
   const { t } = useText();
   return (
-    <section class="onboarding-panel" aria-labelledby="onboarding-title">
-      <h1 id="onboarding-title">{t("onboarding.plan.title")}</h1>
-      <p class="onboarding-description">{t("onboarding.plan.description")}</p>
+    // MyBot: no "Connect your plan" title or "Sign in once" description.
+    <section class="onboarding-panel" aria-label={t("onboarding.provider.label")}>
       <div class="onboarding-provider">
         <SetupProviderPicker
           providers={props.providers}

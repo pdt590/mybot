@@ -92,8 +92,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "Je kunt dit altijd wijzigen in Instellingen.",
   "onboarding.consent.termsLink": "Servicevoorwaarden",
   "onboarding.consent.privacyLink": "Privacybeleid",
-  "onboarding.plan.title": "Verbind je abonnement",
-  "onboarding.plan.description": "Log één keer in. Je agents gebruiken je abonnement.",
   "onboarding.computer.title": "MyBot kan je computer besturen",
   "onboarding.opening": "MyBot openen…",
   "onboarding.launch.downloading": "De gratis modellen downloaden…",

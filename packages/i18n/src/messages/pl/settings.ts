@@ -514,7 +514,6 @@ export const messages = {
   "settings.profile.models.title": "Użycie modeli",
   "settings.profile.account.title": "Konto",
   "settings.profile.email.title": "E-mail",
-  "settings.profile.email.description": "Służy do logowania w MyBot.",
   "settings.profile.sessions.title": "Sesje konta",
   "settings.profile.sessions.description":
     "Sesje pozostają zalogowane, dopóki się nie wylogujesz lub ich nie odłączysz. Odłączenie kończy też aktywne zdalne połączenia tego konta.",

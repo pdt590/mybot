@@ -368,7 +368,7 @@ class LandingAnalytics {
     const handleClick = (event: MouseEvent) => {
       const target = event.target;
       const link = target instanceof Element ? target.closest<HTMLAnchorElement>("a[href]") : null;
-      if (link?.getAttribute("href")?.startsWith("openbot://")) {
+      if (link?.getAttribute("href")?.startsWith("mybot://")) {
         this.#track("join_page_action", { action: "open_app" });
         return;
       }

@@ -4,7 +4,7 @@ import { DOWNLOAD_PLATFORMS, detectDownloadPlatform } from "../../lib/download-p
 import { Button } from "../ui/button";
 
 export interface PluginOpenButtonsProps {
-  /** An `openbot://` link, built by a shared helper from contracts. */
+  /** An `mybot://` link, built by a shared helper from contracts. */
   href: string;
   label: string;
   /** The browser client's entry for the same item, built by a shared helper from contracts. */

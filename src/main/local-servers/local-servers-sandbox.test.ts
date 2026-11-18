@@ -5,7 +5,7 @@ import { sandboxArguments } from "./local-servers";
 describe("sandboxArguments", () => {
   it("keeps the sandbox of a child when this process has it", () => {
     expect(sandboxArguments([])).toEqual([]);
-    expect(sandboxArguments(["--ozone-platform=x11", "openbot://open"])).toEqual([]);
+    expect(sandboxArguments(["--ozone-platform=x11", "mybot://open"])).toEqual([]);
   });
 
   it("gives the child --no-sandbox only when this process started with it", () => {

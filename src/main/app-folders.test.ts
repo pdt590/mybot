@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join, sep } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import { appDataFolderName, appWorkspaceRoot, moveAppFolders, rebaseMovedFolderPaths } from "./app-folders";
+import { appDataFolderName, appUserDataFolder, appWorkspaceRoot, rebaseMovedFolderPaths } from "./app-folders";
 
 const roots: string[] = [];
 
@@ -40,50 +40,44 @@ afterEach(() => {
 });
 
 describe("app folders", () => {
-  it("moves both OpenBot folders and rewrites the stored paths", () => {
+  it("uses the MyBot folders and leaves the OpenBot folders alone", () => {
     const { appData, home } = sandbox();
-    const oldUserData = join(appData, "OpenBot");
-    const oldWorkspace = join(home, "OpenBot");
-    mkdirSync(join(oldWorkspace, "Agents", "agent-1"), { recursive: true });
-    mkdirSync(oldUserData, { recursive: true });
-    writeFileSync(join(oldWorkspace, "Agents", "agent-1", "notes.md"), "kept");
-    seedDatabase(join(oldUserData, "openbot.db"), join(oldWorkspace, "Agents", "agent-1"));
+    mkdirSync(join(appData, "OpenBot"), { recursive: true });
+    mkdirSync(join(home, "OpenBot"), { recursive: true });
+    writeFileSync(join(appData, "OpenBot", "marker"), "old");
+    writeFileSync(join(home, "OpenBot", "marker"), "old");
 
-    const userData = moveAppFolders({ appData, home });
+    const userData = appUserDataFolder({ appData });
+    rebaseMovedFolderPaths(userData);
     expect(userData).toBe(join(appData, "MyBot"));
     expect(appDataFolderName()).toBe("MyBot");
     expect(appWorkspaceRoot(home)).toBe(join(home, "MyBot"));
-    expect(existsSync(oldUserData)).toBe(false);
-    expect(existsSync(oldWorkspace)).toBe(false);
-    expect(readFileSync(join(home, "MyBot", "Agents", "agent-1", "notes.md"), "utf8")).toBe("kept");
+    expect(readFileSync(join(appData, "OpenBot", "marker"), "utf8")).toBe("old");
+    expect(readFileSync(join(home, "OpenBot", "marker"), "utf8")).toBe("old");
+    expect(existsSync(join(appData, "MyBot"))).toBe(false);
+  });
+
+  it("finishes the path rewrite that an earlier build left pending", () => {
+    const { appData, home } = sandbox();
+    const userData = appUserDataFolder({ appData });
+    const oldWorkspace = join(home, "OpenBot");
+    const newWorkspace = join(home, "MyBot");
+    mkdirSync(userData, { recursive: true });
+    seedDatabase(join(userData, "openbot.db"), join(oldWorkspace, "Agents", "agent-1"));
+    writeFileSync(
+      join(userData, "mybot-folder-moves-v1.json"),
+      JSON.stringify([{ from: oldWorkspace, to: newWorkspace }]),
+    );
 
     rebaseMovedFolderPaths(userData);
-    const newWorkspace = join(home, "MyBot", "Agents", "agent-1");
+    const agentFolder = join(newWorkspace, "Agents", "agent-1");
     const rows = readRows(join(userData, "openbot.db"));
-    expect(JSON.parse(rows[0]?.agent_json ?? "{}")).toEqual({ workspacePath: newWorkspace });
-    expect(rows[1]?.agent_json).toBe(`See ${newWorkspace}${sep}notes.md`);
+    expect(JSON.parse(rows[0]?.agent_json ?? "{}")).toEqual({ workspacePath: agentFolder });
+    expect(rows[1]?.agent_json).toBe(`See ${agentFolder}${sep}notes.md`);
     expect(existsSync(join(userData, "mybot-folder-moves-v1.json"))).toBe(false);
 
-    // A second start finds nothing to move and nothing to rewrite.
-    expect(moveAppFolders({ appData, home })).toBe(userData);
+    // A second start finds nothing to rewrite.
     rebaseMovedFolderPaths(userData);
     expect(readRows(join(userData, "openbot.db"))).toEqual(rows);
-  });
-
-  it("keeps a MyBot folder that already exists and leaves the OpenBot folder alone", () => {
-    const { appData, home } = sandbox();
-    mkdirSync(join(appData, "OpenBot"), { recursive: true });
-    mkdirSync(join(appData, "MyBot"), { recursive: true });
-    writeFileSync(join(appData, "OpenBot", "marker"), "old");
-
-    expect(moveAppFolders({ appData, home })).toBe(join(appData, "MyBot"));
-    expect(readFileSync(join(appData, "OpenBot", "marker"), "utf8")).toBe("old");
-    expect(existsSync(join(appData, "MyBot", "mybot-folder-moves-v1.json"))).toBe(false);
-  });
-
-  it("uses the MyBot folders on a computer with no OpenBot data", () => {
-    const { appData, home } = sandbox();
-    expect(moveAppFolders({ appData, home })).toBe(join(appData, "MyBot"));
-    expect(appWorkspaceRoot(home)).toBe(join(home, "MyBot"));
   });
 });

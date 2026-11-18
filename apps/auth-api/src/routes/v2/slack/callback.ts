@@ -25,7 +25,7 @@ export const Route = createFileRoute("/v2/slack/callback")({
             }
             const slack = requestSlackApp();
             const result = yield* slack.complete({ code, state, redirectUri: slack.redirectUri(request.url) });
-            // Development only: the dev app's loopback listener takes the grant, not `openbot://`.
+            // Development only: the dev app's loopback listener takes the grant, not `mybot://`.
             if (result.returnUrl)
               return redirect(
                 new URL(`${result.returnUrl}?${new URLSearchParams({ nonce: result.nonce, grant: result.grant })}`),

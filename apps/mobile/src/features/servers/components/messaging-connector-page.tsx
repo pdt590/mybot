@@ -108,7 +108,7 @@ function isWorkspacePlatform(platform: ConnectorMessagingPlatform): platform is 
 
 /**
  * Opens the platform's page that the host named. A Slack or Discord install returns to an
- * `openbot://` link with a grant that is sealed to the host; the browser session gives it back here,
+ * `mybot://` link with a grant that is sealed to the host; the browser session gives it back here,
  * and the phone sends it on. A Telegram link opens Telegram, and the chat shows when it is linked.
  * Resolves false when the user closed the browser.
  */

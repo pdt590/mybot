@@ -91,8 +91,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "설정에서 언제든지 바꿀 수 있어요.",
   "onboarding.consent.termsLink": "서비스 약관",
   "onboarding.consent.privacyLink": "개인정보 처리방침",
-  "onboarding.plan.title": "요금제 연결",
-  "onboarding.plan.description": "한 번만 로그인하세요. 에이전트가 내 요금제를 사용해요.",
   "onboarding.computer.title": "MyBot이 내 컴퓨터를 제어할 수 있어요",
   "onboarding.opening": "MyBot 여는 중…",
   "onboarding.launch.downloading": "무료 모델을 다운로드하는 중…",

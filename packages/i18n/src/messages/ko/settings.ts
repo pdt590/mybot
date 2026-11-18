@@ -490,7 +490,6 @@ export const messages = {
   "settings.profile.models.title": "모델 사용량",
   "settings.profile.account.title": "계정",
   "settings.profile.email.title": "이메일",
-  "settings.profile.email.description": "MyBot에 로그인할 때 사용해요.",
   "settings.profile.sessions.title": "계정 세션",
   "settings.profile.sessions.description":
     "세션은 로그아웃하거나 연결을 해제할 때까지 로그인 상태로 유지돼요. 연결을 해제하면 이 계정의 활성 원격 연결도 종료돼요.",

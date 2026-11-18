@@ -206,7 +206,7 @@ export async function verifyMobileEmailCode(challengeId: string, code: string): 
 /**
  * Signs in at the company provider of the email, after the email start answered
  * `company_sign_in_required`. The provider page opens in a browser session, which returns to
- * `openbot://company-sign-in` with a one-time code. Only the verifier that stays here makes the code
+ * `mybot://company-sign-in` with a one-time code. Only the verifier that stays here makes the code
  * a session. Resolves null when the user closed the browser.
  */
 export async function signInMobileWithCompany(email: string): Promise<MobileSession | null> {
@@ -841,8 +841,8 @@ function decodeStoredMobileCredential(value: unknown): MobileCredential {
 /** The Mobile Connect rule for an account service origin: HTTPS, or HTTP on a private network. */
 function normalizeAccountApiUrl(value: string): string | null {
   return (
-    parseMobileConnectUrl(`openbot://mobile-connect?api=${encodeURIComponent(value)}&ticket=${"x".repeat(32)}`)
-      ?.apiUrl ?? null
+    parseMobileConnectUrl(`mybot://mobile-connect?api=${encodeURIComponent(value)}&ticket=${"x".repeat(32)}`)?.apiUrl ??
+    null
   );
 }
 

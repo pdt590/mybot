@@ -1,6 +1,6 @@
 // Shares text, a link, an image, a HEIC photo and a PDF to the iOS development build, as the share
 // extension does: the file goes into the App Group, the payload into the App Group defaults, and
-// `simctl openurl` opens `openbot://expo-sharing`. The last case stops the app first (cold start).
+// `simctl openurl` opens `mybot://expo-sharing`. The last case stops the app first (cold start).
 // Each case waits until the app has taken the share: the payload key is gone and the file is in the
 // share folder in the app cache, as a JPEG for the HEIC photo. Writes
 // .openbot-build/mobile-share-e2e/report.json and one screenshot per case.
@@ -19,7 +19,7 @@ const BUNDLE_ID = "run.openbot.mobile";
 const APP_GROUP = "group.run.openbot.mobile";
 // The key and the payload shape of expo-sharing (`ios/shared/Constants.swift`, `ShareProtocol.swift`).
 const PAYLOAD_KEY = "expo-sharing";
-const SHARE_LINK = "openbot://expo-sharing";
+const SHARE_LINK = "mybot://expo-sharing";
 const OUT = resolve(import.meta.dirname, "../.openbot-build/mobile-share-e2e");
 const RUNTIME_TIMEOUT_MS = 5 * 60_000;
 // A cold start loads the bundle from Metro and the session before the share sheet reads the share.

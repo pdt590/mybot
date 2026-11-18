@@ -511,7 +511,6 @@ export const messages = defineMessages("settings", {
   "settings.profile.models.title": "Model usage",
   "settings.profile.account.title": "Account",
   "settings.profile.email.title": "Email",
-  "settings.profile.email.description": "Used to sign in to MyBot.",
   "settings.profile.sessions.title": "Account sessions",
   "settings.profile.sessions.description":
     "Sessions stay signed in until you log out or disconnect them. Disconnecting also ends this account's active remote connections.",

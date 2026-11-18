@@ -499,7 +499,6 @@ export const messages = {
   "settings.profile.models.title": "モデルの使用量",
   "settings.profile.account.title": "アカウント",
   "settings.profile.email.title": "メールアドレス",
-  "settings.profile.email.description": "MyBot へのサインインに使います。",
   "settings.profile.sessions.title": "アカウントのセッション",
   "settings.profile.sessions.description":
     "セッションは、ログアウトするか接続を解除するまでサインインしたままです。接続を解除すると、このアカウントのアクティブなリモート接続も終了します。",

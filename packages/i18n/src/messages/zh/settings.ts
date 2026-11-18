@@ -480,7 +480,6 @@ export const messages = {
   "settings.profile.models.title": "模型用量",
   "settings.profile.account.title": "账号",
   "settings.profile.email.title": "邮箱",
-  "settings.profile.email.description": "用于登录 MyBot。",
   "settings.profile.sessions.title": "账号会话",
   "settings.profile.sessions.description":
     "会话会一直保持登录，直到你退出或断开它们。断开连接也会终止该账号当前的远程连接。",

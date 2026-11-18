@@ -94,8 +94,6 @@ export const messages = {
   "onboarding.consent.thanksToastDetail": "Это можно изменить в любой момент в настройках.",
   "onboarding.consent.termsLink": "Условия использования",
   "onboarding.consent.privacyLink": "Политика конфиденциальности",
-  "onboarding.plan.title": "Подключите подписку",
-  "onboarding.plan.description": "Войдите один раз. Агенты будут использовать вашу подписку.",
   "onboarding.computer.title": "MyBot может управлять вашим компьютером",
   "onboarding.opening": "Открываем MyBot…",
   "onboarding.launch.downloading": "Загружаем бесплатные модели…",

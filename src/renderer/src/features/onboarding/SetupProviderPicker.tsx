@@ -40,7 +40,7 @@ import { createEffect, createMemo, createSignal, onCleanup, Show, untrack } from
 import { ProviderSignInDialogs } from "../../components/ProviderSignInDialogs";
 import type { ProviderConnectionApi } from "../../components/provider-connection-api";
 import { createCustomProviderHostState } from "../custom-providers/custom-provider-host-state";
-import { FREE_PROVIDER, onboardingProviderRows } from "./onboarding-provider-rows";
+import { FREE_PROVIDER, type OnboardingProviderRows, onboardingProviderRows } from "./onboarding-provider-rows";
 import { fallbackProviderState } from "./onboarding-provider-state";
 
 /** The providers of this computer, and the actions on them, as both setup screens take them. */
@@ -179,10 +179,11 @@ export type SetupProviders = ReturnType<typeof createSetupProviders>;
 export function createSetupProviders(
   props: SetupProviderProps,
   initial?: SetupProviderChoice,
-  settings: SetupProviderOptions = {},
+  _settings: SetupProviderOptions = {},
 ) {
   const { t, errorMessage } = useText();
-  const includeFree = () => settings.includeFree?.() ?? true;
+  // MyBot: the OpenCode free provider is hidden, so the step never lists or chooses it by itself.
+  const includeFree = () => false;
   const [selectedProvider, setSelectedProvider] = createSignal<AgentProviderId | null>(initial?.provider ?? null);
   /**
    * Whether the user chose their own endpoints rather than a built-in provider. `selectedProvider`
@@ -270,11 +271,13 @@ export function createSetupProviders(
   const providerRows = createMemo(() => {
     const kept = keptProviders();
     const host = Boolean(props.hostProviders);
-    const rows = onboardingProviderRows(providerOptions(), kept ?? [], freeRow(), host);
+    const rows = withoutFreeProvider(onboardingProviderRows(providerOptions(), kept ?? [], freeRow(), host));
     // A saved choice that the row rule hides still shows, after the rows the rule gives.
     const saved = initial?.provider;
-    if (kept || !saved || rows.listed.some((option) => option.id === saved)) return rows;
-    return onboardingProviderRows(providerOptions(), [...planRowIds(rows.listed), saved], freeRow(), host);
+    if (kept || !saved || saved === FREE_PROVIDER || rows.listed.some((option) => option.id === saved)) return rows;
+    return withoutFreeProvider(
+      onboardingProviderRows(providerOptions(), [...planRowIds(rows.listed), saved], freeRow(), host),
+    );
   });
   /**
    * Whether each provider of a server has reported its state. Until then the row rule can still change
@@ -711,6 +714,14 @@ export function createSetupProviders(
     cancelProviderDownload,
     refreshProviders,
     openProviderGuide,
+  };
+}
+
+/** MyBot: the OpenCode free provider is not offered, neither as a row nor in "More providers". */
+function withoutFreeProvider(rows: OnboardingProviderRows): OnboardingProviderRows {
+  return {
+    listed: rows.listed.filter((option) => option.id !== FREE_PROVIDER),
+    hidden: rows.hidden.filter((option) => option.id !== FREE_PROVIDER),
   };
 }
 

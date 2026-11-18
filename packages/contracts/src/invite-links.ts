@@ -88,7 +88,8 @@ export function createInviteUrl(payload: InviteLinkPayload, options: InviteLinkO
 
 export function createOpenBotInviteUrl(payload: InviteLinkPayload, options: InviteLinkOptions = {}): string {
   validatePayload(payload, options);
-  const url = new URL("openbot://join");
+  // MyBot: the app's link scheme is `mybot://` (`src/main/deep-link-router.ts`).
+  const url = new URL("mybot://join");
   writePayload(url, payload);
   return url.toString();
 }
@@ -147,7 +148,8 @@ export function parseInviteUrl(value: string, options: InviteLinkOptions = {}): 
   const canonical =
     url.protocol === "https:" && url.origin === OPENBOT_INVITE_ORIGIN && url.pathname === OPENBOT_INVITE_PATH;
   const customScheme =
-    url.protocol === "openbot:" && url.hostname === "join" && (url.pathname === "" || url.pathname === "/");
+    // MyBot: the only link scheme is `mybot://`.
+    url.protocol === "mybot:" && url.hostname === "join" && (url.pathname === "" || url.pathname === "/");
   if (
     (!canonical && !customScheme) ||
     url.username !== "" ||

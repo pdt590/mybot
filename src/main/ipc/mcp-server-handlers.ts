@@ -201,7 +201,7 @@ export function mcpServerIpcHandlers({
 
   /**
    * The `sign-in-relay-v1` routes of one MCP sign-in on a joined server. When this computer opens
-   * `openbot://mcp-auth`, the host can return there after both loopback names failed: TradingView's
+   * `mybot://mcp-auth`, the host can return there after both loopback names failed: TradingView's
    * firewall blocks a sign-in page that returns to a loopback name (#9209).
    */
   function relayRemote(serverId: string, input: TestMcpServerInput): SignInRelayRemote<RemoteWorkflowError> {

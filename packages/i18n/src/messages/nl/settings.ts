@@ -502,7 +502,6 @@ export const messages = {
   "settings.profile.models.title": "Modelgebruik",
   "settings.profile.account.title": "Account",
   "settings.profile.email.title": "E-mail",
-  "settings.profile.email.description": "Gebruikt om in te loggen bij MyBot.",
   "settings.profile.sessions.title": "Accountsessies",
   "settings.profile.sessions.description":
     "Sessies blijven ingelogd tot je uitlogt of ze verbreekt. Verbreken beëindigt ook de actieve externe verbindingen van dit account.",

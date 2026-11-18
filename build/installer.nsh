@@ -1,5 +1,5 @@
 ; electron-builder includes this file in the NSIS installer. Its `protocols` setting registers the
-; openbot:// scheme only on macOS and Linux, so the installer writes the Windows key itself.
+; mybot:// scheme only on macOS and Linux, so the installer writes the Windows key itself.
 ; The application writes the same key at each start (`src/main/index.ts`).
 
 ; A chosen folder such as D:\OpenBot inherits Modify rights for "Authenticated Users" from the drive
@@ -37,13 +37,74 @@
   !insertmacro openBotRestrictInstallDirectory
 !macroend
 
+; MyBot: the only link scheme is `mybot://` (`APP_LINK_SCHEME` in `src/main/deep-link-router.ts`). MyBot
+; does not use `openbot://`. Earlier MyBot builds registered `openbot://` for MyBot.exe: that leftover
+; registration is removed, so `openbot://` links no longer open MyBot. An OpenBot registration is kept.
 !macro customInstall
-  WriteRegStr SHCTX "Software\Classes\openbot" "" "URL:MyBot invitations"
-  WriteRegStr SHCTX "Software\Classes\openbot" "URL Protocol" ""
-  WriteRegStr SHCTX "Software\Classes\openbot\DefaultIcon" "" "$appExe,0"
-  WriteRegStr SHCTX "Software\Classes\openbot\shell\open\command" "" '"$appExe" "%1"'
+  WriteRegStr SHCTX "Software\Classes\mybot" "" "URL:MyBot invitations"
+  WriteRegStr SHCTX "Software\Classes\mybot" "URL Protocol" ""
+  WriteRegStr SHCTX "Software\Classes\mybot\DefaultIcon" "" "$appExe,0"
+  WriteRegStr SHCTX "Software\Classes\mybot\shell\open\command" "" '"$appExe" "%1"'
+  Push $0
+  Push $1
+  ReadRegStr $0 SHCTX "Software\Classes\openbot\shell\open\command" ""
+  ${StrContains} $1 "\${APP_EXECUTABLE_FILENAME}$\"" $0
+  ${if} $1 != ""
+    DeleteRegKey SHCTX "Software\Classes\openbot"
+  ${endIf}
+  Pop $1
+  Pop $0
   !insertmacro openBotRemoveAppFromDataFolder
   !insertmacro openBotRemoveAppAboveInstallDirectory
+  !insertmacro myBotAdoptOpenBotIdInstall
+!macroend
+
+; MyBot: earlier MyBot builds had the OpenBot app ID, `app.openbot.desktop`, so they are registered
+; under its GUID, and their login item has its name. Windows now has `app.mybot.desktop`
+; (`appId` in electron-builder.yml), so this installer no longer finds them, and no longer finds
+; an OpenBot install either: OpenBot stays installed. When the old registration names a MyBot
+; uninstaller, remove that registration, delete the old MyBot app files when they are in another
+; folder, and point the old MyBot login item at this copy. An OpenBot registration is left as it is.
+!define MYBOT_OPENBOT_APP_ID "app.openbot.desktop"
+!define MYBOT_OPENBOT_APP_GUID "df305836-e26f-5152-8da0-cadfa0a70d09"
+!macro myBotAdoptOpenBotIdInstall
+  Push $0
+  Push $1
+  Push $2
+  ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MYBOT_OPENBOT_APP_GUID}" UninstallString
+  ${StrContains} $1 "\${UNINSTALL_FILENAME}" $0
+  ${if} $1 != ""
+    ReadRegStr $2 HKCU "Software\${MYBOT_OPENBOT_APP_GUID}" InstallLocation
+    ${if} $2 == ""
+      !insertmacro GetInQuotes $1 $0
+      ${if} $1 != ""
+        Push $1
+        Call GetFileParent
+        Pop $2
+      ${endIf}
+    ${endIf}
+    DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MYBOT_OPENBOT_APP_GUID}"
+    DeleteRegKey HKCU "Software\${MYBOT_OPENBOT_APP_GUID}"
+    StrCpy $1 $2 1 -1
+    ${if} $1 == "\"
+      StrCpy $2 $2 -1
+    ${endIf}
+    ${if} $2 != ""
+    ${andIf} $2 != $INSTDIR
+    ${andIf} ${FileExists} "$2\${APP_EXECUTABLE_FILENAME}"
+      !insertmacro openBotRemoveAppFiles $2
+      RMDir $2
+    ${endIf}
+  ${endIf}
+  ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${MYBOT_OPENBOT_APP_ID}"
+  ${StrContains} $1 "\${APP_EXECUTABLE_FILENAME}" $0
+  ${if} $1 != ""
+    WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${APP_ID}" '"$appExe"'
+    DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${MYBOT_OPENBOT_APP_ID}"
+  ${endIf}
+  Pop $2
+  Pop $1
+  Pop $0
 !macroend
 
 ; OpenBot keeps the agent workspaces in %USERPROFILE%\OpenBot (`src/backend/agent-store.ts`) and its
@@ -216,15 +277,15 @@
 !macro customUnInstall
   ${ifNot} ${isUpdated}
     Push $0
-    ReadRegStr $0 SHCTX "Software\Classes\openbot\shell\open\command" ""
+    ReadRegStr $0 SHCTX "Software\Classes\mybot\shell\open\command" ""
     ${if} $0 == '"$INSTDIR\${APP_EXECUTABLE_FILENAME}" "%1"'
-      DeleteRegKey SHCTX "Software\Classes\openbot"
+      DeleteRegKey SHCTX "Software\Classes\mybot"
     ${endIf}
     Pop $0
   ${endIf}
 !macroend
 
-; OpenBot installs for the current user only. The application writes the openbot:// key in HKCU at
+; OpenBot installs for the current user only. The application writes the mybot:// key in HKCU at
 ; each start, and an update finds only one installation. This skips the "All users" page.
 !macro customInstallMode
   StrCpy $isForceCurrentInstall "1"

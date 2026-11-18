@@ -12,7 +12,7 @@ export const SHARED_APP = "/Applications/MyBot.app";
 const STAGING = "/Applications/.openbot-host-stage";
 const PRIVATE = join(HOST_MANAGER_DIRECTORY, "private");
 const SIGNING_REQUIREMENT =
-  '=anchor apple generic and identifier "app.openbot.desktop" and certificate leaf[subject.OU] = "ZTRDTUL87R"';
+  '=anchor apple generic and identifier "app.mybot.desktop" and certificate leaf[subject.OU] = "ZTRDTUL87R"';
 const releaseSchema = z.object({
   tag_name: z.string().regex(/^v?\d+\.\d+\.\d+$/),
   draft: z.literal(false),

@@ -516,7 +516,6 @@ export const messages = {
   "settings.profile.models.title": "Использование моделей",
   "settings.profile.account.title": "Аккаунт",
   "settings.profile.email.title": "Почта",
-  "settings.profile.email.description": "Используется для входа в MyBot.",
   "settings.profile.sessions.title": "Сеансы аккаунта",
   "settings.profile.sessions.description":
     "Сеансы остаются активными, пока вы не выйдете или не отключите их. Отключение также завершает активные удалённые подключения этого аккаунта.",

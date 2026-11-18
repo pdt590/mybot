@@ -6,7 +6,7 @@
 // 2. The provider sends the browser to `/v1/auth/company/callback`. `finish` checks the ID token,
 //    finds or makes the account, and sends the browser to the app's loopback with a one-time code.
 // 3. The app gives the code and its verifier to `exchange` and gets a session like an email code gives.
-//    The phone app returns to `openbot://company-sign-in` in its browser session, and its exchange
+//    The phone app returns to `mybot://company-sign-in` in its browser session, and its exchange
 //    names the device, so the session is a mobile session.
 //
 // A test sign-in uses the same flow. It saves the connection only when it passes, so a connection

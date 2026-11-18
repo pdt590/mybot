@@ -315,13 +315,16 @@ function ProviderList(props: ProviderSettingsPageProps & { onOpen: (id: PageId) 
   const matches = (...texts: (string | null | undefined)[]) =>
     needle() === "" || texts.some((text) => text?.toLowerCase().includes(needle()));
   const shown = createMemo(() =>
-    props.options.filter((option) =>
-      matches(
-        option.name,
-        summary(option),
-        option.email,
-        ...(option.accounts ?? []).flatMap((account) => [account.label, account.email]),
-      ),
+    props.options.filter(
+      (option) =>
+        // MyBot: the OpenCode provider is hidden. It still runs the custom endpoints behind the scenes.
+        option.id !== "opencode" &&
+        matches(
+          option.name,
+          summary(option),
+          option.email,
+          ...(option.accounts ?? []).flatMap((account) => [account.label, account.email]),
+        ),
     ),
   );
   const connectedRows = () => shown().filter(isConnected);
@@ -497,7 +500,10 @@ function DefaultProviderRow(props: ProviderSettingsPageProps) {
   const choices = (): DefaultChoice[] => {
     const value = props.defaultProvider?.value ?? null;
     const providers = props.options
-      .filter((option) => (option.state === "available" && !option.off) || option.id === value)
+      // MyBot: the OpenCode provider is hidden, so it is not a default choice unless it is saved already.
+      .filter(
+        (option) => (option.state === "available" && !option.off && option.id !== "opencode") || option.id === value,
+      )
       .map((option) => ({ id: option.id, name: option.name }));
     const custom =
       (props.customProviders?.length ?? 0) > 0 && servesCustomEndpoints(props) && props.onAddCustomProvider;

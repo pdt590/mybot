@@ -18,6 +18,8 @@ import { useText } from "../../text";
 import { type ServerActionCallbacks, ServerActionItems, serverMuteDescription } from "./ServerActionItems";
 
 const SERVER_RAIL_TOOLTIP_OPEN_DELAY = 150;
+// MyBot: hides "Add remote server", "New server on this computer" and "New server on another computer".
+const SERVER_ADD_ITEMS_HIDDEN: boolean = true;
 
 const SERVER_STATE_LABELS = {
   online: "server.state.online",
@@ -446,13 +448,16 @@ function ServerRailAddMenu(props: {
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content aria-label={t("server.rail.add")}>
-              <DropdownMenu.Item class="server-menu-add" onSelectAfterClose={props.onAdd}>
-                <span class="server-menu-add-circle" aria-hidden="true">
-                  <Plus />
-                </span>
-                <span>{t(props.addLabel)}</span>
-              </DropdownMenu.Item>
-              <Show when={props.onCreateLocal}>
+              {/* MyBot: the three "add server" items are hidden (SERVER_ADD_ITEMS_HIDDEN). */}
+              <Show when={!SERVER_ADD_ITEMS_HIDDEN}>
+                <DropdownMenu.Item class="server-menu-add" onSelectAfterClose={props.onAdd}>
+                  <span class="server-menu-add-circle" aria-hidden="true">
+                    <Plus />
+                  </span>
+                  <span>{t(props.addLabel)}</span>
+                </DropdownMenu.Item>
+              </Show>
+              <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onCreateLocal}>
                 {(onCreateLocal) => (
                   <DropdownMenu.Item class="server-menu-add" onSelectAfterClose={onCreateLocal()}>
                     <span class="server-menu-add-circle" aria-hidden="true">
@@ -462,7 +467,7 @@ function ServerRailAddMenu(props: {
                   </DropdownMenu.Item>
                 )}
               </Show>
-              <Show when={props.onInstallServer}>
+              <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onInstallServer}>
                 {(onInstallServer) => (
                   <DropdownMenu.Item class="server-menu-add" onSelectAfterClose={onInstallServer()}>
                     <span class="server-menu-add-circle" aria-hidden="true">

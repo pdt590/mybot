@@ -508,7 +508,6 @@ export const messages = {
   "settings.profile.models.title": "Modellnutzung",
   "settings.profile.account.title": "Konto",
   "settings.profile.email.title": "E-Mail",
-  "settings.profile.email.description": "Wird zur Anmeldung bei MyBot verwendet.",
   "settings.profile.sessions.title": "Kontositzungen",
   "settings.profile.sessions.description":
     "Sitzungen bleiben angemeldet, bis du dich abmeldest oder sie trennst. Das Trennen beendet auch die aktiven Remote-Verbindungen dieses Kontos.",

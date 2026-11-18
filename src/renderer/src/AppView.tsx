@@ -187,7 +187,8 @@ export function AppAccessGate() {
                           onSave={setup.saveSetup}
                           onPreviewInvite={setup.previewInvite}
                           onJoinRemote={joinRemoteDuringSetup}
-                          onLogout={auth.logoutCentralAccount}
+                          // MyBot: no Sign out button in the initial setup.
+                          onLogout={undefined}
                         />
                       </Loading>
                     </Show>

@@ -307,7 +307,7 @@ const valid: [string, (value: unknown) => unknown, unknown][] = [
     decodeCentralAuthState,
     { status: "error", issue: { code: "offline", message: "No network." } } satisfies CentralAuthState,
   ],
-  ["Mobile Connect ticket", decodeMobileConnectTicket, { qrData: "openbot://mobile-connect", expiresAt: 1 }],
+  ["Mobile Connect ticket", decodeMobileConnectTicket, { qrData: "mybot://mobile-connect", expiresAt: 1 }],
   [
     "connected devices",
     decodeMobileConnectedDevices,

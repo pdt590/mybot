@@ -139,7 +139,7 @@ export function SettingsProfileTab(props: SettingsProfileTabProps) {
           <Item data-settings-row="settings.profile.email.title" class="settings-modal-account-email-row">
             <ItemContent>
               <ItemTitle>{t("settings.profile.email.title")}</ItemTitle>
-              <ItemDescription>{t("settings.profile.email.description")}</ItemDescription>
+              {/* MyBot: no "Used to sign in" description. */}
               <Show when={signOutError()}>
                 {(message) => <ItemDescription role="alert">{message()}</ItemDescription>}
               </Show>

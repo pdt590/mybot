@@ -219,7 +219,7 @@ export function SkillsMarketplace() {
 }
 
 /**
- * A shared agent from an `openbot://agents/<id>` link. It is added where a marketplace agent is: on
+ * A shared agent from an `mybot://agents/<id>` link. It is added where a marketplace agent is: on
  * the selected joined server when this account administers it, otherwise on this computer.
  */
 function SharedAgentInstall() {
@@ -1124,9 +1124,10 @@ function AppSettings(props: AccountProps) {
         onRevokeMobileConnectedDevice={auth.revokeMobileConnectedDevice}
         onGetRemoteNetworkRoute={() => settingsPort().getRemoteNetworkRoute()}
         onSetRemoteNetworkRoute={(route) => settingsPort().setRemoteNetworkRoute({ route })}
-        onListAccountSessions={auth.listAccountSessions}
-        onRevokeAccountSession={auth.revokeAccountSession}
-        onSignOut={platform.landingPreview ? undefined : auth.logoutCentralAccount}
+        // MyBot: no account sign-in, so no account sessions list and no Sign out button.
+        onListAccountSessions={undefined}
+        onRevokeAccountSession={undefined}
+        onSignOut={undefined}
         billingApi={appPort().billing}
         licenseApi={appPort().license}
         onContactUs={() => void appPort().openExternal("hosted-server-contact")}

@@ -1,10 +1,13 @@
-appId: app.openbot.desktop
+# MyBot: the app ID of every platform. `build/installer.nsh` takes over the Windows installs of
+# earlier MyBot builds, which had `app.openbot.desktop`.
+appId: app.mybot.desktop
 productName: MyBot
 copyright: Copyright © 2026 Synthetify Labs spółka z ograniczoną odpowiedzialnością
 protocols:
   - name: MyBot invitations
+    # MyBot: the only link scheme is `mybot://` (`APP_LINK_SCHEME` in `src/main/deep-link-router.ts`).
     schemes:
-      - openbot
+      - mybot
 asar: true
 artifactName: ${productName}-${version}-${arch}.${ext}
 electronUpdaterCompatibility: ">=2.16"
