@@ -85,7 +85,8 @@ export interface ChannelText {
   title: AppTextKey;
   description: AppTextKey;
   connect: AppTextKey;
-  attentionTitle: `connector.${MessagingPlatform}.attentionTitle`;
+  // MyBot: an agent's own Telegram bot has no connector page.
+  attentionTitle: `connector.${Exclude<MessagingPlatform, "telegram_bot">}.attentionTitle`;
   attentionDescription: AppTextKey;
   disconnectAllTitle: AppTextKey;
   /** Disconnect: one place, or every place in the danger zone. */
@@ -93,7 +94,7 @@ export interface ChannelText {
   reconnect: AppTextKey;
   pause: AppTextKey;
   resume: AppTextKey;
-  rowAction: `connector.${MessagingPlatform}.rowAction`;
+  rowAction: `connector.${Exclude<MessagingPlatform, "telegram_bot">}.rowAction`;
   addAgent: AppTextKey;
   orchestratorTitle: AppTextKey;
   orchestratorDescription: AppTextKey;

@@ -46,10 +46,14 @@ const PLATFORM_WORDS: Record<MessagingPlatform, { name: string; workspace: strin
   discord: { name: "Discord", workspace: "Discord server", conversation: "in a chain of replies" },
   telegram: { name: "Telegram", workspace: "Telegram chat", conversation: "in a reply chain" },
   whatsapp: { name: "WhatsApp", workspace: "WhatsApp number", conversation: "in a reply chain" },
+  // MyBot: an agent's own Telegram bot.
+  telegram_bot: { name: "Telegram", workspace: "Telegram bot", conversation: "in a reply chain" },
 };
 /** How an answer mentions a person so that the platform notifies them. */
 const MENTION_GUIDANCE: Partial<Record<MessagingPlatform, string>> = {
   telegram:
+    "To mention a person so that Telegram notifies them, write their @username, or @ and their Telegram user id, such as @123456789.",
+  telegram_bot:
     "To mention a person so that Telegram notifies them, write their @username, or @ and their Telegram user id, such as @123456789.",
   whatsapp:
     "To mention a person so that WhatsApp notifies them, write @ and their WhatsApp user id, such as @15551234567.",

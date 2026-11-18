@@ -82,6 +82,8 @@ import {
   decodeSaveAgentProfileResult,
   decodeSaveSkillSuggestionResult,
   decodeServerAuditLog,
+  // MyBot: the answers of an agent's own Telegram bot.
+  decodeTelegramBotStatus,
   decodeTestCompanySignInResult,
   decodeWorkspaceDirectory,
   type EventEndpoint,
@@ -1247,6 +1249,16 @@ const openbotApi: OpenBotDesktopApi = {
     deleteCustomProvider: decodeCustomProviderResult,
     providerUse: decodeProviderUseFromMain,
     setProviderUse: decodeProviderUseFromMain,
+  }),
+  // MyBot: each agent's own Telegram bot.
+  telegramBot: bridgeGroup(IPC_ENDPOINTS.telegramBot, {
+    status: decodeTelegramBotStatus,
+    connect: decodeTelegramBotStatus,
+    disconnect: decodeVoid,
+    reconnect: decodeVoid,
+    open: decodeVoid,
+    removeSender: decodeVoid,
+    answerRequest: decodeVoid,
   }),
   messaging: bridgeGroup(IPC_ENDPOINTS.messaging, {
     getSlackOverview: decodeMessagingOverviewReply,

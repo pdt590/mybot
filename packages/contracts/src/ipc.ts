@@ -99,6 +99,8 @@ export * from "./ipc-sidebar-pins";
 export * from "./ipc-skills";
 export * from "./ipc-storage";
 export * from "./ipc-team-host";
+// MyBot: an agent's own Telegram bot.
+export * from "./ipc-telegram-bot";
 export * from "./ipc-vault";
 export * from "./ipc-voice";
 export * from "./ipc-workflow-discord";

@@ -23,6 +23,7 @@ import type {
   SidebarLayoutSnapshot,
   SidebarSection,
   StartWhatsAppLinkInput,
+  TelegramBotStatus,
   WhatsAppLinkState,
   WhatsAppOverview,
   WhatsAppSender,
@@ -90,6 +91,9 @@ import { SlackApiError, SlackWebApi } from "./slack/slack-web-api";
 import { type TelegramAppPort, telegramLinkUrl } from "./telegram/telegram-connect";
 import { telegramOrchestratorMemories, telegramOrchestratorProfile } from "./telegram/telegram-orchestrator";
 import { parseTelegramUpdate, telegramLink, telegramRemoval } from "./telegram/telegram-updates";
+import type { TelegramBotAccess } from "./telegram-bot/telegram-bot-access";
+import type { TelegramFetch } from "./telegram-bot/telegram-bot-api";
+import { TelegramBotConnect } from "./telegram-bot/telegram-bot-connect";
 import { WHATSAPP_HISTORY_KEEP_MS } from "./whatsapp/whatsapp-archive";
 import { WhatsAppConnect } from "./whatsapp/whatsapp-connect";
 import { whatsAppOrchestratorMemories, whatsAppOrchestratorProfile } from "./whatsapp/whatsapp-orchestrator";
@@ -150,6 +154,13 @@ export interface MessagingServiceOptions {
   telegramApp?: TelegramAppPort;
   /** The linked WhatsApp numbers of this computer. Without it, no number can link. */
   whatsapp?: WhatsAppRuntime;
+  /** MyBot: the rules of the agents' own Telegram bots. Without it, no bot can connect. */
+  telegramBots?: {
+    access: TelegramBotAccess;
+    openExternal: (url: string) => Promise<void>;
+    /** The `fetch` of the Bot API calls. Main gives Electron's. */
+    fetch?: TelegramFetch;
+  };
   /** Where the Slack, Discord, Telegram and WhatsApp Orchestrators go in the sidebar: an Integrations section. */
   sidebar?: Pick<SidebarLayoutStore, "getSnapshot" | "mutate" | "removeAgent">;
   /** The file that keeps status posts across a restart. Without it, they are kept in memory only. */
@@ -196,6 +207,12 @@ const RECENT_MESSAGES = 2_000;
 const HISTORY_PRUNE_INTERVAL = "1 hour";
 /** How long a delivery that Signal kept waits for its connection to start. */
 const QUEUED_TRANSPORT_WAIT_MS = 60_000;
+/** MyBot: Telegram shows "typing…" for 5 seconds, so it is sent again a little sooner. */
+const TYPING_INTERVAL_MS = 4_000;
+/** MyBot: a request whose end never comes stops showing "typing…" after this. */
+const TYPING_LIMIT_MS = 15 * 60_000;
+/** MyBot: how often the bots of deleted agents are disconnected. */
+const TELEGRAM_BOT_SWEEP_INTERVAL = "1 minute";
 /** How long a Telegram link waits for the Signal socket. */
 const TELEGRAM_READY_TIMEOUT_MS = 15_000;
 /** How long a connection waits before it tries Slack again after Slack was unreachable. */
@@ -257,6 +274,10 @@ export class MessagingService {
   readonly #telegramApp: TelegramAppPort | null;
   readonly #whatsapp: WhatsAppConnect | null;
   readonly #whatsappRuntime: WhatsAppRuntime | null;
+  /** MyBot: each agent's own Telegram bot. */
+  readonly #telegramBots: TelegramBotConnect | null;
+  /** MyBot: the "typing…" of each request that runs, by `linkId:platformMessageId`. */
+  readonly #typing = new Map<string, ReturnType<typeof setInterval>>();
   readonly #sidebar: Pick<SidebarLayoutStore, "getSnapshot" | "mutate" | "removeAgent"> | null;
   #started = false;
   /** `start` asked every enabled connection to start. One with no live entry then does not start by itself. */
@@ -287,6 +308,22 @@ export class MessagingService {
             prepare: (workspaceId, workspaceName) => this.#prepareWhatsApp(workspaceId, workspaceName),
             finish: (connectionId, values) => this.#finishWhatsApp(connectionId, values),
             dispatch: (operation) => this.#dispatch(operation),
+          },
+        })
+      : null;
+    const telegramBots = options.telegramBots;
+    this.#telegramBots = telegramBots
+      ? new TelegramBotConnect({
+          store: options.threads.store,
+          credentials: options.credentials,
+          access: telegramBots.access,
+          ...(telegramBots.fetch ? { fetch: telegramBots.fetch } : {}),
+          hooks: {
+            start: (connectionId) => this.#restart(connectionId),
+            stop: (connectionId) => this.#stopConnection(connectionId),
+            summary: (record) => this.#summary(record),
+            agentIds: () => new Set(this.#agents.listAgents().map((agent) => agent.id)),
+            openExternal: telegramBots.openExternal,
           },
         })
       : null;
@@ -349,6 +386,17 @@ export class MessagingService {
       { concurrency: "unbounded", discard: true },
     );
     this.#connectionsStarted = true;
+    // MyBot: a bot whose agent was deleted stops; agent deletion does not tell this service.
+    const telegramBots = this.#telegramBots;
+    if (telegramBots)
+      yield* Effect.forkIn(
+        telegramBots.sweep().pipe(
+          Effect.catch((failure) => Effect.sync(() => this.#warn(failure.cause))),
+          Effect.repeat(Schedule.spaced(TELEGRAM_BOT_SWEEP_INTERVAL)),
+        ),
+        this.#scope,
+        { startImmediately: true },
+      );
     // A connection with no credentials or a removed chat did not start: its kept deliveries wait no more.
     for (const [connectionId, waiters] of [...this.#transportWaiters]) {
       if (!this.#live.has(connectionId)) for (const ready of [...waiters]) ready();
@@ -373,6 +421,7 @@ export class MessagingService {
     if (this.#whatsapp) yield* this.#whatsapp.cancelLink();
     for (const timer of this.#settleTimers.values()) clearTimeout(timer);
     this.#settleTimers.clear();
+    for (const key of [...this.#typing.keys()]) this.#stopTyping(key);
     yield* Effect.forEach(
       [...this.#live.values()],
       (live) => {
@@ -418,6 +467,105 @@ export class MessagingService {
 
   whatsappLinkState(): WhatsAppLinkState {
     return this.#whatsapp?.linkState() ?? { status: "idle", qr: null, code: null, workspaceId: null, error: null };
+  }
+
+  /** MyBot: the own Telegram bot of one agent. */
+  telegramBotStatus(agentId: string): TelegramBotStatus {
+    return (
+      this.#telegramBots?.status(agentId) ?? {
+        agentId,
+        connection: null,
+        botUsername: null,
+        problem: null,
+        allowedSenders: [],
+        pendingRequests: [],
+      }
+    );
+  }
+
+  readonly connectTelegramBot = Effect.fn("MessagingService.connectTelegramBot")(function* (
+    this: MessagingService,
+    agentId: string,
+    token: string,
+  ) {
+    const bots = yield* messagingStep(() => this.#requireTelegramBots());
+    return yield* bots.connect(agentId, token).pipe(toMessagingOperationFailed);
+  }).bind(this);
+
+  readonly disconnectTelegramBot = Effect.fn("MessagingService.disconnectTelegramBot")(function* (
+    this: MessagingService,
+    agentId: string,
+  ) {
+    const bots = yield* messagingStep(() => this.#requireTelegramBots());
+    yield* bots.disconnect(agentId).pipe(toMessagingOperationFailed);
+  }).bind(this);
+
+  readonly reconnectTelegramBot = Effect.fn("MessagingService.reconnectTelegramBot")(function* (
+    this: MessagingService,
+    agentId: string,
+  ) {
+    const bots = yield* messagingStep(() => this.#requireTelegramBots());
+    yield* bots.reconnect(agentId).pipe(toMessagingOperationFailed);
+  }).bind(this);
+
+  readonly openTelegramBot = Effect.fn("MessagingService.openTelegramBot")(function* (
+    this: MessagingService,
+    agentId: string,
+    place: "direct" | "group",
+  ) {
+    const bots = yield* messagingStep(() => this.#requireTelegramBots());
+    yield* bots.open(agentId, place).pipe(toMessagingOperationFailed);
+  }).bind(this);
+
+  readonly removeTelegramBotSender = Effect.fn("MessagingService.removeTelegramBotSender")(function* (
+    this: MessagingService,
+    agentId: string,
+    senderId: string,
+  ) {
+    const bots = yield* messagingStep(() => this.#requireTelegramBots());
+    yield* bots.removeSender(agentId, senderId).pipe(toMessagingOperationFailed);
+  }).bind(this);
+
+  readonly answerTelegramBotRequest = Effect.fn("MessagingService.answerTelegramBotRequest")(function* (
+    this: MessagingService,
+    agentId: string,
+    code: string,
+    approve: boolean,
+  ) {
+    const bots = yield* messagingStep(() => this.#requireTelegramBots());
+    yield* bots.answerRequest(agentId, code, approve).pipe(toMessagingOperationFailed);
+  }).bind(this);
+
+  /**
+   * MyBot: sends the adapter's "typing…" now and every few seconds until the request of `key` ends,
+   * for a platform that has it. A request that never ends stops after `TYPING_LIMIT_MS`.
+   */
+  #startTyping(live: LiveConnection, key: string, target: MessageTarget): void {
+    const typing = live.adapter.typing;
+    if (!typing || this.#typing.has(key)) return;
+    const started = Date.now();
+    const send = () => {
+      if (Date.now() - started > TYPING_LIMIT_MS || this.#live.get(live.record.connectionId) !== live) {
+        this.#stopTyping(key);
+        return;
+      }
+      this.#dispatch(typing.call(live.adapter, target).pipe(Effect.catch(() => Effect.void)));
+    };
+    const timer = setInterval(send, TYPING_INTERVAL_MS);
+    timer.unref?.();
+    this.#typing.set(key, timer);
+    send();
+  }
+
+  #stopTyping(key: string): void {
+    const timer = this.#typing.get(key);
+    if (timer !== undefined) clearInterval(timer);
+    this.#typing.delete(key);
+  }
+
+  #requireTelegramBots(): TelegramBotConnect {
+    if (!this.#telegramBots) throw new Error(sourceText("error.messaging.telegramBotNotConnected"));
+    return this.#telegramBots;
   }
 
   readonly startWhatsAppLink = Effect.fn("MessagingService.startWhatsAppLink")(function* (
@@ -563,6 +711,9 @@ export class MessagingService {
    * reaction. An error still posts its line, so the person knows that the request did not succeed.
    */
   #withoutStatusPost(connectionId: string): boolean {
+    // MyBot: an agent's own Telegram bot shows "typing…" instead, and posts only the answer. Its slow
+    // network made each post and edit of the status line wait, and its progress lines read as logs.
+    if (this.#threads.store.connection(connectionId)?.platform === "telegram_bot") return true;
     // Only a WhatsApp number stores this value, so another platform always reads true here.
     return this.#whatsapp?.workingMessage(connectionId) === false;
   }
@@ -582,6 +733,9 @@ export class MessagingService {
     // Only a WhatsApp number stores this value, so another platform always reads true here. A removal
     // still goes out, so a 👀 from before the setting went off does not stay on the message.
     if (on && this.#whatsapp?.statusReactions(live.record.connectionId) === false) return Effect.void;
+    // MyBot: "typing…" and the answer show an own Telegram bot's request; only a failure or a stop
+    // gets a reaction.
+    if (live.record.platform === "telegram_bot" && (reaction === "received" || reaction === "done")) return Effect.void;
     return live.adapter.react(target, messageId, reaction, on).pipe(Effect.catch(() => Effect.void));
   }
 
@@ -1405,7 +1559,8 @@ export class MessagingService {
       const unlink:
         | Effect.Effect<void, DiscordConnectFailed | SlackConnectFailed | MessagingOperationFailed>
         | undefined =
-        live.record.platform === "whatsapp"
+        // MyBot: an own Telegram bot has no route either.
+        live.record.platform === "whatsapp" || live.record.platform === "telegram_bot"
           ? undefined
           : live.record.platform === "telegram"
             ? this.#telegramApp?.unlink(live.record.workspaceId)
@@ -1506,7 +1661,9 @@ export class MessagingService {
         // that a person posted without a mention just before this message. The agent gets them with
         // this message. Slack is not asked: before Marketplace approval it allows one thread read a
         // minute, which the prompt needs.
-        (adapter.platform === "discord" || adapter.platform === "telegram") && !message.isDirect
+        // MyBot: an own Telegram bot keeps the same chat memory as the OpenBot bot.
+        (adapter.platform === "discord" || adapter.platform === "telegram" || adapter.platform === "telegram_bot") &&
+        !message.isDirect
           ? adapter
               .history(
                 message.platformChannelId,
@@ -1600,6 +1757,8 @@ export class MessagingService {
       // On WhatsApp, only the owner can add the orchestrator, and only in their own chat do they write
       // as the number. A contact or a group that the owner allowed gets no setup text from their number.
       if (live.record.platform === "whatsapp" && message.authorId !== live.identity.botUserId) return;
+      // MyBot: a bot whose agent was deleted says nothing; the sweep disconnects it.
+      if (live.record.platform === "telegram_bot") return;
       const noAgent =
         live.record.platform === "discord"
           ? "status.messaging.discordNoAgent"
@@ -1681,6 +1840,7 @@ export class MessagingService {
             return;
           }
           this.#targets.set(key, message.target);
+          this.#startTyping(live, key, message.target);
           yield* this.#react(live, message.target, message.platformMessageId, "received", true);
           // In the same order as the turn's own posts: a turn that already started has its status post.
           if (result.waiting)
@@ -2121,6 +2281,7 @@ export class MessagingService {
       return;
     }
     this.#targets.delete(key);
+    this.#stopTyping(key);
     const final = finalPost(
       activity,
       this.#threads.awaitsTeammate(activity.link.linkId),

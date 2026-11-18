@@ -11,7 +11,7 @@ import {
   type TestRoutineInput,
   userAssignedSkills,
 } from "@openbot/contracts/ipc";
-import { Blocks, BookMarked, CalendarClock, FileText, Folder, Gauge, Puzzle, Table2, Upload } from "@openbot/ui";
+import { Blocks, BookMarked, CalendarClock, FileText, Folder, Gauge, Puzzle, Send, Table2, Upload } from "@openbot/ui";
 import { SettingsLinkGroup, SettingsLinkRow } from "@openbot/ui/components/SettingsPanel";
 import type { AgentProfile } from "@openbot/ui/data";
 import type { BrowserProfileSelectProfile } from "@openbot/ui/features/browser/BrowserProfileSelect";
@@ -45,6 +45,8 @@ import { createStorageUsage } from "../files/storage-usage";
 import { AgentMemoriesSettings } from "./AgentMemoriesSettings";
 import { AgentRoutinesSettings, type DetailLeaveGuard, type RoutineSelectionRequest } from "./AgentRoutinesSettings";
 import { AgentSkillsModal, type AgentSkillsMode, type SkillDetail } from "./AgentSkillsModal";
+// MyBot: the agent's own Telegram bot.
+import { AgentTelegramBotView, telegramBotPort } from "./AgentTelegramBotView";
 import { conversationPort, type SharedTableCalls } from "./conversation-port";
 import type { AgentNotificationLevelCalls, ConversationRuntime } from "./conversation-runtime";
 import { type AgentMemoriesApi, agentMemoriesPort, type MemoriesPort } from "./memories-port";
@@ -265,6 +267,28 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
   /** The web client shows memories and routines only when its runtime has their calls. */
   const memoriesShown = () => !props.remoteClient || props.memoriesApi !== undefined;
   const routinesShown = () => !props.remoteClient || props.routines !== undefined;
+  // MyBot: a Telegram bot is set up on the computer that runs the agent only.
+  const telegramShown = () =>
+    props.localHost === true &&
+    !props.remoteClient &&
+    typeof window !== "undefined" &&
+    Boolean(window.openbot?.telegramBot);
+  const [telegramOpen, setTelegramOpen] = createSignal(false);
+  const [telegramName, setTelegramName] = createSignal<string | null>(null);
+  createEffect(
+    () => (telegramShown() ? props.agent.id : null),
+    (agentId) => {
+      setTelegramName(null);
+      if (!agentId) return;
+      telegramBotPort()
+        .status({ agentId })
+        .then((bot) => {
+          if (props.agent.id === agentId)
+            setTelegramName(bot.connection && bot.botUsername ? `@${bot.botUsername}` : null);
+        })
+        .catch(() => undefined);
+    },
+  );
   const legacyRoutinesPort = createMemo(() =>
     agentRoutinesPort(
       props.agent.id,
@@ -565,7 +589,9 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
           report: { operation: "settings", source: "action", cause_code: "unknown" },
         })
       }
-      detailOpen={draft.routines.open || draft.files.open || draft.memories.open || draft.instructions.open}
+      detailOpen={
+        draft.routines.open || draft.files.open || draft.memories.open || draft.instructions.open || telegramOpen()
+      }
       links={
         <>
           <Show when={sessionSettings()}>
@@ -648,8 +674,16 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
               </Show>
             </SettingsLinkGroup>
           </Show>
-          <Show when={routinesShown() || props.onOpenUsage || props.onOpenApps || props.onPublish}>
+          <Show when={routinesShown() || telegramShown() || props.onOpenUsage || props.onOpenApps || props.onPublish}>
             <SettingsLinkGroup inset title={t("agentSettings.groups.does")}>
+              <Show when={telegramShown()}>
+                <SettingsLinkRow
+                  icon={<Send aria-hidden="true" />}
+                  label={t("agentSettings.links.telegram")}
+                  value={telegramName() ?? t("agentSettings.telegram.notConnected")}
+                  onClick={() => setTelegramOpen(true)}
+                />
+              </Show>
               <Show when={routinesShown()}>
                 <SettingsLinkRow
                   icon={<CalendarClock aria-hidden="true" />}
@@ -746,6 +780,15 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
             agentName={props.agent.name}
           />
         </div>
+      </Show>
+      {/* MyBot: the agent's own Telegram bot, a page of the panel like Advanced. */}
+      <Show when={telegramOpen() && telegramShown()}>
+        <AgentTelegramBotView
+          agentId={props.agent.id}
+          onBack={() => setTelegramOpen(false)}
+          onClose={props.onClose}
+          onStatusChange={setTelegramName}
+        />
       </Show>
       <Show when={props.tablesVisible !== false}>
         <SharedTablesModal

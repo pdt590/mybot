@@ -41,6 +41,8 @@ const logger = createOpenBotLogger("agent-tasks");
  * not count. The user can have up to `INPUT_LIMITS.agentTasks` open tasks.
  */
 const AGENT_STARTED_UNFINISHED_TASKS = 8;
+/** MyBot: the newest conversations of the agent's own Telegram bot that the thread list shows. */
+const EXTERNAL_CHATS_SHOWN = 10;
 
 /**
  * The finished tasks that the agent started and that stay open when it starts one more. The older ones
@@ -166,13 +168,39 @@ export class AgentTasks implements TaskLanes {
     const awaited = this.#mailbox.awaitedThreadRequests();
     return {
       agentId,
-      tasks: this.#store.list(agentId).map((task) => this.#publicTask(task, awaited)),
+      tasks: this.#withExternalChats(
+        agentId,
+        this.#store.list(agentId).map((task) => this.#publicTask(task, awaited)),
+        awaited,
+      ),
       limit: this.limit(agentId),
     };
   }
 
+  /**
+   * MyBot: the side threads and, after them, the newest conversations of the agent's own Telegram bot,
+   * which only read here. The list stays within the limit that a client reads.
+   */
+  #withExternalChats(
+    agentId: string,
+    tasks: AgentTask[],
+    awaited: ReturnType<MailboxStore["awaitedThreadRequests"]>,
+  ): AgentTask[] {
+    const chats = this.#store
+      .externalChats(agentId)
+      .slice(0, EXTERNAL_CHATS_SHOWN)
+      .map((chat) => ({ ...this.#publicTask(chat, awaited), readOnly: true }));
+    return [...tasks.slice(0, INPUT_LIMITS.agentTasks - chats.length), ...chats];
+  }
+
   /** The task's conversation. Its thread loads here, also for a task that no turn has used since boot. */
   read(agentId: string, taskId: string): ConversationSnapshot {
+    // MyBot: a Telegram conversation is a messaging execution thread, never a task thread.
+    const external = this.#store.task(taskId) ? null : this.#store.externalChat(agentId, taskId);
+    if (external) {
+      this.#conversation.registerExecutionThread(agentId, external.threadId);
+      return this.#conversation.ensureSnapshot(agentId, external.threadId);
+    }
     const task = this.#store.task(taskId);
     if (!task || task.agentId !== agentId) throw new Error(sourceText("error.backend.threadNotFound"));
     this.#conversation.registerTaskThread(agentId, task.threadId);
@@ -194,6 +222,15 @@ export class AgentTasks implements TaskLanes {
    */
   recent(agentId: string, after: string | null, limit: number, last?: ThreadListPosition | null): AgentThreadRecord[] {
     return this.#store.recent(agentId, after, limit, last);
+  }
+
+  /** MyBot: the thread to read of a task, or of a Telegram conversation, which no other call takes. */
+  readableThread(agentId: string, taskId: string): string {
+    const task = this.#store.task(taskId);
+    if (task?.agentId === agentId) return task.threadId;
+    const external = this.#store.externalChat(agentId, taskId);
+    if (!external) throw new Error(sourceText("error.backend.threadNotFound"));
+    return external.threadId;
   }
 
   /** Whether this agent has the task, open or closed. */
@@ -607,6 +644,28 @@ export class AgentTasks implements TaskLanes {
     this.#hooks.queued(caller.agentId);
     return startedTaskResult(task);
   });
+
+  /**
+   * MyBot: a conversation of the agent's own Telegram bot shows as a read-only side thread, so its
+   * panel gets the conversation and the list changes when a turn starts or ends. It runs before the
+   * messaging service takes the event, which then goes on as before.
+   */
+  observeExternalChat(event: AgentEvent): void {
+    const threadId =
+      event.type === "conversation"
+        ? event.snapshot.threadId
+        : event.type === "conversation-delta" || event.type === "turn-started" || event.type === "turn-completed"
+          ? event.threadId
+          : null;
+    if (!threadId || this.#store.task(threadId)) return;
+    const agentId = this.#store.externalChatAgent(threadId);
+    if (!agentId) return;
+    if (event.type === "conversation")
+      this.#hooks.emit({ type: "agent-task-conversation", taskId: threadId, snapshot: event.snapshot });
+    else if (event.type === "conversation-delta")
+      this.#hooks.emit({ ...event, type: "agent-task-conversation-delta", taskId: threadId });
+    else this.changed(agentId);
+  }
 
   changed(agentId: string): void {
     this.#hooks.emit({ type: "agent-tasks-changed", snapshot: this.snapshot(agentId) });

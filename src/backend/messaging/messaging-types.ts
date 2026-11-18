@@ -200,6 +200,11 @@ export interface MessagingAdapter {
     reaction: StatusReaction,
     on: boolean,
   ): Effect.Effect<void, MessagingAdapterError>;
+  /**
+   * MyBot: shows that the agent prepares an answer, such as Telegram's "typing…". It lasts a few
+   * seconds, so the service sends it again while the turn runs.
+   */
+  typing?(target: MessageTarget): Effect.Effect<void, MessagingAdapterError>;
   /** Adds one emoji to a message, for a platform where a workflow can choose it (Discord, Telegram, Slack). */
   addEmoji?(target: MessageTarget, messageId: string, emoji: string): Effect.Effect<void, MessagingAdapterError>;
   /**

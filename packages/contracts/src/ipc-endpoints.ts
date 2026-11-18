@@ -11,6 +11,14 @@ import type {
   SetAgentSessionSettingInput,
 } from "./ipc-agent-session-settings";
 import type { ServerAuditLog } from "./ipc-server-audit";
+import type {
+  AnswerTelegramBotRequestInput,
+  ConnectTelegramBotInput,
+  OpenTelegramBotInput,
+  RemoveTelegramBotSenderInput,
+  TelegramBotAgentInput,
+  TelegramBotStatus,
+} from "./ipc-telegram-bot";
 import type { AgentActiveQueues } from "./team-protocol/agent-active-queues-v1";
 // The one channel list. Each endpoint holds its wire value, the group it belongs to, and whether it
 // is a request the renderer invokes or an event the main process sends. That is what lets a
@@ -1536,6 +1544,17 @@ export const IPC_ENDPOINTS = {
     // The changes to members, roles and agent access of the server, newest first (`server-audit-v1`).
     getAuditLog: scopedQuery<ServerAuditLog, "required">()("host-admin:get-audit-log"),
   },
+  // MyBot: the own Telegram bot of each agent, on this computer only. The token goes to main once, in
+  // `connect`; no answer carries it. `open` opens the bot in Telegram from main.
+  telegramBot: {
+    status: request<TelegramBotAgentInput, TelegramBotStatus>()("telegram-bot:status"),
+    connect: request<ConnectTelegramBotInput, TelegramBotStatus>()("telegram-bot:connect"),
+    disconnect: request<TelegramBotAgentInput, void>()("telegram-bot:disconnect"),
+    reconnect: request<TelegramBotAgentInput, void>()("telegram-bot:reconnect"),
+    open: request<OpenTelegramBotInput, void>()("telegram-bot:open"),
+    removeSender: request<RemoveTelegramBotSenderInput, void>()("telegram-bot:remove-sender"),
+    answerRequest: request<AnswerTelegramBotRequestInput, void>()("telegram-bot:answer-request"),
+  },
   // The built-in GitHub connection of this computer. The token stays in main; every answer is the
   // status only. The `host*` endpoints reach the connection of a joined server (`connectors-v1`): the
   // host runs the device flow, and main opens its GitHub pages in this computer's browser.
@@ -2525,6 +2544,8 @@ export const IPC_GROUP_PATHS = {
   acpRegistry: "acpRegistry",
   providerAdmin: "providerAdmin",
   messaging: "messaging",
+  // MyBot: an agent's own Telegram bot.
+  telegramBot: "telegramBot",
   hostAdmin: "hostAdmin",
   githubConnector: "githubConnector",
   onePasswordConnector: "onePasswordConnector",

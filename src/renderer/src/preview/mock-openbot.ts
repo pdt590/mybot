@@ -257,6 +257,8 @@ import { createMockSkills, type MockSkillsOptions } from "./mock-skills";
 import { createMockStorage } from "./mock-storage";
 import { clone, type Listener, type MockRuntime, matchesQuery } from "./mock-support";
 import { createMockTeam, type MockTeamOptions } from "./mock-team";
+// MyBot: each agent's own Telegram bot.
+import { createMockTelegramBot } from "./mock-telegram-bot";
 import { createMockVault } from "./mock-vault";
 import { createMockVoice, type MockVoiceOptions } from "./mock-voice";
 import { type MockWorkflowSeed, mockWorkflows } from "./mock-workflows";
@@ -1943,6 +1945,7 @@ export function createMockOpenBot(options: MockOpenBotOptions = {}): MockOpenBot
     // Preview has one host, so every server answers for the same agents.
     // The Slack, Discord and Telegram Orchestrators of the preview are its first agent.
     messaging: createMockMessaging(() => agents[0]?.id ?? "preview-agent"),
+    telegramBot: createMockTelegramBot(),
     // Preview has one host, so every server answers from the same providers as this computer.
     providerAdmin: {
       startCodeLogin: (provider) => api.startProviderCodeLogin(provider),

@@ -1193,9 +1193,14 @@ export function AgentThreadView(props: AgentThreadViewProps) {
             )}
           </ComposerStackCard>
         </div>
+        {/* MyBot: a conversation of the agent's own Telegram bot takes its messages in Telegram. */}
+        <Show when={props.task?.readOnly}>
+          <p class="agent-thread-read-only">{t("agentSettings.telegram.threadReadOnly")}</p>
+        </Show>
         <form
           ref={draftRows.form}
           class="composer agent-thread-composer"
+          hidden={props.task?.readOnly === true}
           data-compact={hasRow() ? undefined : "true"}
           data-has-attachments={hasRow() ? "" : undefined}
           onSubmit={(event) => {

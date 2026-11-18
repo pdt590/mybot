@@ -45,6 +45,11 @@ export const messages = defineMessages("status.messaging", {
     "MyBot is connected to this chat. Mention {bot} or reply to a message of MyBot to ask the agents.",
   "status.messaging.telegramOrchestratorName": "Telegram Orchestrator",
   "status.messaging.telegramOrchestratorTitle": "Answers in Telegram and asks the team",
+  // MyBot: text that an agent's own Telegram bot posts. Telegram users read it.
+  "status.messaging.telegramBotLinked": "Connected. Your messages here now go to the agent.",
+  "status.messaging.telegramBotPairing":
+    "This bot answers only the people that its owner allows. Ask the owner to approve the code {code} in MyBot.",
+  "status.messaging.telegramBotGroupAllowed": "Hi! Mention me or reply to my messages, and the agent answers.",
   // Text that MyBot posts from a linked WhatsApp number, and the WhatsApp Orchestrator agent.
   // WhatsApp users read the posts. Personal WhatsApp has no buttons, so a person answers with a number.
   "status.messaging.whatsappNoAgent": "No agent can answer here yet. Add the WhatsApp Orchestrator in MyBot.",

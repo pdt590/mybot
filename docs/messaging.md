@@ -203,6 +203,40 @@ the WhatsApp Orchestrator is deleted with its conversations, as for Slack.
 - A message that arrives while OpenBot is off waits on WhatsApp's servers and arrives when the number
   connects again. OpenBot answers messages up to one day old.
 
+## An agent's own Telegram bot (MyBot)
+
+MyBot hides the OpenBot Telegram bot, which needs an OpenBot account. Instead, each agent can have a
+Telegram bot of its own. This computer calls the Telegram Bot API with the bot's token and gets the
+messages by long polling, so no OpenBot service, no account and no public address take part.
+
+1. In Telegram, open @BotFather, send `/newbot`, and copy the token.
+2. In MyBot, open the agent's settings, select **Telegram**, paste the token, and select **Connect**.
+3. Select **Open my chat**. Telegram opens the bot with a one-use link (valid for 15 minutes). Select
+   **Start**: you can now write to the agent.
+4. Optional: select **Add to a group**. A group is allowed when a person that the bot allows adds the
+   bot. The bot leaves a group that anyone else adds it to.
+
+- One bot belongs to one agent, and one agent has one bot. Every conversation goes to that agent; there
+  is no orchestrator.
+- A person who is not allowed gets one 6-character code. The request shows under **Waiting for you**
+  for an hour, at most three at a time. **Approve** allows the person.
+- Only the bot's own agent can post, read or list places through it (`messaging_post`,
+  `messaging_history`, `messaging_list_places`), and a routine result never goes to it.
+- With privacy mode on (the default for a new bot), a bot in a group sees only commands and replies to
+  it. Turn it off with `/setprivacy` in @BotFather, or make the bot a group admin, so that a mention
+  reaches the agent.
+- Telegram keeps a message for 24 hours until this computer confirms it, so a message that comes while
+  MyBot is off gets its answer when MyBot starts.
+- Only one program can poll a bot. When another MyBot, OpenBot or a script uses the same token, the
+  settings say so; stop it, or make a new token with @BotFather and select **Change token**.
+- **Disconnect** stops the bot and deletes its token on this computer. The agent, its conversations,
+  memories and allowed people stay. Deleting the agent disconnects its bot within a minute.
+- A bot is set up on the computer that runs the agent. A joined server and the phone app show no
+  Telegram page for it.
+
+The code is in `src/backend/messaging/telegram-bot/`. It reuses the upstream Telegram adapter, update
+parser and chat memory through `telegramDriver` with a gateway that calls the Bot API directly.
+
 ## Test Telegram locally
 
 Telegram must reach Signal over public HTTPS.
@@ -388,6 +422,7 @@ core changes:
 | Slack | The Events API through Signal | `thread_ts`, or the message `ts` that starts a thread | Implemented. |
 | Discord | The Gateway in Signal (`@discordjs/ws`), which passes mentions to the host; calls go through Signal | The id of the first message of a reply chain | Implemented. No privileged intent. |
 | Telegram | The webhook of the one OpenBot bot through Signal, which holds the token | `message_thread_id`, the topic in a forum, `dm` in a direct chat | Implemented. No history API: the host keeps what the bot sees, in memory. |
+| Telegram bot (MyBot, `telegram_bot`) | Long polling of the agent's own bot, with its token on this computer | As for Telegram, one connection per bot | Implemented. One agent per bot. Allowed people and groups in `projection_messaging_allowed_senders`. |
 | WhatsApp | A linked device: this computer's own socket to WhatsApp (vendored Baileys, `packages/whatsapp`) | `dm` in a direct chat; in a group, the id of the message that mentioned the number | Implemented. No history: the host saves what it saw for 90 days (`projection_messaging_history`). Sender rules in `whatsapp-senders.ts`. |
 
 Then add the platform to `MESSAGING_PLATFORMS`, a page in Marketplace → Apps, and its i18n

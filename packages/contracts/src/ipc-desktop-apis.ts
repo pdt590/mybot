@@ -118,6 +118,9 @@ export type HostAdminDesktopApi = GroupApi<IpcEndpoints["hostAdmin"]>;
 /** The Slack workspaces where this computer's agents answer. */
 export type MessagingDesktopApi = GroupApi<IpcEndpoints["messaging"]>;
 
+/** MyBot: the own Telegram bot of each agent of this computer. */
+export type TelegramBotDesktopApi = GroupApi<IpcEndpoints["telegramBot"]>;
+
 /**
  * Storage and files of one host. Every scoped method names its server, because the settings modal can
  * be open for a server the user has not switched to. A remote host without `storage-v1` answers null.

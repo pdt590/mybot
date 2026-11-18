@@ -293,6 +293,8 @@ const PLATFORM_MARKS: Record<MessagingPlatform, (props: { class?: string }) => J
   discord: DiscordMark,
   telegram: TelegramMark,
   whatsapp: WhatsAppMark,
+  // MyBot: an agent's own Telegram bot.
+  telegram_bot: TelegramMark,
 };
 
 /** The key of an OpenBot channel in the channel list. A place key has two parts, so the two never match. */

@@ -6569,7 +6569,8 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
    * the markers that a remote reader cannot show, so they do not count either.
    */
   readTaskPage(input: ReadAgentTaskPageInput, exclusions: ConversationMarkerExclusions = {}): AgentTaskPage {
-    const { threadId } = this.#tasks.require(input.agentId, input.taskId);
+    // MyBot: a Telegram conversation reads as a side thread too.
+    const threadId = this.#tasks.readableThread(input.agentId, input.taskId);
     const database = this.#store.database;
     const none = (hasOlder: boolean): AgentTaskPage => ({
       conversation: { agentId: input.agentId, threadId, activeTurnId: null, revision: 0, messages: [] },
@@ -6603,7 +6604,8 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
    * pages between. A message that the thread does not hold, or that `exclusions` leave out, has none.
    */
   readTaskAround(input: ReadAgentTaskAroundInput, exclusions: ConversationMarkerExclusions = {}): AgentTaskWindow {
-    const { threadId } = this.#tasks.require(input.agentId, input.taskId);
+    // MyBot: a Telegram conversation reads as a side thread too.
+    const threadId = this.#tasks.readableThread(input.agentId, input.taskId);
     const database = this.#store.database;
     const page = database.readConversationPage(
       input.agentId,
@@ -7740,6 +7742,8 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
     // The account in use is not saved: a new reading, as at start, sets it again.
     if (event.type === "usage-changed") for (const provider of AGENT_PROVIDERS) this.#refreshPoolInUse(provider);
     this.#liveVoice?.observe(event);
+    // MyBot: a Telegram bot conversation also shows as a read-only side thread.
+    this.#tasks?.observeExternalChat(event);
     if (this.channels?.event(event) || this.messaging?.event(event, this.#scope) || this.#tasks?.event(event)) return;
     this.emit("event", event, memberId);
   }

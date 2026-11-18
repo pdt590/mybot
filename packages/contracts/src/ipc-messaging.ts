@@ -12,7 +12,8 @@ import { isBoundedString, isIdentifier, isNullableBoundedString } from "./ipc-bo
 import { isBoolean, isDynamicRecord, isOneOf } from "./runtime-values";
 import { TELEGRAM_ROUTE_CHATS_LIMIT } from "./signal-protocol/telegram-route";
 
-export const MESSAGING_PLATFORMS = ["slack", "discord", "telegram", "whatsapp"] as const;
+// MyBot: `telegram_bot` is an agent's own Telegram bot, which this computer polls itself (ipc-telegram-bot.ts).
+export const MESSAGING_PLATFORMS = ["slack", "discord", "telegram", "whatsapp", "telegram_bot"] as const;
 export type MessagingPlatform = (typeof MESSAGING_PLATFORMS)[number];
 /**
  * The platforms that a joined server manages through `connectors-v1`, whose codec is frozen. A

@@ -1575,3 +1575,70 @@
 .agent-settings-page [data-search-match] {
   background: var(--openbot-bg-control-active);
 }
+
+/* MyBot: the agent's own Telegram bot, a page of the panel like Advanced. */
+.agent-telegram-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  border-radius: var(--openbot-radius-lg);
+  background: var(--openbot-border);
+  padding: 13px 12px;
+}
+
+.agent-telegram-card > strong {
+  color: var(--openbot-text-primary);
+  font-size: var(--openbot-text-md);
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.agent-telegram-note {
+  display: block;
+  margin: 0;
+  color: var(--openbot-text-secondary);
+  font-size: var(--openbot-text-sm);
+  line-height: var(--openbot-leading-sm);
+}
+
+.agent-telegram-actions,
+.agent-telegram-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.agent-telegram-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agent-telegram-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.agent-telegram-sender {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* MyBot: a Telegram conversation shown as a side thread takes no message here. */
+.agent-thread-read-only {
+  margin: 0;
+  padding: 12px 16px;
+  color: var(--openbot-text-secondary);
+  font-size: var(--openbot-text-sm);
+  line-height: var(--openbot-leading-sm);
+  text-align: center;
+}

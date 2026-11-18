@@ -121,6 +121,8 @@ import { sharedTableIpcHandlers } from "./ipc/shared-table-handlers";
 import { skillIpcHandlers } from "./ipc/skill-handlers";
 import { storageIpcHandlers } from "./ipc/storage-handlers";
 import { teamIpcHandlers } from "./ipc/team-handlers";
+// MyBot: each agent's own Telegram bot.
+import { telegramBotIpcHandlers } from "./ipc/telegram-bot-handlers";
 import { updateIpcHandlers } from "./ipc/update-handlers";
 import { vaultIpcHandlers } from "./ipc/vault-handlers";
 import { voiceIpcHandlers } from "./ipc/voice-handlers";
@@ -1203,6 +1205,7 @@ function registerIpcHandlers({
       relayedInstalls: relayedMessagingInstalls,
       openExternal: openLink,
     }),
+    ...telegramBotIpcHandlers({ messaging }),
     ...mcpServerIpcHandlers({
       service,
       mcpAccess,

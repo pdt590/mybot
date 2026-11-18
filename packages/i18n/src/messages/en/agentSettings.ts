@@ -212,6 +212,53 @@ export const messages = defineMessages("agentSettings", {
   "agentSettings.links.files": "Files",
   "agentSettings.links.routines": "Routines",
   "agentSettings.links.routinesCount": { one: "{count} configured", other: "{count} configured" },
+  // MyBot: the own Telegram bot of the agent.
+  "agentSettings.links.telegram": "Telegram",
+  "agentSettings.telegram.title": "Telegram bot",
+  "agentSettings.telegram.description": "Talk to this agent in Telegram through a bot of your own.",
+  "agentSettings.telegram.notConnected": "Not connected",
+  "agentSettings.telegram.steps":
+    "In Telegram, open @BotFather, send /newbot, and copy the token that it gives you. Paste it here.",
+  "agentSettings.telegram.tokenLabel": "Bot token",
+  "agentSettings.telegram.connect": "Connect",
+  "agentSettings.telegram.loadFailed": "MyBot could not read the Telegram bot.",
+  "agentSettings.telegram.actionFailed": "That did not work. Try again.",
+  "agentSettings.telegram.stateConnecting": "Connecting…",
+  "agentSettings.telegram.stateConnected": "Connected",
+  "agentSettings.telegram.stateReconnecting": "Cannot reach Telegram. Trying again…",
+  "agentSettings.telegram.stateInvalidToken": "Telegram does not accept the token anymore. Give a new token.",
+  "agentSettings.telegram.stateConflict":
+    "Another program gets this bot's messages. Stop it, or make a new token with @BotFather.",
+  "agentSettings.telegram.statePaused": "Off",
+  "agentSettings.telegram.stateError": "Something went wrong. Select Reconnect.",
+  "agentSettings.telegram.openChat": "Open my chat",
+  "agentSettings.telegram.openChatHint":
+    "Opens the bot in Telegram with a one-use link. Select Start, and your messages reach this agent.",
+  "agentSettings.telegram.addGroup": "Add to a group",
+  "agentSettings.telegram.groupHint":
+    "In a group, mention the bot or reply to it. So that the bot sees mentions, turn privacy mode off with /setprivacy in @BotFather, or make the bot an admin of the group.",
+  "agentSettings.telegram.allowed": "Who can write",
+  "agentSettings.telegram.allowedEmpty": "Nobody yet. Open your chat first.",
+  "agentSettings.telegram.contact": "Person",
+  "agentSettings.telegram.group": "Group",
+  "agentSettings.telegram.remove": "Remove {name}",
+  "agentSettings.telegram.requests": "Waiting for you",
+  "agentSettings.telegram.requestLine": "{name} · code {code}",
+  "agentSettings.telegram.approve": "Approve",
+  "agentSettings.telegram.deny": "Deny",
+  "agentSettings.telegram.reconnect": "Reconnect",
+  "agentSettings.telegram.open": "Open",
+  "agentSettings.telegram.add": "Add",
+  "agentSettings.telegram.change": "Change",
+  "agentSettings.telegram.changeTokenHint": "Give a new token from @BotFather, such as after you revoked the old one.",
+  "agentSettings.telegram.changeToken": "Change token",
+  "agentSettings.telegram.disconnect": "Disconnect",
+  "agentSettings.telegram.disconnectHint":
+    "Disconnect stops the bot and deletes its token on this computer. The agent and its conversations stay.",
+  "agentSettings.telegram.threadReadOnly": "This conversation is in Telegram. People write to the agent there.",
+  "agentSettings.telegram.permissionsNote":
+    "People who write to the bot give this agent work with its permissions. Keep the agent off Full access unless you trust them.",
+
   "agentSettings.runtime.workspaceNote":
     "Workspace only limits writes to this agent's workspace, the shared folder and the temporary folders. Reads and network stay available.",
   "agentSettings.runtime.workspaceEnforcedCommand": "A command that must write outside asks you first.",

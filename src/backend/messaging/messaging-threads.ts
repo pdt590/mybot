@@ -304,6 +304,8 @@ export const PLATFORM_NAMES: Record<MessagingPlatform, string> = {
   discord: "Discord",
   telegram: "Telegram",
   whatsapp: "WhatsApp",
+  // MyBot: an agent's own Telegram bot.
+  telegram_bot: "Telegram",
 };
 
 /**
@@ -539,7 +541,12 @@ export class MessagingThreads {
       return openBotToolFailure(
         "A turn that works for an external chat cannot read a place by name. In the turn that answers the chat, call messaging_history without connection and place.",
       );
-    const enabled = this.store.connections().filter((record) => record.enabled);
+    // MyBot: an agent's own Telegram bot posts, reads and lists only for that agent.
+    const enabled = this.store
+      .connections()
+      .filter(
+        (record) => record.enabled && (record.platform !== "telegram_bot" || record.orchestratorAgentId === agentId),
+      );
     if (call.tool === "messaging_list_places" && !call.connection)
       return openBotToolResult({
         connections: enabled.map((record) => ({
@@ -629,7 +636,9 @@ export class MessagingThreads {
     placeId: string,
     markdown: string,
   ): Effect.fn.Return<{ posted: true } | { failure: MessagingPostFailure }> {
-    if (!this.store.connection(connectionId)?.enabled) return { failure: "gone" };
+    const record = this.store.connection(connectionId);
+    // MyBot: a routine result names no agent, so it never goes to an agent's own Telegram bot.
+    if (!record?.enabled || record.platform === "telegram_bot") return { failure: "gone" };
     const outbound = this.#outbound;
     if (!outbound) return { failure: "not-running" };
     const answer = yield* outbound.post(
@@ -647,7 +656,8 @@ export class MessagingThreads {
   ): Effect.fn.Return<RoutineResultConnectionOption[]> {
     const outbound = this.#outbound;
     return yield* Effect.forEach(
-      this.store.connections().filter((record) => record.enabled),
+      // MyBot: an agent's own Telegram bot is not a routine destination; its agent posts with messaging_post.
+      this.store.connections().filter((record) => record.enabled && record.platform !== "telegram_bot"),
       (record) =>
         (outbound
           ? outbound.places(record.connectionId).pipe(

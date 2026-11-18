@@ -162,6 +162,62 @@ export class AgentThreadStore {
   }
 
   /**
+   * MyBot: the conversations of this agent's own Telegram bot, the newest first, as side threads that
+   * take no message here. Each is the execution thread of a messaging link, not a side thread row, so
+   * nothing that changes a side thread reaches it.
+   */
+  externalChats(agentId: string): AgentThreadRecord[] {
+    return databaseRows(
+      this.#database.connection
+        .prepare(
+          `SELECT link.thread_id, link.title, link.created_at, link.updated_at
+           FROM projection_messaging_threads AS link
+           JOIN projection_messaging_connections AS connection ON connection.connection_id = link.connection_id
+           WHERE link.agent_id = ? AND connection.platform = 'telegram_bot'
+           ORDER BY link.updated_at DESC, link.thread_id LIMIT ?`,
+        )
+        .all(agentId, INPUT_LIMITS.agentTasks),
+    ).map((row) => {
+      const threadId = requiredStringColumn(row, "thread_id");
+      const title = requiredStringColumn(row, "title");
+      return {
+        taskId: threadId,
+        agentId,
+        threadId,
+        origin: "agent" as const,
+        title: `Telegram · ${title}`.slice(0, INPUT_LIMITS.agentTaskTitle),
+        titleSource: "auto" as const,
+        outcome: null,
+        error: null,
+        createdAt: requiredStringColumn(row, "created_at"),
+        updatedAt: requiredStringColumn(row, "updated_at"),
+        closedAt: null,
+        branch: null,
+        routineId: null,
+      };
+    });
+  }
+
+  /** MyBot: the agent of the Telegram bot conversation whose execution thread is `threadId`, or null. */
+  externalChatAgent(threadId: string): string | null {
+    const row = databaseRow(
+      this.#database.connection
+        .prepare(
+          `SELECT link.agent_id FROM projection_messaging_threads AS link
+           JOIN projection_messaging_connections AS connection ON connection.connection_id = link.connection_id
+           WHERE link.thread_id = ? AND connection.platform = 'telegram_bot'`,
+        )
+        .get(threadId),
+    );
+    return row ? requiredStringColumn(row, "agent_id") : null;
+  }
+
+  /** MyBot: the conversation of this agent's own Telegram bot whose execution thread is `threadId`. */
+  externalChat(agentId: string, threadId: string): AgentThreadRecord | null {
+    return this.externalChats(agentId).find((chat) => chat.threadId === threadId) ?? null;
+  }
+
+  /**
    * The threads of this agent, open and archived, with activity (`updated_at`: a turn start, a close
    * or a reopen) at or after `after`. The latest activity first. With `last`, the threads that come
    * after it in this order: the next page of a list that ended with `last`.

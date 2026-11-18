@@ -17,7 +17,8 @@ import { clone } from "./mock-support";
  * The platforms whose preview adds a workspace for each connect. Telegram has a chat for each link,
  * and WhatsApp a number for each phone that links.
  */
-type WorkspacePlatform = Exclude<MessagingPlatform, "telegram" | "whatsapp">;
+// MyBot: an agent's own Telegram bot has its own page.
+type WorkspacePlatform = Exclude<MessagingPlatform, "telegram" | "whatsapp" | "telegram_bot">;
 
 /** The preview workspace of the `count`th connect. The first keeps the names that stories show. */
 const PREVIEW_WORKSPACE = {

@@ -174,6 +174,8 @@ import { discordDriver, downloadDiscordAttachment } from "../backend/messaging/d
 import { MessagingOperationFailed, MessagingService } from "../backend/messaging/messaging-service";
 import { slackDriver } from "../backend/messaging/slack/slack-driver";
 import { telegramDriver } from "../backend/messaging/telegram/telegram-driver";
+import { TelegramBotAccess } from "../backend/messaging/telegram-bot/telegram-bot-access";
+import { telegramBotDriver } from "../backend/messaging/telegram-bot/telegram-bot-driver";
 import { whatsAppDriver } from "../backend/messaging/whatsapp/whatsapp-driver";
 import { WhatsAppRuntime } from "../backend/messaging/whatsapp/whatsapp-runtime";
 import { OpenBotDatabase } from "../backend/openbot-database";
@@ -951,6 +953,11 @@ async function createMessagingServices({
     createSocket: (config) => makeWASocket(config),
     makeSignalRepository: makeOpenBotSignalRepository,
   });
+  // MyBot: who can reach each agent's own Telegram bot, shared by its driver and its settings.
+  const telegramBots = new TelegramBotAccess(service.messaging.store);
+  // Chromium's network stack: Node's fetch gives up on a connection after 10 s, and a network that
+  // slows Telegram down takes longer than that. It also follows the system proxy.
+  const telegramFetch = (input: string, init?: RequestInit) => net.fetch(input, init);
   const messaging = new MessagingService({
     threads: service.messaging,
     agents: {
@@ -973,11 +980,14 @@ async function createMessagingServices({
       discordDriver({ ingress: signalIngress }),
       telegramDriver({ ingress: signalIngress }),
       whatsAppDriver({ runtime: whatsapp }),
+      // MyBot: each agent's own Telegram bot, which this computer polls itself.
+      telegramBotDriver({ access: telegramBots, fetch: telegramFetch }),
     ],
     downloadsRoot: join(app.getPath("userData"), "messaging-downloads"),
     statusPath: join(app.getPath("userData"), "openbot-messaging-status-v1.json"),
     ingress: signalIngress,
     whatsapp,
+    telegramBots: { access: telegramBots, openExternal: openLink, fetch: telegramFetch },
     sidebar: sidebarLayout,
     slackApp: {
       authorize: (input) =>

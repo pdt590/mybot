@@ -147,6 +147,11 @@ export interface AgentTask {
    * never sent on the frozen `agent-tasks-v1` routes.
    */
   routineId?: string | null;
+  /**
+   * MyBot: a conversation of the agent's own Telegram bot, shown beside the side threads. It takes no
+   * message, rename, archive or delete here: people write in Telegram. Absent for every other thread.
+   */
+  readOnly?: boolean;
 }
 
 /** Where a branch was copied from. */
@@ -302,7 +307,8 @@ export function isAgentTask(value: unknown): value is AgentTask {
     isBoundedString(value.updatedAt, 160) &&
     (value.closedAt === null || isBoundedString(value.closedAt, 160)) &&
     (value.branch === undefined || value.branch === null || isAgentTaskBranch(value.branch)) &&
-    (value.routineId === undefined || value.routineId === null || isIdentifier(value.routineId))
+    (value.routineId === undefined || value.routineId === null || isIdentifier(value.routineId)) &&
+    (value.readOnly === undefined || typeof value.readOnly === "boolean")
   );
 }
 

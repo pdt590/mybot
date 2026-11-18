@@ -20,6 +20,12 @@ export const messages = defineMessages("error.messaging", {
   "error.messaging.telegramRelayUnreachable":
     "MyBot cannot connect to its service from this computer. Check the internet connection, VPN, proxy, or firewall, and try again.",
   "error.messaging.telegramServiceUnavailable": "MyBot cannot connect Telegram now. Try again later.",
+  // MyBot: errors of an agent's own Telegram bot.
+  "error.messaging.telegramBotNotConnected": "This agent has no Telegram bot.",
+  "error.messaging.telegramBotTokenInvalid": "Telegram does not accept this token. Copy it again from @BotFather.",
+  "error.messaging.telegramBotUnreachable": "MyBot cannot reach Telegram. Check the network and try again.",
+  "error.messaging.telegramBotInUse": "This bot already belongs to another agent. Disconnect it there first.",
+  "error.messaging.telegramBotRequestGone": "This request ended. Ask the person to write to the bot again.",
   // Errors of a linked WhatsApp number, which the host sends.
   "error.messaging.whatsappNotConnected": "This WhatsApp number is not connected.",
   "error.messaging.whatsappUnsupported": "This computer cannot connect to WhatsApp.",
