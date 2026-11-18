@@ -48,7 +48,7 @@ async function build(): Promise<void> {
     await command("/usr/libexec/PlistBuddy", [
       "-c",
       "Print CFBundleShortVersionString",
-      "dist/mac-arm64/OpenBot.app/Contents/Info.plist",
+      "dist/mac-arm64/MyBot.app/Contents/Info.plist",
     ])
   ).trim();
   if (appVersion !== version) throw new Error("OpenBot.app and Host package versions differ.");

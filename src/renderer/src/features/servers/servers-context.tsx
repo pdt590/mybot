@@ -348,10 +348,11 @@ const Servers = createSimpleContext({
         .hostedServers.list()
         .catch(() => null);
       if (!list) return hostedServersAvailable();
-      setHostedServersAvailable(list.available);
+      // MyBot: hosted servers are paid plans, so the app never offers to buy one.
+      setHostedServersAvailable(false);
       setHostedServerIds(new Set(list.servers.map((server) => server.serverId)));
       setHostedServersLoaded(true);
-      return list.available;
+      return false;
     }
 
     // Each time the user enters a server that has a new version, the update dialog opens. A selection

@@ -100,6 +100,7 @@ function usedEnough(state: SocialFollowState, stats: SentMessageStats | null, no
   return now - Math.min(...firsts) >= FIRST_SHOW_DAYS * DAY_MS && sent >= FIRST_SHOW_MESSAGES;
 }
 
+const SOCIAL_FOLLOW_DISABLED: boolean = true;
 let sentThisSession = false;
 let checking = false;
 let lastStatsReadAt = 0;
@@ -132,6 +133,8 @@ export function noteSocialFollowMessageSent(): void {
  * over an open dialog.
  */
 export function noteSocialFollowReplyCompleted(): void {
+  // MyBot: the social follow prompt is disabled.
+  if (SOCIAL_FOLLOW_DISABLED) return;
   if (!sentThisSession || checking || blocked()) return;
   let state: SocialFollowState;
   try {

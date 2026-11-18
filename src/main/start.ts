@@ -6,8 +6,7 @@
 // It must import only `electron` and code that the build puts in `out/main`. An installed package
 // here, such as `effect`, would fail in the same way and with no message.
 import { resolveLocale, translateFor } from "@openbot/i18n";
-import { app, dialog, shell } from "electron";
-import { DOWNLOAD_URL } from "./download-url";
+import { app, dialog } from "electron";
 
 /**
  * True when `error` shows that a file of the installed app cannot load: a package manifest that is
@@ -43,15 +42,15 @@ function report(message: string, error: unknown): void {
 async function showDamagedInstallation(): Promise<void> {
   // The saved language is in the database, which no code can open here.
   const translate = translateFor(resolveLocale("system", app.getLocale()));
-  const { response } = await dialog.showMessageBox({
+  await dialog.showMessageBox({
     type: "error",
     message: translate("startup.failedTitle"),
     detail: translate("startup.filesDamagedBody"),
-    buttons: [translate("startup.archiveChangedDownload"), translate("common.close")],
+    // MyBot: no download link to the upstream site.
+    buttons: [translate("common.close")],
     defaultId: 0,
-    cancelId: 1,
+    cancelId: 0,
   });
-  if (response === 0) await shell.openExternal(DOWNLOAD_URL);
 }
 
 // Electron sends `ready` only after this module has loaded, so the code of `index.ts` that must run

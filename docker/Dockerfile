@@ -3,7 +3,7 @@
 # release workflow builds it on a runner of each architecture, from the AppImage of that release,
 # after it checks the AppImage against the release checksums:
 #
-#   docker build --file docker/Dockerfile <folder that has OpenBot.AppImage>
+#   docker build --file docker/Dockerfile <folder that has MyBot.AppImage>
 #
 # The server scripts and the package list come from the unpacked release, so they always match the
 # build that they run.
@@ -11,10 +11,10 @@ ARG BASE=ubuntu:24.04@sha256:a853f94d226358a79c740cfc7bce0c289748f3fe3488d921d03
 
 FROM ${BASE} AS release
 # The static AppImage runtime unpacks itself with no system library. Unpacked, the release needs no FUSE.
-COPY OpenBot.AppImage /tmp/OpenBot.AppImage
+COPY MyBot.AppImage /tmp/MyBot.AppImage
 WORKDIR /tmp
-RUN chmod 0700 OpenBot.AppImage \
-  && ./OpenBot.AppImage --appimage-extract >/dev/null \
+RUN chmod 0700 MyBot.AppImage \
+  && ./MyBot.AppImage --appimage-extract >/dev/null \
   && chmod -R u+rwX,go=rX squashfs-root \
   && test -x squashfs-root/resources/hosting/openbot-container
 
@@ -40,10 +40,10 @@ RUN userdel --remove ubuntu \
 RUN install -d -m 0755 /var/lib/openbot-update/requests /var/lib/openbot-update/status
 # Root owns the release, so the user and its agents cannot change it. chrome-sandbox has no SUID bit:
 # the sandbox uses user namespaces, which the seccomp profile in docker/ permits.
-COPY --from=release /tmp/squashfs-root /opt/OpenBot/app
-RUN install -d -m 0755 /opt/OpenBot/hosted \
-  && printf 'container\n' >/opt/OpenBot/hosted/mode \
-  && ln -s /opt/OpenBot/app/resources/hosting/openbot /usr/local/bin/openbot
+COPY --from=release /tmp/squashfs-root /opt/MyBot/app
+RUN install -d -m 0755 /opt/MyBot/hosted \
+  && printf 'container\n' >/opt/MyBot/hosted/mode \
+  && ln -s /opt/MyBot/app/resources/hosting/openbot /usr/local/bin/openbot
 
 ARG VERSION=unknown
 ARG REVISION=unknown
@@ -62,4 +62,4 @@ USER openbot
 WORKDIR /data
 VOLUME /data
 STOPSIGNAL SIGTERM
-ENTRYPOINT ["/usr/bin/tini", "--", "/opt/OpenBot/app/resources/hosting/openbot-container"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/opt/MyBot/app/resources/hosting/openbot-container"]

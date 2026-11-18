@@ -8,9 +8,8 @@ import type { UpdateStatus } from "@openbot/contracts/ipc";
 import type { AppTranslate } from "@openbot/i18n";
 import { createOpenBotLogger, toLogValue } from "@openbot/logging";
 import { Effect } from "effect";
-import { app, type BrowserWindow, dialog, shell } from "electron";
+import { app, type BrowserWindow, dialog } from "electron";
 import { runCauseEffect } from "../backend/effect-boundary";
-import { DOWNLOAD_URL } from "./download-url";
 import { UPDATE_HANDOVER_FILE } from "./update-install-guard";
 import { readUpdatePreference, UPDATE_PREFERENCE_FILE } from "./update-preference-store";
 import {
@@ -24,11 +23,11 @@ import {
 } from "./update-service";
 import { listSiblingOpenBotInstances } from "./update-sibling-instances";
 
+/** MyBot: no update downloads, also in the recovery window. */
+const APP_UPDATES_DISABLED: boolean = true;
 const logger = createOpenBotLogger("update");
 // The time that the user has to read the download dialog after a stalled install, before the app exits.
 const STALLED_INSTALL_DIALOG_MS = 10 * 60_000;
-const GUIDE_URL =
-  "https://github.com/nightly-labs/openbot/blob/main/docs/TROUBLESHOOTING.md#openbot-says-a-newer-version-saved-your-data";
 
 interface NewerDatabaseRecoveryOptions {
   window: BrowserWindow | null;
@@ -65,6 +64,8 @@ async function createRecoveryUpdater(
 ): Promise<UpdateService | null> {
   const currentVersion = app.getVersion();
   if (
+    // MyBot: automatic updates are off.
+    APP_UPDATES_DISABLED ||
     !app.isPackaged ||
     isNixStoreInstall() ||
     !supportsInstalledUpdates(process.platform) ||
@@ -178,18 +179,13 @@ async function showUpdating(
 }
 
 async function showUpdateRequired(translate: AppTranslate): Promise<void> {
-  const { response } = await dialog.showMessageBox({
+  // MyBot: no download or guide link to the upstream site.
+  await dialog.showMessageBox({
     type: "warning",
     message: translate("startup.newerDataTitle"),
     detail: translate("startup.newerDataBody", { version: app.getVersion() }),
-    buttons: [
-      translate("startup.newerDataDownload"),
-      translate("startup.newerDataGuide"),
-      translate("startup.newerDataQuit"),
-    ],
+    buttons: [translate("startup.newerDataQuit")],
     defaultId: 0,
-    cancelId: 2,
+    cancelId: 0,
   });
-  if (response === 0) await shell.openExternal(DOWNLOAD_URL);
-  if (response === 1) await shell.openExternal(GUIDE_URL);
 }

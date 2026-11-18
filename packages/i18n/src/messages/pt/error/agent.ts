@@ -19,7 +19,7 @@ export const messages = {
   "error.agent.toolCallUnknownToolSuggest":
     "A ferramenta não foi executada. tool_call não encontrou nenhuma ferramenta com este nome. O nome qualificado talvez seja {name}. Se for, envie a chamada novamente com esse nome.",
   "error.agent.toolDescribeUnknownNames":
-    "tool_describe não encontrou nenhuma ferramenta do OpenBot chamada {names}. Ele descreve só as ferramentas do OpenBot e do navegador que openbot.tool_search lista, não as ferramentas MCP.",
+    "tool_describe não encontrou nenhuma ferramenta do MyBot chamada {names}. Ele descreve só as ferramentas do MyBot e do navegador que openbot.tool_search lista, não as ferramentas MCP.",
   "error.agent.toolDescribeDiscoveryNames":
     "Chame {names} diretamente. tool_describe não descreve as ferramentas de busca.",
   "error.agent.routineScheduleArgumentsInvalid":
@@ -41,7 +41,7 @@ export const messages = {
   "error.agent.instructionsTooLarge":
     "O arquivo de instruções é grande demais para abrir aqui. Encurte-o em um editor de texto.",
   "error.agent.instructionsOutside":
-    "O arquivo de instruções aponta para um local fora do espaço de trabalho do agente, então o OpenBot não o abre.",
+    "O arquivo de instruções aponta para um local fora do espaço de trabalho do agente, então o MyBot não o abre.",
   "error.agent.instructionsReadFailed": "Não foi possível ler o arquivo de instruções.",
   "error.agent.instructionsSaveFailed": "Não foi possível salvar o arquivo de instruções.",
   "error.agent.profileGenerationBusy": "A geração de perfil já está em andamento. Tente novamente em instantes.",
@@ -89,16 +89,16 @@ export const messages = {
   "error.agent.changedWhileDuplicating": "O agente mudou durante a duplicação. Tente novamente.",
   "error.agent.duplicatedAgentGone": "O agente duplicado não existe mais.",
   "error.agent.stateCorrupt":
-    "O estado dos agentes está corrompido ou é de uma versão mais recente do OpenBot; ele não será sobrescrito.",
+    "O estado dos agentes está corrompido ou é de uma versão mais recente do MyBot; ele não será sobrescrito.",
   "error.agent.oldRoleField":
-    "Os perfis de agente salvos usam o campo de função antigo; atualize os dados antes de iniciar o OpenBot.",
+    "Os perfis de agente salvos usam o campo de função antigo; atualize os dados antes de iniciar o MyBot.",
   "error.agent.duplicateIds": "O estado dos agentes contém IDs de agente duplicados; ele não será sobrescrito.",
-  "error.agent.copyNameFailed": "O OpenBot não conseguiu criar um nome exclusivo para a cópia do agente.",
+  "error.agent.copyNameFailed": "O MyBot não conseguiu criar um nome exclusivo para a cópia do agente.",
   "error.agent.endpointRemoved": "O endpoint usado por este agente foi removido. Escolha outro modelo para ele.",
   "error.agent.turnStalled":
-    "{provider} parou de responder, então o OpenBot encerrou este turno. Envie a mensagem novamente ou escolha outro modelo.",
+    "{provider} parou de responder, então o MyBot encerrou este turno. Envie a mensagem novamente ou escolha outro modelo.",
   "error.agent.toolLoopStopped":
-    "{provider} repetiu muitas vezes uma etapa que falhou, então o OpenBot parou este turno. Envie a mensagem de novo ou escolha outro modelo.",
+    "{provider} repetiu muitas vezes uma etapa que falhou, então o MyBot parou este turno. Envie a mensagem de novo ou escolha outro modelo.",
   "error.agent.answerCutOff":
     "O agente parou antes de terminar a resposta, então a resposta não está completa. Envie a mensagem de novo.",
   "error.agent.compactionConnectionLost":
@@ -106,7 +106,7 @@ export const messages = {
   "error.agent.compactionConnectionLostAddress":
     "A conexão parou enquanto o agente compactava o contexto, então a tarefa parou. Verifique sua conexão com a internet e se {variable}, em Variáveis nas configurações de {provider}, é o endereço da API do seu serviço de modelos (muitas vezes termina em /v1). Depois, envie uma mensagem.",
   "error.agent.compactionLoopStopped":
-    "{provider} compactou o contexto várias vezes, e em cada vez ele continuou cheio demais para continuar, então o OpenBot parou este turno. Desative os servidores MCP ou o uso do computador de que este agente não precisa e envie uma mensagem. Se você ou o agente mudaram quando o {provider} compacta, desfaça essa mudança.",
+    "{provider} compactou o contexto várias vezes, e em cada vez ele continuou cheio demais para continuar, então o MyBot parou este turno. Desative os servidores MCP ou o uso do computador de que este agente não precisa e envie uma mensagem. Se você ou o agente mudaram quando o {provider} compacta, desfaça essa mudança.",
   "error.agent.selectedGone": "O agente selecionado não existe mais.",
   "error.agent.profileEndpointsChanged": "Os endpoints personalizados mudaram durante a geração. Tente novamente.",
   "error.agent.profileInvalid": "O provedor retornou um perfil inválido. Tente reformular seu pedido.",
@@ -127,9 +127,9 @@ export const messages = {
   "error.agent.saveOtherAgent": "Este registro salvo pertence a outro agente.",
   "error.agent.savedGone": "O agente salvo não existe mais.",
   "error.agent.storedProfileUnreadable":
-    'Um perfil de agente salvo tem um valor "{field}" ilegível; atualize os dados antes de iniciar o OpenBot.',
+    'Um perfil de agente salvo tem um valor "{field}" ilegível; atualize os dados antes de iniciar o MyBot.',
   "error.agent.storedProfileUnreadableId":
-    'O perfil de agente salvo {id} tem um valor "{field}" ilegível; atualize os dados antes de iniciar o OpenBot.',
+    'O perfil de agente salvo {id} tem um valor "{field}" ilegível; atualize os dados antes de iniciar o MyBot.',
   "error.agent.queueEditRejected": "Edição da fila rejeitada: {reason}",
   "error.agent.computerUseLocalOnly": "Uso do computador só pode ser alterado no computador que executa o agente.",
   "error.agent.automationLocalOnly": "Scripts locais só podem ser permitidos no computador que executa o agente.",
@@ -159,7 +159,7 @@ export const messages = {
   "error.agent.lowMemoryServer":
     "Este servidor está com pouca memória. Sua mensagem aguarda na fila e começa quando houver memória livre.",
   "error.agent.workspaceOnlyToolMissing":
-    "O acesso Somente o espaço de trabalho exige {tool}, que o OpenBot não encontrou. Instale a ferramenta ou escolha Acesso completo nas configurações do agente.",
+    "O acesso Somente o espaço de trabalho exige {tool}, que o MyBot não encontrou. Instale a ferramenta ou escolha Acesso completo nas configurações do agente.",
   "error.agent.codexSandboxUnavailable":
     "O acesso Somente o espaço de trabalho precisa do sandbox do Codex, que o Codex não consegue iniciar neste computador, então os comandos do agente falham. Escolha Perguntar antes ou Acesso completo nas configurações do agente.",
   "error.agent.claudeSandboxUnavailable":
@@ -183,7 +183,7 @@ export const messages = {
   "error.agent.screenCaptureRegionOutside":
     "A região não está dentro de um único monitor. Use pontos da área de trabalho dentro dos limites de um monitor de list_capture_sources.",
   "error.agent.screenCapturePermissionMissing":
-    "O OpenBot não tem a permissão de Gravação de Tela. Peça ao usuário para abrir Ajustes do Sistema > Privacidade e Segurança > Gravação de Tela e Áudio do Sistema, ativar o OpenBot e depois sair e abrir o OpenBot de novo.",
+    "O MyBot não tem a permissão de Gravação de Tela. Peça ao usuário para abrir Ajustes do Sistema > Privacidade e Segurança > Gravação de Tela e Áudio do Sistema, ativar o MyBot e depois sair e abrir o MyBot de novo.",
   "error.agent.screenCaptureEmptyWindows":
     "O Windows retornou uma imagem vazia. Peça ao usuário para desbloquear o computador e fechar o conteúdo protegido. Uma política da organização também pode impedir a captura de tela.",
   "error.agent.screenCaptureFailed": "A captura de tela falhou. Tente de novo.",

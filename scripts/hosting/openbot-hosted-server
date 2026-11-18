@@ -15,7 +15,7 @@ umask 077
 if [ "${1:-}" = --stop ]; then
   pid=$(cat "$XDG_RUNTIME_DIR/openbot.pid" 2>/dev/null) || pid=""
   # The PID is still OpenBot when it is a process named openbot in the cgroup of this unit, as this
-  # script is. Do not compare /proc/$pid/exe with /opt/OpenBot/app/openbot: after a resume, OpenBot
+  # script is. Do not compare /proc/$pid/exe with /opt/MyBot/app/openbot: after a resume, OpenBot
   # starts from the FUSE mount of /opt, and when boat moves /opt back to the disk, the two are
   # different files. The stop then sent no signal, and OpenBot ended with its database open.
   if [[ $pid =~ ^[1-9][0-9]*$ ]] &&
@@ -40,7 +40,7 @@ if [ "${1:-}" = --stop ]; then
 fi
 state="$HOME/.config/openbot-hosted"
 mode=hosted
-if [ -r /opt/OpenBot/hosted/mode ] && [ "$(</opt/OpenBot/hosted/mode)" = self ]; then mode=self; fi
+if [ -r /opt/MyBot/hosted/mode ] && [ "$(</opt/MyBot/hosted/mode)" = self ]; then mode=self; fi
 
 if [ "${1:-}" != --in-session ] && [ "$mode" = self ]; then
   mkdir -p "$state"
@@ -72,13 +72,13 @@ fi
 # A self-hosted server has this file only when its install named another account server or a
 # display size.
 requested_size=""
-if [ -r /opt/OpenBot/hosted/openbot.env ]; then
+if [ -r /opt/MyBot/hosted/openbot.env ]; then
   while IFS='=' read -r key value || [ -n "$key" ]; do
     case $key in
       OPENBOT_AUTH_API_URL) export "$key=$value" ;;
       OPENBOT_DISPLAY_SIZE) requested_size=$value ;;
     esac
-  done </opt/OpenBot/hosted/openbot.env
+  done </opt/MyBot/hosted/openbot.env
 fi
 
 # The size of the virtual display, which computer use reads: $1 as WIDTHxHEIGHT, else 1280x800. A
@@ -156,7 +156,7 @@ export GNOME_KEYRING_CONTROL
 
 # OpenBot writes its PID for `--stop` before it starts.
 openbot=(bash -c 'echo "$$" >"$XDG_RUNTIME_DIR/openbot.pid" && exec "$@"' openbot-hosted-server
-  /opt/OpenBot/app/openbot --password-store=gnome-libsecret)
+  /opt/MyBot/app/openbot --password-store=gnome-libsecret)
 if [ "$mode" = hosted ] && [ -e /etc/systemd/system/display-manager.service ]; then
   # xauth locks ~/.Xauthority with ~/.Xauthority-c and ~/.Xauthority-l, and it does not remove a
   # lock that a stopped xauth left. xvfb-run then waits 20 to 40 s for xauth and exits with
@@ -186,4 +186,4 @@ fi
 # scripts that it knows.
 exec xvfb-run -a -s "-screen 0 $(display_size "$requested_size")x24 -nolisten tcp -wr -noreset" \
   bash -c 'command -v xsetroot >/dev/null && xsetroot -cursor_name left_ptr; if [ -r "$1" ]; then bash "$1" </dev/null & fi; shift; export OPENBOT_AGENT_DISPLAY=$DISPLAY; exec xvfb-run -a -f "$XAUTHORITY" -s "-screen 0 1280x800x24 -nolisten tcp" "$@"' \
-  openbot-hosted-server /opt/OpenBot/app/resources/hosting/openbot-desktop "${openbot[@]}"
+  openbot-hosted-server /opt/MyBot/app/resources/hosting/openbot-desktop "${openbot[@]}"

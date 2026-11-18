@@ -3,15 +3,15 @@ import type { messages as source } from "../../en/status/messaging";
 
 export const messages = {
   "status.messaging.working": "Pracuję nad tym…",
-  "status.messaging.queued": "Oczekiwanie: OpenBot pracuje nad innym żądaniem. Odpowiedź pojawi się tutaj.",
+  "status.messaging.queued": "Oczekiwanie: MyBot pracuje nad innym żądaniem. Odpowiedź pojawi się tutaj.",
   "status.messaging.busy": "Czeka zbyt wiele żądań. Spróbuj ponownie później.",
-  "status.messaging.failed": "OpenBot nie mógł dokończyć tego żądania. Szczegóły są na hoście OpenBot.",
-  "status.messaging.noAnswer": "OpenBot zakończył pracę bez odpowiedzi tekstowej.",
-  "status.messaging.noAgent": "Żaden agent nie może tu jeszcze odpowiadać. Dodaj Slack Orchestrator w OpenBot.",
+  "status.messaging.failed": "MyBot nie mógł dokończyć tego żądania. Szczegóły są na hoście MyBot.",
+  "status.messaging.noAnswer": "MyBot zakończył pracę bez odpowiedzi tekstowej.",
+  "status.messaging.noAgent": "Żaden agent nie może tu jeszcze odpowiadać. Dodaj Slack Orchestrator w MyBot.",
   "status.messaging.delegated": "Członek zespołu nad tym pracuje. Odpowiedź pojawi się tutaj.",
   "status.messaging.stopped": "Zatrzymano.",
   "status.messaging.stop": "Zatrzymaj",
-  "status.messaging.approvalTitle": "OpenBot prosi o zatwierdzenie, aby kontynuować.",
+  "status.messaging.approvalTitle": "MyBot prosi o zatwierdzenie, aby kontynuować.",
   "status.messaging.approvalCommand": "Uruchomienie polecenia",
   "status.messaging.approvalFileChange": "Zmiana plików",
   "status.messaging.approvalPermissions": "Dodatkowe uprawnienia",
@@ -19,28 +19,27 @@ export const messages = {
   "status.messaging.deny": "Odrzuć",
   "status.messaging.approvedBy": "Zatwierdzone przez: {user}.",
   "status.messaging.deniedBy": "Odrzucone przez: {user}.",
-  "status.messaging.answeredOnHost": "Odpowiedziano na hoście OpenBot.",
+  "status.messaging.answeredOnHost": "Odpowiedziano na hoście MyBot.",
   "status.messaging.requestInactive": "To żądanie nie jest już aktywne.",
-  "status.messaging.onlyRequester": "Tylko {user} może to zrobić. Może też odpowiedzieć host OpenBot.",
-  "status.messaging.hostOnly": "Na to żądanie może odpowiedzieć tylko host OpenBot.",
+  "status.messaging.onlyRequester": "Tylko {user} może to zrobić. Może też odpowiedzieć host MyBot.",
+  "status.messaging.hostOnly": "Na to żądanie może odpowiedzieć tylko host MyBot.",
   "status.messaging.filesSkipped": "Niektóre pliki nie zostały wysłane: {names}.",
   "status.messaging.orchestratorName": "Slack Orchestrator",
   "status.messaging.orchestratorTitle": "Odpowiada w Slacku i pyta zespół",
-  "status.messaging.discordNoAgent":
-    "Żaden agent nie może tu jeszcze odpowiadać. Dodaj Discord Orchestrator w OpenBot.",
+  "status.messaging.discordNoAgent": "Żaden agent nie może tu jeszcze odpowiadać. Dodaj Discord Orchestrator w MyBot.",
   "status.messaging.discordOrchestratorName": "Discord Orchestrator",
   "status.messaging.discordOrchestratorTitle": "Odpowiada na Discordzie i pyta zespół",
   "status.messaging.integrationsSection": "Integracje",
-  "status.messaging.signInReceived": "OpenBot otrzymał instalację Slack. Możesz zamknąć tę kartę.",
-  "status.messaging.signInUnknown": "OpenBot nie rozpoczął tej instalacji Slack. Rozpocznij ją ponownie w OpenBot.",
+  "status.messaging.signInReceived": "MyBot otrzymał instalację Slack. Możesz zamknąć tę kartę.",
+  "status.messaging.signInUnknown": "MyBot nie rozpoczął tej instalacji Slack. Rozpocznij ją ponownie w MyBot.",
   "status.messaging.telegramNoAgent":
-    "Żaden agent nie może tu jeszcze odpowiadać. Dodaj Telegram Orchestrator w OpenBot.",
+    "Żaden agent nie może tu jeszcze odpowiadać. Dodaj Telegram Orchestrator w MyBot.",
   "status.messaging.telegramLinked":
-    "OpenBot jest połączony z tym czatem. Oznacz {bot} lub odpowiedz na wiadomość OpenBot, aby zapytać agentów.",
+    "MyBot jest połączony z tym czatem. Oznacz {bot} lub odpowiedz na wiadomość MyBot, aby zapytać agentów.",
   "status.messaging.telegramOrchestratorName": "Telegram Orchestrator",
   "status.messaging.telegramOrchestratorTitle": "Odpowiada w Telegramie i pyta zespół",
   "status.messaging.whatsappNoAgent":
-    "Żaden agent nie może tu jeszcze odpowiadać. Dodaj WhatsApp Orchestrator w OpenBot.",
+    "Żaden agent nie może tu jeszcze odpowiadać. Dodaj WhatsApp Orchestrator w MyBot.",
   "status.messaging.whatsappApprovalMenu": "Odpowiedz 1, aby zatwierdzić, lub 2, aby odrzucić.",
   "status.messaging.whatsappStopMenu": "Odpowiedz „stop”, aby zatrzymać.",
   "status.messaging.whatsappPairingCode":
@@ -48,13 +47,13 @@ export const messages = {
   "status.messaging.whatsappPairingApproved": "Możesz teraz wysyłać prośby na ten numer.",
   "status.messaging.whatsappOwnChat": "Wiadomość do siebie",
   "status.messaging.whatsappWelcomeOwn":
-    "👋 *OpenBot jest połączony*\n\nNapisz tutaj, aby poprosić swoich agentów. WhatsApp Orchestrator odpowiada albo przekazuje pracę właściwemu agentowi.\n\nWyślij *stop*, aby zatrzymać prośbę.",
+    "👋 *MyBot jest połączony*\n\nNapisz tutaj, aby poprosić swoich agentów. WhatsApp Orchestrator odpowiada albo przekazuje pracę właściwemu agentowi.\n\nWyślij *stop*, aby zatrzymać prośbę.",
   "status.messaging.whatsappWelcomeDedicated":
-    "👋 *OpenBot jest połączony*\n\nOsoby, na które pozwolisz w OpenBot, mogą już pisać na ten numer. Nowa osoba dostaje kod: zatwierdź go w OpenBot w sekcji Prośby.\n\nWyślij *stop*, aby zatrzymać prośbę.",
+    "👋 *MyBot jest połączony*\n\nOsoby, na które pozwolisz w MyBot, mogą już pisać na ten numer. Nowa osoba dostaje kod: zatwierdź go w MyBot w sekcji Prośby.\n\nWyślij *stop*, aby zatrzymać prośbę.",
   "status.messaging.whatsappOtherOpenBot":
-    "Z tym numerem WhatsApp jest połączony inny OpenBot, więc możesz dostać dwie odpowiedzi. Aby to naprawić, otwórz Połączone urządzenia w WhatsAppie na telefonie i wyloguj OpenBot, którego nie używasz.",
+    "Z tym numerem WhatsApp jest połączony inny MyBot, więc możesz dostać dwie odpowiedzi. Aby to naprawić, otwórz Połączone urządzenia w WhatsAppie na telefonie i wyloguj MyBot, którego nie używasz.",
   "status.messaging.whatsappPaused":
-    "OpenBot przestał tu odpowiadać na 10 minut: w krótkim czasie przyszło za dużo wiadomości. Jeśli z tym numerem jest połączony inny OpenBot, otwórz Połączone urządzenia w WhatsAppie na telefonie i wyloguj OpenBot, którego nie używasz.",
+    "MyBot przestał tu odpowiadać na 10 minut: w krótkim czasie przyszło za dużo wiadomości. Jeśli z tym numerem jest połączony inny MyBot, otwórz Połączone urządzenia w WhatsAppie na telefonie i wyloguj MyBot, którego nie używasz.",
   "status.messaging.whatsappOrchestratorName": "WhatsApp Orchestrator",
   "status.messaging.whatsappOrchestratorTitle": "Odpowiada w WhatsApp i pyta zespół",
 } as const satisfies PartialTranslation<typeof source>;

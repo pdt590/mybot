@@ -49,7 +49,7 @@ const WAIT_DEADLINE_MS = 420_000;
 const PROBE = `
 set -u
 export LC_ALL=C
-user=$(</opt/OpenBot/hosted/service-user)
+user=$(</opt/MyBot/hosted/service-user)
 router=$(cut -d, -f1 ${STATE_FILE})
 connect='exec 3<>"/dev/tcp/$0/$1"'
 result() {
@@ -364,7 +364,7 @@ async function waitForBoot(host: string, lastBootId: string): Promise<string> {
 /** Waits until `openbot status` shows the server state that it had before the test. */
 async function waitForServer(host: string, server: string): Promise<void> {
   const deadline = Date.now() + WAIT_DEADLINE_MS;
-  const command = `runuser -u "$(</opt/OpenBot/hosted/service-user)" -- openbot status 2>/dev/null | sed -n 's/^Server: //p'`;
+  const command = `runuser -u "$(</opt/MyBot/hosted/service-user)" -- openbot status 2>/dev/null | sed -n 's/^Server: //p'`;
   while (Date.now() < deadline) {
     const result = await ssh(host, command);
     if (result.code === 0 && result.stdout.trim() === server) return;

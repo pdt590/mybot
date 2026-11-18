@@ -90,7 +90,7 @@ export const messages = {
   "mobile.agent.files.deleteBody": "“{name}” diskten silinir. Onu gösteren mesajlar dosya olmadan sohbette kalır.",
   "mobile.agent.files.keep": "Koru",
   "mobile.agent.files.deleteFailed": "Dosya silinemedi",
-  "mobile.agent.files.deleteFailedBody": "OpenBot bu dosyayı silemedi.",
+  "mobile.agent.files.deleteFailedBody": "MyBot bu dosyayı silemedi.",
   "mobile.agent.files.downloading": "İndiriliyor…",
   "mobile.agent.files.removeNamed": "{name} adlı dosyayı kaldır",
   "mobile.agent.files.deleteNamed": "{name} adlı dosyayı sil",
@@ -145,14 +145,13 @@ export const messages = {
   "mobile.agent.info.routinePaused": "Duraklatıldı",
   "mobile.agent.info.noRoutines": "Henüz rutin yok.",
   "mobile.agent.info.addRoutine": "Rutin ekle",
-  "mobile.agent.info.skillsUnsupported":
-    "Bu ana makine becerileri desteklemiyor. Ana makinedeki OpenBot'u güncelleyin.",
+  "mobile.agent.info.skillsUnsupported": "Bu ana makine becerileri desteklemiyor. Ana makinedeki MyBot'u güncelleyin.",
   "mobile.agent.info.noSkills": "Henüz beceri yok.",
   "mobile.agent.info.skillsManaged": "Bu ajanın becerileri ana makinede yönetilir.",
   "mobile.agent.info.skillsAddOnComputer":
-    "Bu ajanla bir beceri oluşturmak için + düğmesini kullanın. Pazaryeri becerilerini bir bilgisayardaki OpenBot'ta veya web uygulamasında ekleyin.",
+    "Bu ajanla bir beceri oluşturmak için + düğmesini kullanın. Pazaryeri becerilerini bir bilgisayardaki MyBot'ta veya web uygulamasında ekleyin.",
   "mobile.agent.info.filesUnsupported":
-    "Bu ana makine dosya yönetimini desteklemiyor. Ana makinedeki OpenBot'u güncelleyin.",
+    "Bu ana makine dosya yönetimini desteklemiyor. Ana makinedeki MyBot'u güncelleyin.",
   "mobile.agent.info.memoryGone": "Bu bellek artık mevcut değil.",
   "mobile.agent.info.routineGone": "Bu rutin artık mevcut değil.",
   "mobile.agent.skill.workspaceFolder": "Çalışma alanı klasörü",
@@ -164,15 +163,14 @@ export const messages = {
   "mobile.agent.skill.uninstall": "Kaldır",
   "mobile.agent.skill.uninstallNamed": "{name} becerisini kaldır",
   "mobile.agent.skill.uninstallTitle": "{name} kaldırılsın mı?",
-  "mobile.agent.skill.uninstallBody": "OpenBot bu beceriyi ajandan kaldırır. Sohbet geçmişi kalır.",
+  "mobile.agent.skill.uninstallBody": "MyBot bu beceriyi ajandan kaldırır. Sohbet geçmişi kalır.",
   "mobile.agent.skill.uninstallModifiedBody":
     "Bu beceri ajan çalışma alanında yerel değişikliklere sahip. Kaldırma işlemi o dosyaları siler. Sohbet geçmişi kalır.",
   "mobile.agent.skill.uninstalling": "Kaldırılıyor…",
   "mobile.agent.skill.uninstallFailed": "{name} kaldırılamadı.",
   "mobile.agent.skill.enableFailed": "{name} açılamadı.",
   "mobile.agent.skill.disableFailed": "{name} kapatılamadı.",
-  "mobile.agent.skill.manageUnsupported":
-    "Bu ana makine becerileri değiştiremez. Ana makinedeki OpenBot'u güncelleyin.",
+  "mobile.agent.skill.manageUnsupported": "Bu ana makine becerileri değiştiremez. Ana makinedeki MyBot'u güncelleyin.",
   "mobile.agent.discard.title": "Değişiklikler atılsın mı?",
   "mobile.agent.discard.body": "Değişiklikleriniz kaydedilmedi.",
   "mobile.agent.discard.keepEditing": "Düzenlemeye devam et",
@@ -211,7 +209,7 @@ export const messages = {
   "mobile.agent.record.addEventFilter": "Filtre ekle",
   "mobile.agent.record.removeEventFilter": "Filtreyi kaldır",
   "mobile.agent.record.eventsUnsupported":
-    "Bu ana makine olay rutinlerini desteklemiyor. Ana makinedeki OpenBot'u güncelleyin.",
+    "Bu ana makine olay rutinlerini desteklemiyor. Ana makinedeki MyBot'u güncelleyin.",
   "mobile.agent.webhook.url": "Uç nokta",
   "mobile.agent.webhook.urlNew": "Uç noktasını ve imzalama gizli anahtarını almak için rutini kaydedin.",
   "mobile.agent.webhook.urlPending": "Ana makine uç noktayı henüz oluşturmadı. Bu rutini daha sonra tekrar açın.",
@@ -289,7 +287,7 @@ export const messages = {
   "mobile.agent.record.resultDestination.createFailed":
     "Rutin kaydedildi ama mesajlaşma yeri kaydedilmedi. Yeri yeniden seçmek için rutini açın.",
   "mobile.agent.record.resultDestinationUnsupported":
-    "Bu sunucu rutin yanıtlarını bir mesajlaşma yerine gönderemiyor. Sunucudaki OpenBot'u güncelleyin.",
+    "Bu sunucu rutin yanıtlarını bir mesajlaşma yerine gönderemiyor. Sunucudaki MyBot'u güncelleyin.",
   "mobile.agent.record.enabled": "Etkin",
   "mobile.agent.record.routine": "Rutin",
   "mobile.agent.record.testStarting": "Başlatılıyor…",
@@ -305,7 +303,7 @@ export const messages = {
   "mobile.agent.permissions.title": "İzinler",
   "mobile.agent.advanced.title": "Gelişmiş",
   "mobile.agent.runtime.unavailable": "Kullanılamıyor",
-  "mobile.agent.runtime.updateToUse": "{name} kullanmak için OpenBot'u güncelleyin",
+  "mobile.agent.runtime.updateToUse": "{name} kullanmak için MyBot'u güncelleyin",
   "mobile.agent.runtime.hostDefault": "Ana makine varsayılanı",
   "mobile.agent.runtime.provider": "Sağlayıcı",
   "mobile.agent.runtime.account": "Hesap",
@@ -341,7 +339,7 @@ export const messages = {
     "Bu ana makinede Turbo mod açık, bu nedenle her ajanın istekleri otomatik onaylanır.",
   "mobile.agent.access.workspaceNote": "Ajan, ana makinedeki çalışma alanında ve paylaşılan klasörde çalışır.",
   "mobile.agent.access.askNote":
-    "Ajan bir OpenBot aracı kullanmadan veya bir site yayımlamadan önce ve sağlayıcısı onay istediğinde size sorar.",
+    "Ajan bir MyBot aracı kullanmadan veya bir site yayımlamadan önce ve sağlayıcısı onay istediğinde size sorar.",
   "mobile.agent.access.fullNote": "Ajan, size sorduğu sorular hariç, sormadan hareket eder.",
   "mobile.agent.access.fullTitle": "Bu ajana tam erişim verilsin mi?",
   "mobile.agent.access.askTitle": "Bu ajan çalışma alanının dışında çalışabilsin mi?",
@@ -404,7 +402,7 @@ export const messages = {
   "mobile.agent.browserProfile.manage": "Profilleri yönet",
   "mobile.agent.browserProfile.footer":
     "Her profil kendi oturumlarını ve çerezlerini tutar. Bir değişiklik ajanın açık sekmelerini kapatır.",
-  "mobile.agent.browserProfile.saveFailed": "OpenBot ajanın tarayıcı profilini değiştiremedi.",
+  "mobile.agent.browserProfile.saveFailed": "MyBot ajanın tarayıcı profilini değiştiremedi.",
   "mobile.agent.planCard.label": "Uzun görevlerden önce planı göster",
   "mobile.agent.planCard.footer":
     "Uzun bir görevden önce ajan planını gösterir. 10 sn sonra veya Başlat'a bastığınızda başlar.",
@@ -421,7 +419,7 @@ export const messages = {
   "mobile.agent.notificationLevel.footer":
     "“Şunun hakkında bildir” yalnızca senin içindir ve tüm cihazlarında geçerlidir.",
   "mobile.agent.notificationLevel.unsupported":
-    "Bu sunucu bir ajan için kendi bildirim düzeyini saklayamıyor. OpenBot’u onu çalıştıran bilgisayarda güncelle.",
+    "Bu sunucu bir ajan için kendi bildirim düzeyini saklayamıyor. MyBot’u onu çalıştıran bilgisayarda güncelle.",
   "mobile.agent.newChat.title": "Yeni sohbet",
   "mobile.agent.newChat.starting": "Yeni sohbet başlatılıyor…",
   "mobile.agent.newChat.footer": "Ajan bu sohbeti unutur. Yapılandırması kalır.",
@@ -444,7 +442,7 @@ export const messages = {
     "Henüz tablo yok. Bir görev turlar arasında kayıtlara ihtiyaç duyduğunda ajan bunu kendisi oluşturur ve her ajan kullanabilir.",
   "mobile.agent.tables.note":
     "Bu ana makinedeki tüm ajanlar bu tabloları paylaşır. Silinen bir tablo her ajan için kaybolur.",
-  "mobile.agent.tables.madeOutside": "OpenBot dışında oluşturuldu · herhangi bir ajan silebilir",
+  "mobile.agent.tables.madeOutside": "MyBot dışında oluşturuldu · herhangi bir ajan silebilir",
   "mobile.agent.tables.keptBy": "{name} tarafından tutuluyor",
   "mobile.agent.tables.keptByDeleted": "Artık var olmayan bir ajan tarafından tutuluyor",
   "mobile.agent.tables.notCounted": "Sayılmadı",
@@ -454,7 +452,7 @@ export const messages = {
   "mobile.agent.tables.deleteBody": "Tablo her ajan için silinir. Kayıtlar kurtarılamaz.",
   "mobile.agent.tables.keep": "Koru",
   "mobile.agent.tables.deleteFailed": "Tablo silinemedi",
-  "mobile.agent.tables.deleteFailedBody": "OpenBot bu tabloyu silemedi.",
+  "mobile.agent.tables.deleteFailedBody": "MyBot bu tabloyu silemedi.",
   "mobile.agent.tables.unsupported": "Bu ana makine tablolarını uzak bir cihazda gösteremez.",
   "mobile.agent.publish.title": "Yayımla",
   "mobile.agent.publish.loading": "Yükleniyor…",
@@ -566,7 +564,7 @@ export const messages = {
   "mobile.agent.list.waiting.state.question": "Yanıtınızı bekliyor",
   "mobile.agent.list.waiting.state.approval": "Onayınızı bekliyor",
   "mobile.agent.list.waiting.state.takeover": "Tarayıcıda sizi bekliyor",
-  "mobile.agent.add.failed": "OpenBot bu ajanı oluşturamadı.",
+  "mobile.agent.add.failed": "MyBot bu ajanı oluşturamadı.",
   "mobile.agent.add.create": "Ajan oluştur",
   "mobile.agent.add.creating": "Oluşturuluyor…",
   "mobile.agent.form.name": "Ad",
@@ -577,7 +575,7 @@ export const messages = {
   "mobile.agent.add.nameRequired": "Bu ajan için bir ad girin.",
   "mobile.agent.edit.loading": "Ajan yükleniyor…",
   "mobile.agent.edit.gone": "Bu ajan bu ana makinede artık mevcut değil.",
-  "mobile.agent.edit.failed": "OpenBot bu ajanı güncelleyemedi.",
+  "mobile.agent.edit.failed": "MyBot bu ajanı güncelleyemedi.",
   "mobile.agent.edit.appearance": "Görünümü düzenle",
   "mobile.agent.edit.title": "Başlık",
   "mobile.agent.edit.titlePlaceholder": "Ajanınızın ne yaptığını açıklayın",
@@ -664,7 +662,7 @@ export const messages = {
   "mobile.agent.folders.inShared": "{folder} klasörü paylaşılan klasörde olduğu için {agent} onu zaten değiştirebilir",
   "mobile.agent.folders.inFolder": "{folder} klasörü, zaten eklenmiş olan {parent} klasörünün içinde",
   "mobile.agent.folders.protected":
-    "{folder} klasörü eklenemez: OpenBot verilerini veya diğer ajanların dosyalarını içeriyor",
+    "{folder} klasörü eklenemez: MyBot verilerini veya diğer ajanların dosyalarını içeriyor",
   "mobile.agent.folders.missing": "{folder} ana bilgisayarda bir klasör değil",
   "mobile.agent.folders.limit": {
     one: "En fazla {count} klasör ekleyebilirsiniz",
@@ -723,7 +721,7 @@ export const messages = {
   "mobile.agent.deleteHistory.footer": "Bu sohbetin mesajları silinir ve ajan onları unutur. Kurulumu kalır.",
   "mobile.agent.deleteHistory.confirmTitle": "{name} ile sohbet geçmişi silinsin mi?",
   "mobile.agent.deleteHistory.confirmBody":
-    "Bu sohbetin tüm mesajları ve dosyaları OpenBot'tan silinir ve ajan onları unutur. Bu işlem geri alınamaz. Yan konular, talimatlar, model, araçlar, anılar, çalışma alanı ve tarayıcı değişmez.",
+    "Bu sohbetin tüm mesajları ve dosyaları MyBot'tan silinir ve ajan onları unutur. Bu işlem geri alınamaz. Yan konular, talimatlar, model, araçlar, anılar, çalışma alanı ve tarayıcı değişmez.",
   "mobile.agent.deleteHistory.confirm": "Geçmişi sil",
   "mobile.agent.deleteHistory.failed": "Geçmiş silinemedi",
   "mobile.agent.deleteHistory.failedBody": "Ana makine geçmişi silemedi.",

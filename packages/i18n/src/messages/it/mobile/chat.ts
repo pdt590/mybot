@@ -4,7 +4,7 @@ import type { messages as source } from "../../en/mobile/chat";
 export const messages = {
   "mobile.chat.dictation.microphoneOffTitle": "L'accesso al microfono è disattivato",
   "mobile.chat.dictation.microphoneOffMessage":
-    "Per dettare un messaggio, consenti a OpenBot di usare il microfono e il riconoscimento vocale nelle Impostazioni.",
+    "Per dettare un messaggio, consenti a MyBot di usare il microfono e il riconoscimento vocale nelle Impostazioni.",
   "mobile.chat.dictation.stopped": "Dettatura interrotta",
   "mobile.chat.dictation.tryAgain": "Riprova.",
   "mobile.chat.dictation.unavailable": "La dettatura non è disponibile",
@@ -142,7 +142,7 @@ export const messages = {
   "mobile.chat.attachment.openFailed": "Impossibile aprire l'allegato",
   "mobile.chat.attachment.photosNeedUpdate": "Per salvare le foto serve l'ultima versione dell'app.",
   "mobile.chat.attachment.photosPermission":
-    "Consenti a OpenBot di aggiungere foto nelle Impostazioni per salvare questa immagine.",
+    "Consenti a MyBot di aggiungere foto nelle Impostazioni per salvare questa immagine.",
   "mobile.chat.attachment.imageUnavailable": "L'immagine non è disponibile. Riprova.",
   "mobile.chat.attachment.saveImageFailed": "Impossibile salvare l'immagine",
   "mobile.chat.attachment.copyImageFailed": "Impossibile copiare l’immagine",
@@ -174,9 +174,9 @@ export const messages = {
   "mobile.chat.attachment.unsupported":
     "{name}: scegli immagini, audio MP3, video MOV o MP4, archivi ZIP, PDF, documenti Office, EML, testo, Markdown, dati o file di codice sorgente.",
   "mobile.chat.attachment.hostRejectsType":
-    "{name}: il computer host non accetta file {type}. Aggiorna OpenBot lì per allegarli.",
+    "{name}: il computer host non accetta file {type}. Aggiorna MyBot lì per allegarli.",
   "mobile.chat.attachment.hostRejects":
-    "{name}: il computer host non accetta questi file. Aggiorna OpenBot lì per allegarli.",
+    "{name}: il computer host non accetta questi file. Aggiorna MyBot lì per allegarli.",
   "mobile.chat.attachment.nameTooLong": "Scegli un file con un nome più corto.",
   "mobile.chat.attachment.damaged": "L'allegato è danneggiato. Selezionalo di nuovo.",
   "mobile.chat.attachment.tooLarge": "{name} supera i {limit}.",
@@ -227,11 +227,11 @@ export const messages = {
   "mobile.chat.liveVoice.voiceServerFailed":
     "Il tuo server vocale non è riuscito a leggere la risposta. Controllalo in Impostazioni > Voce.",
   "mobile.chat.liveVoice.gptUnsupported":
-    "Questo server non supporta GPT Live Voice. Aggiorna OpenBot sul computer che lo esegue.",
+    "Questo server non supporta GPT Live Voice. Aggiorna MyBot sul computer che lo esegue.",
   "mobile.chat.liveVoice.gptFailed": "Impossibile avviare GPT Live Voice. Riattiva il microfono per riprovare.",
   "mobile.chat.liveVoice.gptEnded": "GPT Live Voice si è fermato. Riattiva il microfono per avviarlo di nuovo.",
   "mobile.chat.liveVoice.gptMicrophoneOff":
-    "Consenti a OpenBot di usare il microfono in Impostazioni. Poi riattiva il microfono per riprovare.",
+    "Consenti a MyBot di usare il microfono in Impostazioni. Poi riattiva il microfono per riprovare.",
   "mobile.chat.composer.addAttachment": "Aggiungi allegato",
   "mobile.chat.composer.ask": "Chiedi a {name}",
   "mobile.chat.composer.stopFailed": "Impossibile fermare l'agente. Potrebbe aver già finito.",
@@ -252,7 +252,7 @@ export const messages = {
   "mobile.chat.pins.unpin": "Rimuovi",
   "mobile.chat.pins.failed": "Il messaggio fissato non è cambiato.",
   "mobile.chat.pins.loadFailed": "Impossibile caricare i messaggi fissati.",
-  "mobile.chat.pins.unsupported": "Questo host non può fissare i messaggi. Aggiorna OpenBot sull’host.",
+  "mobile.chat.pins.unsupported": "Questo host non può fissare i messaggi. Aggiorna MyBot sull’host.",
   "mobile.chat.pins.mainChat": "Chat principale",
   "mobile.chat.pins.thread": "Thread laterale",
   "mobile.chat.pins.pinnedBy": "Fissato da {name}",
@@ -341,7 +341,7 @@ export const messages = {
   "mobile.chat.imageGallery.saved": "Salvate in Foto",
   "mobile.chat.imageGallery.shareAll": "Condividi tutte",
   "mobile.chat.imageGallery.photosPermission":
-    "Consenti a OpenBot di aggiungere foto in Impostazioni per salvare queste immagini.",
+    "Consenti a MyBot di aggiungere foto in Impostazioni per salvare queste immagini.",
   "mobile.chat.imageGallery.saveFailed": "Impossibile salvare le immagini",
   "mobile.chat.imageGallery.shareFailed": "Impossibile condividere le immagini",
   "mobile.chat.imageGallery.shareNeedsUpdate": "Per condividere più immagini serve l'ultima versione dell'app.",
@@ -351,8 +351,7 @@ export const messages = {
   "mobile.chat.video.loading": "Caricamento di {name}",
   "mobile.chat.video.share": "Condividi {name}",
   "mobile.chat.video.save": "Salva {name} in Foto",
-  "mobile.chat.video.photosPermission":
-    "Consenti a OpenBot di aggiungere foto in Impostazioni per salvare questo video.",
+  "mobile.chat.video.photosPermission": "Consenti a MyBot di aggiungere foto in Impostazioni per salvare questo video.",
   "mobile.chat.video.saveFailed": "Impossibile salvare il video",
   "mobile.chat.audio.play": "Riproduci {name}",
   "mobile.chat.audio.pause": "Metti in pausa {name}",
@@ -366,10 +365,10 @@ export const messages = {
   "mobile.chat.browserSecret.authenticatorCode": "Codice dell'app di autenticazione",
   "mobile.chat.browserSecret.oneTimeCode": "Codice monouso",
   "mobile.chat.browserSecret.takeoverTitle": "Intervento nel browser",
-  "mobile.chat.browserSecret.takeoverBody": "Completa questo passaggio nel browser sul computer su cui gira OpenBot.",
+  "mobile.chat.browserSecret.takeoverBody": "Completa questo passaggio nel browser sul computer su cui gira MyBot.",
   "mobile.chat.browserSecret.signInBlockedTitle": "Accedi dal tuo computer",
   "mobile.chat.browserSecret.signInBlockedBody":
-    "Questo sito non accetta un accesso dal server. Apri questa chat nell’app desktop di OpenBot sul tuo computer e accedi da lì.",
+    "Questo sito non accetta un accesso dal server. Apri questa chat nell’app desktop di MyBot sul tuo computer e accedi da lì.",
   "mobile.chat.browserSecret.takeoverReload": "Poi ricarica la pagina prima di scegliere «Ho finito».",
   "mobile.chat.browserSecret.takeoverFailed": "Impossibile completare la richiesta.",
   "mobile.chat.browserSecret.done": "Ho finito",
@@ -377,17 +376,17 @@ export const messages = {
     "Invia una sola volta a {origin}. Questo valore non viene aggiunto alla chat.",
   "mobile.chat.browserSecret.submitFailed": "Impossibile completare la richiesta. Controlla la connessione e riprova.",
   "mobile.chat.browserSecret.vaultSkip.agentScript":
-    "OpenBot non ha usato le tue credenziali salvate perché l’agente ha eseguito uno script in questa pagina. Per usarle, chiedi all’agente di ricaricare la pagina e riprovare.",
+    "MyBot non ha usato le tue credenziali salvate perché l’agente ha eseguito uno script in questa pagina. Per usarle, chiedi all’agente di ricaricare la pagina e riprovare.",
   "mobile.chat.browserSecret.vaultSkip.fieldKind":
-    "OpenBot non ha usato le tue credenziali salvate perché l’agente ha scelto il campo sbagliato nella pagina.",
+    "MyBot non ha usato le tue credenziali salvate perché l’agente ha scelto il campo sbagliato nella pagina.",
   "mobile.chat.browserSecret.vaultSkip.loginChoice":
-    "OpenBot non ha usato credenziali salvate perché l’agente non ha scelto nessuna delle credenziali salvate per questo sito. Di’ all’agente quale account usare.",
+    "MyBot non ha usato credenziali salvate perché l’agente non ha scelto nessuna delle credenziali salvate per questo sito. Di’ all’agente quale account usare.",
   "mobile.chat.browserSecret.vaultSkip.noPassword":
-    "OpenBot non ha usato le tue credenziali salvate perché non contengono una password per questo sito.",
+    "MyBot non ha usato le tue credenziali salvate perché non contengono una password per questo sito.",
   "mobile.chat.browserSecret.vaultSkip.noAuthenticatorKey":
-    "OpenBot non ha usato le tue credenziali salvate perché non contengono una chiave dell’autenticatore.",
+    "MyBot non ha usato le tue credenziali salvate perché non contengono una chiave dell’autenticatore.",
   "mobile.chat.browserSecret.vaultSkip.vaultUnreadable":
-    "OpenBot non ha usato credenziali salvate perché non è riuscito a leggere il tuo gestore di password.",
+    "MyBot non ha usato credenziali salvate perché non è riuscito a leggere il tuo gestore di password.",
   "mobile.chat.browserSecret.submit": "Invia",
   "mobile.chat.browserSecret.takeOver": "Intervieni",
   "mobile.chat.starter.title": "Da dove cominciamo?",
@@ -457,14 +456,14 @@ export const messages = {
   "mobile.chat.approval.effect.permissions":
     "«Consenti» dà a {name} questi permessi su {server}. «Rifiuta» mantiene i permessi attuali.",
   "mobile.chat.approval.partial":
-    "{server} invia al telefono solo l’inizio di questa richiesta. Per consentirla, aggiorna OpenBot su {server} oppure apri questa chat nell’app desktop di OpenBot. Qui puoi rifiutarla.",
+    "{server} invia al telefono solo l’inizio di questa richiesta. Per consentirla, aggiorna MyBot su {server} oppure apri questa chat nell’app desktop di MyBot. Qui puoi rifiutarla.",
   "mobile.chat.approval.loading": "Caricamento della richiesta completa…",
   "mobile.chat.approval.loadFailed": "Impossibile caricare la richiesta completa. Qui puoi rifiutarla.",
   "mobile.chat.approval.retry": "Riprova",
   "mobile.chat.approval.report.bugHeadline": "Hai trovato un bug? Risolviamolo.",
   "mobile.chat.approval.report.ideaHeadline": "Hai un'idea? Realizziamola.",
   "mobile.chat.approval.report.dontSend": "Non ora",
-  "mobile.chat.approval.report.send": "Invia al team di OpenBot",
+  "mobile.chat.approval.report.send": "Invia al team di MyBot",
   "mobile.chat.approval.report.phoneAdds": "Questo telefono aggiunge alla segnalazione:",
   "mobile.chat.approval.allow": "Consenti",
   "mobile.chat.approval.deny": "Rifiuta",
@@ -547,7 +546,7 @@ export const messages = {
   "mobile.chat.queue.sendNowNeedsTurn": "«Invia ora» richiede un turno in corso.",
   "mobile.chat.queue.stillHoldingTitle": "Il messaggio è ancora trattenuto",
   "mobile.chat.queue.stillHoldingMessage":
-    "OpenBot non è riuscito a rilasciare questo messaggio, quindi l'agente continua ad aspettarlo. Riprova quando il telefono si riconnette.",
+    "MyBot non è riuscito a rilasciare questo messaggio, quindi l'agente continua ad aspettarlo. Riprova quando il telefono si riconnette.",
   "mobile.chat.queue.keepEditing": "Continua a modificare",
   "mobile.chat.queue.leaveAnyway": "Esci comunque",
   "mobile.chat.queue.discardTitle": "Scartare le modifiche?",
@@ -557,7 +556,7 @@ export const messages = {
   "mobile.chat.queue.alreadyReceivedKept":
     "L’agente ha già ricevuto questo messaggio, quindi non può essere modificato. Quando chiudi questa schermata, il tuo testo va nella casella del messaggio.",
   "mobile.chat.queue.holding": "Sto trattenendo il messaggio per te…",
-  "mobile.chat.queue.holdFailed": "OpenBot non è riuscito a trattenere questo messaggio per la modifica.",
+  "mobile.chat.queue.holdFailed": "MyBot non è riuscito a trattenere questo messaggio per la modifica.",
   "mobile.chat.queue.messageLabel": "Messaggio",
   "mobile.chat.queue.messagePlaceholder": "Testo del messaggio",
   "mobile.chat.queue.save": "Salva messaggio in coda",
@@ -591,13 +590,13 @@ export const messages = {
   "mobile.chat.threads.renameSave": "Salva",
   "mobile.chat.threads.name": "Nome del thread",
   "mobile.chat.threads.renameUnavailable":
-    "Non puoi rinominare questo thread ora. Connettiti al server o aggiorna OpenBot sull’host.",
+    "Non puoi rinominare questo thread ora. Connettiti al server o aggiorna MyBot sull’host.",
   "mobile.chat.threads.delete.action": "Elimina",
   "mobile.chat.threads.delete.title": "Eliminare questo thread?",
   "mobile.chat.threads.delete.body":
-    "OpenBot elimina per sempre il thread, i suoi messaggi e i suoi file. La chat principale non cambia.",
-  "mobile.chat.threads.filesUnsupported": "Questo host non può ricevere file in un thread. Aggiorna OpenBot sull’host.",
-  "mobile.chat.threads.unsupported": "Questo host non può rinominare o eliminare i thread. Aggiorna OpenBot sull’host.",
+    "MyBot elimina per sempre il thread, i suoi messaggi e i suoi file. La chat principale non cambia.",
+  "mobile.chat.threads.filesUnsupported": "Questo host non può ricevere file in un thread. Aggiorna MyBot sull’host.",
+  "mobile.chat.threads.unsupported": "Questo host non può rinominare o eliminare i thread. Aggiorna MyBot sull’host.",
   "mobile.chat.threads.error.rename": "Impossibile rinominare il thread.",
   "mobile.chat.threads.error.delete": "Impossibile eliminare il thread.",
   "mobile.chat.channelWork.working": "Lavora in {channel}",

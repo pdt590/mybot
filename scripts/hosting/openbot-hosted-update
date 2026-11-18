@@ -2,7 +2,7 @@
 # Keeps a hosted server on the newest OpenBot release. systemd runs it as root:
 #
 #   openbot-hosted-update stage   openbot-update.timer. Downloads a newer release, checks it against
-#                                 the release manifest, copies it to /opt/OpenBot/staged, and installs
+#                                 the release manifest, copies it to /opt/MyBot/staged, and installs
 #                                 the packages that it needs. OpenBot keeps running.
 #   openbot-hosted-update boot    openbot-update-apply.service, at boot before openbot.service. Runs
 #                                 `apply` when the disk of the server is complete. After a boat wake,
@@ -27,7 +27,7 @@ set -euo pipefail
 export LC_ALL=C DEBIAN_FRONTEND=noninteractive
 umask 022
 
-INSTALL=/opt/OpenBot
+INSTALL=/opt/MyBot
 RELEASES=https://github.com/nightly-labs/openbot/releases
 LOCK=/run/openbot-update.lock
 # Not in a directory that boat saves, so a download that a stop interrupts does not stay.
@@ -374,11 +374,11 @@ stage() {
   # Global: the trap runs after this function returns.
   work=$(mktemp -d "$SCRATCH/openbot-update.XXXXXX")
   trap 'rm -rf "$work"; rm -f "$STATE"' EXIT
-  download "$RELEASES/download/v$version/$path" "$work/OpenBot.AppImage" "$size"
+  download "$RELEASES/download/v$version/$path" "$work/MyBot.AppImage" "$size"
   set_state preparing
-  [ "$(openssl dgst -sha512 -binary "$work/OpenBot.AppImage" | openssl base64 -A)" = "$sha512" ] ||
+  [ "$(openssl dgst -sha512 -binary "$work/MyBot.AppImage" | openssl base64 -A)" = "$sha512" ] ||
     fail "The AppImage does not match the release manifest."
-  unpack "$work/OpenBot.AppImage"
+  unpack "$work/MyBot.AppImage"
   [ "$(version_of "$work/squashfs-root")" = "$version" ] || fail "The AppImage has another version."
   # The release names its own packages and units. A release without them cannot update a server.
   local file

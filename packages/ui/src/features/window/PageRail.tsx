@@ -585,24 +585,10 @@ function RailMoreMenu(props: {
 
 /** The logo in the top row of the rail, in line with the icons of the rail and the server logo of the sidebar. */
 function RailLogo(props: { variant: AppLogoVariant; href: string | undefined }) {
-  const { t } = useText();
   return (
     <div class="window-rail-logo">
-      <Show when={props.href} fallback={<AppLogo variant={props.variant} />}>
-        {(href) => (
-          <MotionTooltip content={t("app.rail.website")}>
-            <a
-              class="window-rail-logo-link"
-              href={href()}
-              target="_blank"
-              rel="noopener"
-              aria-label={t("app.rail.website")}
-            >
-              <AppLogo variant={props.variant} />
-            </a>
-          </MotionTooltip>
-        )}
-      </Show>
+      {/* MyBot: the logo is not a link to the website. */}
+      <AppLogo variant={props.variant} />
     </div>
   );
 }

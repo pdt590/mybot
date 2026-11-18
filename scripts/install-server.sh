@@ -118,11 +118,11 @@ sha512=$(sed -n 's/^sha512: *//p' <<<"$manifest" | head -n 1)
 [[ $sha512 =~ ^[A-Za-z0-9+/]{86}==$ ]] || fail "The release manifest has no valid SHA-512."
 
 echo "Downloading OpenBot $version..."
-fetch --output "$work/OpenBot.AppImage" "$RELEASES/download/v$version/$path"
-[ "$(openssl dgst -sha512 -binary "$work/OpenBot.AppImage" | openssl base64 -A)" = "$sha512" ] ||
+fetch --output "$work/MyBot.AppImage" "$RELEASES/download/v$version/$path"
+[ "$(openssl dgst -sha512 -binary "$work/MyBot.AppImage" | openssl base64 -A)" = "$sha512" ] ||
   fail "The download does not match the release manifest."
-chmod 0700 "$work/OpenBot.AppImage"
-(cd "$work" && ./OpenBot.AppImage --appimage-extract >/dev/null)
+chmod 0700 "$work/MyBot.AppImage"
+(cd "$work" && ./MyBot.AppImage --appimage-extract >/dev/null)
 
 setup="$work/squashfs-root/resources/hosting/openbot-server-setup"
 [ -f "$setup" ] || fail "OpenBot $version cannot install as a server. Try again after the next release."

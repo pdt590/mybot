@@ -37,6 +37,7 @@ import { type AgentFolders, createAgentFolders } from "./agent-folders";
 import { type AgentHostSettingsService, createAgentHostSettings } from "./agent-host-settings";
 import { fitImageForAgent } from "./agent-image-fit";
 import { type AgentInstructionsFiles, createAgentInstructionsFiles } from "./agent-instructions-files";
+import { appDataFolderName, appWorkspaceRoot } from "./app-folders";
 import {
   type BrowserProfileService,
   browserProxyConnection,
@@ -477,6 +478,8 @@ import { VoiceTranscriptionService } from "./voice-transcription-service";
 import { WebhookRelay } from "./webhook-relay";
 import { WindowsTopmostKeeper } from "./windows-topmost-keeper";
 
+/** MyBot: the app never checks for, downloads or installs an update. */
+const APP_UPDATES_DISABLED: boolean = true;
 const logger = createOpenBotLogger("application-services");
 const SETUP_FILE = "openbot-setup-v2.json";
 const ANALYTICS_PREFERENCE_FILE = "openbot-analytics-preference-v1.json";
@@ -1364,7 +1367,8 @@ export async function createApplicationServices({
     homedir(),
     new OpenBotDatabase(app.getPath("userData"), checkDatabaseIntegrityInHost),
     () => agentDefaults.get(),
-    localServerChild?.agentRoot,
+    // MyBot: `~/MyBot`, or `~/OpenBot` when its move failed (`app-folders.ts`).
+    localServerChild?.agentRoot ?? appWorkspaceRoot(homedir()),
   );
   // Phase marks for `dev:bench`, so a slow start shows which group of awaits it waited on. They
   // change nothing.
@@ -1765,6 +1769,7 @@ export async function createApplicationServices({
     providerRuntimeRoot({
       appData: app.getPath("appData"),
       userDataOverride: app.commandLine.getSwitchValue("user-data-dir"),
+      appFolder: appDataFolderName(),
     });
   const providerDownloads = join(app.getPath("userData"), "provider-runtimes", ".downloads");
   const hermesInstaller = new HermesInstaller({
@@ -3908,7 +3913,9 @@ export async function createApplicationServices({
     throw new Error(`Unsupported analytics platform: ${analyticsPlatform}`);
   }
   performance.mark("openbot:services.remote-desktop");
-  const analyticsEnabled = (app.isPackaged && appVariant === "production") || analyticsCaptureUrl !== null;
+  // MyBot: no product analytics or failure reports go to analytics.openbot.run. Only a development
+  // capture URL (`OPENBOT_ANALYTICS_CAPTURE_URL`, a local test server) can turn them on.
+  const analyticsEnabled = analyticsCaptureUrl !== null;
   const analyticsInstallId = analyticsEnabled
     ? await Effect.runPromise(
         readAnalyticsInstallId(join(app.getPath("userData"), ANALYTICS_INSTALL_ID_FILE), Date.now()),
@@ -4164,7 +4171,7 @@ export async function createApplicationServices({
       : new LocalServers({
           registryPath: join(app.getPath("userData"), LOCAL_SERVERS_FILE),
           userDataRoot: join(app.getPath("userData"), "local-servers"),
-          agentRoot: join(homedir(), "OpenBot", "Servers"),
+          agentRoot: join(appWorkspaceRoot(homedir()), "Servers"),
           runtimeRoot: providerRuntimesRoot,
           cipher: safeStorageCipher("error.app.macSecureStorageUnavailable"),
           remoteServers,
@@ -4429,7 +4436,10 @@ export async function createApplicationServices({
       (process.env.OPENBOT_HOSTED_SERVER === "1" || (serverModeEnvironment !== null && installationMode === "self")) &&
       existsSync(HOSTED_UPDATE_TRIGGER));
   // A local server is the same application as its parent, which installs the update for both.
+  // MyBot: automatic updates are off. The update feed is the upstream OpenBot release, which would
+  // replace this build.
   const updatesEnabled =
+    !APP_UPDATES_DISABLED &&
     !localServerChild &&
     app.isPackaged &&
     !isNixStoreInstall() &&

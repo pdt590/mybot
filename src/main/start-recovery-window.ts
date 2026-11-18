@@ -230,7 +230,6 @@ ${plush ?? ""}
 ${noticeText ? `<p class="notice" role="status">${text(noticeText)}</p>` : ""}
 <div class="actions">
 ${link("retry", t("startup.recoveryRetry"), true)}
-${link("previous-version", t("startup.recoveryPreviousVersion"))}
 ${link("export-diagnostics", t("startup.recoveryExportDiagnostics"))}
 ${link("open-data-folder", t("startup.recoveryOpenDataFolder"))}
 ${link("quit", t("startup.recoveryQuit"))}

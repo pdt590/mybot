@@ -314,7 +314,7 @@ uninstall_command() {
     fi
   fi
   rm -f /etc/apparmor.d/openbot-hosted /usr/local/bin/openbot
-  # The desktop .deb also installs into /opt/OpenBot, so only the entries of a server go.
+  # The desktop .deb also installs into /opt/MyBot, so only the entries of a server go.
   for entry in app hosted staged staged.ready .applying; do rm -rf "${INSTALL:?}/$entry"; done
   rmdir "$INSTALL" 2>/dev/null || true
   home=$(getent passwd "$user" | cut -d: -f6)

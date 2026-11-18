@@ -78,7 +78,6 @@ export const navItems: ReadonlyArray<SettingsNavItem> = [
         descriptionKey: "settings.compactMessageActions.description",
       },
       { titleKey: "settings.externalLinks.title", descriptionKey: "settings.externalLinks.description" },
-      { titleKey: "settings.analytics.title", descriptionKey: "settings.analytics.description" },
     ],
   },
   {
@@ -275,6 +274,8 @@ export function settingsTabShown(
   window: { platform: AppInfo["platform"] | undefined; chatWindow: boolean },
 ): boolean {
   if (tab === "hosted-servers") return false;
+  // MyBot: no plans or payments.
+  if (tab === "billing") return false;
   if (tab === "dynamic-island") return dynamicIslandSettingsShown(window.platform, window.chatWindow);
   if (tab === "agent-dock") return window.platform !== undefined && !window.chatWindow;
   return true;

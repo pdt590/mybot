@@ -75,17 +75,17 @@ IMPORT_STATE=/var/lib/openbot-move-import
 # The machine ID and the token of openbot-pool-wait, of root.
 OFFER=/etc/openbot-pool
 OFFER_INSTALL=/usr/local/lib/openbot-pool
-DATABASE=$USER_HOME/.config/OpenBot/openbot.db
+DATABASE=$USER_HOME/.config/MyBot/openbot.db
 # The files that must be the same on the two machines. The agent database is there only after an
 # agent made a table.
 CHECKED=(
   "$DATABASE"
-  "$USER_HOME/OpenBot/Shared/Data/agent-data.db"
+  "$USER_HOME/MyBot/Shared/Data/agent-data.db"
   "$USER_HOME/.config/openbot-hosted/keyring-password"
   "$KEYRING_HOME/keyrings/login.keyring"
 )
 # The files of boat, the X authorization of the old displays, and a cache that npm makes again.
-# The installed release in /opt/OpenBot is not in the archive: provision.sh installs it.
+# The installed release in /opt/MyBot is not in the archive: provision.sh installs it.
 # `import` deletes ~/.ascii and ~/.config/ascii of the boat agent. The agent can write there during the
 # export, and tar then fails (seen on 2026-11-12).
 EXCLUDED=(
@@ -186,11 +186,11 @@ openbot_runs() {
 }
 
 installed_version() {
-  sed -n 's/^X-AppImage-Version=//p' /opt/OpenBot/app/*.desktop 2>/dev/null | head -n 1
+  sed -n 's/^X-AppImage-Version=//p' /opt/MyBot/app/*.desktop 2>/dev/null | head -n 1
 }
 
 is_hosted_install() {
-  [ "$(cat /opt/OpenBot/hosted/service-user 2>/dev/null)" = "$SERVICE_USER" ] && [ ! -e /opt/OpenBot/hosted/mode ]
+  [ "$(cat /opt/MyBot/hosted/service-user 2>/dev/null)" = "$SERVICE_USER" ] && [ ! -e /opt/MyBot/hosted/mode ]
 }
 
 # One line for each command that npm installed for all users: its name, its package and its
@@ -532,10 +532,10 @@ offer() {
   stop_offer
   is_hosted_install || fail "This machine is not prepared. Run \"$0 prepare\" first."
   openbot_is_off || fail "OpenBot is enabled or runs on this machine. It is not a prepared pool server."
-  [ ! -e "$USER_HOME/.config/OpenBot" ] && [ ! -e "$USER_HOME/.config/openbot-hosted" ] &&
+  [ ! -e "$USER_HOME/.config/MyBot" ] && [ ! -e "$USER_HOME/.config/openbot-hosted" ] &&
     [ ! -e "$KEYRING_HOME/keyrings" ] && [ ! -e "$IMPORT_STATE" ] ||
     fail "This machine has the data of a server. It cannot take a new one."
-  grep -q '^OPENBOT_AUTH_API_URL=https://' /opt/OpenBot/hosted/openbot.env ||
+  grep -q '^OPENBOT_AUTH_API_URL=https://' /opt/MyBot/hosted/openbot.env ||
     fail "This machine names no account service."
   install -d -m 0755 "$OFFER_INSTALL"
   install -m 0755 "$source/openbot-pool-wait" "$OFFER_INSTALL/openbot-pool-wait"
@@ -559,7 +559,7 @@ prepare() {
     fail "The user and group IDs must be numbers above 0."
   source=$(cd "$(dirname "$0")" && pwd)
   [ -f "$source/provision.sh" ] || fail "Run this file from a copy of scripts/hosting."
-  [ ! -e /opt/OpenBot ] || fail "OpenBot is installed on this machine. Use a free pool server."
+  [ ! -e /opt/MyBot ] || fail "OpenBot is installed on this machine. Use a free pool server."
   [ ! -e "$USER_HOME" ] && [ ! -e "$KEYRING_HOME" ] ||
     fail "This machine has data in $USER_HOME or $KEYRING_HOME."
   ! id "$SERVICE_USER" >/dev/null 2>&1 || fail "This machine has a user $SERVICE_USER."
@@ -598,7 +598,7 @@ upgrade() {
   [ -f "$source/provision.sh" ] || fail "Run this file from a copy of scripts/hosting."
   stop_offer
   is_hosted_install || fail "This machine is not prepared. Run \"$0 prepare\" first."
-  [ ! -e "$USER_HOME/.config/OpenBot" ] && [ ! -e "$KEYRING_HOME/keyrings" ] && [ ! -e "$IMPORT_STATE" ] ||
+  [ ! -e "$USER_HOME/.config/MyBot" ] && [ ! -e "$KEYRING_HOME/keyrings" ] && [ ! -e "$IMPORT_STATE" ] ||
     fail "This machine has the data of a server. Do not upgrade it here."
   if openbot_runs; then fail "OpenBot runs. Stop it."; fi
   copy=$(mktemp -d /run/openbot-move.XXXXXX)
@@ -646,7 +646,7 @@ export_data() {
   fi
   id "$SERVICE_USER" >/dev/null 2>&1 || fail "This machine has no user $SERVICE_USER. It is not a boat sandbox."
   is_hosted_install || fail "This machine is not a hosted server of the user $SERVICE_USER."
-  [ -s "$USER_HOME/.config/OpenBot/openbot.db" ] || fail "The home of $SERVICE_USER has no OpenBot database."
+  [ -s "$USER_HOME/.config/MyBot/openbot.db" ] || fail "The home of $SERVICE_USER has no OpenBot database."
   [ -s "$USER_HOME/.config/openbot-hosted/keyring-password" ] && [ -s "$KEYRING_HOME/keyrings/login.keyring" ] ||
     fail "The server keyring or its password file is missing. The server could not sign in after the move."
   # While boat restores the disk, a directory can show no files. boat can start the restore some seconds
@@ -872,14 +872,14 @@ add_node_command() {
   runuser -u "$SERVICE_USER" -- bash -c 'umask 022 && cat >"$1" && chmod 0755 "$1"' _ "$node" <<'EOF'
 #!/bin/bash
 # The move from boat added this command. It starts the Bun of OpenBot as Node.
-bun=$(printf '%s\n' "$HOME"/.config/OpenBot/provider-runtimes/bun/*/*/bin/bun | sort -V | tail -n 1)
+bun=$(printf '%s\n' "$HOME"/.config/MyBot/provider-runtimes/bun/*/*/bin/bun | sort -V | tail -n 1)
 if [ ! -x "$bun" ]; then
   echo "node: OpenBot has not downloaded Bun. OpenBot downloads it when an MCP server is on." >&2
   exit 127
 fi
 exec -a node "$bun" "$@"
 EOF
-  if ! compgen -G "$USER_HOME/.config/OpenBot/provider-runtimes/bun/*/*/bin/bun" >/dev/null; then
+  if ! compgen -G "$USER_HOME/.config/MyBot/provider-runtimes/bun/*/*/bin/bun" >/dev/null; then
     echo "The moved npm commands need Bun, and OpenBot did not download Bun in the sandbox. OpenBot downloads it when an MCP server is on."
   fi
 }
@@ -976,7 +976,7 @@ import_data() {
   openbot_is_off || fail "OpenBot is enabled or runs on this machine. It is not a prepared pool server."
   [ ! -e "$IMPORT_STATE" ] ||
     fail "An import did not get to its start on this machine. Run \"$0 discard $(hostname)\", then run the import again."
-  [ ! -e "$USER_HOME/.config/OpenBot" ] && [ ! -e "$KEYRING_HOME/keyrings" ] ||
+  [ ! -e "$USER_HOME/.config/MyBot" ] && [ ! -e "$KEYRING_HOME/keyrings" ] ||
     fail "This machine has the data of a server."
   shift
   for folder in "$@"; do

@@ -71,7 +71,7 @@ function summary(result: Run): string {
 
 /** The data of one instance: the database, shared tables, keyring, a workspace and an attachment. */
 async function writeFixture(root: string): Promise<void> {
-  const config = join(root, ".config/OpenBot");
+  const config = join(root, ".config/MyBot");
   const shared = join(root, "OpenBot/Shared/Data");
   await mkdir(config, { recursive: true });
   await mkdir(shared, { recursive: true });
@@ -180,7 +180,7 @@ async function main(): Promise<void> {
       cp -a /fixture/. ${data}/ && chown -R 1000:1000 ${data} && chmod 0700 ${data}
       printf 'OPENBOT_NAME=main\\nOPENBOT_CPUS=1\\nOPENBOT_MEM=1g\\nOPENBOT_DISK=256M\\nOPENBOT_BACKUP_DIR=/backups\\nOPENBOT_BACKUP_KEEP=2\\nOPENBOT_BACKUP_MAX_AGE=24\\n' >/opt/openbot-docker/instances/main.env
       docker run --detach --name openbot-main --stop-timeout 20 -v ${data}:/data ghcr.io/nightly-labs/openbot:latest >/dev/null`);
-    const dataHash = must(`sha256sum ${data}/.config/OpenBot/openbot.db | cut -d ' ' -f 1`);
+    const dataHash = must(`sha256sum ${data}/.config/MyBot/openbot.db | cut -d ' ' -f 1`);
 
     let result = instance("backups", "main");
     check(
@@ -243,7 +243,7 @@ async function main(): Promise<void> {
     const invalidSources = [
       {
         name: "main database",
-        path: ".config/OpenBot/openbot.db",
+        path: ".config/MyBot/openbot.db",
         error: /OpenBot cannot open openbot\.db|openbot\.db is damaged/,
       },
       {
@@ -272,7 +272,7 @@ async function main(): Promise<void> {
         summary(invalidResult),
       );
       const targetHashes = must(
-        `cd ${data} && sha256sum .config/OpenBot/openbot.db OpenBot/Shared/Data/agent-data.db OpenBot/Agents/E2E/notes.md OpenBot/Agents/E2E/attachment.bin .local/share/keyrings/login.keyring .config/openbot-container/keyring-password .e2e-starts .e2e-clean-stop`,
+        `cd ${data} && sha256sum .config/MyBot/openbot.db OpenBot/Shared/Data/agent-data.db OpenBot/Agents/E2E/notes.md OpenBot/Agents/E2E/attachment.bin .local/share/keyrings/login.keyring .config/openbot-container/keyring-password .e2e-starts .e2e-clean-stop`,
       );
       const targetRunningBefore = running();
       const refused = instance("restore", "main", invalidBackup, "--replace");
@@ -283,7 +283,7 @@ async function main(): Promise<void> {
       );
       const targetRunningAfter = running();
       const afterHashes = must(
-        `cd ${data} && sha256sum .config/OpenBot/openbot.db OpenBot/Shared/Data/agent-data.db OpenBot/Agents/E2E/notes.md OpenBot/Agents/E2E/attachment.bin .local/share/keyrings/login.keyring .config/openbot-container/keyring-password .e2e-starts .e2e-clean-stop`,
+        `cd ${data} && sha256sum .config/MyBot/openbot.db OpenBot/Shared/Data/agent-data.db OpenBot/Agents/E2E/notes.md OpenBot/Agents/E2E/attachment.bin .local/share/keyrings/login.keyring .config/openbot-container/keyring-password .e2e-starts .e2e-clean-stop`,
       );
       check(
         `a refused ${source.name} restore keeps target bytes and running state`,
@@ -490,7 +490,7 @@ async function main(): Promise<void> {
     check("restore with --replace", result.status === 0, summary(result));
     check("instance stays stopped after a restore", !running(), `running=${running()}`);
     const restored = must(
-      `cd ${data} && test -f OpenBot/Agents/E2E/notes.md && test ! -e OpenBot/Agents/E2E/after-backup.md && test -z "$(find . -maxdepth 1 -name '.openbot-*')" && sha256sum .config/OpenBot/openbot.db | cut -d ' ' -f 1`,
+      `cd ${data} && test -f OpenBot/Agents/E2E/notes.md && test ! -e OpenBot/Agents/E2E/after-backup.md && test -z "$(find . -maxdepth 1 -name '.openbot-*')" && sha256sum .config/MyBot/openbot.db | cut -d ' ' -f 1`,
     );
     check("restored data is the backup", restored === dataHash, `openbot.db ${restored.slice(0, 12)}`);
     check(

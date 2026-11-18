@@ -731,8 +731,9 @@ const UPDATE_PHASES = new Set([
   "unsupported",
 ]);
 
-function shouldEnableDesktopAnalytics(appInfo: AppInfo, productionBuild: boolean): boolean {
-  return appInfo.analyticsCaptureUrl !== undefined || (productionBuild && appInfo.variant === "production");
+function shouldEnableDesktopAnalytics(appInfo: AppInfo, _productionBuild: boolean): boolean {
+  // MyBot: nothing goes to analytics.openbot.run. Only a development capture URL turns analytics on.
+  return appInfo.analyticsCaptureUrl !== undefined;
 }
 
 function sanitizeDesktopAnalyticsEvent(
@@ -900,7 +901,8 @@ class DesktopAnalytics {
    * failure reports, and the web preference controls both.
    */
   configureWeb(options: { version: string; user: AnalyticsIdentity | null; enabled: boolean }): boolean {
-    if (!this.#client && (!this.#productionBuild || window.location.origin !== "https://openbot.run")) {
+    // MyBot: the web client sends no analytics.
+    if (!this.#client) {
       this.#disabled = true;
       this.#pending = [];
       return false;

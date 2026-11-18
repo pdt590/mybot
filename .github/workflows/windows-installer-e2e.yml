@@ -63,7 +63,7 @@ jobs:
       - name: Update the installers
         shell: bash
         run: |
-          installer=$(ls .openbot-build/installer/OpenBot-*-x64.exe)
+          installer=$(ls .openbot-build/installer/MyBot-*-x64.exe)
           bun scripts/windows-home-install-update-e2e.ts ".openbot-build/installers/OpenBot-$EARLIER_VERSION-x64.exe" "$installer"
 
       - name: Upload report

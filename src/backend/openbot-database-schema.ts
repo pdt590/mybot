@@ -1814,6 +1814,24 @@ function isPreservedText(table: string, column: string): boolean {
   return table === "projection_agent_memories" && (column === "text" || column === "normalized_text");
 }
 
+/**
+ * MyBot: replaces text in every TEXT column of every table, in one transaction. The app folders moved
+ * from `OpenBot` to `MyBot`, and this rewrites the absolute paths that the database keeps into them.
+ * Each pair must leave no `from` in its `to`, so that a second run changes nothing.
+ */
+export function substituteStoredText(db: DatabaseSync, substitutions: readonly Substitution[]): void {
+  if (substitutions.length === 0) return;
+  const tables = textColumnTables(db);
+  db.exec("BEGIN IMMEDIATE");
+  try {
+    substituteAll(db, tables, substitutions);
+    db.exec("COMMIT");
+  } catch (error) {
+    db.exec("ROLLBACK");
+    throw error;
+  }
+}
+
 /** Every table this migration rewrites, with the TEXT columns of each. */
 function textColumnTables(db: DatabaseSync): readonly TextColumnTable[] {
   const tables: TextColumnTable[] = [];

@@ -217,7 +217,7 @@ export class AgentStore {
     database = new OpenBotDatabase(userDataPath),
     agentDefaults: () => AgentDefaults = () => DEFAULT_AGENT_DEFAULTS,
     /** The folder of the agents, shared files and downloads. A local server has its own. */
-    openbotRoot = join(homePath, "OpenBot"),
+    openbotRoot = join(homePath, "MyBot"),
   ) {
     this.#statePath = join(userDataPath, LEGACY_AGENTS_STATE_FILE);
     this.#agentsRoot = join(openbotRoot, "Agents");

@@ -7,6 +7,7 @@ const STORAGE_KEY = "openbot:github-star-prompt";
 const PROMPTED = "shown";
 const SENDS_BEFORE_PROMPT = 3;
 const TOAST_ID = "github-star-prompt";
+const PROMPTS_DISABLED: boolean = true;
 
 let shownThisSession = false;
 
@@ -21,6 +22,8 @@ export function githubStarPromptShownThisSession(): boolean {
  * Blocked storage counts nothing, so a user never gets the question on each start.
  */
 export function noteAgentMessageSent(): void {
+  // MyBot: the GitHub star prompt is disabled.
+  if (PROMPTS_DISABLED) return;
   let sent: number;
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);

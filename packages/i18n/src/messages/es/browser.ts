@@ -56,8 +56,8 @@ export const messages = {
   "browser.pip.reattach": "Volver a acoplar el navegador a la barra lateral derecha",
   "browser.pip.reattachTitle": "Volver a acoplar navegador",
   "browser.pip.close": "Cerrar ventana emergente del navegador",
-  "browser.pip.reattachFailed": "OpenBot no pudo volver a acoplar el navegador.",
-  "browser.pip.closeFailed": "OpenBot no pudo cerrar la ventana emergente del navegador.",
+  "browser.pip.reattachFailed": "MyBot no pudo volver a acoplar el navegador.",
+  "browser.pip.closeFailed": "MyBot no pudo cerrar la ventana emergente del navegador.",
   "browser.popupBlocked.title": "Ventana emergente bloqueada",
   "browser.popupBlocked.dismiss": "Descartar mensaje de ventana emergente",
   "browser.liveView.label": "Vista en directo de la página en el servidor",
@@ -92,17 +92,17 @@ export const messages = {
   "browser.secret.takeOver": "Intervenir",
   "browser.secret.failed": "No se pudo completar la solicitud. Comprueba la conexión e inténtalo de nuevo.",
   "browser.secret.vaultSkip.agentScript":
-    "OpenBot no usó tu inicio de sesión guardado porque el agente ejecutó un script en esta página. Para usarlo, pide al agente que recargue la página y lo intente de nuevo.",
+    "MyBot no usó tu inicio de sesión guardado porque el agente ejecutó un script en esta página. Para usarlo, pide al agente que recargue la página y lo intente de nuevo.",
   "browser.secret.vaultSkip.fieldKind":
-    "OpenBot no usó tu inicio de sesión guardado porque el agente eligió un campo incorrecto en la página.",
+    "MyBot no usó tu inicio de sesión guardado porque el agente eligió un campo incorrecto en la página.",
   "browser.secret.vaultSkip.loginChoice":
-    "OpenBot no usó ningún inicio de sesión guardado porque el agente no eligió ninguno de los guardados para este sitio. Dile al agente qué cuenta debe usar.",
+    "MyBot no usó ningún inicio de sesión guardado porque el agente no eligió ninguno de los guardados para este sitio. Dile al agente qué cuenta debe usar.",
   "browser.secret.vaultSkip.noPassword":
-    "OpenBot no usó tu inicio de sesión guardado porque no tiene contraseña para este sitio.",
+    "MyBot no usó tu inicio de sesión guardado porque no tiene contraseña para este sitio.",
   "browser.secret.vaultSkip.noAuthenticatorKey":
-    "OpenBot no usó tu inicio de sesión guardado porque no tiene clave de autenticador.",
+    "MyBot no usó tu inicio de sesión guardado porque no tiene clave de autenticador.",
   "browser.secret.vaultSkip.vaultUnreadable":
-    "OpenBot no usó ningún inicio de sesión guardado porque no pudo leer tu gestor de contraseñas.",
+    "MyBot no usó ningún inicio de sesión guardado porque no pudo leer tu gestor de contraseñas.",
   "browser.error.openAddress": "No se pudo abrir la dirección en esta pestaña.",
   "browser.error.channelNoBrowserMember": "Ningún miembro puede abrir una pestaña nueva en este canal.",
   "browser.error.closeTab": "No se pudo cerrar la pestaña del navegador.",
@@ -162,22 +162,22 @@ export const messages = {
   "browser.signIn.local": "Iniciar sesión en este ordenador",
   "browser.signIn.title": "Iniciar sesión en {site}",
   "browser.signIn.description":
-    "Algunos sitios rechazan un inicio de sesión desde un servidor. Inicia sesión en este ordenador y OpenBot enviará el inicio de sesión de {site} a {server}. Todos los agentes y miembros de {server} podrán usarlo en el navegador.",
+    "Algunos sitios rechazan un inicio de sesión desde un servidor. Inicia sesión en este ordenador y MyBot enviará el inicio de sesión de {site} a {server}. Todos los agentes y miembros de {server} podrán usarlo en el navegador.",
   "browser.signIn.windowOpen":
-    "Inicia sesión en la ventana que se abrió. OpenBot envía el inicio de sesión cuando está completo. Si la ventana sigue abierta, selecciona Listo.",
+    "Inicia sesión en la ventana que se abrió. MyBot envía el inicio de sesión cuando está completo. Si la ventana sigue abierta, selecciona Listo.",
   "browser.signIn.windowClosed":
     "La ventana de inicio de sesión está cerrada. Selecciona Listo para enviar el inicio de sesión o abre la ventana de nuevo.",
   "browser.signIn.reopen": "Abrir la ventana de inicio de sesión",
   "browser.signIn.sending": "Enviando a {server}…",
   "browser.signIn.sent": "Sesión iniciada en {site} en {server}",
   "browser.signIn.notFound":
-    "OpenBot no encontró un inicio de sesión para {site}. Inicia sesión en la ventana y selecciona Listo.",
+    "MyBot no encontró un inicio de sesión para {site}. Inicia sesión en la ventana y selecciona Listo.",
   "browser.signIn.stillSignedOut":
     "{server} todavía muestra una página de inicio de sesión de {site}. Termina el inicio de sesión en la ventana.",
-  "browser.signIn.failed": "OpenBot no pudo enviar el inicio de sesión.",
+  "browser.signIn.failed": "MyBot no pudo enviar el inicio de sesión.",
   "browser.profiles.title": "Perfiles del navegador",
   "browser.profiles.subtitle":
-    "Cada perfil guarda sus propios inicios de sesión, cookies y datos de sitios en el equipo que ejecuta OpenBot.",
+    "Cada perfil guarda sus propios inicios de sesión, cookies y datos de sitios en el equipo que ejecuta MyBot.",
   "browser.profiles.label": "Perfiles del navegador",
   "browser.profiles.newName": "Nombre del perfil",
   "browser.profiles.create": "Añadir",
@@ -196,8 +196,8 @@ export const messages = {
   "browser.profiles.deleteDescription":
     "Esto elimina los inicios de sesión, las cookies y los datos de sitios del perfil. Sus pestañas abiertas se cierran.",
   "browser.profiles.deleteAgents": "Estos agentes pasan al perfil compartido: {agents}.",
-  "browser.profiles.failed": "OpenBot no pudo cambiar los perfiles del navegador.",
-  "browser.profiles.loadFailed": "OpenBot no pudo cargar los perfiles del navegador.",
+  "browser.profiles.failed": "MyBot no pudo cambiar los perfiles del navegador.",
+  "browser.profiles.loadFailed": "MyBot no pudo cargar los perfiles del navegador.",
   "browser.profiles.tabLabel": "Perfil: {name}",
   "browser.profiles.tabLabelProxy": "Perfil: {name} · Proxy: {proxy}",
   "browser.profiles.agentTabLabel": "Perfil propio del agente",
@@ -212,7 +212,7 @@ export const messages = {
   "browser.proxies.addTitle": "Añadir proxy",
   "browser.proxies.editTitle": "Editar {name}",
   "browser.proxies.dialogDescription":
-    "Usa socks5, http o https. El nombre de usuario y la contraseña son opcionales en cada tipo. La contraseña se guarda cifrada en el equipo que ejecuta OpenBot.",
+    "Usa socks5, http o https. El nombre de usuario y la contraseña son opcionales en cada tipo. La contraseña se guarda cifrada en el equipo que ejecuta MyBot.",
   "browser.proxies.address": "Dirección",
   "browser.proxies.addressPlaceholder": "socks5://user:password@host:1080",
   "browser.proxies.deleteUsed": {
@@ -222,7 +222,7 @@ export const messages = {
   "browser.proxies.deleteUnused": "Ningún perfil usa este proxy.",
   "browser.proxies.failing": "{name} no responde",
   "browser.proxies.signInRefused": "{name} rechazó el inicio de sesión",
-  "browser.proxies.unsupported": "Este servidor no puede usar proxies. Actualiza OpenBot en ese servidor.",
+  "browser.proxies.unsupported": "Este servidor no puede usar proxies. Actualiza MyBot en ese servidor.",
   "browser.proxies.yourComputer": "Tu ordenador",
   "browser.proxies.memberComputer": "Ordenador de {name}",
   "browser.proxies.unknownComputer": "Ordenador de un miembro",
@@ -233,7 +233,7 @@ export const messages = {
   "browser.proxies.offlineBadge": "{name} está sin conexión",
   "browser.proxies.shareTitle": "¿Compartir la conexión de este ordenador?",
   "browser.proxies.shareDescription":
-    "Los perfiles que usan tu ordenador abren sitios públicos a través de la conexión a internet de este ordenador. Esto solo funciona mientras OpenBot esté abierto aquí. El servidor no puede abrir direcciones de tu red local.",
+    "Los perfiles que usan tu ordenador abren sitios públicos a través de la conexión a internet de este ordenador. Esto solo funciona mientras MyBot esté abierto aquí. El servidor no puede abrir direcciones de tu red local.",
   "browser.proxies.share": "Compartir",
   "browser.proxies.stopSharing": "Dejar de compartir",
   "browser.proxies.closesTabs": {

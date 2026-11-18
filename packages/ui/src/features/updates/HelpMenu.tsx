@@ -1,7 +1,6 @@
-import { BookOpen, Bug, CircleQuestionMark, DropdownMenu, Gift, Megaphone, MotionTooltip } from "@openbot/ui";
+import { CircleQuestionMark, DropdownMenu, Gift, MotionTooltip } from "@openbot/ui";
 import { createSignal, For, Show } from "solid-js";
 import { useText } from "../../text";
-import { DiscordMark } from "../settings/brand-marks";
 
 /** One line of the What's new list: the headline of a release note and the date of its release. */
 export interface HelpMenuNews {
@@ -18,11 +17,12 @@ export interface HelpMenuProps {
   /** Called when the menu opens, so the caller can load the news. */
   onOpen?: () => void;
   onOpenWhatsNew: () => void;
-  onOpenChangelog: () => void;
-  onOpenGuides: () => void;
-  onOpenDiscord: () => void;
-  onReportProblem: () => void;
-  onSendFeedback: () => void;
+  /** Unused: MyBot hides the external links of the menu. */
+  onOpenChangelog?: () => void;
+  onOpenGuides?: () => void;
+  onOpenDiscord?: () => void;
+  onReportProblem?: () => void;
+  onSendFeedback?: () => void;
 }
 
 /** A release date in local time. `new Date("YYYY-MM-DD")` reads UTC and can show the day before. */
@@ -68,26 +68,10 @@ export function HelpMenu(props: HelpMenuProps) {
               )}
             </For>
           </Show>
-          <DropdownMenu.Item onSelect={() => props.onOpenChangelog()}>
+          {/* MyBot: the changelog, guides, Discord, problem report and feedback links are hidden. */}
+          <DropdownMenu.Item onSelect={() => props.onOpenWhatsNew()}>
             <Gift class="agent-context-icon size-4" aria-hidden="true" />
-            <span>{t("app.help.changelog")}</span>
-          </DropdownMenu.Item>
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item onSelect={() => props.onOpenGuides()}>
-            <BookOpen class="agent-context-icon size-4" aria-hidden="true" />
-            <span>{t("app.help.guides")}</span>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item onSelect={() => props.onOpenDiscord()}>
-            <DiscordMark class="agent-context-icon size-4" />
-            <span>{t("app.help.discord")}</span>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item onSelect={() => props.onReportProblem()}>
-            <Bug class="agent-context-icon size-4" aria-hidden="true" />
-            <span>{t("app.help.reportProblem")}</span>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item onSelect={() => props.onSendFeedback()}>
-            <Megaphone class="agent-context-icon size-4" aria-hidden="true" />
-            <span>{t("account.menu.sendFeedback")}</span>
+            <span>{t("app.help.whatsNew")}</span>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

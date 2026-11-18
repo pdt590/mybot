@@ -65,12 +65,12 @@ export const messages = {
   "mobile.marketplace.facts.accessMac": "Yalnızca Mac",
   "mobile.marketplace.permission.admin": "Pazaryerinden yalnızca sahipler ve yöneticiler kurulum yapabilir.",
   "mobile.marketplace.permission.unavailable":
-    "Bu sunucu çevrimdışı veya OpenBot sürümü bunun için çok eski. OpenBot'u, sunucuyu çalıştıran bilgisayarda güncelleyin.",
-  "mobile.marketplace.error.agentUnsupported": "Pazaryerinden ajan eklemek için sunucudaki OpenBot'u güncelleyin.",
+    "Bu sunucu çevrimdışı veya MyBot sürümü bunun için çok eski. MyBot'u, sunucuyu çalıştıran bilgisayarda güncelleyin.",
+  "mobile.marketplace.error.agentUnsupported": "Pazaryerinden ajan eklemek için sunucudaki MyBot'u güncelleyin.",
   "mobile.marketplace.error.agentUpdateUnsupported":
-    "Pazaryerindeki ajanları güncellemek için sunucudaki OpenBot’u güncelleyin.",
+    "Pazaryerindeki ajanları güncellemek için sunucudaki MyBot’u güncelleyin.",
   "mobile.marketplace.error.signInUnsupported":
-    "Telefondan uygulamalarda oturum açmak için sunucudaki OpenBot'u güncelleyin.",
+    "Telefondan uygulamalarda oturum açmak için sunucudaki MyBot'u güncelleyin.",
   "mobile.marketplace.agent.add": "Ajan ekle",
   "mobile.marketplace.agent.adding": "Ajan ekleniyor",
   "mobile.marketplace.agent.update": "Ajanı güncelle",
@@ -113,11 +113,11 @@ export const messages = {
   "mobile.marketplace.app.linkInvalid": "{hostname} üzerinde bir https bağlantısı kullanın.",
   "mobile.marketplace.app.docs": "Anahtar al",
   "mobile.marketplace.app.local":
-    "Bu uygulama OpenBot'un çalıştığı bilgisayarda çalışır. Uygulamayı o bilgisayarda kurun.",
+    "Bu uygulama MyBot'un çalıştığı bilgisayarda çalışır. Uygulamayı o bilgisayarda kurun.",
   "mobile.marketplace.app.needsMac":
-    "Bu uygulama yalnızca OpenBot çalıştıran bir Mac'te çalışır ve bu sunucu bir Mac değil.",
+    "Bu uygulama yalnızca MyBot çalıştıran bir Mac'te çalışır ve bu sunucu bir Mac değil.",
   "mobile.marketplace.app.relayUnsupported":
-    "Bu uygulama tarayıcıda oturum açmayı gerektirir. Sunucudaki OpenBot'u güncelleyin veya uygulamayı bilgisayarda bağlayın.",
+    "Bu uygulama tarayıcıda oturum açmayı gerektirir. Sunucudaki MyBot'u güncelleyin veya uygulamayı bilgisayarda bağlayın.",
   "mobile.marketplace.app.waiting": "Oturum açma sayfası bekleniyor…",
   "mobile.marketplace.app.openAgain": "Oturum açma sayfasını yeniden aç",
   "mobile.marketplace.app.pasteHint":

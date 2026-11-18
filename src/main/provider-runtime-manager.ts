@@ -225,10 +225,15 @@ export interface ProviderRuntimeManagerOptions {
  * self-contained: automation and packaged smoke checks delete one directory to get a clean machine,
  * and two isolated runs must not reach into each other.
  */
-export function providerRuntimeRoot(input: { appData: string; userDataOverride: string }): string {
+export function providerRuntimeRoot(input: {
+  appData: string;
+  userDataOverride: string;
+  /** MyBot: the `userData` folder name of the installed app (`app-folders.ts`). */
+  appFolder?: string;
+}): string {
   const override = input.userDataOverride.trim();
   if (override) return join(resolve(override), "provider-runtimes");
-  return join(input.appData, "OpenBot", "provider-runtimes");
+  return join(input.appData, input.appFolder ?? "MyBot", "provider-runtimes");
 }
 
 export class ProviderRuntimeManager extends EventEmitter<ProviderRuntimeManagerEvents> {

@@ -7,6 +7,6 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/opt/OpenBot/hosted/openbot-hosted-update request
+ExecStart=/opt/MyBot/hosted/openbot-hosted-update request
 # A download and an apply: the limits of openbot-update.service and openbot-update-apply.service.
 TimeoutStartSec=45min

@@ -4,7 +4,7 @@
 #
 #   ssh root@<address> 'bash -s' <scripts/hosting/leaseweb-bootstrap.sh
 #
-# A release also has it, in /opt/OpenBot/app/resources/hosting. Run it again to apply a newer
+# A release also has it, in /opt/MyBot/app/resources/hosting. Run it again to apply a newer
 # version: it does not restart OpenBot, and a second run gives the same state.
 #
 # 1. SSH accepts keys only. Leaseweb installs no key on a VPS. Give the public keys of the operators,
@@ -37,7 +37,7 @@
 set -euo pipefail
 export LC_ALL=C DEBIAN_FRONTEND=noninteractive
 
-INSTALL=/opt/OpenBot
+INSTALL=/opt/MyBot
 HELPER=/usr/local/sbin/openbot-egress-firewall
 UNIT_DIRECTORY=/etc/systemd/system
 OPERATOR_KEYS=/etc/ssh/openbot-operator-keys
@@ -117,7 +117,7 @@ export LC_ALL=C
 STATE=/etc/openbot/egress-router
 PRIVATE4="0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.168.0.0/16, 198.18.0.0/15, 224.0.0.0/4, 240.0.0.0/4"
 
-user=$(</opt/OpenBot/hosted/service-user)
+user=$(</opt/MyBot/hosted/service-user)
 uid=$(id -u "$user")
 # The DHCP servers of the current leases of systemd-networkd. None before the network starts.
 routers=$(sed -n 's/^SERVER_ADDRESS=//p' /run/systemd/netif/leases/* 2>/dev/null | sort -u | paste -sd, - || true)

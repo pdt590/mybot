@@ -48,7 +48,7 @@ interface HostReleaseOptions {
 /** Reads only the install marker. No command or application file is executed. */
 export const readInstallationMode = Effect.fn("HostRelease.readInstallationMode")(function* () {
   return yield* Effect.tryPromise({
-    try: (signal) => readFile("/opt/OpenBot/hosted/mode", { encoding: "utf8", signal }),
+    try: (signal) => readFile("/opt/MyBot/hosted/mode", { encoding: "utf8", signal }),
     catch: () => new ReleaseCheckFailed(),
   }).pipe(
     Effect.map((value) => value.trim()),

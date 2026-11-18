@@ -19,8 +19,7 @@ export const messages = {
   "error.billing.licenseOneUser": "הרישיון הזה מיועד למשתמש אחד. יש לעבור ל-Team כדי להוסיף משתמשים.",
   "error.billing.licensePlanChange": "אי אפשר לשנות את הרישיון הזה לתוכנית הזו. יש לבטל אותו ולרכוש את התוכנית החדשה.",
   "error.billing.noLicense": "לחשבון הזה אין רישיון.",
-  "error.billing.countryRequired":
-    "יש לציין את מדינת החיוב לפני התשלום. יש לעדכן את OpenBot כדי לעשות זאת, ולנסות שוב.",
+  "error.billing.countryRequired": "יש לציין את מדינת החיוב לפני התשלום. יש לעדכן את MyBot כדי לעשות זאת, ולנסות שוב.",
   "error.billing.detailsInvalid": "יש לבדוק את המדינה ואת מספר המע״מ. מספר המע״מ חייב להיות של המדינה שנבחרה.",
   "error.billing.vatIdInvalid":
     "מערכת המע״מ של האיחוד האירופי לא מכירה את מספר המע״מ הזה. יש לבדוק את המספר, או להמשיך בלי מספר מע״מ.",

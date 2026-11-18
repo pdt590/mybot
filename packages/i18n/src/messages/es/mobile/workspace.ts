@@ -18,8 +18,7 @@ export const messages = {
   "mobile.workspace.error.leaveOwnServer": "Solo puedes salir de servidores remotos a los que te hayas unido.",
   "mobile.workspace.error.removeOwnedServerOnly": "Solo el propietario puede eliminar este servidor.",
   "mobile.workspace.error.agentNotOnHost": "El agente no está en este host.",
-  "mobile.workspace.error.filesUnsupported":
-    "Este host no admite la gestión de archivos. Actualiza OpenBot en el host.",
+  "mobile.workspace.error.filesUnsupported": "Este host no admite la gestión de archivos. Actualiza MyBot en el host.",
   "mobile.workspace.error.agentUnavailableOnHost": "El agente no está disponible en este host.",
   "mobile.workspace.error.agentUnavailable": "El agente no está disponible.",
   "mobile.workspace.error.formUnavailable": "Este formulario ya no está disponible.",

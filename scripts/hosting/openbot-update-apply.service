@@ -11,7 +11,7 @@ Type=oneshot
 # openbot.service wants this unit, and boat starts each enabled unit after a wake too. The second
 # start must not copy a release under a running OpenBot.
 RemainAfterExit=yes
-ExecStart=/opt/OpenBot/hosted/openbot-hosted-update boot
+ExecStart=/opt/MyBot/hosted/openbot-hosted-update boot
 # At most 4 minutes of restore wait when a stop interrupted a copy, then the copy.
 TimeoutStartSec=15min
 
