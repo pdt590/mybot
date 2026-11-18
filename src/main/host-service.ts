@@ -1110,7 +1110,8 @@ export class HostService extends EventEmitter<HostEvents> {
     // change starts the next route sync, so the host is not made a second time here.
     if (this.#boundAccountId !== this.#signedInAccountId()) return;
     if (!this.#options.store.configured) {
-      yield* this.configure({ serverName: "OpenBot" }, true);
+      // MyBot: the default server name is MyBot.
+      yield* this.configure({ serverName: "MyBot" }, true);
       return;
     }
     const register = this.#options.registerRemoteHost;

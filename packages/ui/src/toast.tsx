@@ -1,3 +1,4 @@
+import { matchingSourceKeys, sourceTranslateFor } from "@openbot/i18n/source";
 import { classifyFailure, type FailureProperties, type NotificationMetadata } from "@openbot/telemetry";
 import { errorReference } from "@openbot/user-errors";
 import type { ComponentProps, JSX } from "@solidjs/web";
@@ -40,9 +41,36 @@ function rememberReport(id: string | number, report: NotificationMetadata): void
     reports.delete(oldest.value);
   }
 }
+/**
+ * MyBot: sign-in is off and the app runs as the local account, which has no account service session.
+ * A failure that only says the account is not signed in, or that the account service cannot be
+ * reached, is not shown.
+ */
+const SIGN_IN_FAILURE_KEYS = [
+  "error.auth.signInFirst",
+  "error.auth.signInRequired",
+  "error.team.signInRequired",
+  "error.auth.serviceUnavailable",
+  "error.auth.serviceUnreachable",
+  "error.auth.serviceTimeout",
+  "error.remote.directoryUnreachable",
+] as const;
+const SIGN_IN_FAILURE_KEY_SET = new Set<string>([...SIGN_IN_FAILURE_KEYS, "error.auth.networkBlocked"]);
+function isSignInFailureText(value: unknown): boolean {
+  if (typeof value !== "string" || value.length === 0) return false;
+  if (matchingSourceKeys(value).some((key) => SIGN_IN_FAILURE_KEY_SET.has(key))) return true;
+  const t = sourceTranslateFor(currentText().locale());
+  return SIGN_IN_FAILURE_KEYS.some((key) => t(key) === value);
+}
+function isSignInFailure(message: unknown, data: { description?: unknown }, error: unknown): boolean {
+  if (isSignInFailureText(message) || isSignInFailureText(data.description)) return true;
+  return error instanceof Error ? isSignInFailureText(error.message) : isSignInFailureText(error);
+}
 function outcomeToast(kind: "error" | "warning") {
   return (message: Parameters<typeof sonnerToast>[0], options?: ExternalToast) => {
     const { report, error, fallback, ...data } = options ?? {};
+    // MyBot: no toast for a failure that comes from not being signed in.
+    if (isSignInFailure(message, data, error)) return data.id ?? `mybot-hidden-${++promiseId}`;
     if (error !== undefined) data.description = withReference(error, data.description, fallback);
     const id = sonnerToast[kind](message, data);
     if (report) rememberReport(id, report);

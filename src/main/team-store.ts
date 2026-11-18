@@ -306,6 +306,13 @@ export class TeamStore {
         this.#file.legacyImport = { fingerprint: legacy.fingerprint, record: structuredClone(legacy.record) };
         migrated = true;
       }
+      // MyBot: a host that still has the upstream default name "OpenBot" is renamed to MyBot.
+      for (const host of this.#file.hosts) {
+        if (host.serverName === "OpenBot") {
+          host.serverName = "MyBot";
+          migrated = true;
+        }
+      }
       const imported = this.#file.legacyImport?.record.serverId;
       const importedHost = imported === undefined ? undefined : this.#file.hosts.find((h) => h.serverId === imported);
       // Every start, not only the one that took the record in: a copy that failed once would

@@ -71,7 +71,8 @@ function isHostMismatch(error: CentralAuthOperationError | RemoteWorkflowError):
 const publishMobileConnectHost = Effect.fn("MobileConnectHost.publish")(function* (
   host: MobileConnectHostDependencies<never>["host"],
 ) {
-  if (!host.getStatus().configured) yield* host.configure({ serverName: "OpenBot" });
+  // MyBot: the default server name is MyBot.
+  if (!host.getStatus().configured) yield* host.configure({ serverName: "MyBot" });
   const status = yield* host.start();
   if (!isPublishedHost(status)) {
     return yield* new RemoteWorkflowError({
