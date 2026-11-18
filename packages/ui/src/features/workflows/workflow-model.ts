@@ -40,7 +40,8 @@ export interface WorkflowFeatures {
 /** Image and file steps, file outputs and message triggers do not run in this version. */
 export const WORKFLOW_FEATURES_V1: WorkflowFeatures = {
   kinds: WORKFLOW_NODE_KINDS.filter((kind) => kind !== "image" && kind !== "asset"),
-  triggers: ["manual", "schedule", "webhook"],
+  // MyBot: no webhook trigger. Its address needs the upstream account service and a registered host.
+  triggers: ["manual", "schedule"],
   outputs: ["notify", "channel"],
   uploads: false,
   presence: false,

@@ -7,7 +7,7 @@ import { connectorAccess } from "./connector-access";
 import type { ConnectorController } from "./connector-controller";
 import { createGitHubConnector } from "./github-connector";
 import type { GitHubConnectorPort } from "./github-connector-port";
-import { createMessagingConnector, type MessagingApi, type MessagingConnectorOptions } from "./messaging-connector";
+import type { MessagingApi, MessagingConnectorOptions } from "./messaging-connector";
 import { createOnePasswordConnector } from "./onepassword-connector";
 import { type OnePasswordConnectorPort, onePasswordConnectorPort } from "./onepassword-connector-port";
 import { createPasswordManagerConnector } from "./password-manager-connector";
@@ -41,11 +41,8 @@ export const LOCAL_CONNECTOR_TRANSPORTS = {
  */
 export function createConnectorSet(transports: ConnectorTransports, options: MessagingConnectorOptions): ConnectorSet {
   const set: ConnectorSet = {};
-  const { messaging } = transports;
-  if (messaging) {
-    // MyBot: no Slack or Discord. Both use the upstream @OpenBot apps through signal.openbot.run.
-    set.telegram = createMessagingConnector("telegram", messaging, options);
-  }
+  // MyBot: no Slack, Discord or Telegram. They use the upstream @OpenBot apps and bot through
+  // signal.openbot.run, which need a signed-in account and a registered host; MyBot has neither.
   if (transports.whatsapp) set.whatsapp = createWhatsAppConnector(transports.whatsapp, options);
   if (transports.github) set.github = createGitHubConnector(transports.github, options.hostName);
   if (transports.onePassword) set.onepassword = createOnePasswordConnector(transports.onePassword, options.hostName);
