@@ -389,9 +389,13 @@ export class AttachmentGateway {
       ),
     );
     const normalized = value.replaceAll("\\", "/");
-    const sharedReference = ["~/OpenBot/Shared/", "OpenBot/Shared/", "Shared/"].some((prefix) =>
-      normalized.startsWith(prefix),
-    );
+    const sharedReference = [
+      "~/MyBot/Shared/",
+      "MyBot/Shared/",
+      "~/OpenBot/Shared/",
+      "OpenBot/Shared/",
+      "Shared/",
+    ].some((prefix) => normalized.startsWith(prefix));
     // An absolute path may be one the provider's own transcript still names under this agent's pre-rename
     // workspace root. The rebased twin is just another candidate, so it goes through the same containment
     // and symlink checks below as the original.

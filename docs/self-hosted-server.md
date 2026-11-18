@@ -196,7 +196,7 @@ The display size does not change the OpenBot browser (`openbot_browser`). Its pa
 size, 1200x800 when no panel shows them, and its clicks go to page elements.
 
 To use another size, give it at the install with `--display-size 1920x1080`, or write this line in
-`/opt/OpenBot/hosted/openbot.env` and run `sudo openbot restart`:
+`/opt/MyBot/hosted/openbot.env` and run `sudo openbot restart`:
 
 ```text
 OPENBOT_DISPLAY_SIZE=1920x1080
@@ -289,7 +289,7 @@ already in its server list. Remove a phone from the account in the desktop app, 
 ## Remove
 
 `sudo openbot uninstall` signs out, then removes the service, the units, the AppArmor profile, the
-`openbot` command and the server files in `/opt/OpenBot`. It keeps the home folder of the service user
+`openbot` command and the server files in `/opt/MyBot`. It keeps the home folder of the service user
 and the keyring in `/srv/openbot-hosted`. The keyring has the key of the encrypted data in that home
 folder, so keep or delete the two together. An install with the same `--user` uses them again. To
 delete the data too:
@@ -309,8 +309,8 @@ install steps always match the build that they install. A release before this fe
 file, and the install stops with a message.
 
 `openbot-server-setup` uses the install steps of a hosted server (`openbot-hosted-update`): it
-installs the packages in `packages.txt`, copies the release to `/opt/OpenBot/app`, and installs the
-scripts, the AppArmor profile and the units. It writes `self` to `/opt/OpenBot/hosted/mode` and
+installs the packages in `packages.txt`, copies the release to `/opt/MyBot/app`, and installs the
+scripts, the AppArmor profile and the units. It writes `self` to `/opt/MyBot/hosted/mode` and
 links `/usr/local/bin/openbot`.
 
 When Ubuntu's `bwrap-userns-restrict` profile is loaded (the default on Ubuntu 26.04), the install

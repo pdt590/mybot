@@ -75,4 +75,4 @@ for tenant in "$@"; do
     echo "LaunchAgent for $tenant will load at the next GUI login."
   fi
 done
-ls -ld /Applications/OpenBot.app "$ROOT"
+ls -ld /Applications/MyBot.app "$ROOT"

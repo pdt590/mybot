@@ -21,8 +21,7 @@ export const messages = {
   "status.remote.stageCompatibility": "デスクトップの互換性を確認しています: {reason}",
   "status.remote.stageAgents": "エージェントを読み込んでいます: {reason}",
   "status.remote.stageReads": "既読状態を読み込んでいます: {reason}",
-  "status.remote.suspendedDetail":
-    "接続する前に、OpenBot Mobile またはデスクトップアプリを更新してください。\n{detail}",
+  "status.remote.suspendedDetail": "接続する前に、MyBot Mobile またはデスクトップアプリを更新してください。\n{detail}",
   "status.remote.cooldownDetail":
     "{limit} 回の試行後に接続に失敗しました。{minutes}:{seconds} 後に再試行します。\n{detail}",
   "status.remote.cooldown": "{limit} 回の試行後に接続に失敗しました。{minutes}:{seconds} 後に再試行します。",

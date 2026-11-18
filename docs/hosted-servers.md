@@ -95,7 +95,7 @@ when a server is idle or boat stops a sandbox; and `error` and `deleted`. The Wo
    lowercase, and each group of characters that are not letters or digits becomes one `-`. The name is only a label; a plan change
    renames the sandbox.
 3. **Env handoff.** boat puts the sandbox env in the setup script, not in systemd. The Worker sends
-   `setupScript: exec /opt/OpenBot/hosted/openbot-hosted-env`. That helper writes the two values to
+   `setupScript: exec /opt/MyBot/hosted/openbot-hosted-env`. That helper writes the two values to
    `~/.config/openbot-hosted/env` (mode 0600). `openbot.service` waits for this file.
 4. **First boot.** OpenBot starts with `OPENBOT_HOSTED_SERVER=1`. It redeems the claim at
    `POST /v2/hosting/claims/redeem`, signs in as the owner, keeps the host ID, and publishes the
@@ -520,7 +520,7 @@ named snapshot access. The script:
 1. creates a builder sandbox with `noEnv`;
 2. uploads `scripts/hosting/` and runs `provision.sh` with `sudo`. It installs the packages in
    `packages.txt` (Xvfb, D-Bus, gnome-keyring, the Electron libraries and the remote desktop runtime
-   libraries), checks the AppImage SHA-256, unpacks the AppImage to `/opt/OpenBot/app`, adds an
+   libraries), checks the AppImage SHA-256, unpacks the AppImage to `/opt/MyBot/app`, adds an
    AppArmor profile that lets Chromium make user namespaces, and enables `openbot.service` and the
    [update](#updates) units;
 3. checks the installed version, that OpenBot did not start, and that no profile or claim exists;
@@ -573,7 +573,7 @@ On a server, root runs `openbot-hosted-update`:
    latest GitHub release, the manifest that the Linux desktop updater reads. When that version is newer than the installed one, it downloads the
    AppImage, checks its SHA-512 against the manifest, unpacks it in `/var/tmp`, checks that it has
    all hosting files, installs the packages in the `packages.txt` of that release, and copies it
-   to `/opt/OpenBot/staged`.
+   to `/opt/MyBot/staged`.
    `staged.ready` comes after the last file. OpenBot keeps running. The download and unpack use
    idle CPU and disk priority.
 2. `apply` copies `staged` to `app`, and then installs the scripts, AppArmor profile and units of
@@ -955,7 +955,7 @@ The steps of the command:
 2. Install OpenBot with `install-server.sh` and a [server claim](self-hosted-server.md#sign-in-with-a-server-claim)
    for the customer's email.
 3. Run `scripts/hosting/leaseweb-bootstrap.sh` as root, with the public keys of the operators. Each
-   release also has it in `/opt/OpenBot/app/resources/hosting`.
+   release also has it in `/opt/MyBot/app/resources/hosting`.
 
    ```sh
    ssh root@<address> bash -s "$(ssh <core server> cat /root/.ssh/authorized_keys | base64 | tr -d '\n')" \
@@ -1189,7 +1189,7 @@ The Worker sends no message to the operator, and it connects to no machine. Run
 Never write `desired_state = 'idle'` on such a row: the next client request changes it to `running`,
 and the cron query for a server with a routine does not look at the machine.
 
-The server on the VPS stays a hosted server (no `/opt/OpenBot/hosted/mode` file), so OpenBot signs
+The server on the VPS stays a hosted server (no `/opt/MyBot/hosted/mode` file), so OpenBot signs
 in, reports its use and installs updates as it did on boat. `provision.sh` installs it and does not
 start it, so the data is in place before the first start. `scripts/hosting/move-from-boat.sh` does
 the parts of a move that run on the two machines, as root.
@@ -1338,7 +1338,7 @@ still uses the sandbox. The downtime is the export, the copy, the import and the
    The archive also has the SHA-256 of `openbot.db`, `agent-data.db`, `login.keyring` and
    `keyring-password`, the names of the npm commands and groups of the sandbox, and the Ubuntu
    version. It does not have:
-   - `/opt/OpenBot`, `~/.boat`, `~/.boatignore`, `~/.ascii`, `~/.config/ascii`, `~/.Xauthority*` and
+   - `/opt/MyBot`, `~/.boat`, `~/.boatignore`, `~/.ascii`, `~/.config/ascii`, `~/.Xauthority*` and
      `~/.npm/_cacache`.
    - the cache folders in each profile of Chromium, Chrome and Brave in `~/.config` (`Cache`,
      `Code Cache`, `GPUCache`, `GrShaderCache`, `ShaderCache`, the four Dawn caches,
@@ -1678,7 +1678,7 @@ so its 30 days start then.
 Tested on 2026-11-12 with the test Worker, its D1 and one VPS in `AMS-01`: `add`, `status`, `sync`
 stop and start, the cron delete of a server whose plan ended 31 days before with a `canceled` Stripe
 test subscription, then `sync`. The reinstall took 51 seconds: the machine started 26 seconds after
-the request, and `sync` returned 25 seconds later. A file in `/root` and `/opt/OpenBot` were gone.
+the request, and `sync` returned 25 seconds later. A file in `/root` and `/opt/MyBot` were gone.
 Then `remove` and `add`.
 
 `operator_hosts` has one row for each machine that was in the pool:

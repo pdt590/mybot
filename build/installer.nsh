@@ -38,7 +38,7 @@
 !macroend
 
 !macro customInstall
-  WriteRegStr SHCTX "Software\Classes\openbot" "" "URL:OpenBot invitations"
+  WriteRegStr SHCTX "Software\Classes\openbot" "" "URL:MyBot invitations"
   WriteRegStr SHCTX "Software\Classes\openbot" "URL Protocol" ""
   WriteRegStr SHCTX "Software\Classes\openbot\DefaultIcon" "" "$appExe,0"
   WriteRegStr SHCTX "Software\Classes\openbot\shell\open\command" "" '"$appExe" "%1"'
@@ -61,6 +61,10 @@
     StrCpy ${PATH} ${PATH} -1
   ${endIf}
   ${if} ${PATH} != ""
+    ; MyBot: the data folders are `MyBot`. The `OpenBot` folders stay protected: the app keeps using
+    ; them when it cannot move them (`src/main/app-folders.ts`).
+    !insertmacro openBotHolds ${PATH} "$PROFILE\MyBot" ${OUT}
+    !insertmacro openBotHolds ${PATH} "$APPDATA\MyBot" ${OUT}
     !insertmacro openBotHolds ${PATH} "$PROFILE\OpenBot" ${OUT}
     !insertmacro openBotHolds ${PATH} "$APPDATA\OpenBot" ${OUT}
   ${endIf}
@@ -102,6 +106,10 @@
       ${if} ${FileExists} "$1\${APP_EXECUTABLE_FILENAME}"
         StrCpy $openBotDataFolderInstall $1
       ${endIf}
+    ${elseIf} ${FileExists} "$PROFILE\MyBot\${APP_EXECUTABLE_FILENAME}"
+      StrCpy $openBotDataFolderInstall "$PROFILE\MyBot"
+    ${elseIf} ${FileExists} "$APPDATA\MyBot\${APP_EXECUTABLE_FILENAME}"
+      StrCpy $openBotDataFolderInstall "$APPDATA\MyBot"
     ${elseIf} ${FileExists} "$PROFILE\OpenBot\${APP_EXECUTABLE_FILENAME}"
       StrCpy $openBotDataFolderInstall "$PROFILE\OpenBot"
     ${elseIf} ${FileExists} "$APPDATA\OpenBot\${APP_EXECUTABLE_FILENAME}"

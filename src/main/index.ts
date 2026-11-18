@@ -1,4 +1,4 @@
-import { uptime } from "node:os";
+import { homedir, uptime } from "node:os";
 import { join, resolve } from "node:path";
 import { parseInviteUrl, selfHostedApiOrigin } from "@openbot/contracts/invite-links";
 import {
@@ -38,6 +38,7 @@ import { runCauseEffect } from "../backend/effect-boundary";
 import { NewerDatabaseError } from "../backend/openbot-database-schema";
 import { OWNER_NOTIFICATION_KEY } from "./agent-notification-level-store";
 import { watchAppArchive } from "./app-archive-watch";
+import { moveAppFolders, rebaseMovedFolderPaths } from "./app-folders";
 import { readAppVariant, resolveAppIconPath, resolveLogoColorIconPath, resolveMenuBarIconPath } from "./app-icon";
 import { readSavedTransparentWindow } from "./appearance-service";
 import {
@@ -316,7 +317,14 @@ if (commandLineUserDataDirectory) {
     ),
   );
 }
-app.setName("OpenBot");
+// MyBot: the installed app moves its `OpenBot` folders to `MyBot` once, before anything opens them,
+// and then rewrites the paths that the databases keep (`app-folders.ts`).
+if (!commandLineUserDataDirectory && app.isPackaged) {
+  const userData = moveAppFolders({ appData: app.getPath("appData"), home: homedir() });
+  app.setPath("userData", userData);
+  rebaseMovedFolderPaths(userData);
+}
+app.setName("MyBot");
 // After `userData` has its final path and before the app is ready: renderers read `TZ` when they start.
 const systemTimezone =
   serverMode || hostedServer || localServerChild
@@ -1186,7 +1194,7 @@ function requestDesktopNotificationPermission(
       preference,
       showWelcome: () => {
         if (!Notification.isSupported()) return;
-        showRetainedNotification(new Notification({ title: "OpenBot", body: translate("notification.welcome") }));
+        showRetainedNotification(new Notification({ title: "MyBot", body: translate("notification.welcome") }));
       },
     }),
   );

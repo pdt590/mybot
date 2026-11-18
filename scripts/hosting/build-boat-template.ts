@@ -119,8 +119,8 @@ async function main(): Promise<void> {
       boat,
       builderId,
       [
-        "test -x /opt/OpenBot/app/openbot",
-        `test "$(sed -n 's/^X-AppImage-Version=//p' /opt/OpenBot/app/*.desktop)" = ${shellQuote(options.version)}`,
+        "test -x /opt/MyBot/app/openbot",
+        `test "$(sed -n 's/^X-AppImage-Version=//p' /opt/MyBot/app/*.desktop)" = ${shellQuote(options.version)}`,
         "systemctl is-enabled --quiet openbot.service",
         "! systemctl is-active --quiet openbot.service",
         // With more than one unit, `is-enabled` passes when one of them is enabled.
@@ -128,7 +128,7 @@ async function main(): Promise<void> {
         "systemctl is-enabled --quiet openbot-update-apply.service",
         "systemctl is-enabled --quiet openbot-update-request.path",
         "! systemctl is-active --quiet openbot-update.timer",
-        'test ! -e "$HOME/.config/OpenBot"',
+        'test ! -e "$HOME/.config/MyBot"',
         'test ! -e "$HOME/.config/openbot-hosted"',
         'test -z "$(ls -A /srv/openbot-hosted)"',
         `rm -rf ${REMOTE_DIRECTORY}`,

@@ -1,6 +1,6 @@
 import { AppLogo } from "@openbot/brand";
 import type { AppTextKey } from "@openbot/i18n";
-import { Button, ChevronDown, Dialog, ExternalLink, Heading, IconButton, Text, TriangleAlert, X } from "@openbot/ui";
+import { Button, ChevronDown, Dialog, Heading, IconButton, Text, TriangleAlert, X } from "@openbot/ui";
 import { createEffect, createMemo, createSignal, createUniqueId, For, Match, onSettled, Show, Switch } from "solid-js";
 import { createScrollFades } from "../../components/createScrollFades";
 import { useText } from "../../text";
@@ -31,7 +31,8 @@ export interface WhatsNewDialogProps {
   previousVersion: string | null;
   notes: WhatsNewNotes;
   onRetry: () => void;
-  onOpenChangelog: () => void;
+  /** Unused: MyBot hides the changelog link. */
+  onOpenChangelog?: () => void;
 }
 
 /**
@@ -94,10 +95,6 @@ export function WhatsNewDialog(props: WhatsNewDialogProps) {
             <WhatsNewBody notes={props.notes} releases={releases()} onRetry={retry} />
 
             <footer class="whats-new-actions">
-              <Button type="button" variant="ghost" onClick={() => props.onOpenChangelog()}>
-                {t("update.whatsNew.changelog")}
-                <ExternalLink aria-hidden="true" />
-              </Button>
               <Button
                 ref={(element: HTMLButtonElement) => {
                   doneButton = element;

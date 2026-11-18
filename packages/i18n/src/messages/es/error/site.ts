@@ -5,8 +5,7 @@ export const messages = {
   "error.site.absolutePath": "Elige una ruta absoluta al directorio del sitio.",
   "error.site.rootSymlink": "No se permiten enlaces simbólicos en los sitios alojados.",
   "error.site.notDirectory": "El origen del sitio debe ser un directorio.",
-  "error.site.outsideWorkspace":
-    "El sitio debe estar dentro del espacio de trabajo de este agente o de OpenBot Shared.",
+  "error.site.outsideWorkspace": "El sitio debe estar dentro del espacio de trabajo de este agente o de MyBot Shared.",
   "error.site.packageJsonInvalid": "El package.json del sitio no es válido.",
   "error.site.astroServerOutput": "Astro debe usar salida estática.",
   "error.site.astroAdapter": "No se permiten adaptadores de servidor de Astro ni la integración con React.",

@@ -2,32 +2,29 @@ import type { PartialTranslation } from "../../message";
 import type { messages as source } from "../en/startup";
 
 export const messages = {
-  "startup.failedTitle": "OpenBot не удалось запустить",
+  "startup.failedTitle": "MyBot не удалось запустить",
   "startup.failedBody":
     "{message}\n\nЛокальные данные не сброшены и не перезаписаны. Шаги восстановления — в руководстве по устранению неполадок.",
-  "startup.archiveChangedTitle": "Файлы OpenBot изменены",
+  "startup.archiveChangedTitle": "Файлы MyBot изменены",
   "startup.archiveChangedBody":
-    "Другая программа изменила файл OpenBot app.asar. Сейчас OpenBot работает, но после выхода он больше не запустится.\n\nЧтобы исправить это, установите OpenBot заново. Ваши локальные данные сохранятся.",
-  "startup.archiveChangedDownload": "Скачать OpenBot",
+    "Другая программа изменила файл MyBot app.asar. Сейчас MyBot работает, но после выхода он больше не запустится.\n\nЧтобы исправить это, установите MyBot заново. Ваши локальные данные сохранятся.",
   "startup.filesDamagedBody":
-    "Некоторые файлы OpenBot повреждены или отсутствуют.\n\nЧтобы исправить это, установите OpenBot заново. Ваши локальные данные сохранятся.",
-  "startup.newerDataUpdatingTitle": "Обновление OpenBot",
+    "Некоторые файлы MyBot повреждены или отсутствуют.\n\nЧтобы исправить это, установите MyBot заново. Ваши локальные данные сохранятся.",
+  "startup.newerDataUpdatingTitle": "Обновление MyBot",
   "startup.newerDataUpdatingBody":
-    "Более новая версия OpenBot сохранила ваши данные. OpenBot устанавливает последнюю версию и затем откроется снова.\n\nВаши локальные данные не были сброшены или перезаписаны.",
-  "startup.newerDataTitle": "Установите последнюю версию OpenBot",
+    "Более новая версия MyBot сохранила ваши данные. MyBot устанавливает последнюю версию и затем откроется снова.\n\nВаши локальные данные не были сброшены или перезаписаны.",
+  "startup.newerDataTitle": "Установите последнюю версию MyBot",
   "startup.newerDataBody":
-    "Более новая версия OpenBot сохранила ваши данные, и эта версия ({version}) не может их открыть. Установите последнюю версию, чтобы открыть данные.\n\nВаши локальные данные не были сброшены или перезаписаны.",
-  "startup.newerDataDownload": "Скачать OpenBot",
-  "startup.newerDataGuide": "Открыть руководство",
+    "Более новая версия MyBot сохранила ваши данные, и эта версия ({version}) не может их открыть. Установите последнюю версию, чтобы открыть данные.\n\nВаши локальные данные не были сброшены или перезаписаны.",
   "startup.newerDataQuit": "Выйти",
-  "startup.recoveryWindowTitle": "Восстановление OpenBot",
-  "startup.recoveryTitle": "OpenBot не открылся",
+  "startup.recoveryWindowTitle": "Восстановление MyBot",
+  "startup.recoveryTitle": "MyBot не открылся",
   "startup.recoveryBody": {
-    one: "OpenBot {version} остановился до открытия {count} раз подряд. Ваши локальные данные не сброшены и не перезаписаны.",
-    few: "OpenBot {version} остановился до открытия {count} раза подряд. Ваши локальные данные не сброшены и не перезаписаны.",
-    many: "OpenBot {version} остановился до открытия {count} раз подряд. Ваши локальные данные не сброшены и не перезаписаны.",
+    one: "MyBot {version} остановился до открытия {count} раз подряд. Ваши локальные данные не сброшены и не перезаписаны.",
+    few: "MyBot {version} остановился до открытия {count} раза подряд. Ваши локальные данные не сброшены и не перезаписаны.",
+    many: "MyBot {version} остановился до открытия {count} раз подряд. Ваши локальные данные не сброшены и не перезаписаны.",
     other:
-      "OpenBot {version} остановился до открытия {count} раза подряд. Ваши локальные данные не сброшены и не перезаписаны.",
+      "MyBot {version} остановился до открытия {count} раза подряд. Ваши локальные данные не сброшены и не перезаписаны.",
   },
   "startup.recoveryHint":
     "Попробуйте снова или установите последнюю версию, которая открывалась. Чтобы получить помощь, экспортируйте диагностику и отправьте файл вместе с отчётом.",
@@ -37,5 +34,5 @@ export const messages = {
   "startup.recoveryOpenDataFolder": "Открыть папку данных",
   "startup.recoveryQuit": "Выйти",
   "startup.recoveryDiagnosticsSaved": "Файл диагностики сохранён.",
-  "startup.recoveryActionFailed": "OpenBot не удалось выполнить это действие.",
+  "startup.recoveryActionFailed": "MyBot не удалось выполнить это действие.",
 } as const satisfies PartialTranslation<typeof source>;

@@ -1,8 +1,8 @@
 appId: app.openbot.desktop
-productName: OpenBot
+productName: MyBot
 copyright: Copyright © 2026 Synthetify Labs spółka z ograniczoną odpowiedzialnością
 protocols:
-  - name: OpenBot invitations
+  - name: MyBot invitations
     schemes:
       - openbot
 asar: true
@@ -143,12 +143,12 @@ mac:
   extendInfo:
     CFBundleIconName: Icon
     ElectronTeamID: ZTRDTUL87R
-    NSMicrophoneUsageDescription: OpenBot uses the microphone to transcribe voice prompts locally on this Mac.
+    NSMicrophoneUsageDescription: MyBot uses the microphone to transcribe voice prompts locally on this Mac.
     # Computer Use runs the driver as a child process, so macOS asks for both grants in OpenBot's
     # name and shows these sentences. Under the hardened runtime, macOS shows the Automation prompt
     # only when the app has `com.apple.security.automation.apple-events` in its entitlements.
-    NSScreenCaptureUsageDescription: OpenBot captures the screen so an agent can see the app windows you ask it to control.
-    NSAppleEventsUsageDescription: OpenBot sends Automation events so an agent can control the apps you ask it to control.
+    NSScreenCaptureUsageDescription: MyBot captures the screen so an agent can see the app windows you ask it to control.
+    NSAppleEventsUsageDescription: MyBot sends Automation events so an agent can control the apps you ask it to control.
     NSUserActivityTypes:
       - NSUserActivityTypeBrowsingWeb
   # No `arch` here: a target's own `arch` list replaces the one given on the command line, so
@@ -178,6 +178,9 @@ win:
 # no page.
 nsis:
   oneClick: false
+  # MyBot: `productName` names the install folder and the release files too.
+  shortcutName: MyBot
+  uninstallDisplayName: MyBot ${version}
   allowToChangeInstallationDirectory: true
 linux:
   category: Development
@@ -211,7 +214,7 @@ linux:
         - x64
         - arm64
 dmg:
-  title: ${productName} ${version}
+  title: MyBot ${version}
   # The art is 478 pt high, so it fills the window when Finder shows only the title bar.
   # With the tab bar and status bar, the window shows the top 410 pt.
   background: build/dmg-background.png

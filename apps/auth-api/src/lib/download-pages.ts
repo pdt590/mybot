@@ -311,7 +311,7 @@ export const DOWNLOAD_PAGES: Record<DownloadPagePlatform, DownloadPageContent> =
             code: "sudo install -m 0644 squashfs-root/resources/linux/openbot.apparmor /etc/apparmor.d/openbot\nsudo systemctl reload apparmor",
           },
           {
-            text: "The profile applies to an AppImage in ~/Applications, ~/Desktop, ~/Downloads, ~/.local/bin or /opt/OpenBot. Keep it in one of these, or edit the path in the profile before you install it. Do not start OpenBot with --no-sandbox: the sandbox is the boundary between a web page and the rest of your computer.",
+            text: "The profile applies to an AppImage in ~/Applications, ~/Desktop, ~/Downloads, ~/.local/bin or /opt/MyBot. Keep it in one of these, or edit the path in the profile before you install it. Do not start OpenBot with --no-sandbox: the sandbox is the boundary between a web page and the rest of your computer.",
           },
         ],
       },

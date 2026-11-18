@@ -248,12 +248,12 @@ interface MachineState {
   data: boolean;
   hostKey: string;
 }
-const MACHINE_STATE = `v=$(sed -n 's/^X-AppImage-Version=//p' /opt/OpenBot/app/*.desktop 2>/dev/null | head -n 1)
+const MACHINE_STATE = `v=$(sed -n 's/^X-AppImage-Version=//p' /opt/MyBot/app/*.desktop 2>/dev/null | head -n 1)
 echo "version=$v"
-echo "user=$(cat /opt/OpenBot/hosted/service-user 2>/dev/null || true)"
+echo "user=$(cat /opt/MyBot/hosted/service-user 2>/dev/null || true)"
 echo "ids=$(id -u user 2>/dev/null || true):$(id -g user 2>/dev/null || true)"
 echo "enabled=$(systemctl is-enabled openbot.service 2>/dev/null || true)"
-if [ -e /home/user/.config/OpenBot ] || [ -e /home/user/.config/openbot-hosted ] || [ -e /srv/openbot-hosted/keyrings ]; then echo data=yes; else echo data=no; fi
+if [ -e /home/user/.config/MyBot ] || [ -e /home/user/.config/openbot-hosted ] || [ -e /srv/openbot-hosted/keyrings ]; then echo data=yes; else echo data=no; fi
 echo "hostkey=$(cut -d' ' -f1,2 /etc/ssh/ssh_host_ed25519_key.pub)"`;
 
 /**
@@ -264,14 +264,14 @@ echo "hostkey=$(cut -d' ' -f1,2 /etc/ssh/ssh_host_ed25519_key.pub)"`;
 const CUSTOM_STATE = `export LC_ALL=C
 echo "hostname=$(hostname)"
 if [ -s /etc/ssh/openbot-operator-keys/root ]; then echo bootstrap=yes; else echo bootstrap=no; fi
-user=$(cat /opt/OpenBot/hosted/service-user 2>/dev/null || true)
+user=$(cat /opt/MyBot/hosted/service-user 2>/dev/null || true)
 if [ -n "$user" ] && command -v openbot >/dev/null && systemctl is-active --quiet openbot.service; then
   status=$(runuser -u "$user" -- openbot status 2>/dev/null || true)
   echo "version=$(sed -n 's/^OpenBot //p' <<<"$status" | head -n 1)"
   echo "account=$(sed -n 's/^Account: //p' <<<"$status" | head -n 1)"
   echo "server=$(sed -n 's/^Server: //p' <<<"$status" | head -n 1)"
   home=$(getent passwd "$user" | cut -d: -f6)
-  echo "hosts=$(grep -o '"serverId": *"[^"]*"' "$home/.config/OpenBot/openbot-team-server-v2.json" 2>/dev/null |
+  echo "hosts=$(grep -o '"serverId": *"[^"]*"' "$home/.config/MyBot/openbot-team-server-v2.json" 2>/dev/null |
     sed 's/.*"\\([^"]*\\)"$/\\1/' | paste -sd, -)"
 fi`;
 
@@ -1650,7 +1650,7 @@ ${writeFileCommand(`${SANDBOX_MOVE}/known-hosts`, `${machine.address} ${machineS
 ssh-keygen -q -t ed25519 -N '' -C openbot-move -f "$d/key" </dev/null
 echo "key=$(cat "$d/key.pub")"
 echo "ids=$(id -u user):$(id -g user)"
-echo "version=$(sed -n 's/^X-AppImage-Version=//p' /opt/OpenBot/app/*.desktop | head -n 1)"
+echo "version=$(sed -n 's/^X-AppImage-Version=//p' /opt/MyBot/app/*.desktop | head -n 1)"
 echo "containers=$(find /var/lib/docker/containers -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)"
 if ids=$(docker ps -aq 2>/dev/null); then
   echo "docker_running=$(docker ps -q | wc -l)"

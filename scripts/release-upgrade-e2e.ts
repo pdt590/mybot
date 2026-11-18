@@ -4,7 +4,7 @@
 //   1. Downloads the previous public release for this platform from GitHub Releases (the newest
 //      published, non-prerelease version below the new one) and checks it against SHA256SUMS.txt.
 //   2. Installs it the way a user does: macOS extracts the update ZIP to a temporary Applications
-//      folder, Windows runs the NSIS installer silently, Linux puts the AppImage in /opt/OpenBot,
+//      folder, Windows runs the NSIS installer silently, Linux puts the AppImage in /opt/MyBot,
 //      where the shipped AppArmor profile applies (build/linux/openbot.apparmor).
 //   3. Starts it once on an empty user data folder and home folder, so that it makes a real profile
 //      and openbot.db. Through the app's own API (`window.openbot`, over the DevTools protocol), it
@@ -27,7 +27,7 @@
 //   --previous-artifact  A downloaded artifact of that release, in place of the download.
 // The download needs `gh` with a token (GH_TOKEN or GITHUB_TOKEN). Windows installs in the real
 // %LOCALAPPDATA%\Programs\OpenBot, so it runs only on a GitHub Actions runner. Linux needs a display
-// (`xvfb-run -a`), a writable /opt/OpenBot and the AppArmor profile; it never uses `--no-sandbox`.
+// (`xvfb-run -a`), a writable /opt/MyBot and the AppArmor profile; it never uses `--no-sandbox`.
 // Writes .openbot-build/release-upgrade-e2e/report.json with versions and counts only, no user text.
 //
 // The seed step calls the API of the previous release. When a change renames or changes one of
@@ -293,7 +293,7 @@ const macApplications = join(root, "Applications");
 const macBundle = join(macApplications, "OpenBot.app");
 const windowsFolder = join(process.env.LOCALAPPDATA ?? "", "Programs", "OpenBot");
 // The shipped AppArmor profile attaches to this path.
-const linuxAppImage = "/opt/OpenBot/OpenBot.AppImage";
+const linuxAppImage = "/opt/MyBot/MyBot.AppImage";
 
 function executablePath(): string {
   if (target === "macos") return join(macBundle, "Contents", "MacOS", "OpenBot");
@@ -343,8 +343,8 @@ async function installPrevious(artifact: string): Promise<void> {
     check(existsSync(executablePath()), "The installer of the previous release did not install OpenBot.exe.");
     return;
   }
-  await access("/opt/OpenBot", constants.W_OK).catch(() => {
-    throw new Error("/opt/OpenBot must exist and be writable, with the AppArmor profile installed.");
+  await access("/opt/MyBot", constants.W_OK).catch(() => {
+    throw new Error("/opt/MyBot must exist and be writable, with the AppArmor profile installed.");
   });
   check(!existsSync(linuxAppImage), `${linuxAppImage} already exists. Use a computer with no OpenBot there.`);
   await copyFile(artifact, linuxAppImage);

@@ -25,13 +25,13 @@ export const messages = {
   "prompt.approval.allow": "允许",
   "prompt.approval.alwaysAllow": "始终允许",
   "prompt.approval.deny": "拒绝",
-  "prompt.approval.cut": "此卡片只显示请求的开头，因此只能拒绝。如果“允许”没有很快出现，请更新服务器上的 OpenBot。",
+  "prompt.approval.cut": "此卡片只显示请求的开头，因此只能拒绝。如果“允许”没有很快出现，请更新服务器上的 MyBot。",
   "prompt.approval.report.bugHeadline": "发现了问题？我们来修复它。",
   "prompt.approval.report.ideaHeadline": "有想法？我们来实现它。",
   "prompt.approval.report.dontSend": "暂不",
-  "prompt.approval.report.send": "发送给 OpenBot 团队",
+  "prompt.approval.report.send": "发送给 MyBot 团队",
   "prompt.approval.report.phoneOnly":
-    "请在 OpenBot 手机应用中打开此对话，并在那里发送报告。手机会附上它的版本、系统信息和支持日志。如果手机无法连接，请在手机应用中打开“设置”>“支持”，在 GitHub 上反馈问题。",
+    "请在 MyBot 手机应用中打开此对话，并在那里发送报告。手机会附上它的版本、系统信息和支持日志。如果手机无法连接，请在手机应用中打开“设置”>“支持”，在 GitHub 上反馈问题。",
   "prompt.approval.title.command": "运行命令",
   "prompt.approval.title.fileChange": "修改文件",
   "prompt.approval.title.permissions": "授予权限",
@@ -55,9 +55,9 @@ export const messages = {
   "prompt.browser.signInBlocked.title": "{host} 拦截了来自 {server} 的登录",
   "prompt.browser.signInBlocked.cancelledTitle": "已取消登录 {host}",
   "prompt.browser.signInBlocked.body":
-    "请在这台电脑上登录。OpenBot 只会把 {host} 的登录状态发送给 {server}，{name} 随后继续工作。",
+    "请在这台电脑上登录。MyBot 只会把 {host} 的登录状态发送给 {server}，{name} 随后继续工作。",
   "prompt.browser.signInBlocked.desktopBody":
-    "{host} 不接受来自服务器的登录。请在你电脑上的 OpenBot 桌面应用中打开此聊天，并在那里登录。之后 {name} 会继续。",
+    "{host} 不接受来自服务器的登录。请在你电脑上的 MyBot 桌面应用中打开此聊天，并在那里登录。之后 {name} 会继续。",
   "prompt.browser.signInBlocked.cancelledBody": "登录已取消。",
   "prompt.browser.signInBlocked.waiting": "正在等待登录",
   "prompt.browser.signInBlocked.waitingButton": "正在等待登录…",

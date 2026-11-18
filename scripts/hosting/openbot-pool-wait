@@ -12,7 +12,7 @@ export LC_ALL=C
 umask 077
 
 STATE=/etc/openbot-pool
-INSTALL=/opt/OpenBot/hosted
+INSTALL=/opt/MyBot/hosted
 # The runtime directory of the unit: on tmpfs, 0700, and removed when the unit stops.
 WORK=${RUNTIME_DIRECTORY:-/run/openbot-pool}
 INTERVAL=10

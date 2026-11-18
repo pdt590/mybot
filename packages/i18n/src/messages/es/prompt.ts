@@ -26,13 +26,13 @@ export const messages = {
   "prompt.approval.alwaysAllow": "Permitir siempre",
   "prompt.approval.deny": "Rechazar",
   "prompt.approval.cut":
-    "Esta tarjeta muestra solo el inicio de la solicitud, así que solo permite rechazarla. Si Permitir no aparece pronto, actualiza OpenBot en el servidor.",
+    "Esta tarjeta muestra solo el inicio de la solicitud, así que solo permite rechazarla. Si Permitir no aparece pronto, actualiza MyBot en el servidor.",
   "prompt.approval.report.bugHeadline": "¿Encontraste un error? Vamos a corregirlo.",
   "prompt.approval.report.ideaHeadline": "¿Tienes una idea? Vamos a hacerla realidad.",
   "prompt.approval.report.dontSend": "Ahora no",
-  "prompt.approval.report.send": "Enviar al equipo de OpenBot",
+  "prompt.approval.report.send": "Enviar al equipo de MyBot",
   "prompt.approval.report.phoneOnly":
-    "Abre este chat en la app de OpenBot del teléfono y envía el informe allí. El teléfono añade su versión, su sistema y su registro de soporte. Si el teléfono no se puede conectar, abre Ajustes > Ayuda en la app del teléfono e informa del problema en GitHub.",
+    "Abre este chat en la app de MyBot del teléfono y envía el informe allí. El teléfono añade su versión, su sistema y su registro de soporte. Si el teléfono no se puede conectar, abre Ajustes > Ayuda en la app del teléfono e informa del problema en GitHub.",
   "prompt.approval.title.command": "Ejecutar un comando",
   "prompt.approval.title.fileChange": "Cambiar archivos",
   "prompt.approval.title.permissions": "Conceder permisos",
@@ -57,9 +57,9 @@ export const messages = {
   "prompt.browser.signInBlocked.title": "{host} bloqueó el inicio de sesión desde {server}",
   "prompt.browser.signInBlocked.cancelledTitle": "Inicio de sesión en {host} cancelado",
   "prompt.browser.signInBlocked.body":
-    "Inicia sesión en este ordenador. OpenBot envía solo el inicio de sesión de {host} a {server}, y {name} continúa.",
+    "Inicia sesión en este ordenador. MyBot envía solo el inicio de sesión de {host} a {server}, y {name} continúa.",
   "prompt.browser.signInBlocked.desktopBody":
-    "{host} no acepta un inicio de sesión desde el servidor. Abre este chat en la aplicación de escritorio de OpenBot en tu ordenador e inicia sesión allí. Después, {name} continúa.",
+    "{host} no acepta un inicio de sesión desde el servidor. Abre este chat en la aplicación de escritorio de MyBot en tu ordenador e inicia sesión allí. Después, {name} continúa.",
   "prompt.browser.signInBlocked.cancelledBody": "El inicio de sesión se canceló.",
   "prompt.browser.signInBlocked.waiting": "Esperando el inicio de sesión",
   "prompt.browser.signInBlocked.waitingButton": "Esperando el inicio de sesión…",

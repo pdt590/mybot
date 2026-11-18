@@ -12,8 +12,7 @@ import { promisify } from "node:util";
 import type { AppTranslate } from "@openbot/i18n";
 import { createOpenBotLogger, toLogValue } from "@openbot/logging";
 import { Option, Schema } from "effect";
-import { dialog, shell } from "electron";
-import { DOWNLOAD_URL } from "./download-url";
+import { dialog } from "electron";
 
 const logger = createOpenBotLogger("app-archive");
 // A copy of the archive writes for some seconds. Check once the writes stop.
@@ -73,15 +72,15 @@ async function readPlistHash(resourcesPath: string): Promise<string | null> {
 }
 
 async function showArchiveChanged(translate: AppTranslate): Promise<void> {
-  const { response } = await dialog.showMessageBox({
+  await dialog.showMessageBox({
     type: "warning",
     message: translate("startup.archiveChangedTitle"),
     detail: translate("startup.archiveChangedBody"),
-    buttons: [translate("startup.archiveChangedDownload"), translate("common.close")],
+    // MyBot: no download link to the upstream site.
+    buttons: [translate("common.close")],
     defaultId: 0,
-    cancelId: 1,
+    cancelId: 0,
   });
-  if (response === 0) await shell.openExternal(DOWNLOAD_URL);
 }
 
 /**

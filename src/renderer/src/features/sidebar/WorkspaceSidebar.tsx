@@ -373,8 +373,9 @@ export function WorkspaceSidebar(props: { peopleEnabled: boolean }) {
         }
       />
       {/* A compact sidebar hides the footer card, so the offer is outside the footer. */}
+      {/* MyBot: no paid storage offer. */}
       <ServerUpgradeOffer
-        card={alertCards.storageCard.card()}
+        card={null}
         server={activeServer()}
         blocked={serverSettingsOpen()}
         onFreeUpSpace={(serverId) => openServerSettings(serverId, null, "storage")}

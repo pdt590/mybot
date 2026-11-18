@@ -7,7 +7,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/opt/OpenBot/hosted/openbot-hosted-update stage
+ExecStart=/opt/MyBot/hosted/openbot-hosted-update stage
 Nice=19
 IOSchedulingClass=idle
 CPUWeight=idle

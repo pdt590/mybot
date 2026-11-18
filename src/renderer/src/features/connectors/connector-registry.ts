@@ -43,8 +43,7 @@ export function createConnectorSet(transports: ConnectorTransports, options: Mes
   const set: ConnectorSet = {};
   const { messaging } = transports;
   if (messaging) {
-    set.slack = createMessagingConnector("slack", messaging, options);
-    set.discord = createMessagingConnector("discord", messaging, options);
+    // MyBot: no Slack or Discord. Both use the upstream @OpenBot apps through signal.openbot.run.
     set.telegram = createMessagingConnector("telegram", messaging, options);
   }
   if (transports.whatsapp) set.whatsapp = createWhatsAppConnector(transports.whatsapp, options);

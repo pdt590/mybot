@@ -46,9 +46,9 @@ install -d -m 0755 "$INSTALL" "$INSTALL/hosted"
 recover
 work=$(mktemp -d "$SCRATCH/openbot-update.XXXXXX")
 trap 'rm -rf "$work"' EXIT
-fetch --output "$work/OpenBot.AppImage" "$APPIMAGE_URL"
-echo "$APPIMAGE_SHA256  $work/OpenBot.AppImage" | sha256sum --check --quiet
-unpack "$work/OpenBot.AppImage"
+fetch --output "$work/MyBot.AppImage" "$APPIMAGE_URL"
+echo "$APPIMAGE_SHA256  $work/MyBot.AppImage" | sha256sum --check --quiet
+unpack "$work/MyBot.AppImage"
 prepare_release "$work/squashfs-root"
 # An older OpenBot cannot open a database that a newer one migrated.
 installed=$(version_of "$INSTALL/app")

@@ -4,7 +4,7 @@ import type { messages as source } from "../../en/mobile/chat";
 export const messages = {
   "mobile.chat.dictation.microphoneOffTitle": "Microfoontoegang staat uit",
   "mobile.chat.dictation.microphoneOffMessage":
-    "Sta OpenBot in Instellingen toe de microfoon en spraakherkenning te gebruiken om een bericht te dicteren.",
+    "Sta MyBot in Instellingen toe de microfoon en spraakherkenning te gebruiken om een bericht te dicteren.",
   "mobile.chat.dictation.stopped": "Dicteren gestopt",
   "mobile.chat.dictation.tryAgain": "Probeer opnieuw.",
   "mobile.chat.dictation.unavailable": "Dicteren is niet beschikbaar",
@@ -134,7 +134,7 @@ export const messages = {
   "mobile.chat.attachment.openFailed": "Kan bijlage niet openen",
   "mobile.chat.attachment.photosNeedUpdate": "Voor het bewaren van foto’s is de nieuwste versie van de app nodig.",
   "mobile.chat.attachment.photosPermission":
-    "Sta OpenBot in Instellingen toe foto’s toe te voegen om deze afbeelding te bewaren.",
+    "Sta MyBot in Instellingen toe foto’s toe te voegen om deze afbeelding te bewaren.",
   "mobile.chat.attachment.imageUnavailable": "De afbeelding is niet beschikbaar. Probeer opnieuw.",
   "mobile.chat.attachment.saveImageFailed": "Kan afbeelding niet bewaren",
   "mobile.chat.attachment.copyImageFailed": "Kan afbeelding niet kopiëren",
@@ -167,9 +167,9 @@ export const messages = {
   "mobile.chat.attachment.unsupported":
     "{name}: kies afbeeldingen, MP3-audio, MOV- of MP4-video, ZIP-archieven, PDF, Office-documenten, EML, tekst, Markdown, data of bronbestanden.",
   "mobile.chat.attachment.hostRejectsType":
-    "{name}: de hostcomputer accepteert geen {type}-bestanden. Werk OpenBot daar bij om ze bij te voegen.",
+    "{name}: de hostcomputer accepteert geen {type}-bestanden. Werk MyBot daar bij om ze bij te voegen.",
   "mobile.chat.attachment.hostRejects":
-    "{name}: de hostcomputer accepteert deze bestanden niet. Werk OpenBot daar bij om ze bij te voegen.",
+    "{name}: de hostcomputer accepteert deze bestanden niet. Werk MyBot daar bij om ze bij te voegen.",
   "mobile.chat.attachment.nameTooLong": "Kies een bestand met een kortere naam.",
   "mobile.chat.attachment.damaged": "De bijlage is beschadigd. Selecteer de bijlage opnieuw.",
   "mobile.chat.attachment.tooLarge": "{name} is groter dan {limit}.",
@@ -214,7 +214,7 @@ export const messages = {
   "mobile.chat.pins.unpin": "Losmaken",
   "mobile.chat.pins.failed": "De vastgemaakte status is niet gewijzigd.",
   "mobile.chat.pins.loadFailed": "Kan de vastgemaakte berichten niet laden.",
-  "mobile.chat.pins.unsupported": "Deze host kan geen berichten vastmaken. Werk OpenBot bij op de host.",
+  "mobile.chat.pins.unsupported": "Deze host kan geen berichten vastmaken. Werk MyBot bij op de host.",
   "mobile.chat.pins.mainChat": "Hoofdchat",
   "mobile.chat.pins.thread": "Zijthread",
   "mobile.chat.pins.pinnedBy": "Vastgemaakt door {name}",
@@ -307,7 +307,7 @@ export const messages = {
   "mobile.chat.imageGallery.saved": "Bewaard in Foto’s",
   "mobile.chat.imageGallery.shareAll": "Alles delen",
   "mobile.chat.imageGallery.photosPermission":
-    "Sta OpenBot in Instellingen toe foto’s toe te voegen om deze afbeeldingen te bewaren.",
+    "Sta MyBot in Instellingen toe foto’s toe te voegen om deze afbeeldingen te bewaren.",
   "mobile.chat.imageGallery.saveFailed": "Kan afbeeldingen niet bewaren",
   "mobile.chat.imageGallery.shareFailed": "Kan afbeeldingen niet delen",
   "mobile.chat.imageGallery.shareNeedsUpdate":
@@ -318,8 +318,7 @@ export const messages = {
   "mobile.chat.video.loading": "{name} laden",
   "mobile.chat.video.share": "Deel {name}",
   "mobile.chat.video.save": "Bewaar {name} in Foto’s",
-  "mobile.chat.video.photosPermission":
-    "Sta OpenBot in Instellingen toe foto’s toe te voegen om deze video te bewaren.",
+  "mobile.chat.video.photosPermission": "Sta MyBot in Instellingen toe foto’s toe te voegen om deze video te bewaren.",
   "mobile.chat.video.saveFailed": "Kan video niet bewaren",
   "mobile.chat.audio.play": "Speel {name} af",
   "mobile.chat.audio.pause": "Pauzeer {name}",
@@ -333,10 +332,10 @@ export const messages = {
   "mobile.chat.browserSecret.authenticatorCode": "Authenticatiecode",
   "mobile.chat.browserSecret.oneTimeCode": "Eenmalige code",
   "mobile.chat.browserSecret.takeoverTitle": "Browser overnemen",
-  "mobile.chat.browserSecret.takeoverBody": "Voltooi deze stap in de browser op de computer waarop OpenBot draait.",
+  "mobile.chat.browserSecret.takeoverBody": "Voltooi deze stap in de browser op de computer waarop MyBot draait.",
   "mobile.chat.browserSecret.signInBlockedTitle": "Log in op je computer",
   "mobile.chat.browserSecret.signInBlockedBody":
-    "Deze site accepteert geen aanmelding vanaf de server. Open deze chat in de OpenBot-desktopapp op je computer en log daar in.",
+    "Deze site accepteert geen aanmelding vanaf de server. Open deze chat in de MyBot-desktopapp op je computer en log daar in.",
   "mobile.chat.browserSecret.takeoverReload": "Laad daarna de pagina opnieuw voordat je Ik ben klaar kiest.",
   "mobile.chat.browserSecret.takeoverFailed": "Het verzoek kan niet worden voltooid.",
   "mobile.chat.browserSecret.done": "Ik ben klaar",
@@ -345,17 +344,17 @@ export const messages = {
   "mobile.chat.browserSecret.submitFailed":
     "Het verzoek kan niet worden voltooid. Controleer de verbinding en probeer opnieuw.",
   "mobile.chat.browserSecret.vaultSkip.agentScript":
-    "OpenBot heeft je opgeslagen login niet gebruikt, omdat de agent een script op deze pagina heeft uitgevoerd. Vraag de agent de pagina opnieuw te laden en het nog eens te proberen.",
+    "MyBot heeft je opgeslagen login niet gebruikt, omdat de agent een script op deze pagina heeft uitgevoerd. Vraag de agent de pagina opnieuw te laden en het nog eens te proberen.",
   "mobile.chat.browserSecret.vaultSkip.fieldKind":
-    "OpenBot heeft je opgeslagen login niet gebruikt, omdat de agent het verkeerde veld op de pagina heeft gekozen.",
+    "MyBot heeft je opgeslagen login niet gebruikt, omdat de agent het verkeerde veld op de pagina heeft gekozen.",
   "mobile.chat.browserSecret.vaultSkip.loginChoice":
-    "OpenBot heeft geen opgeslagen login gebruikt, omdat de agent geen van de opgeslagen logins voor deze site heeft gekozen. Vertel de agent welk account hij moet gebruiken.",
+    "MyBot heeft geen opgeslagen login gebruikt, omdat de agent geen van de opgeslagen logins voor deze site heeft gekozen. Vertel de agent welk account hij moet gebruiken.",
   "mobile.chat.browserSecret.vaultSkip.noPassword":
-    "OpenBot heeft je opgeslagen login niet gebruikt, omdat die geen wachtwoord voor deze site heeft.",
+    "MyBot heeft je opgeslagen login niet gebruikt, omdat die geen wachtwoord voor deze site heeft.",
   "mobile.chat.browserSecret.vaultSkip.noAuthenticatorKey":
-    "OpenBot heeft je opgeslagen login niet gebruikt, omdat die geen authenticatorsleutel heeft.",
+    "MyBot heeft je opgeslagen login niet gebruikt, omdat die geen authenticatorsleutel heeft.",
   "mobile.chat.browserSecret.vaultSkip.vaultUnreadable":
-    "OpenBot heeft geen opgeslagen login gebruikt, omdat je wachtwoordmanager niet gelezen kon worden.",
+    "MyBot heeft geen opgeslagen login gebruikt, omdat je wachtwoordmanager niet gelezen kon worden.",
   "mobile.chat.browserSecret.submit": "Versturen",
   "mobile.chat.browserSecret.takeOver": "Overnemen",
   "mobile.chat.starter.title": "Waar zullen we eerst aan werken?",
@@ -425,14 +424,14 @@ export const messages = {
   "mobile.chat.approval.effect.permissions":
     "Toestaan geeft {name} deze machtigingen op {server}. Weigeren behoudt de huidige machtigingen.",
   "mobile.chat.approval.partial":
-    "{server} stuurt alleen het begin van dit verzoek naar de telefoon. Werk OpenBot op {server} bij of open deze chat in de OpenBot-desktopapp om het toe te staan. Je kunt het hier weigeren.",
+    "{server} stuurt alleen het begin van dit verzoek naar de telefoon. Werk MyBot op {server} bij of open deze chat in de MyBot-desktopapp om het toe te staan. Je kunt het hier weigeren.",
   "mobile.chat.approval.loading": "Volledig verzoek laden…",
   "mobile.chat.approval.loadFailed": "Het volledige verzoek kon niet worden geladen. Je kunt het hier weigeren.",
   "mobile.chat.approval.retry": "Opnieuw",
   "mobile.chat.approval.report.bugHeadline": "Een bug gevonden? Laten we hem oplossen.",
   "mobile.chat.approval.report.ideaHeadline": "Een idee? Laten we het waarmaken.",
   "mobile.chat.approval.report.dontSend": "Niet nu",
-  "mobile.chat.approval.report.send": "Naar het OpenBot-team sturen",
+  "mobile.chat.approval.report.send": "Naar het MyBot-team sturen",
   "mobile.chat.approval.report.phoneAdds": "Deze telefoon voegt aan het rapport toe:",
   "mobile.chat.approval.allow": "Toestaan",
   "mobile.chat.approval.deny": "Weigeren",
@@ -515,7 +514,7 @@ export const messages = {
   "mobile.chat.queue.sendNowNeedsTurn": "Nu verzenden kan alleen tijdens een lopende beurt.",
   "mobile.chat.queue.stillHoldingTitle": "Bericht wordt nog vastgehouden",
   "mobile.chat.queue.stillHoldingMessage":
-    "OpenBot kan dit bericht niet vrijgeven, dus de agent blijft erop wachten. Probeer opnieuw als de telefoon weer verbonden is.",
+    "MyBot kan dit bericht niet vrijgeven, dus de agent blijft erop wachten. Probeer opnieuw als de telefoon weer verbonden is.",
   "mobile.chat.queue.keepEditing": "Blijf bewerken",
   "mobile.chat.queue.leaveAnyway": "Toch verlaten",
   "mobile.chat.queue.discardTitle": "Wijzigingen weggooien?",
@@ -525,7 +524,7 @@ export const messages = {
   "mobile.chat.queue.alreadyReceivedKept":
     "De agent heeft dit bericht al ontvangen, dus het kan niet meer worden gewijzigd. Als je dit scherm sluit, gaat je tekst naar het berichtvak.",
   "mobile.chat.queue.holding": "Bericht wordt voor je vastgehouden…",
-  "mobile.chat.queue.holdFailed": "OpenBot kan dit bericht niet vasthouden om het te bewerken.",
+  "mobile.chat.queue.holdFailed": "MyBot kan dit bericht niet vasthouden om het te bewerken.",
   "mobile.chat.queue.messageLabel": "Bericht",
   "mobile.chat.queue.messagePlaceholder": "Berichttekst",
   "mobile.chat.queue.save": "Bewaar bericht in wachtrij",
@@ -558,15 +557,14 @@ export const messages = {
   "mobile.chat.threads.renameSave": "Bewaren",
   "mobile.chat.threads.name": "Naam van thread",
   "mobile.chat.threads.renameUnavailable":
-    "Je kunt deze thread nu niet hernoemen. Maak verbinding met de server of werk OpenBot op de host bij.",
+    "Je kunt deze thread nu niet hernoemen. Maak verbinding met de server of werk MyBot op de host bij.",
   "mobile.chat.threads.delete.action": "Verwijderen",
   "mobile.chat.threads.delete.title": "Deze thread verwijderen?",
   "mobile.chat.threads.delete.body":
-    "OpenBot verwijdert de thread, de berichten en de bestanden ervan voorgoed. De hoofdchat verandert niet.",
+    "MyBot verwijdert de thread, de berichten en de bestanden ervan voorgoed. De hoofdchat verandert niet.",
   "mobile.chat.threads.filesUnsupported":
-    "Deze host kan geen bestanden in een thread ontvangen. Werk OpenBot op de host bij.",
-  "mobile.chat.threads.unsupported":
-    "Deze host kan threads niet hernoemen of verwijderen. Werk OpenBot op de host bij.",
+    "Deze host kan geen bestanden in een thread ontvangen. Werk MyBot op de host bij.",
+  "mobile.chat.threads.unsupported": "Deze host kan threads niet hernoemen of verwijderen. Werk MyBot op de host bij.",
   "mobile.chat.threads.error.rename": "Kon de thread niet hernoemen.",
   "mobile.chat.threads.error.delete": "Kon de thread niet verwijderen.",
   "mobile.chat.channelWork.working": "Bezig in {channel}",

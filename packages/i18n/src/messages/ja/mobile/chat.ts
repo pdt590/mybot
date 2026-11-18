@@ -4,7 +4,7 @@ import type { messages as source } from "../../en/mobile/chat";
 export const messages = {
   "mobile.chat.dictation.microphoneOffTitle": "マイクへのアクセスがオフです",
   "mobile.chat.dictation.microphoneOffMessage":
-    "メッセージを音声入力するには、設定で OpenBot にマイクと音声認識の使用を許可してください。",
+    "メッセージを音声入力するには、設定で MyBot にマイクと音声認識の使用を許可してください。",
   "mobile.chat.dictation.stopped": "音声入力が停止しました",
   "mobile.chat.dictation.tryAgain": "もう一度お試しください。",
   "mobile.chat.dictation.unavailable": "音声入力は利用できません",
@@ -141,7 +141,7 @@ export const messages = {
   "mobile.chat.attachment.unavailable": "添付ファイルを利用できません。もう一度お試しください。",
   "mobile.chat.attachment.openFailed": "添付ファイルを開けませんでした",
   "mobile.chat.attachment.photosNeedUpdate": "写真を保存するには、アプリを最新版に更新してください。",
-  "mobile.chat.attachment.photosPermission": "この画像を保存するには、設定で OpenBot に写真の追加を許可してください。",
+  "mobile.chat.attachment.photosPermission": "この画像を保存するには、設定で MyBot に写真の追加を許可してください。",
   "mobile.chat.attachment.imageUnavailable": "画像を利用できません。もう一度お試しください。",
   "mobile.chat.attachment.saveImageFailed": "画像を保存できませんでした",
   "mobile.chat.attachment.copyImageFailed": "画像をコピーできませんでした",
@@ -174,9 +174,9 @@ export const messages = {
   "mobile.chat.attachment.unsupported":
     "{name}: 画像、MP3 音声、MOV・MP4 動画、ZIP アーカイブ、PDF、Office 文書、EML、テキスト、Markdown、データ、またはソースファイルを選択してください。",
   "mobile.chat.attachment.hostRejectsType":
-    "{name}: ホストのコンピューターは {type} ファイルを受け付けません。添付するには、そのコンピューターの OpenBot を更新してください。",
+    "{name}: ホストのコンピューターは {type} ファイルを受け付けません。添付するには、そのコンピューターの MyBot を更新してください。",
   "mobile.chat.attachment.hostRejects":
-    "{name}: ホストのコンピューターはこれらのファイルを受け付けません。添付するには、そのコンピューターの OpenBot を更新してください。",
+    "{name}: ホストのコンピューターはこれらのファイルを受け付けません。添付するには、そのコンピューターの MyBot を更新してください。",
   "mobile.chat.attachment.nameTooLong": "名前が短いファイルを選択してください。",
   "mobile.chat.attachment.damaged": "添付ファイルが破損しています。もう一度選択してください。",
   "mobile.chat.attachment.tooLarge": "{name} は {limit} を超えています。",
@@ -226,11 +226,11 @@ export const messages = {
   "mobile.chat.liveVoice.voiceServerFailed":
     "音声サーバーが返信を読み上げられませんでした。設定 > 音声 で確認してください。",
   "mobile.chat.liveVoice.gptUnsupported":
-    "このサーバーは GPT Live Voice に対応していません。サーバーを実行しているコンピューターの OpenBot を更新してください。",
+    "このサーバーは GPT Live Voice に対応していません。サーバーを実行しているコンピューターの MyBot を更新してください。",
   "mobile.chat.liveVoice.gptFailed": "GPT Live Voice を開始できませんでした。ミュートを解除して再試行してください。",
   "mobile.chat.liveVoice.gptEnded": "GPT Live Voice が停止しました。ミュートを解除すると再開します。",
   "mobile.chat.liveVoice.gptMicrophoneOff":
-    "設定で OpenBot にマイクの使用を許可してから、ミュートを解除して再試行してください。",
+    "設定で MyBot にマイクの使用を許可してから、ミュートを解除して再試行してください。",
   "mobile.chat.composer.addAttachment": "添付ファイルを追加",
   "mobile.chat.composer.ask": "{name} に質問",
   "mobile.chat.composer.stopFailed": "エージェントを停止できませんでした。すでに終了している可能性があります。",
@@ -251,7 +251,7 @@ export const messages = {
   "mobile.chat.pins.unpin": "ピン留めを解除",
   "mobile.chat.pins.failed": "ピン留めは変更されませんでした。",
   "mobile.chat.pins.loadFailed": "ピン留めしたメッセージを読み込めませんでした。",
-  "mobile.chat.pins.unsupported": "このホストはメッセージをピン留めできません。ホストの OpenBot を更新してください。",
+  "mobile.chat.pins.unsupported": "このホストはメッセージをピン留めできません。ホストの MyBot を更新してください。",
   "mobile.chat.pins.mainChat": "メインチャット",
   "mobile.chat.pins.thread": "サイドスレッド",
   "mobile.chat.pins.pinnedBy": "{name}がピン留め",
@@ -340,7 +340,7 @@ export const messages = {
   "mobile.chat.imageGallery.saved": "写真に保存しました",
   "mobile.chat.imageGallery.shareAll": "すべて共有",
   "mobile.chat.imageGallery.photosPermission":
-    "これらの画像を保存するには、設定で OpenBot に写真の追加を許可してください。",
+    "これらの画像を保存するには、設定で MyBot に写真の追加を許可してください。",
   "mobile.chat.imageGallery.saveFailed": "画像を保存できませんでした",
   "mobile.chat.imageGallery.shareFailed": "画像を共有できませんでした",
   "mobile.chat.imageGallery.shareNeedsUpdate": "複数の画像を共有するには、アプリを最新版に更新してください。",
@@ -350,7 +350,7 @@ export const messages = {
   "mobile.chat.video.loading": "{name} を読み込み中",
   "mobile.chat.video.share": "{name} を共有",
   "mobile.chat.video.save": "{name} を写真に保存",
-  "mobile.chat.video.photosPermission": "この動画を保存するには、設定で OpenBot に写真の追加を許可してください。",
+  "mobile.chat.video.photosPermission": "この動画を保存するには、設定で MyBot に写真の追加を許可してください。",
   "mobile.chat.video.saveFailed": "動画を保存できませんでした",
   "mobile.chat.audio.play": "{name} を再生",
   "mobile.chat.audio.pause": "{name} を一時停止",
@@ -365,10 +365,10 @@ export const messages = {
   "mobile.chat.browserSecret.oneTimeCode": "ワンタイムコード",
   "mobile.chat.browserSecret.takeoverTitle": "ブラウザーの引き継ぎ",
   "mobile.chat.browserSecret.takeoverBody":
-    "OpenBot を実行しているコンピューターのブラウザーで、この手順を完了してください。",
+    "MyBot を実行しているコンピューターのブラウザーで、この手順を完了してください。",
   "mobile.chat.browserSecret.signInBlockedTitle": "お使いのコンピューターでサインインしてください",
   "mobile.chat.browserSecret.signInBlockedBody":
-    "このサイトはサーバーからのサインインを受け付けません。お使いのコンピューターの OpenBot デスクトップアプリでこのチャットを開き、そこでサインインしてください。",
+    "このサイトはサーバーからのサインインを受け付けません。お使いのコンピューターの MyBot デスクトップアプリでこのチャットを開き、そこでサインインしてください。",
   "mobile.chat.browserSecret.takeoverReload": "その後、ページを再読み込みしてから「完了しました」を選択してください。",
   "mobile.chat.browserSecret.takeoverFailed": "リクエストを完了できませんでした。",
   "mobile.chat.browserSecret.done": "完了しました",
@@ -376,17 +376,17 @@ export const messages = {
   "mobile.chat.browserSecret.submitFailed":
     "リクエストを完了できませんでした。接続を確認して、もう一度お試しください。",
   "mobile.chat.browserSecret.vaultSkip.agentScript":
-    "エージェントがこのページでスクリプトを実行したため、OpenBot は保存したログイン情報を使いませんでした。使うには、ページを再読み込みしてもう一度試すようにエージェントに頼んでください。",
+    "エージェントがこのページでスクリプトを実行したため、MyBot は保存したログイン情報を使いませんでした。使うには、ページを再読み込みしてもう一度試すようにエージェントに頼んでください。",
   "mobile.chat.browserSecret.vaultSkip.fieldKind":
-    "エージェントがページ上の違う欄を選んだため、OpenBot は保存したログイン情報を使いませんでした。",
+    "エージェントがページ上の違う欄を選んだため、MyBot は保存したログイン情報を使いませんでした。",
   "mobile.chat.browserSecret.vaultSkip.loginChoice":
-    "エージェントがこのサイトの保存済みログイン情報を選ばなかったため、OpenBot は保存したログイン情報を使いませんでした。どのアカウントを使うかエージェントに伝えてください。",
+    "エージェントがこのサイトの保存済みログイン情報を選ばなかったため、MyBot は保存したログイン情報を使いませんでした。どのアカウントを使うかエージェントに伝えてください。",
   "mobile.chat.browserSecret.vaultSkip.noPassword":
-    "このサイトのパスワードがないため、OpenBot は保存したログイン情報を使いませんでした。",
+    "このサイトのパスワードがないため、MyBot は保存したログイン情報を使いませんでした。",
   "mobile.chat.browserSecret.vaultSkip.noAuthenticatorKey":
-    "認証アプリのキーがないため、OpenBot は保存したログイン情報を使いませんでした。",
+    "認証アプリのキーがないため、MyBot は保存したログイン情報を使いませんでした。",
   "mobile.chat.browserSecret.vaultSkip.vaultUnreadable":
-    "パスワードマネージャーを読み取れなかったため、OpenBot は保存したログイン情報を使いませんでした。",
+    "パスワードマネージャーを読み取れなかったため、MyBot は保存したログイン情報を使いませんでした。",
   "mobile.chat.browserSecret.submit": "送信",
   "mobile.chat.browserSecret.takeOver": "操作を引き継ぐ",
   "mobile.chat.starter.title": "何から始めますか？",
@@ -449,14 +449,14 @@ export const messages = {
   "mobile.chat.approval.effect.permissions":
     "許可すると {name} に {server} 上のこれらの権限を付与します。拒否すると現在の権限のままです。",
   "mobile.chat.approval.partial":
-    "{server} はこのリクエストの冒頭だけをスマートフォンに送ります。許可するには、{server} の OpenBot を更新するか、OpenBot デスクトップアプリでこのチャットを開いてください。拒否はここでできます。",
+    "{server} はこのリクエストの冒頭だけをスマートフォンに送ります。許可するには、{server} の MyBot を更新するか、MyBot デスクトップアプリでこのチャットを開いてください。拒否はここでできます。",
   "mobile.chat.approval.loading": "リクエスト全体を読み込み中…",
   "mobile.chat.approval.loadFailed": "リクエスト全体を読み込めませんでした。拒否はここでできます。",
   "mobile.chat.approval.retry": "再試行",
   "mobile.chat.approval.report.bugHeadline": "バグを見つけましたか？直しましょう。",
   "mobile.chat.approval.report.ideaHeadline": "アイデアがありますか？形にしましょう。",
   "mobile.chat.approval.report.dontSend": "今はしない",
-  "mobile.chat.approval.report.send": "OpenBot チームに送信",
+  "mobile.chat.approval.report.send": "MyBot チームに送信",
   "mobile.chat.approval.report.phoneAdds": "このスマートフォンがレポートに追加する情報:",
   "mobile.chat.approval.allow": "許可",
   "mobile.chat.approval.deny": "拒否",
@@ -538,7 +538,7 @@ export const messages = {
   "mobile.chat.queue.sendNowNeedsTurn": "今すぐ送信するには、実行中のターンが必要です。",
   "mobile.chat.queue.stillHoldingTitle": "メッセージはまだ保留中です",
   "mobile.chat.queue.stillHoldingMessage":
-    "OpenBot がこのメッセージの保留を解除できなかったため、エージェントは引き続き待機しています。スマートフォンが再接続したら、もう一度お試しください。",
+    "MyBot がこのメッセージの保留を解除できなかったため、エージェントは引き続き待機しています。スマートフォンが再接続したら、もう一度お試しください。",
   "mobile.chat.queue.keepEditing": "編集を続ける",
   "mobile.chat.queue.leaveAnyway": "このまま離れる",
   "mobile.chat.queue.discardTitle": "変更を破棄しますか？",
@@ -548,7 +548,7 @@ export const messages = {
   "mobile.chat.queue.alreadyReceivedKept":
     "エージェントはすでにこのメッセージを受け取ったため、編集できません。この画面を閉じると、入力したテキストはメッセージ欄に移ります。",
   "mobile.chat.queue.holding": "メッセージを保留しています…",
-  "mobile.chat.queue.holdFailed": "OpenBot は編集のためにこのメッセージを保留できませんでした。",
+  "mobile.chat.queue.holdFailed": "MyBot は編集のためにこのメッセージを保留できませんでした。",
   "mobile.chat.queue.messageLabel": "メッセージ",
   "mobile.chat.queue.messagePlaceholder": "メッセージのテキスト",
   "mobile.chat.queue.save": "キューのメッセージを保存",
@@ -578,15 +578,15 @@ export const messages = {
   "mobile.chat.threads.renameSave": "保存",
   "mobile.chat.threads.name": "スレッド名",
   "mobile.chat.threads.renameUnavailable":
-    "このスレッドの名前は今変更できません。サーバーに接続するか、ホストの OpenBot を更新してください。",
+    "このスレッドの名前は今変更できません。サーバーに接続するか、ホストの MyBot を更新してください。",
   "mobile.chat.threads.delete.action": "削除",
   "mobile.chat.threads.delete.title": "このスレッドを削除しますか？",
   "mobile.chat.threads.delete.body":
-    "OpenBot はスレッド、そのメッセージとファイルを完全に削除します。メインチャットは変わりません。",
+    "MyBot はスレッド、そのメッセージとファイルを完全に削除します。メインチャットは変わりません。",
   "mobile.chat.threads.filesUnsupported":
-    "このホストはスレッドでファイルを受け取れません。ホストの OpenBot を更新してください。",
+    "このホストはスレッドでファイルを受け取れません。ホストの MyBot を更新してください。",
   "mobile.chat.threads.unsupported":
-    "このホストはスレッドの名前変更や削除ができません。ホストの OpenBot を更新してください。",
+    "このホストはスレッドの名前変更や削除ができません。ホストの MyBot を更新してください。",
   "mobile.chat.threads.error.rename": "スレッドの名前を変更できませんでした。",
   "mobile.chat.threads.error.delete": "スレッドを削除できませんでした。",
   "mobile.chat.channelWork.working": "{channel} で作業中",

@@ -70,7 +70,7 @@ done
 xsetroot -display :1 -cursor_name left_ptr || true
 # A window manager on :1, so that remote desktop shows title bars and a menu (openbot-desktop). The
 # subshell exits at once, so tini adopts it, as it adopts Xvfb.
-(DISPLAY=:1 bash /opt/OpenBot/app/resources/hosting/openbot-desktop </dev/null &)
+(DISPLAY=:1 bash /opt/MyBot/app/resources/hosting/openbot-desktop </dev/null &)
 
 # Each data volume makes its own keyring password on its first start. The password only lets the
 # daemon open the keyring without a person; the file is 0600. A keyring with no password file is not
@@ -102,4 +102,4 @@ shm=$(df --output=size -k /dev/shm 2>/dev/null | tail -n 1 | tr -d ' ') || shm=0
 [ "${shm:-0}" -ge 1048576 ] 2>/dev/null || chromium+=(--disable-dev-shm-usage)
 
 export OPENBOT_SERVER=1
-exec /opt/OpenBot/app/openbot --password-store=gnome-libsecret "${chromium[@]}"
+exec /opt/MyBot/app/openbot --password-store=gnome-libsecret "${chromium[@]}"

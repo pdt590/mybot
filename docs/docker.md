@@ -481,7 +481,7 @@ environment of OpenBot, so they can read these values.
 
 The release workflow (`.github/workflows/release.yml`) builds the image on a runner of each
 architecture from the AppImage of that release, after it checks the AppImage against the release
-checksums. `docker/Dockerfile` unpacks the AppImage to `/opt/OpenBot/app` and installs the packages
+checksums. `docker/Dockerfile` unpacks the AppImage to `/opt/MyBot/app` and installs the packages
 of a self-hosted server from that release. The workflow starts and stops each image once, and pushes
 the images to GHCR only after the GitHub Release is published.
 
@@ -492,7 +492,7 @@ work on `:1`, at the size of `OPENBOT_DISPLAY_SIZE`, which the script names in
 `OPENBOT_AGENT_DISPLAY`. Computer Use and remote desktop use `:1`, so they do not show the OpenBot
 window. `:1` has a window manager (Openbox, from `openbot-desktop`), which tini adopts as it adopts
 Xvfb. On a stop, tini gives the signal to OpenBot and waits for it.
-`/opt/OpenBot/hosted/mode` is `container`, so the `openbot` command talks to the control socket and
+`/opt/MyBot/hosted/mode` is `container`, so the `openbot` command talks to the control socket and
 does not use systemd.
 
 ## Limits
