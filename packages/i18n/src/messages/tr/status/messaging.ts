@@ -5,7 +5,7 @@ export const messages = {
   // Text that MyBot posts in a Slack conversation. Slack users read it. It names no agent: in
   // Slack, every answer comes from MyBot.
   "status.messaging.working": "Üzerinde çalışılıyor…",
-  "status.messaging.queued": "Bekleniyor: MyBot başka bir istek üzerinde çalışıyor. Yanıt buraya gelecek.",
+  "status.messaging.queued": "Bekleniyor: önceki bir istek henüz bitmedi. Yanıt buraya gelecek.",
   "status.messaging.busy": "Çok fazla istek bekliyor. Daha sonra tekrar deneyin.",
   "status.messaging.failed": "MyBot bu isteği tamamlayamadı. Ayrıntılar MyBot ana makinesinde mevcuttur.",
   "status.messaging.noAnswer": "MyBot yazılı bir yanıt olmadan tamamlandı.",

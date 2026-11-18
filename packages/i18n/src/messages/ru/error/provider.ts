@@ -172,6 +172,10 @@ export const messages = {
   "error.provider.cliTimedOut": "{provider} не ответил вовремя. Возможно, компьютер занят. MyBot повторит попытку.",
   "error.provider.cliTimedOutRefresh":
     "{provider} не ответил вовремя. Возможно, компьютер занят. Обновите провайдеров, чтобы повторить попытку.",
+  "error.provider.serviceUnreachable":
+    "{provider} не может подключиться к своему сервису. Проверьте подключение к интернету. MyBot повторит попытку.",
+  "error.provider.serviceUnreachableRefresh":
+    "{provider} не может подключиться к своему сервису. Проверьте подключение к интернету, затем обновите провайдеров.",
   "error.provider.acpStartTimedOut": "{provider} не завершил запуск за {seconds} с. Возможно, компьютер занят.",
   "error.provider.acpModelsTimedOut": "{provider} не вывел список моделей за {seconds} с. Возможно, компьютер занят.",
   "error.provider.startStopped":
@@ -236,6 +240,8 @@ export const messages = {
     "Бесплатные модели OpenCode исчерпали лимит использования. Этот лимит общий для всех бесплатных моделей. Чтобы продолжить, вставьте ключ OpenCode Go в настройках OpenCode или выберите модель другого провайдера.",
   "error.provider.opencodeProviderFailed":
     "У провайдера моделей произошёл сбой на его стороне. Дело не в вашем соединении. Повторите попытку позже или выберите другую модель.\n{detail}",
+  "error.provider.opencodeModelUnavailable":
+    "Эта модель вам недоступна. Выберите другую модель для этого агента.\n{detail}",
   "error.provider.opencodeIncompleteReply":
     "Ответ модели оборвался или был некорректным. Отправьте сообщение ещё раз или выберите другую модель.\n{detail}",
   "error.provider.opencodeReasoningOverlap":
@@ -489,6 +495,8 @@ export const messages = {
   "error.provider.piSessionIdentity": "Pi вернул другую сессию. Сохранённая сессия не заменена.",
   "error.provider.piExtensionFailed":
     "Pi остановился, потому что не смог загрузить расширение. Удалите или обновите это расширение и повторите попытку. {detail}",
+  "error.provider.piThreadStopped":
+    "Pi неожиданно остановился, не завершив этот ход. Отправьте сообщение, чтобы продолжить.",
   "error.provider.piModelInvalid": "Выберите модель Pi с указанием её провайдера.",
   "error.provider.piToolInvalid": "Инструмент вернул некорректный результат.",
   "error.provider.piSignIn": "Выполните /login в Pi на компьютере-хосте. Закройте Pi, когда вход завершится.",

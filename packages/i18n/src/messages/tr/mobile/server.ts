@@ -421,7 +421,6 @@ export const messages = {
   "mobile.server.route.providers": "Sağlayıcılar",
   "mobile.server.route.provider": "Sağlayıcı",
   "mobile.server.route.providerModels": "Modeller",
-  "mobile.server.route.mcp": "MCP sunucuları",
   "mobile.server.route.mcpServer": "MCP sunucusu",
   "mobile.server.members.rowLabel": "{name}, {role}",
   "mobile.server.members.you": "{name} (siz)",
@@ -911,7 +910,7 @@ export const messages = {
     "Yalnızca “Kendine mesaj gönder” sohbetiniz ve izin verdiğiniz kişiler yazabilir. Diğer kişiler yanıt almaz. Kapalıyken MyBot tanımadığınız kişilere bir kodla yanıt verir.",
   "mobile.server.connectors.whatsapp.workingMessage": "“Üzerinde çalışılıyor…” mesajı",
   "mobile.server.connectors.whatsapp.workingMessageDescription":
-    "MyBot bunu ajan çalışırken gönderir, sonra yanıtla değiştirir. Yalnızca yanıtı göndermek için kapatın.",
+    "MyBot bunu ajan çalışırken gönderir, sonra yanıtla değiştirir. Önceki bir isteği bekleyen istek de bir bekleme mesajı alır. Yalnızca yanıtı göndermek için kapatın.",
   "mobile.server.connectors.whatsapp.statusReactions": "Durum tepkileri",
   "mobile.server.connectors.whatsapp.statusReactionsDescription":
     "MyBot bir mesaj geldiğinde 👀, yanıt hazır olduğunda ✅ tepkisi verir. Hiç tepki göndermemek için kapatın.",
@@ -1196,23 +1195,11 @@ export const messages = {
   "mobile.server.providers.defaultForNew": "Yeni ajanlar için varsayılan",
   "mobile.server.providers.startsWith": "Yeni ajanlar {name} ile başlar.",
   "mobile.server.providers.connectFirst": "Önce {name} bağlantısını kurun.",
-  "mobile.server.settings.mcp": "MCP sunucuları",
-  "mobile.server.settings.mcpCount": { one: "{count} sunucu", other: "{count} sunucu" },
   "mobile.server.mcp.unsupported": "MCP sunucularını burada yönetmek için bu sunucudaki MyBot'u güncelleyin.",
   "mobile.server.mcp.unavailable": "MCP sunucularını yönetmek için bu sunucuya sahip veya yönetici olarak bağlanın.",
   "mobile.server.mcp.accessUnsupported":
     "MCP sunucularını kimin alacağını seçmek için bu sunucudaki MyBot'u güncelleyin.",
-  "mobile.server.mcp.description":
-    "MCP sunucuları bu sunucunun ajanlarına daha fazla araç verir. Claude ve Codex ajanları yalnızca bu listedeki sunucuları alır.",
   "mobile.server.mcp.loading": "MCP sunucuları yükleniyor…",
-  "mobile.server.mcp.loadFailed": "MCP sunucuları yüklenemedi.",
-  "mobile.server.mcp.empty": "Henüz MCP sunucusu yok.",
-  "mobile.server.mcp.retry": "Tekrar dene",
-  "mobile.server.mcp.add": "MCP sunucusu ekle",
-  "mobile.server.mcp.rowLabel": "{name}, {status}",
-  "mobile.server.mcp.enabled": "Açık",
-  "mobile.server.mcp.disabled": "Kapalı",
-  "mobile.server.mcp.signedIn": "Oturum açık",
   "mobile.server.mcp.gone": "Bu MCP sunucusu artık bu sunucuda değil.",
   "mobile.server.mcp.addTitle": "MCP sunucusu ekle",
   "mobile.server.mcp.addConfirm": "Ekle",
@@ -1347,7 +1334,7 @@ export const messages = {
   "mobile.server.update.path.container":
     "Docker ana makinesinde yeni MyBot görüntüsünü çekin ve kapsayıcıyı aynı veri birimleriyle yeniden oluşturun. Önce etkin çalışmanın bitmesini bekleyin. Verilerinizi korumak için mevcut birimleri saklayın.",
   "mobile.server.update.path.manual":
-    "Bu kurulum kendini değiştiremez. Ana makine yöneticisinden uyumlu sürümü github.com/nightly-labs/openbot/releases adresinden yüklemesini isteyin. Mevcut MyBot verilerini saklayın.",
+    "Bu kurulum kendini değiştiremez. Ana makine yöneticisinden uyumlu sürümü yüklemesini isteyin. Mevcut MyBot verilerini saklayın.",
   "mobile.server.update.path.unavailable":
     "Bu bir geliştirme derlemesidir. Güncellemeleri denetlemek için yüklü bir MyBot sürümü kullanın.",
   "mobile.server.update.check": "Güncellemeleri denetle",

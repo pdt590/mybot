@@ -1,10 +1,13 @@
 // A newer OpenBot migrated the database, and then an older copy started, for example from an old
 // shortcut or a second install (#4969). The older copy cannot read the data, and it must not change
 // it. It installs the latest release instead, which opens the data. When it cannot, the user gets a
-// download link in place of a dead-end error.
+// download link in place of a dead-end error. When the latest release is the one that did not start
+// with this data (`loopVersion` in `start-attempts.ts`), it does not install it again: the user gets
+// that state, not a loop.
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { UpdateStatus } from "@openbot/contracts/ipc";
+import { isNewerRelease, isValidSemver } from "@openbot/contracts/release-version";
 import type { AppTranslate } from "@openbot/i18n";
 import { createOpenBotLogger, toLogValue } from "@openbot/logging";
 import { Effect } from "effect";
@@ -15,7 +18,6 @@ import { readUpdatePreference, UPDATE_PREFERENCE_FILE } from "./update-preferenc
 import {
   electronUpdaterCacheDirectory,
   isNixStoreInstall,
-  isValidSemver,
   loadElectronUpdater,
   supportsInstalledUpdates,
   UPDATE_INSTALL_TIMEOUT_MS,
@@ -34,6 +36,8 @@ interface NewerDatabaseRecoveryOptions {
   translate: AppTranslate;
   /** Shutdown preparation of the app, as for an in-app update. It exits the app after the deadline. */
   beforeInstall: (deadlineMs: number) => Promise<void>;
+  /** The version that did not start several times in a row, from the start attempts file. */
+  loopVersion: string | null;
 }
 
 /**
@@ -41,17 +45,27 @@ interface NewerDatabaseRecoveryOptions {
  * update is not possible or fails. The install quits the app, so this returns only after a failure.
  */
 export async function recoverFromNewerDatabase(options: NewerDatabaseRecoveryOptions): Promise<void> {
+  // Only a newer version than this one can have saved the data. An older one is not the latest release.
+  const loopVersion =
+    options.loopVersion && isNewerRelease(options.loopVersion, app.getVersion()) ? options.loopVersion : null;
   const updater = await createRecoveryUpdater(options.beforeInstall);
   if (updater) {
     const progress = new AbortController();
     const quit = { chosen: false };
     void showUpdating(options, progress.signal, quit);
-    await installLatest(updater, quit);
+    await installLatest(updater, quit, loopVersion);
     progress.abort();
     if (quit.chosen) return;
     await Effect.runPromise(updater.stop());
   }
-  await showUpdateRequired(options.translate);
+  if (loopVersion) {
+    logger.warn(
+      `An older OpenBot started over newer data, and OpenBot ${loopVersion} did not start. Not installing it.`,
+    );
+    await showLatestDidNotStart(options.translate, loopVersion);
+  } else {
+    await showUpdateRequired(options.translate);
+  }
   app.quit();
 }
 
@@ -119,9 +133,14 @@ function nextPhase(updater: UpdateService, phases: readonly UpdateStatus["phase"
 
 /**
  * Checks, downloads and installs. The install quits the app, so this returns only when no newer
- * release is ready, when the install failed, or when the user chose Quit before the install.
+ * release is ready, when the install failed, or when the user chose Quit before the install. It
+ * does not install `loopVersion` or an older release, or a release whose version it does not know.
  */
-async function installLatest(updater: UpdateService, quit: { readonly chosen: boolean }): Promise<void> {
+async function installLatest(
+  updater: UpdateService,
+  quit: { readonly chosen: boolean },
+  loopVersion: string | null,
+): Promise<void> {
   updater.start(false);
   // Subscribed before the check: a download that ends at once must not be missed.
   const downloaded = nextPhase(updater, ["ready", "up-to-date", "unsupported", "error"]);
@@ -132,9 +151,16 @@ async function installLatest(updater: UpdateService, quit: { readonly chosen: bo
     downloaded.cancel();
     return;
   }
+  const startsAgain = (version: string | null) =>
+    !loopVersion || (version !== null && isNewerRelease(version, loopVersion));
+  if (checked.availableVersion !== null && !startsAgain(checked.availableVersion)) {
+    downloaded.cancel();
+    return;
+  }
   const outcome = checked.phase === "ready" ? checked : await downloaded.status;
   downloaded.cancel();
   if (outcome.phase !== "ready" || quit.chosen) return;
+  if (!startsAgain(outcome.availableVersion ?? checked.availableVersion)) return;
   // `quitAndInstall` can return without quitting and report the failure as an error status later.
   const installFailed = nextPhase(updater, ["error"]);
   try {
@@ -184,6 +210,19 @@ async function showUpdateRequired(translate: AppTranslate): Promise<void> {
     type: "warning",
     message: translate("startup.newerDataTitle"),
     detail: translate("startup.newerDataBody", { version: app.getVersion() }),
+    buttons: [translate("startup.newerDataQuit")],
+    defaultId: 0,
+    cancelId: 0,
+  });
+}
+
+/** The latest release that the updater can offer did not start with this data. */
+async function showLatestDidNotStart(translate: AppTranslate, loopVersion: string): Promise<void> {
+  // MyBot: no releases or guide link to the upstream site.
+  await dialog.showMessageBox({
+    type: "warning",
+    message: translate("startup.newerDataLoopTitle"),
+    detail: translate("startup.newerDataLoopBody", { version: app.getVersion(), loopVersion }),
     buttons: [translate("startup.newerDataQuit")],
     defaultId: 0,
     cancelId: 0,

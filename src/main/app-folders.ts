@@ -16,7 +16,7 @@ import { join, sep } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { isDynamicRecord, isString } from "@openbot/contracts/runtime-values";
 import { createOpenBotLogger, toLogValue } from "@openbot/logging";
-import { substituteStoredText } from "../backend/openbot-database-schema";
+import { substituteStoredText } from "../backend/migrations/0013-generated-agent-ids";
 
 /** The folder name of this build. */
 export const APP_FOLDER_NAME = "MyBot";

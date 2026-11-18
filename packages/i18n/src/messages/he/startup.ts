@@ -17,6 +17,9 @@ export const messages = {
   "startup.newerDataBody":
     "גרסה חדשה יותר של MyBot שמרה את הנתונים שלך, והגרסה הזו ({version}) אינה יכולה לפתוח אותם. יש להתקין את הגרסה האחרונה כדי לפתוח את הנתונים.\n\nהנתונים המקומיים שלך לא אופסו ולא נדרסו.",
   "startup.newerDataQuit": "יציאה",
+  "startup.newerDataLoopTitle": "הגרסה האחרונה של MyBot לא נפתחה",
+  "startup.newerDataLoopBody":
+    "גרסה חדשה יותר של MyBot שמרה את הנתונים שלך, והגרסה הזו ({version}) אינה יכולה לפתוח אותם. MyBot {loopVersion} נעצר לפני שנפתח כמה פעמים ברצף, ולכן הוא לא יותקן שוב.\n\nיש להתקין גרסה חדשה יותר מ-{loopVersion} כשתהיה זמינה. לקבלת עזרה, יש לפתוח את המדריך.\n\nהנתונים המקומיים שלך לא אופסו ולא נדרסו.",
   "startup.recoveryWindowTitle": "שחזור MyBot",
   "startup.recoveryTitle": "MyBot לא נפתח",
   "startup.recoveryBody": {
@@ -26,8 +29,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "נסה שוב, או התקן את הגרסה האחרונה שנפתחה. לקבלת עזרה, ייצא את נתוני האבחון ושלח את הקובץ עם הדיווח שלך.",
+  "startup.recoveryHintLatest":
+    "MyBot לא מצא גרסה קודמת שיכולה לפתוח את הנתונים שלך. נסה שוב, או התקן את הגרסה האחרונה. לקבלת עזרה, ייצא את נתוני האבחון ושלח את הקובץ עם הדיווח שלך.",
   "startup.recoveryRetry": "נסה שוב",
-  "startup.recoveryPreviousVersion": "הורדת הגרסה הקודמת",
   "startup.recoveryExportDiagnostics": "ייצוא אבחון",
   "startup.recoveryOpenDataFolder": "פתיחת תיקיית הנתונים",
   "startup.recoveryQuit": "יציאה",

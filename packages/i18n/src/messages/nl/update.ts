@@ -64,4 +64,10 @@ export const messages = {
     "Deze versie heeft geen opmerkingen om hier te tonen. De volledige changelog toont alle wijzigingen.",
   "update.whatsNew.changelogFailed": "MyBot kan de changelog niet openen.",
   "update.whatsNew.done": "Begrepen",
+  "update.required.title": "Update vereist",
+  "update.required.description":
+    "MyBot {version} wordt niet meer ondersteund. Werk bij naar {minimum} of nieuwer om door te gaan.",
+  "update.required.download": "MyBot downloaden",
+  "update.required.continue": "Doorgaan zonder update",
+  "update.required.failed": "De update is niet voltooid.",
 } as const satisfies PartialTranslation<typeof source>;

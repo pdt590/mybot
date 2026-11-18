@@ -4,7 +4,8 @@ export const messages = defineMessages("status.messaging", {
   // Text that MyBot posts in a Slack conversation. Slack users read it. It names no agent: in
   // Slack, every answer comes from MyBot.
   "status.messaging.working": "Working on it…",
-  "status.messaging.queued": "Waiting: MyBot is working on another request. The answer comes here.",
+  // It names no product: WhatsApp posts it from the owner's own number, also in a group.
+  "status.messaging.queued": "Waiting for an earlier request to finish. The answer comes here.",
   "status.messaging.busy": "Too many requests are waiting. Try again later.",
   "status.messaging.failed": "MyBot could not finish this request. The MyBot host has the details.",
   "status.messaging.noAnswer": "MyBot finished without a written answer.",

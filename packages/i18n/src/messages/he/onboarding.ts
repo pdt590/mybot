@@ -27,7 +27,7 @@ export const messages = {
   "onboarding.setup.defaultProvider": "ספק ברירת מחדל",
   "onboarding.setup.defaultProviderHint": "משמש לסוכנים מקומיים חדשים. אפשר לשנות אותו לכל סוכן בהמשך.",
   "onboarding.setup.invitation": "הזמנה למארח",
-  "onboarding.setup.invitationPlaceholder": "יש להדביק קישור הזמנה מהכתובת https://openbot.run/join",
+  "onboarding.setup.invitationPlaceholder": "יש להדביק קישור הזמנה",
   "onboarding.setup.otherInvitation": "שימוש בהזמנה אחרת",
   "onboarding.setup.joinNote": "ההצטרפות תתבצע בתור {email}. הזמנות באימייל פועלות רק עבור הכתובת שקיבלה אותן.",
   "onboarding.setup.connect": "התחברות למארח",

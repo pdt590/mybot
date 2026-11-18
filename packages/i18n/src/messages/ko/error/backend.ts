@@ -88,6 +88,7 @@ export const messages = {
   "error.backend.channelCompactNotSupported":
     "이 채널의 어떤 멤버도 요청 시 압축할 수 없습니다. 지원하는 멤버는 컨텍스트가 거의 가득 차면 자동으로 압축합니다.",
   "error.backend.channelArchived": "메시지를 보내거나 작업을 변경하려면 먼저 이 채널을 복원하세요.",
+  "error.backend.channelArchiveRunning": "이 채널에서 실행 중인 작업을 중지한 다음 삭제하세요.",
   "error.backend.channelReferenceUnavailable": "참조한 채널 메시지를 사용할 수 없어요.",
   "error.backend.channelTaskNotFound": "채널 작업을 찾을 수 없어요.",
   "error.backend.channelTaskComplete": "이 작업은 이미 완료되었어요.",
@@ -119,6 +120,8 @@ export const messages = {
   "error.backend.memoryGone": "이 메모리는 더 이상 없어요.",
   "error.backend.routineGone": "이 루틴은 더 이상 없어요.",
   "error.backend.routineRunGone": "이 루틴 실행은 더 이상 없어요.",
+  "error.backend.routineRunFailedNoReason":
+    "실행이 오류로 멈췄지만 이유가 전달되지 않았습니다. 실행을 열어 에이전트가 한 일을 확인하세요.",
   "error.backend.turnNotStarted": "제공자가 이 턴을 시작하지 않았어요.",
   "error.backend.routineResultConnectionOff": "이 메시징 연결이 꺼져 있거나 제거되었어요. 다른 위치를 선택하세요.",
   "error.backend.routineResultNoDelivery": "이 실행에는 다시 보낼 답변이 없어요.",

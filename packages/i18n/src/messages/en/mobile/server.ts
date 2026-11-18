@@ -518,7 +518,6 @@ export const messages = defineMessages("mobile.server", {
   "mobile.server.route.provider": "Provider",
   "mobile.server.route.providerModels": "Models",
   "mobile.server.route.acpRegistry": "ACP registry",
-  "mobile.server.route.mcp": "MCP servers",
   "mobile.server.route.mcpServer": "MCP server",
   "mobile.server.members.rowLabel": "{name}, {role}",
   "mobile.server.members.you": "{name} (you)",
@@ -1180,7 +1179,7 @@ export const messages = defineMessages("mobile.server", {
     "Only your “Message yourself” chat and the people you allow can write. Other people get no reply. When it is off, MyBot replies to unknown people with a code.",
   "mobile.server.connectors.whatsapp.workingMessage": "“Working on it…” message",
   "mobile.server.connectors.whatsapp.workingMessageDescription":
-    "MyBot posts it while the agent works, then replaces it with the answer. Turn off to post only the answer.",
+    "MyBot posts it while the agent works, then replaces it with the answer. A request that waits for an earlier request gets a waiting message too. Turn off to post only the answer.",
   "mobile.server.connectors.whatsapp.statusReactions": "Status reactions",
   "mobile.server.connectors.whatsapp.statusReactionsDescription":
     "MyBot reacts with 👀 when a message arrives and with ✅ when the answer is ready. Turn off to send no reactions.",
@@ -1648,22 +1647,10 @@ export const messages = defineMessages("mobile.server", {
   "mobile.server.customProviders.removeTitle": "Remove {name}?",
   "mobile.server.customProviders.removeBody": "Agents on this server can no longer use its models.",
   "mobile.server.customProviders.removeFailed": "MyBot could not remove this endpoint.",
-  "mobile.server.settings.mcp": "MCP servers",
-  "mobile.server.settings.mcpCount": { one: "{count} server", other: "{count} servers" },
   "mobile.server.mcp.unsupported": "Update MyBot on this server to manage its MCP servers here.",
   "mobile.server.mcp.unavailable": "Connect to this server as an owner or admin to manage its MCP servers.",
   "mobile.server.mcp.accessUnsupported": "Update MyBot on this server to choose who gets its MCP servers.",
-  "mobile.server.mcp.description":
-    "MCP servers give the agents of this server more tools. Claude and Codex agents get only the servers in this list.",
   "mobile.server.mcp.loading": "Loading MCP servers…",
-  "mobile.server.mcp.loadFailed": "Could not load the MCP servers.",
-  "mobile.server.mcp.empty": "No MCP servers yet.",
-  "mobile.server.mcp.retry": "Try again",
-  "mobile.server.mcp.add": "Add MCP server",
-  "mobile.server.mcp.rowLabel": "{name}, {status}",
-  "mobile.server.mcp.enabled": "On",
-  "mobile.server.mcp.disabled": "Off",
-  "mobile.server.mcp.signedIn": "Signed in",
   "mobile.server.mcp.gone": "This MCP server is no longer on this server.",
   "mobile.server.mcp.addTitle": "Add MCP server",
   "mobile.server.mcp.addConfirm": "Add",
@@ -1800,7 +1787,7 @@ export const messages = defineMessages("mobile.server", {
   "mobile.server.update.path.container":
     "On the Docker host, pull the new MyBot image and create the container again with the same data volumes. Wait for active work to finish first. Keep the existing volumes to preserve your data.",
   "mobile.server.update.path.manual":
-    "This installation cannot replace itself. Ask the host administrator to install the compatible release from github.com/nightly-labs/openbot/releases. Keep the existing MyBot data.",
+    "This installation cannot replace itself. Ask the host administrator to install the compatible release. Keep the existing MyBot data.",
   "mobile.server.update.path.unavailable":
     "This is a development build. Use an installed MyBot release to check for updates.",
   "mobile.server.update.check": "Check for updates",

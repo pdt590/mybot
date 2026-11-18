@@ -584,7 +584,7 @@ export const messages = {
   "server.update.path.container":
     "Docker ana makinesinde yeni MyBot görüntüsünü çekin ve kapsayıcıyı aynı veri birimleriyle yeniden oluşturun. Önce etkin çalışmanın bitmesini bekleyin. Verilerinizi korumak için mevcut birimleri saklayın.",
   "server.update.path.manual":
-    "Bu kurulum kendini değiştiremez. Ana makine yöneticisinden uyumlu sürümü github.com/nightly-labs/openbot/releases adresinden yüklemesini isteyin. Mevcut MyBot verilerini saklayın.",
+    "Bu kurulum kendini değiştiremez. Ana makine yöneticisinden uyumlu sürümü yüklemesini isteyin. Mevcut MyBot verilerini saklayın.",
   "server.update.path.unavailable":
     "Bu bir geliştirme derlemesidir. Güncellemeleri denetlemek için yüklü bir MyBot sürümü kullanın.",
   "server.update.check": "Güncellemeleri denetle",

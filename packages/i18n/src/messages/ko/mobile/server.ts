@@ -404,7 +404,6 @@ export const messages = {
   "mobile.server.route.providers": "제공자",
   "mobile.server.route.provider": "제공자",
   "mobile.server.route.providerModels": "모델",
-  "mobile.server.route.mcp": "MCP 서버",
   "mobile.server.route.mcpServer": "MCP 서버",
   "mobile.server.members.rowLabel": "{name}, {role}",
   "mobile.server.members.you": "{name} (나)",
@@ -866,7 +865,7 @@ export const messages = {
     "“나에게 메시지 보내기” 채팅과 허용한 사람들만 메시지를 보낼 수 있어요. 다른 사람에게는 답장하지 않아요. 끄면 MyBot이 모르는 사람에게 코드를 답장해요.",
   "mobile.server.connectors.whatsapp.workingMessage": "“작업 중이에요…” 메시지",
   "mobile.server.connectors.whatsapp.workingMessageDescription":
-    "에이전트가 작업하는 동안 MyBot이 보내고, 이후 답변으로 바꿔요. 답변만 보내려면 끄세요.",
+    "에이전트가 작업하는 동안 MyBot이 보내고, 이후 답변으로 바꿔요. 이전 요청을 기다리는 요청에는 대기 메시지도 보내요. 답변만 보내려면 끄세요.",
   "mobile.server.connectors.whatsapp.statusReactions": "상태 반응",
   "mobile.server.connectors.whatsapp.statusReactionsDescription":
     "메시지가 도착하면 MyBot이 👀로, 답변이 준비되면 ✅로 반응해요. 반응을 보내지 않으려면 끄세요.",
@@ -1149,22 +1148,10 @@ export const messages = {
   "mobile.server.providers.defaultForNew": "새 에이전트 기본값",
   "mobile.server.providers.startsWith": "새 에이전트는 {name}(으)로 시작해요.",
   "mobile.server.providers.connectFirst": "먼저 {name}을(를) 연결하세요.",
-  "mobile.server.settings.mcp": "MCP 서버",
-  "mobile.server.settings.mcpCount": { other: "서버 {count}개" },
   "mobile.server.mcp.unsupported": "여기에서 MCP 서버를 관리하려면 이 서버의 MyBot을 업데이트해 주세요.",
   "mobile.server.mcp.unavailable": "MCP 서버를 관리하려면 소유자나 관리자로 이 서버에 연결하세요.",
   "mobile.server.mcp.accessUnsupported": "MCP 서버를 받을 대상을 선택하려면 이 서버의 MyBot을 업데이트해 주세요.",
-  "mobile.server.mcp.description":
-    "MCP 서버는 이 서버의 에이전트에게 더 많은 도구를 제공해요. Claude와 Codex 에이전트는 이 목록에 있는 서버만 사용해요.",
   "mobile.server.mcp.loading": "MCP 서버 불러오는 중…",
-  "mobile.server.mcp.loadFailed": "MCP 서버를 불러오지 못했어요.",
-  "mobile.server.mcp.empty": "아직 MCP 서버가 없어요.",
-  "mobile.server.mcp.retry": "다시 시도",
-  "mobile.server.mcp.add": "MCP 서버 추가",
-  "mobile.server.mcp.rowLabel": "{name}, {status}",
-  "mobile.server.mcp.enabled": "켜짐",
-  "mobile.server.mcp.disabled": "꺼짐",
-  "mobile.server.mcp.signedIn": "로그인됨",
   "mobile.server.mcp.gone": "이 MCP 서버는 더 이상 이 서버에 없어요.",
   "mobile.server.mcp.addTitle": "MCP 서버 추가",
   "mobile.server.mcp.addConfirm": "추가",
@@ -1298,7 +1285,7 @@ export const messages = {
   "mobile.server.update.path.container":
     "Docker 호스트에서 새 MyBot 이미지를 가져오고 같은 데이터 볼륨으로 컨테이너를 다시 만드세요. 먼저 진행 중인 작업이 끝나기를 기다리세요. 데이터를 보존하려면 기존 볼륨을 유지하세요.",
   "mobile.server.update.path.manual":
-    "이 설치본은 스스로 교체할 수 없어요. 호스트 관리자에게 github.com/nightly-labs/openbot/releases에서 호환되는 릴리스를 설치해 달라고 요청하세요. 기존 MyBot 데이터는 유지하세요.",
+    "이 설치본은 스스로 교체할 수 없어요. 호스트 관리자에게 호환되는 릴리스를 설치해 달라고 요청하세요. 기존 MyBot 데이터는 유지하세요.",
   "mobile.server.update.path.unavailable": "개발 빌드예요. 업데이트를 확인하려면 설치된 MyBot 릴리스를 사용하세요.",
   "mobile.server.update.check": "업데이트 확인",
   "mobile.server.update.start": "대기 상태일 때 업데이트",

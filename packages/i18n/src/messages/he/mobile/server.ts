@@ -534,7 +534,6 @@ export const messages = {
   "mobile.server.route.provider": "ספק",
   "mobile.server.route.providerModels": "מודלים",
   "mobile.server.route.acpRegistry": "רישום ACP",
-  "mobile.server.route.mcp": "שרתי MCP",
   "mobile.server.route.mcpServer": "שרת MCP",
   "mobile.server.members.rowLabel": "{name}, {role}",
   "mobile.server.members.you": "{name} (אני)",
@@ -1215,7 +1214,7 @@ export const messages = {
     "רק הצ'אט ״הודעה לעצמך״ שלך והאנשים שאישרת יכולים לכתוב. אנשים אחרים לא מקבלים תשובה. כשהאפשרות כבויה, MyBot משיב לאנשים לא מוכרים עם קוד.",
   "mobile.server.connectors.whatsapp.workingMessage": "הודעת ״עובד על זה…״",
   "mobile.server.connectors.whatsapp.workingMessageDescription":
-    "MyBot שולח אותה בזמן שהסוכן עובד, ואז מחליף אותה בתשובה. יש לכבות כדי לשלוח רק את התשובה.",
+    "MyBot שולח אותה בזמן שהסוכן עובד, ואז מחליף אותה בתשובה. בקשה שממתינה לבקשה קודמת מקבלת גם הודעת המתנה. יש לכבות כדי לשלוח רק את התשובה.",
   "mobile.server.connectors.whatsapp.statusReactions": "תגובות סטטוס",
   "mobile.server.connectors.whatsapp.statusReactionsDescription":
     "MyBot מגיב עם 👀 כשהודעה מגיעה ועם ✅ כשהתשובה מוכנה. יש לכבות כדי לא לשלוח תגובות.",
@@ -1670,22 +1669,10 @@ export const messages = {
   "mobile.server.customProviders.removeTitle": "להסיר את {name}?",
   "mobile.server.customProviders.removeBody": "סוכנים בשרת הזה לא יוכלו עוד להשתמש במודלים שלה.",
   "mobile.server.customProviders.removeFailed": "MyBot לא הצליח להסיר את נקודת הקצה הזו.",
-  "mobile.server.settings.mcp": "שרתי MCP",
-  "mobile.server.settings.mcpCount": { one: "שרת אחד", two: "שני שרתים", other: "{count} שרתים" },
   "mobile.server.mcp.unsupported": "יש לעדכן את MyBot בשרת הזה כדי לנהל כאן את שרתי ה-MCP שלו.",
   "mobile.server.mcp.unavailable": "יש להתחבר לשרת הזה כבעלים או כמנהל כדי לנהל את שרתי ה-MCP שלו.",
   "mobile.server.mcp.accessUnsupported": "יש לעדכן את MyBot בשרת הזה כדי לבחור מי מקבל את שרתי ה-MCP שלו.",
-  "mobile.server.mcp.description":
-    "שרתי MCP נותנים לסוכנים של השרת הזה עוד כלים. סוכני Claude ו-Codex מקבלים רק את השרתים שברשימה הזו.",
   "mobile.server.mcp.loading": "טוען שרתי MCP…",
-  "mobile.server.mcp.loadFailed": "לא ניתן לטעון את שרתי ה-MCP.",
-  "mobile.server.mcp.empty": "עדיין אין שרתי MCP.",
-  "mobile.server.mcp.retry": "ניסיון חוזר",
-  "mobile.server.mcp.add": "הוספת שרת MCP",
-  "mobile.server.mcp.rowLabel": "{name}, {status}",
-  "mobile.server.mcp.enabled": "פועל",
-  "mobile.server.mcp.disabled": "כבוי",
-  "mobile.server.mcp.signedIn": "מחובר",
   "mobile.server.mcp.gone": "שרת ה-MCP הזה כבר לא נמצא בשרת הזה.",
   "mobile.server.mcp.addTitle": "הוספת שרת MCP",
   "mobile.server.mcp.addConfirm": "הוספה",
@@ -1816,7 +1803,7 @@ export const messages = {
   "mobile.server.update.path.container":
     "במארח Docker, יש למשוך את תמונת MyBot החדשה וליצור את הקונטיינר מחדש עם אותם כוני נתונים. קודם יש להמתין לסיום עבודה פעילה. כדי לשמור את הנתונים, יש להשאיר את הכוננים הקיימים.",
   "mobile.server.update.path.manual":
-    "ההתקנה הזו לא יכולה להחליף את עצמה. יש לבקש ממנהל המארח להתקין את הגרסה התואמת מ-github.com/nightly-labs/openbot/releases. יש להשאיר את נתוני MyBot הקיימים.",
+    "ההתקנה הזו לא יכולה להחליף את עצמה. יש לבקש ממנהל המארח להתקין את הגרסה התואמת. יש להשאיר את נתוני MyBot הקיימים.",
   "mobile.server.update.path.unavailable": "זו בנייה לפיתוח. כדי לבדוק עדכונים, יש להשתמש בגרסת MyBot מותקנת.",
   "mobile.server.update.check": "בדיקת עדכונים",
   "mobile.server.update.start": "עדכון כשאין פעילות",

@@ -3,7 +3,7 @@ import type { messages as source } from "../../en/status/messaging";
 
 export const messages = {
   "status.messaging.working": "Pracuję nad tym…",
-  "status.messaging.queued": "Oczekiwanie: MyBot pracuje nad innym żądaniem. Odpowiedź pojawi się tutaj.",
+  "status.messaging.queued": "Oczekiwanie na zakończenie wcześniejszego żądania. Odpowiedź pojawi się tutaj.",
   "status.messaging.busy": "Czeka zbyt wiele żądań. Spróbuj ponownie później.",
   "status.messaging.failed": "MyBot nie mógł dokończyć tego żądania. Szczegóły są na hoście MyBot.",
   "status.messaging.noAnswer": "MyBot zakończył pracę bez odpowiedzi tekstowej.",

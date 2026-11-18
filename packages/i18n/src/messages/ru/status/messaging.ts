@@ -4,7 +4,7 @@ import type { messages as source } from "../../en/status/messaging";
 // Not translated yet: the screen shows the English text.
 export const messages = {
   "status.messaging.working": "Уже работаю…",
-  "status.messaging.queued": "Ожидание: MyBot занят другим запросом. Ответ придёт сюда.",
+  "status.messaging.queued": "Ожидание: предыдущий запрос ещё выполняется. Ответ придёт сюда.",
   "status.messaging.busy": "В очереди слишком много запросов. Повторите попытку позже.",
   "status.messaging.failed": "MyBot не смог завершить этот запрос. Подробности — на хосте MyBot.",
   "status.messaging.noAnswer": "MyBot завершил работу без письменного ответа.",

@@ -17,6 +17,9 @@ export const messages = {
   "startup.newerDataBody":
     "Een nieuwere versie van MyBot heeft je gegevens opgeslagen, en deze versie ({version}) kan ze niet openen. Installeer de nieuwste versie om je gegevens te openen.\n\nJe lokale gegevens zijn niet gereset of overschreven.",
   "startup.newerDataQuit": "Stoppen",
+  "startup.newerDataLoopTitle": "De nieuwste MyBot opende niet",
+  "startup.newerDataLoopBody":
+    "Een nieuwere versie van MyBot heeft je gegevens opgeslagen, en deze versie ({version}) kan ze niet openen. MyBot {loopVersion} stopte meerdere keren achter elkaar voordat het opende, dus het wordt niet opnieuw geïnstalleerd.\n\nInstalleer een versie nieuwer dan {loopVersion} zodra er een beschikbaar is. Open de gids voor hulp.\n\nJe lokale gegevens zijn niet gereset of overschreven.",
   "startup.recoveryWindowTitle": "MyBot-herstel",
   "startup.recoveryTitle": "MyBot is niet geopend",
   "startup.recoveryBody": {
@@ -26,8 +29,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "Probeer het opnieuw, of installeer de laatste versie die wel opende. Exporteer voor hulp de diagnose en stuur het bestand mee met je melding.",
+  "startup.recoveryHintLatest":
+    "MyBot vond geen eerdere versie die je gegevens kan openen. Probeer het opnieuw, of installeer de nieuwste versie. Exporteer voor hulp de diagnose en stuur het bestand mee met je melding.",
   "startup.recoveryRetry": "Opnieuw",
-  "startup.recoveryPreviousVersion": "Vorige versie downloaden",
   "startup.recoveryExportDiagnostics": "Diagnose exporteren",
   "startup.recoveryOpenDataFolder": "Gegevensmap openen",
   "startup.recoveryQuit": "Stoppen",

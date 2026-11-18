@@ -426,7 +426,6 @@ export const messages = {
   "mobile.server.route.providers": "Anbieter",
   "mobile.server.route.provider": "Anbieter",
   "mobile.server.route.providerModels": "Modelle",
-  "mobile.server.route.mcp": "MCP-Server",
   "mobile.server.route.mcpServer": "MCP-Server",
   "mobile.server.members.rowLabel": "{name}, {role}",
   "mobile.server.members.you": "{name} (du)",
@@ -937,7 +936,7 @@ export const messages = {
     "Nur dein Chat „Nachricht an dich selbst“ und die Personen, die du zulässt, können schreiben. Andere bekommen keine Antwort. Wenn es aus ist, antwortet MyBot unbekannten Personen mit einem Code.",
   "mobile.server.connectors.whatsapp.workingMessage": "Nachricht „Wird bearbeitet…“",
   "mobile.server.connectors.whatsapp.workingMessageDescription":
-    "MyBot sendet sie, während der Agent arbeitet, und ersetzt sie dann durch die Antwort. Schalte sie aus, um nur die Antwort zu senden.",
+    "MyBot sendet sie, während der Agent arbeitet, und ersetzt sie dann durch die Antwort. Eine Anfrage, die auf eine frühere wartet, bekommt auch eine Wartemeldung. Schalte sie aus, um nur die Antwort zu senden.",
   "mobile.server.connectors.whatsapp.statusReactions": "Status-Reaktionen",
   "mobile.server.connectors.whatsapp.statusReactionsDescription":
     "MyBot reagiert mit 👀, wenn eine Nachricht ankommt, und mit ✅, wenn die Antwort fertig ist. Schalte sie aus, um keine Reaktionen zu senden.",
@@ -1232,24 +1231,12 @@ export const messages = {
   "mobile.server.providers.defaultForNew": "Standard für neue Agenten",
   "mobile.server.providers.startsWith": "Neue Agenten starten mit {name}.",
   "mobile.server.providers.connectFirst": "Verbinde zuerst {name}.",
-  "mobile.server.settings.mcp": "MCP-Server",
-  "mobile.server.settings.mcpCount": { one: "{count} Server", other: "{count} Server" },
   "mobile.server.mcp.unsupported": "Aktualisiere MyBot auf diesem Server, um seine MCP-Server hier zu verwalten.",
   "mobile.server.mcp.unavailable":
     "Verbinde dich als Inhaber oder Admin mit diesem Server, um seine MCP-Server zu verwalten.",
   "mobile.server.mcp.accessUnsupported":
     "Aktualisiere MyBot auf diesem Server, um festzulegen, wer seine MCP-Server erhält.",
-  "mobile.server.mcp.description":
-    "MCP-Server geben den Agenten dieses Servers mehr Werkzeuge. Claude- und Codex-Agenten erhalten nur die Server in dieser Liste.",
   "mobile.server.mcp.loading": "MCP-Server werden geladen…",
-  "mobile.server.mcp.loadFailed": "Die MCP-Server konnten nicht geladen werden.",
-  "mobile.server.mcp.empty": "Noch keine MCP-Server.",
-  "mobile.server.mcp.retry": "Erneut versuchen",
-  "mobile.server.mcp.add": "MCP-Server hinzufügen",
-  "mobile.server.mcp.rowLabel": "{name}, {status}",
-  "mobile.server.mcp.enabled": "An",
-  "mobile.server.mcp.disabled": "Aus",
-  "mobile.server.mcp.signedIn": "Angemeldet",
   "mobile.server.mcp.gone": "Dieser MCP-Server ist nicht mehr auf diesem Server.",
   "mobile.server.mcp.addTitle": "MCP-Server hinzufügen",
   "mobile.server.mcp.addConfirm": "Hinzufügen",
@@ -1386,7 +1373,7 @@ export const messages = {
   "mobile.server.update.path.container":
     "Lade auf dem Docker-Host das neue MyBot-Image herunter und erstelle den Container mit denselben Datenvolumes neu. Warte zuerst, bis aktive Aufgaben beendet sind. Behalte die vorhandenen Volumes, um deine Daten zu erhalten.",
   "mobile.server.update.path.manual":
-    "Diese Installation kann sich nicht selbst ersetzen. Bitte den Host-Administrator, die kompatible Version von github.com/nightly-labs/openbot/releases zu installieren. Behalte die vorhandenen MyBot-Daten.",
+    "Diese Installation kann sich nicht selbst ersetzen. Bitte den Host-Administrator, die kompatible Version zu installieren. Behalte die vorhandenen MyBot-Daten.",
   "mobile.server.update.path.unavailable":
     "Dies ist eine Entwicklungsversion. Verwende eine installierte MyBot-Version, um nach Updates zu suchen.",
   "mobile.server.update.check": "Nach Updates suchen",

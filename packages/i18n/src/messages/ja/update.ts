@@ -65,4 +65,10 @@ export const messages = {
     "このバージョンにはここに表示するノートがありません。完全な変更履歴ですべての変更を確認できます。",
   "update.whatsNew.changelogFailed": "MyBot は変更履歴を開けませんでした。",
   "update.whatsNew.done": "OK",
+  "update.required.title": "アップデートが必要です",
+  "update.required.description":
+    "MyBot {version} はサポートが終了しました。続けるには {minimum} 以降にアップデートしてください。",
+  "update.required.download": "MyBot をダウンロード",
+  "update.required.continue": "アップデートせずに続ける",
+  "update.required.failed": "アップデートが完了しませんでした。",
 } as const satisfies PartialTranslation<typeof source>;

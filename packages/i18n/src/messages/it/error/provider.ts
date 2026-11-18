@@ -176,6 +176,10 @@ export const messages = {
     "{provider} non ha risposto in tempo. Il computer potrebbe essere occupato. MyBot riproverà.",
   "error.provider.cliTimedOutRefresh":
     "{provider} non ha risposto in tempo. Il computer potrebbe essere occupato. Aggiorna i provider per riprovare.",
+  "error.provider.serviceUnreachable":
+    "{provider} non riesce a connettersi al suo servizio. Controlla la connessione a internet. MyBot riproverà.",
+  "error.provider.serviceUnreachableRefresh":
+    "{provider} non riesce a connettersi al suo servizio. Controlla la connessione a internet, poi aggiorna i provider.",
   "error.provider.acpStartTimedOut":
     "{provider} non ha finito di avviarsi entro {seconds} s. Il computer potrebbe essere occupato.",
   "error.provider.acpModelsTimedOut":
@@ -243,6 +247,8 @@ export const messages = {
     "I modelli gratuiti di OpenCode hanno raggiunto il limite di utilizzo. Tutti i modelli gratuiti condividono questo limite. Per continuare, incolla una chiave OpenCode Go nelle impostazioni di OpenCode, oppure scegli un modello di un altro provider.",
   "error.provider.opencodeProviderFailed":
     "Il provider del modello è andato in errore dal suo lato. La tua connessione non c'entra. Riprova più tardi o scegli un altro modello.\n{detail}",
+  "error.provider.opencodeModelUnavailable":
+    "Questo modello non è disponibile per te. Scegli un altro modello per questo agente.\n{detail}",
   "error.provider.opencodeIncompleteReply":
     "La risposta del modello si è interrotta o non era valida. Invia di nuovo il messaggio o scegli un altro modello.\n{detail}",
   "error.provider.opencodeReasoningOverlap":
@@ -497,6 +503,8 @@ export const messages = {
     "Pi ha restituito una sessione diversa. La sessione salvata non è stata sostituita.",
   "error.provider.piExtensionFailed":
     "Pi si è fermato perché non è riuscito a caricare un'estensione. Rimuovi o aggiorna questa estensione, poi riprova. {detail}",
+  "error.provider.piThreadStopped":
+    "Pi si è fermato in modo imprevisto prima di finire questo turno. Invia un messaggio per continuare.",
   "error.provider.piModelInvalid": "Seleziona un modello di Pi che includa il suo provider.",
   "error.provider.piToolInvalid": "Il tool ha restituito un risultato non valido.",
   "error.provider.piSignIn": "Usa /login in Pi sul computer host. Chiudi Pi quando l'accesso è completato.",

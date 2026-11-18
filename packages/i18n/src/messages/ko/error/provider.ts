@@ -173,6 +173,10 @@ export const messages = {
     "{provider}이(가) 제시간에 응답하지 않았어요. 컴퓨터가 바쁜 것 같아요. MyBot이 다시 시도할게요.",
   "error.provider.cliTimedOutRefresh":
     "{provider}이(가) 제시간에 응답하지 않았어요. 컴퓨터가 바쁜 것 같아요. 제공자를 새로 고쳐 다시 시도해 주세요.",
+  "error.provider.serviceUnreachable":
+    "{provider}이(가) 서비스에 연결할 수 없어요. 인터넷 연결을 확인해 주세요. MyBot이 다시 시도할게요.",
+  "error.provider.serviceUnreachableRefresh":
+    "{provider}이(가) 서비스에 연결할 수 없어요. 인터넷 연결을 확인한 다음 제공자를 새로 고쳐 주세요.",
   "error.provider.acpStartTimedOut":
     "{provider}이(가) {seconds}초 안에 시작을 마치지 못했어요. 컴퓨터가 바쁜 것 같아요.",
   "error.provider.acpModelsTimedOut":
@@ -239,6 +243,8 @@ export const messages = {
     "OpenCode 무료 모델이 사용 한도에 도달했어요. 모든 무료 모델이 이 한도를 함께 사용해요. 계속하려면 OpenCode 설정에 OpenCode Go 키를 붙여넣거나 다른 제공자의 모델을 선택하세요.",
   "error.provider.opencodeProviderFailed":
     "모델 제공자 쪽에서 오류가 났어요. 회원님의 연결 문제가 아니에요. 나중에 다시 시도하거나 다른 모델을 선택하세요.\n{detail}",
+  "error.provider.opencodeModelUnavailable":
+    "이 모델은 사용할 수 없어요. 이 에이전트에 다른 모델을 선택하세요.\n{detail}",
   "error.provider.opencodeIncompleteReply":
     "모델의 응답이 중간에 끊겼거나 올바르지 않았어요. 메시지를 다시 보내거나 다른 모델을 선택하세요.\n{detail}",
   "error.provider.opencodeReasoningOverlap":
@@ -488,6 +494,8 @@ export const messages = {
   "error.provider.piSessionIdentity": "Pi가 다른 세션을 반환했어요. 저장된 세션은 교체되지 않았어요.",
   "error.provider.piExtensionFailed":
     "확장 프로그램을 불러올 수 없어 Pi가 중지되었습니다. 이 확장 프로그램을 제거하거나 업데이트한 후 다시 시도하세요. {detail}",
+  "error.provider.piThreadStopped":
+    "Pi가 이 턴을 마치기 전에 예기치 않게 중지되었습니다. 계속하려면 메시지를 보내세요.",
   "error.provider.piModelInvalid": "제공자가 포함된 Pi 모델을 선택하세요.",
   "error.provider.piToolInvalid": "도구가 올바르지 않은 결과를 반환했어요.",
   "error.provider.piSignIn": "호스트 컴퓨터의 Pi에서 /login을 사용하세요. 로그인이 끝나면 Pi를 닫으세요.",

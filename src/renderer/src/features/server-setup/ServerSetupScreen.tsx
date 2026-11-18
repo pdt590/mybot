@@ -16,7 +16,7 @@ import {
 } from "./server-setup-port";
 
 const APP_URL = "https://openbot.run/app";
-const PRODUCT_NAME = "OpenBot";
+const PRODUCT_NAME = "MyBot"; // MyBot: brand name.
 /** The name of a server before its first publish, as in `ServerMode`. */
 const DEFAULT_SERVER_NAME = "OpenBot";
 /** How often the page asks again while the account loads or the server starts. */

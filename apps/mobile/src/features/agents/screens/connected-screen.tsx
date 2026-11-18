@@ -580,6 +580,11 @@ export function ConnectedScreen({ variant = "screen" }: { variant?: "screen" | "
   // An app update drops the lilac block to a header above the list, where the search field shows.
   const appUpdate = useAppUpdate();
   const updateHeader = useAppUpdateHeader(searchShows ? appUpdate : null);
+  // The rating ask waits for a home with nothing over its list.
+  // A pane stays focused while a chat or a sheet is open beside it, so only the home screen asks.
+  // Open search also keeps the ask away, so it never covers the field and the keyboard.
+  // MyBot: no rating ask (App Store review and X post prompt).
+  // useRatingAskGate(!pane && searchShows && !search.open && !updateHeader.shown);
   const { open: searchOpen, closeSearch } = search;
   useEffect(() => {
     if (!searchShows && searchOpen) closeSearch();

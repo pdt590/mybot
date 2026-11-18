@@ -72,4 +72,10 @@ export const messages = {
   "update.whatsNew.empty.body": "Для этой версии нет примечаний. Все изменения есть в полном списке изменений.",
   "update.whatsNew.changelogFailed": "MyBot не удалось открыть список изменений.",
   "update.whatsNew.done": "Понятно",
+  "update.required.title": "Требуется обновление",
+  "update.required.description":
+    "MyBot {version} больше не поддерживается. Обновите до версии {minimum} или новее, чтобы продолжить.",
+  "update.required.download": "Скачать MyBot",
+  "update.required.continue": "Продолжить без обновления",
+  "update.required.failed": "Обновление не завершилось.",
 } as const satisfies PartialTranslation<typeof source>;

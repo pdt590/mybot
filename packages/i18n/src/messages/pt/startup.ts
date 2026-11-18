@@ -17,6 +17,9 @@ export const messages = {
   "startup.newerDataBody":
     "Uma versão mais recente do MyBot salvou seus dados, e esta versão ({version}) não consegue abri-los. Instale a versão mais recente para abrir seus dados.\n\nSeus dados locais não foram redefinidos nem substituídos.",
   "startup.newerDataQuit": "Sair",
+  "startup.newerDataLoopTitle": "A versão mais recente do MyBot não abriu",
+  "startup.newerDataLoopBody":
+    "Uma versão mais recente do MyBot salvou seus dados, e esta versão ({version}) não consegue abri-los. O MyBot {loopVersion} parou antes de abrir várias vezes seguidas, então ele não será instalado de novo.\n\nInstale uma versão mais recente que a {loopVersion} quando houver uma disponível. Para obter ajuda, abra o guia.\n\nSeus dados locais não foram redefinidos nem substituídos.",
   "startup.recoveryWindowTitle": "Recuperação do MyBot",
   "startup.recoveryTitle": "O MyBot não abriu",
   "startup.recoveryBody": {
@@ -26,8 +29,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "Tente novamente ou instale a última versão que abriu. Para obter ajuda, exporte o diagnóstico e envie o arquivo com seu relato.",
+  "startup.recoveryHintLatest":
+    "O MyBot não encontrou uma versão anterior que consiga abrir seus dados. Tente novamente ou instale a versão mais recente. Para obter ajuda, exporte o diagnóstico e envie o arquivo com seu relato.",
   "startup.recoveryRetry": "Tentar de novo",
-  "startup.recoveryPreviousVersion": "Baixar versão anterior",
   "startup.recoveryExportDiagnostics": "Exportar diagnóstico",
   "startup.recoveryOpenDataFolder": "Abrir pasta de dados",
   "startup.recoveryQuit": "Sair",

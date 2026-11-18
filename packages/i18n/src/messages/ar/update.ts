@@ -70,4 +70,9 @@ export const messages = {
   "update.whatsNew.empty.body": "لا يحتوي هذا الإصدار على ملاحظات لعرضها هنا. يعرض سجل التغييرات الكامل كل التغييرات.",
   "update.whatsNew.changelogFailed": "تعذّر على MyBot فتح سجل التغييرات.",
   "update.whatsNew.done": "حسنًا",
+  "update.required.title": "التحديث مطلوب",
+  "update.required.description": "لم يعد MyBot {version} مدعومًا. حدّث إلى {minimum} أو أحدث للمتابعة.",
+  "update.required.download": "تنزيل MyBot",
+  "update.required.continue": "المتابعة دون تحديث",
+  "update.required.failed": "لم يكتمل التحديث.",
 } as const satisfies PartialTranslation<typeof source>;

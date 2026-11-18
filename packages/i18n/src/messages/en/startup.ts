@@ -20,6 +20,9 @@ export const messages = defineMessages("startup", {
   "startup.newerDataBody":
     "A newer version of MyBot saved your data, and this version ({version}) cannot open it. Install the latest version to open your data.\n\nYour local data was not reset or overwritten.",
   "startup.newerDataQuit": "Quit",
+  "startup.newerDataLoopTitle": "The latest MyBot did not open",
+  "startup.newerDataLoopBody":
+    "A newer version of MyBot saved your data, and this version ({version}) cannot open it. MyBot {loopVersion} stopped before it opened several times in a row, so it is not installed again.\n\nInstall a version newer than {loopVersion} when one is available. To get help, open the guide.\n\nYour local data was not reset or overwritten.",
   // The recovery window: one version did not finish its start several times in a row. It shows before
   // the next start, from the main process, with no renderer.
   "startup.recoveryWindowTitle": "MyBot recovery",
@@ -31,8 +34,9 @@ export const messages = defineMessages("startup", {
   },
   "startup.recoveryHint":
     "Try again, or install the last version that opened. To get help, export the diagnostics and send the file with your report.",
+  "startup.recoveryHintLatest":
+    "MyBot found no earlier version that can open your data. Try again, or install the latest version. To get help, export the diagnostics and send the file with your report.",
   "startup.recoveryRetry": "Try again",
-  "startup.recoveryPreviousVersion": "Download previous version",
   "startup.recoveryExportDiagnostics": "Export diagnostics",
   "startup.recoveryOpenDataFolder": "Open data folder",
   "startup.recoveryQuit": "Quit",

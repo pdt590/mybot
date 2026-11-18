@@ -72,4 +72,9 @@ export const messages = {
   "update.whatsNew.empty.body": "该版本没有可在此展示的更新说明。完整更新日志会列出所有改动。",
   "update.whatsNew.changelogFailed": "MyBot 无法打开更新日志。",
   "update.whatsNew.done": "知道了",
+  "update.required.title": "需要更新",
+  "update.required.description": "MyBot {version} 已不再受支持。请更新到 {minimum} 或更高版本以继续使用。",
+  "update.required.download": "下载 MyBot",
+  "update.required.continue": "不更新并继续",
+  "update.required.failed": "更新未完成。",
 } as const satisfies PartialTranslation<typeof source>;

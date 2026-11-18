@@ -62,4 +62,9 @@ export const messages = {
   "update.whatsNew.empty.body": "אין לגרסה הזו הערות להצגה כאן. יומן השינויים המלא מציג את כל השינויים.",
   "update.whatsNew.changelogFailed": "MyBot לא הצליח לפתוח את יומן השינויים.",
   "update.whatsNew.done": "הבנתי",
+  "update.required.title": "נדרש עדכון",
+  "update.required.description": "MyBot {version} כבר לא נתמך. יש לעדכן לגרסה {minimum} ומעלה כדי להמשיך.",
+  "update.required.download": "הורדת MyBot",
+  "update.required.continue": "המשך בלי לעדכן",
+  "update.required.failed": "העדכון לא הסתיים.",
 } as const satisfies PartialTranslation<typeof source>;

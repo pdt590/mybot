@@ -583,7 +583,7 @@ export const messages = {
   "server.update.path.container":
     "Lade auf dem Docker-Host das neue MyBot-Image herunter und erstelle den Container mit denselben Datenvolumes neu. Warte zuerst, bis aktive Aufgaben beendet sind. Behalte die vorhandenen Volumes, um deine Daten zu erhalten.",
   "server.update.path.manual":
-    "Diese Installation kann sich nicht selbst ersetzen. Bitte den Host-Administrator, die kompatible Version von github.com/nightly-labs/openbot/releases zu installieren. Behalte die vorhandenen MyBot-Daten.",
+    "Diese Installation kann sich nicht selbst ersetzen. Bitte den Host-Administrator, die kompatible Version zu installieren. Behalte die vorhandenen MyBot-Daten.",
   "server.update.path.unavailable":
     "Dies ist eine Entwicklungsversion. Verwende eine installierte MyBot-Version, um nach Updates zu suchen.",
   "server.update.check": "Nach Updates suchen",

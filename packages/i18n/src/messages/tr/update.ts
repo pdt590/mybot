@@ -69,4 +69,10 @@ export const messages = {
     "Bu sürümde burada gösterilecek bir not yok. Tüm değişiklikler tam sürüm günlüğünde gösterilir.",
   "update.whatsNew.changelogFailed": "MyBot sürüm günlüğünü açamadı.",
   "update.whatsNew.done": "Anladım",
+  "update.required.title": "Güncelleme gerekli",
+  "update.required.description":
+    "MyBot {version} artık desteklenmiyor. Devam etmek için {minimum} veya daha yeni bir sürüme güncelleyin.",
+  "update.required.download": "MyBot’u indir",
+  "update.required.continue": "Güncellemeden devam et",
+  "update.required.failed": "Güncelleme tamamlanmadı.",
 } as const satisfies PartialTranslation<typeof source>;

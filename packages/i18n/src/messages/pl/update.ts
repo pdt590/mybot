@@ -69,4 +69,10 @@ export const messages = {
     "Ta wersja nie ma tu informacji do pokazania. Pełna lista zmian pokazuje wszystkie zmiany.",
   "update.whatsNew.changelogFailed": "Nie udało się otworzyć listy zmian.",
   "update.whatsNew.done": "Rozumiem",
+  "update.required.title": "Wymagana aktualizacja",
+  "update.required.description":
+    "MyBot {version} nie jest już obsługiwany. Zaktualizuj do wersji {minimum} lub nowszej, aby kontynuować.",
+  "update.required.download": "Pobierz MyBot",
+  "update.required.continue": "Kontynuuj bez aktualizacji",
+  "update.required.failed": "Aktualizacja nie została ukończona.",
 } as const satisfies PartialTranslation<typeof source>;

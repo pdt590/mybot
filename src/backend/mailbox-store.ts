@@ -6,6 +6,7 @@ import { rewriteAttachmentReferences } from "@openbot/contracts/attachment-refer
 import { INPUT_LIMITS } from "@openbot/contracts/input-limits";
 import type {
   AgentRuntimeWorkItem,
+  AgentTaskAwaitedReply,
   AttachmentDataInput,
   AttachmentSummary,
   ConversationMessage,
@@ -26,6 +27,7 @@ import {
   AGENT_RUNTIME_ATTENTION_LIMIT,
   AGENT_RUNTIME_TEXT_LIMIT,
   AGENT_RUNTIME_WORKING_ITEMS_LIMIT,
+  AGENT_TASK_AWAITED_STATES,
   AGENT_WELCOME_ITEM_TYPE,
   isConversationMessageSender,
   isMessageReaction,
@@ -54,7 +56,7 @@ import { routineNameInLimit } from "./database/legacy-conversation-message";
 import { mailboxReactionRowKey } from "./database/mailbox-projection";
 import { MailboxDeliveryGate } from "./mailbox-delivery-gate";
 import { runIdOrigins } from "./message-run-ids";
-import { OpenBotDatabase } from "./openbot-database";
+import type { OpenBotDatabase } from "./openbot-database";
 import { isRecord } from "./protocol";
 import { recordRestartActivity } from "./restart-activity";
 
@@ -335,7 +337,11 @@ export class MailboxStore {
     reactionKeys: new Set<string>(),
   };
 
-  constructor(userDataPath: string, sharedRoot: string, database = new OpenBotDatabase(userDataPath)) {
+  /**
+   * `database` is the one connection of the process to `openbot.db`, the one that `AgentStore` holds.
+   * A second connection would run the migrations again and compete for the write lock.
+   */
+  constructor(userDataPath: string, sharedRoot: string, database: OpenBotDatabase) {
     this.#statePath = join(userDataPath, "mailbox.json");
     this.#files = new AttachmentFiles({ userDataPath, sharedRoot });
     this.#database = database;
@@ -930,6 +936,42 @@ export class MailboxStore {
   }
 
   /**
+   * The open work of the queue of each agent, as `listQueue` shows it, in one pass over the mailbox: the
+   * deliveries that are queued, starting or running, and the failed deliveries of the turn that
+   * `failedTurns` names for the agent. A sidebar reads it for many agents at once (`agent-active-queues-v1`),
+   * and the finished history was most of a full queue.
+   */
+  listActiveQueues(agentIds: readonly string[], failedTurns: ReadonlyMap<string, string>): QueueSnapshot[] {
+    const targets = new Set(agentIds);
+    const executionMessageIds = this.#executionMessageIds();
+    const messages = this.#messagesById();
+    const welcomes = new Set<string>();
+    const open = new Map<string, StoredDelivery[]>();
+    for (const delivery of this.#state.deliveries) {
+      const agentId = delivery.recipientAgentId;
+      if (!targets.has(agentId)) continue;
+      if (WELCOME_PENDING_STATUSES.has(delivery.status) && messages.get(delivery.messageId)?.welcome === true)
+        welcomes.add(agentId);
+      if (executionMessageIds.has(delivery.messageId)) continue;
+      const failed = delivery.status === "failed" && delivery.turnId === failedTurns.get(agentId);
+      if (!isActiveDelivery(delivery) && !failed) continue;
+      const list = open.get(agentId);
+      if (list) list.push(delivery);
+      else open.set(agentId, [delivery]);
+    }
+    const positions = open.size > 0 ? this.#queuedPositions() : new Map<string, number>();
+    return [...targets].map((agentId) => ({
+      agentId,
+      ...(welcomes.has(agentId) ? { welcome: true as const } : {}),
+      deliveries: (open.get(agentId) ?? [])
+        .sort(compareQueueOrder)
+        .map((delivery) =>
+          this.#publicDelivery(delivery, positions, this.#requireMessage(delivery.messageId, messages)),
+        ),
+    }));
+  }
+
+  /**
    * The queued channel, messaging, task and welcome work of this agent, in queue order. `listQueue` hides it, so a
    * caller that reorders the queue the user sees has to put these ids back before the mailbox reads
    * the order.
@@ -971,6 +1013,40 @@ export class MailboxStore {
     for (const message of this.#state.messages)
       if (message.channelId || message.messaging || message.taskId || message.welcome) ids.add(message.id);
     return ids;
+  }
+
+  /**
+   * The requests that agents sent from their side threads and that wait for an answer: the recipient
+   * has not ended the turn that runs them, and has not answered them yet, as `sideThreadWaitsFor` reads
+   * an answer. An answer or a note for a failed request then goes back to the thread.
+   */
+  awaitedThreadRequests(): Array<
+    AgentTaskAwaitedReply & { deliveryId: string; senderAgentId: string; taskId: string }
+  > {
+    let messages: Map<string, StoredMessage> | undefined;
+    let answered: Set<string> | undefined;
+    return this.#state.deliveries.flatMap((delivery) => {
+      if (!isOneOf(AGENT_TASK_AWAITED_STATES, delivery.status)) return [];
+      messages ??= this.#messagesById();
+      const message = messages.get(delivery.messageId);
+      if (!message?.senderTaskId || message.sender.kind !== "agent" || message.expectsReply === false) return [];
+      answered ??= new Set(
+        this.#state.messages.flatMap((answer) =>
+          isAnswer(answer) ? [`${answer.replyToMessageId}:${answer.sender.agentId}`] : [],
+        ),
+      );
+      if (answered.has(`${message.id}:${delivery.recipientAgentId}`)) return [];
+      return [
+        {
+          deliveryId: delivery.id,
+          senderAgentId: message.sender.agentId,
+          taskId: message.senderTaskId,
+          messageId: message.id,
+          recipientAgentId: delivery.recipientAgentId,
+          status: delivery.status,
+        },
+      ];
+    });
   }
 
   /** Indexed once for a whole read, so a read over many deliveries does not scan the messages for each one. */
@@ -1700,6 +1776,7 @@ export class MailboxStore {
                 }
               : undefined,
           createdAt: storedDelivery.steeredAt ?? message.createdAt,
+          ...(storedDelivery.steeredAt === undefined ? {} : { steered: true as const }),
           status: delivery.status === "failed" ? "failed" : "completed",
           itemType:
             message.sender.kind === "agent"
@@ -2373,17 +2450,23 @@ export class MailboxStore {
    *
    * A request steered into a turn for other work gets a note too when that turn ends as interrupted
    * before a reply to it: the person stopped it, or the provider process exited.
+   *
+   * `recovered` is a delivery that the restart recovery settled: the process that ran its turn is gone,
+   * so an interrupted request gets a note too. Otherwise the agent that asked waits for a result that
+   * no turn sends (#11561).
    */
   answerFailedRequest = Effect.fn("MailboxStore.answerFailedRequest")(function* (
     this: MailboxStore,
     deliveryId: string,
     taskOpen: (taskId: string) => boolean,
     agentExists: (agentId: string) => boolean,
+    recovered = false,
   ): Effect.fn.Return<string | null, StoredStateFailure> {
     const delivery = this.#state.deliveries.find((candidate) => candidate.id === deliveryId);
     const request = delivery && this.#state.messages.find((message) => message.id === delivery.messageId);
+    const steered = delivery?.status === "interrupted" && this.steeredIntoOtherWork(deliveryId);
     const outcome =
-      delivery?.status === "failed" || (delivery?.status === "interrupted" && this.steeredIntoOtherWork(deliveryId))
+      delivery?.status === "failed" || (delivery?.status === "interrupted" && (steered || recovered))
         ? delivery.status
         : null;
     if (!delivery || !outcome || request?.sender.kind !== "agent" || request.channelId) return null;
@@ -2409,11 +2492,15 @@ export class MailboxStore {
         "Status: blocked",
         outcome === "failed"
           ? `Result: OpenBot note, not written by this teammate: the request failed before the teammate answered. ${(delivery.error ?? "The provider gave no reason.").slice(0, FAILED_REQUEST_REASON_LIMIT)}`
-          : "Result: OpenBot note, not written by this teammate: the request went into a running turn of the teammate, and that turn ended before the teammate answered.",
+          : steered
+            ? "Result: OpenBot note, not written by this teammate: the request went into a running turn of the teammate, and that turn ended before the teammate answered."
+            : "Result: OpenBot note, not written by this teammate: the teammate's turn stopped when OpenBot or its provider restarted, before the teammate answered. Part of the work can be done.",
         "Evidence: none",
         outcome === "failed"
           ? "Unblock: The user must fix the cause, then ask for the request again."
-          : "Unblock: Send the request again if you still need the result.",
+          : steered
+            ? "Unblock: Send the request again if you still need the result."
+            : "Unblock: Check what the teammate already did, then send the request again if you still need the result.",
       ].join("\n"),
       replyToMessageId: request.id,
       ...(taskId ? { taskId } : {}),
@@ -3142,19 +3229,25 @@ export class MailboxStore {
    * As {@link hasUnfinishedDelivery}, without the work of the agent's tasks, which run in their own
    * threads. External conversation work counts as before it had its own lane. Channel work counts
    * only with `includeChannels`: on a provider that runs one turn at a time, a channel turn holds the
-   * agent's own chat too. The `exceptQueued` deliveries do not count while they are queued.
+   * agent's own chat too. The `exceptQueued` deliveries do not count while they are queued. Without
+   * `includeMessaging`, the work of the messaging lane does not count.
    */
   hasUnfinishedDeliveryOutsideTasks(
     agentId: string,
     includeChannels: boolean,
     exceptQueued: readonly string[] = [],
+    includeMessaging = true,
   ): boolean {
     const messages = this.#messagesById();
     return this.#state.deliveries.some((delivery) => {
       if (delivery.recipientAgentId !== agentId || !isActiveDelivery(delivery)) return false;
       if (delivery.status === "queued" && exceptQueued.includes(delivery.id)) return false;
       const lane = this.#laneOf(delivery, messages);
-      return lane === null || lane === MESSAGING_LANE || (includeChannels && laneChannelId(lane) !== null);
+      return (
+        lane === null ||
+        (includeMessaging && lane === MESSAGING_LANE) ||
+        (includeChannels && laneChannelId(lane) !== null)
+      );
     });
   }
 
@@ -3436,13 +3529,14 @@ export class MailboxStore {
     }
   }, Effect.uninterruptible).bind(this);
 
-  /** The content digest of a staged or saved generated attachment, or null for any other file. */
-  generatedAttachmentSha256(attachmentId: string): string | null {
-    return (
-      this.#stagedGeneratedAttachments.get(attachmentId)?.sha256 ??
-      this.#state.generatedAttachments.find((candidate) => candidate.id === attachmentId)?.sha256 ??
-      null
-    );
+  /**
+   * The content digest of a staged or saved generated attachment, or of a file that a message keeps,
+   * such as a teammate's (#11589). Null for a deleted or unknown file: the chat does not show it.
+   */
+  attachmentSha256(attachmentId: string): string | null {
+    const staged = this.#stagedGeneratedAttachments.get(attachmentId);
+    if (staged) return staged.sha256;
+    return this.#fileRecords().find((record) => record.id === attachmentId && !record.deletedAt)?.sha256 ?? null;
   }
 
   storeGeneratedAttachment = Effect.fn("MailboxStore.storeGeneratedAttachment")(function* (

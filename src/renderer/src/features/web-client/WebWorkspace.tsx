@@ -311,6 +311,7 @@ import type { HostProviderEnvironmentCalls } from "../settings/provider-environm
 import type { HostModelVisibilityCalls } from "../settings/provider-model-visibility";
 import type { HostPromptCacheTtlCalls } from "../settings/provider-prompt-cache";
 import { createSidebarAlertCards, SidebarAlertCards } from "../sidebar/SidebarAlertCards";
+import { ServerUpgradeOffer } from "../sidebar/server-upgrade-offer";
 import { isReaderAuthor } from "../team/reader-identity";
 import type { ServerVaultOptions } from "../vault/ServerVaultPanel";
 import { createVaultStore } from "../vault/stores/vault-store";
@@ -1854,9 +1855,11 @@ function WebWorkspaceFrame(props: WebWorkspaceProps) {
     return agentId ? workspace.deleteMessage(agentId, messageId) : Promise.resolve();
   };
   /** Pin and Unpin on the host. A host without `message-pins-v1` has none. */
-  const agentMessagePins = () => {
+  const messagePinsSupported = createMemo(() => workspace.state.capabilities.includes(MESSAGE_PINS_CAPABILITY));
+  // One object while the capability stays: a new object reads the pinned list again.
+  const agentMessagePins = createMemo(() => {
     const { listPinnedMessages: list, setMessagePinned: set } = workspace.runtime;
-    if (!list || !set || !workspace.state.capabilities.includes(MESSAGE_PINS_CAPABILITY)) return undefined;
+    if (!list || !set || !messagePinsSupported()) return undefined;
     return {
       list,
       set,
@@ -1865,7 +1868,7 @@ function WebWorkspaceFrame(props: WebWorkspaceProps) {
           if (event.type === "message-pins-changed" && event.agentId === agentId) changed();
         }),
     };
-  };
+  });
   /** The Delete action of the open agent's chat. A host without `message-delete-v1` has none. */
   const agentDeleteMessageAction = () => (messageDeleteSupported() ? deleteOpenAgentMessage : undefined);
   const hostServerAuditCalls: HostServerAuditCalls = {
@@ -2402,14 +2405,20 @@ function WebWorkspaceFrame(props: WebWorkspaceProps) {
       },
     );
   };
-  createEffect(
+  // The conversation changes with each message, and an effect runs again each time its key is computed.
+  // The memo compares the key, so only another agent or turn reads the waits again.
+  const waitsKey = createMemo(
     () => ({
       agentId: workspace.state.selectedId ?? null,
       turnId: workspace.conversation()?.page?.activeTurnId ?? null,
       supported: workspace.state.capabilities.includes(AGENT_WAITS_CAPABILITY),
     }),
-    ({ agentId, supported }) => loadSelectedWaits(agentId, supported),
+    {
+      equals: (before, after) =>
+        before.agentId === after.agentId && before.turnId === after.turnId && before.supported === after.supported,
+    },
   );
+  createEffect(waitsKey, ({ agentId, supported }) => loadSelectedWaits(agentId, supported));
   const visibleWaits = () => {
     const snapshot = selectedWaits();
     return snapshot && snapshot.agentId === workspace.state.selectedId ? snapshot.waits : undefined;
@@ -3682,6 +3691,15 @@ function WebWorkspaceFrame(props: WebWorkspaceProps) {
                         billingDetails={billingCalls}
                       />
                     }
+                  />
+                  {/* The larger storage tier of an almost full hosted server, as on desktop. */}
+                  {/* MyBot: no paid storage offer. */}
+                  <ServerUpgradeOffer
+                    billing={billingCalls}
+                    card={null}
+                    server={server()}
+                    blocked={serverSettings.state.open || billingOpen() || accountSettingsOpen()}
+                    onFreeUpSpace={(serverId) => void openServerSettings(serverId, null, "storage")}
                   />
                   <ChannelCreateOverlay />
                   <GlobalSearchOverlay

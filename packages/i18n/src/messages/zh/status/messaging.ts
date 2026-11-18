@@ -5,7 +5,7 @@ export const messages = {
   // Text that MyBot posts in a Slack conversation. Slack users read it. It names no agent: in
   // Slack, every answer comes from MyBot.
   "status.messaging.working": "正在处理…",
-  "status.messaging.queued": "等待中：MyBot 正在处理另一个请求，回答会发到这里。",
+  "status.messaging.queued": "等待中：之前的请求尚未完成，回答会发到这里。",
   "status.messaging.busy": "等待中的请求太多，请稍后再试。",
   "status.messaging.failed": "MyBot 未能完成该请求，详情请见 MyBot 主机。",
   "status.messaging.noAnswer": "MyBot 已完成，但没有书面回答。",

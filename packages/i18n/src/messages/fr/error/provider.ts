@@ -191,6 +191,10 @@ export const messages = {
     "{provider} n’a pas répondu à temps. L’ordinateur est peut-être occupé. MyBot va réessayer.",
   "error.provider.cliTimedOutRefresh":
     "{provider} n’a pas répondu à temps. L’ordinateur est peut-être occupé. Actualisez les fournisseurs pour réessayer.",
+  "error.provider.serviceUnreachable":
+    "{provider} ne parvient pas à se connecter à son service. Vérifiez votre connexion internet. MyBot va réessayer.",
+  "error.provider.serviceUnreachableRefresh":
+    "{provider} ne parvient pas à se connecter à son service. Vérifiez votre connexion internet, puis actualisez les fournisseurs.",
   "error.provider.acpStartTimedOut":
     "{provider} n’a pas fini de démarrer en {seconds} s. L’ordinateur est peut-être occupé.",
   "error.provider.acpModelsTimedOut":
@@ -257,6 +261,8 @@ export const messages = {
     "Les modèles gratuits d’OpenCode ont atteint leur limite d’utilisation. Tous les modèles gratuits partagent cette limite. Pour continuer, collez une clé OpenCode Go dans les réglages d’OpenCode, ou choisissez un modèle d’un autre fournisseur.",
   "error.provider.opencodeProviderFailed":
     "Le fournisseur du modèle a échoué de son côté. Votre connexion n’en est pas la cause. Réessayez plus tard ou choisissez un autre modèle.\n{detail}",
+  "error.provider.opencodeModelUnavailable":
+    "Ce modèle ne vous est pas disponible. Choisissez un autre modèle pour cet agent.\n{detail}",
   "error.provider.opencodeIncompleteReply":
     "La réponse du modèle a été coupée ou n’était pas valide. Renvoyez votre message ou choisissez un autre modèle.\n{detail}",
   "error.provider.opencodeReasoningOverlap":
@@ -516,6 +522,8 @@ export const messages = {
   "error.provider.piSessionIdentity": "Pi a renvoyé une autre session. La session enregistrée n’a pas été remplacée.",
   "error.provider.piExtensionFailed":
     "Pi s’est arrêté, car il n’a pas pu charger une extension. Supprimez ou mettez à jour cette extension, puis réessayez. {detail}",
+  "error.provider.piThreadStopped":
+    "Pi s’est arrêté de façon inattendue avant de terminer ce tour. Envoyez un message pour continuer.",
   "error.provider.piModelInvalid": "Sélectionnez un modèle Pi qui inclut son fournisseur.",
   "error.provider.piToolInvalid": "L’outil a renvoyé un résultat non valide.",
   "error.provider.piSignIn": "Utilisez /login dans Pi sur l’ordinateur hôte. Fermez Pi une fois la connexion terminée.",

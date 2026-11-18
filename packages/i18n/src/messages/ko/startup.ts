@@ -17,6 +17,9 @@ export const messages = {
   "startup.newerDataBody":
     "더 새로운 버전의 MyBot이 데이터를 저장했으며, 이 버전({version})으로는 열 수 없습니다. 데이터를 열려면 최신 버전을 설치하세요.\n\n로컬 데이터는 초기화되거나 덮어쓰이지 않았습니다.",
   "startup.newerDataQuit": "종료",
+  "startup.newerDataLoopTitle": "최신 MyBot이 열리지 않았습니다",
+  "startup.newerDataLoopBody":
+    "더 새로운 버전의 MyBot이 데이터를 저장했으며, 이 버전({version})으로는 열 수 없습니다. MyBot {loopVersion}이 열리기 전에 여러 번 연속으로 멈췄으므로 다시 설치하지 않습니다.\n\n{loopVersion}보다 새로운 버전이 나오면 설치하세요. 도움이 필요하면 가이드를 여세요.\n\n로컬 데이터는 초기화되거나 덮어쓰이지 않았습니다.",
   "startup.recoveryWindowTitle": "MyBot 복구",
   "startup.recoveryTitle": "MyBot이 열리지 않았습니다",
   "startup.recoveryBody": {
@@ -25,8 +28,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "다시 시도하거나 마지막으로 열린 버전을 설치하세요. 도움이 필요하면 진단 정보를 내보내고 보고서와 함께 파일을 보내세요.",
+  "startup.recoveryHintLatest":
+    "데이터를 열 수 있는 이전 버전을 찾지 못했습니다. 다시 시도하거나 최신 버전을 설치하세요. 도움이 필요하면 진단 정보를 내보내고 보고서와 함께 파일을 보내세요.",
   "startup.recoveryRetry": "다시 시도",
-  "startup.recoveryPreviousVersion": "이전 버전 다운로드",
   "startup.recoveryExportDiagnostics": "진단 정보 내보내기",
   "startup.recoveryOpenDataFolder": "데이터 폴더 열기",
   "startup.recoveryQuit": "종료",

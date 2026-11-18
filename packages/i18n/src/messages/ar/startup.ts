@@ -16,6 +16,9 @@ export const messages = {
   "startup.newerDataBody":
     "حفظ إصدار أحدث من MyBot بياناتك، ولا يستطيع هذا الإصدار ({version}) فتحها. ثبّت أحدث إصدار لفتح بياناتك.\n\nلم تتم إعادة تعيين بياناتك المحلية أو الكتابة فوقها.",
   "startup.newerDataQuit": "إنهاء",
+  "startup.newerDataLoopTitle": "لم يُفتح أحدث إصدار من MyBot",
+  "startup.newerDataLoopBody":
+    "حفظ إصدار أحدث من MyBot بياناتك، ولا يستطيع هذا الإصدار ({version}) فتحها. توقف MyBot {loopVersion} قبل أن يُفتح عدة مرات متتالية، لذلك لن يُثبَّت مرة أخرى.\n\nثبّت إصدارًا أحدث من {loopVersion} عندما يتوفر. للحصول على المساعدة، افتح الدليل.\n\nلم تتم إعادة تعيين بياناتك المحلية أو الكتابة فوقها.",
   "startup.recoveryWindowTitle": "استرداد MyBot",
   "startup.recoveryTitle": "لم يُفتح MyBot",
   "startup.recoveryBody": {
@@ -28,8 +31,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "أعد المحاولة، أو ثبّت آخر إصدار فُتح. للحصول على المساعدة، صدّر بيانات التشخيص وأرسل الملف مع بلاغك.",
+  "startup.recoveryHintLatest":
+    "لم يجد MyBot إصدارًا سابقًا يستطيع فتح بياناتك. أعد المحاولة، أو ثبّت أحدث إصدار. للحصول على المساعدة، صدّر بيانات التشخيص وأرسل الملف مع بلاغك.",
   "startup.recoveryRetry": "إعادة المحاولة",
-  "startup.recoveryPreviousVersion": "تنزيل الإصدار السابق",
   "startup.recoveryExportDiagnostics": "تصدير التشخيص",
   "startup.recoveryOpenDataFolder": "فتح مجلد البيانات",
   "startup.recoveryQuit": "إنهاء",

@@ -7,7 +7,7 @@ import { IOS_APP_STORE_URL } from "@openbot/ui/features/mobile-app/ios-app-store
 import { useText } from "@openbot/ui/text";
 import { For } from "solid-js";
 
-const PRODUCT_NAME = "OpenBot";
+const PRODUCT_NAME = "MyBot"; // MyBot: brand name.
 const STORAGE_KEY = "openbot.web.phoneBrowser";
 /**
  * A phone: a touch pointer and a narrow screen, or a short screen when the phone is in landscape. A

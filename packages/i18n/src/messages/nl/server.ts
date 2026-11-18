@@ -636,7 +636,7 @@ export const messages = {
   "server.update.path.container":
     "Haal op de Docker-host de nieuwe MyBot-image op en maak de container opnieuw met dezelfde datavolumes. Wacht eerst tot actief werk klaar is. Behoud de bestaande volumes om je gegevens te bewaren.",
   "server.update.path.manual":
-    "Deze installatie kan zichzelf niet vervangen. Vraag de beheerder van de host om de compatibele release te installeren vanaf github.com/nightly-labs/openbot/releases. Behoud de bestaande MyBot-gegevens.",
+    "Deze installatie kan zichzelf niet vervangen. Vraag de beheerder van de host om de compatibele release te installeren. Behoud de bestaande MyBot-gegevens.",
   "server.update.path.unavailable":
     "Dit is een ontwikkelbuild. Gebruik een geïnstalleerde MyBot-release om naar updates te zoeken.",
   "server.update.check": "Zoek naar updates",

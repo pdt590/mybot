@@ -17,6 +17,9 @@ export const messages = {
   "startup.newerDataBody":
     "MyBot’un daha yeni bir sürümü verilerinizi kaydetti ve bu sürüm ({version}) onları açamıyor. Verilerinizi açmak için en son sürümü yükleyin.\n\nYerel verileriniz sıfırlanmadı veya üzerine yazılmadı.",
   "startup.newerDataQuit": "Çık",
+  "startup.newerDataLoopTitle": "En son MyBot açılmadı",
+  "startup.newerDataLoopBody":
+    "MyBot’un daha yeni bir sürümü verilerinizi kaydetti ve bu sürüm ({version}) onları açamıyor. MyBot {loopVersion} art arda birkaç kez açılmadan durdu, bu yüzden yeniden yüklenmiyor.\n\n{loopVersion} sürümünden daha yeni bir sürüm çıktığında onu yükleyin. Yardım almak için kılavuzu açın.\n\nYerel verileriniz sıfırlanmadı veya üzerine yazılmadı.",
   "startup.recoveryWindowTitle": "MyBot kurtarma",
   "startup.recoveryTitle": "MyBot açılmadı",
   "startup.recoveryBody": {
@@ -26,8 +29,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "Yeniden deneyin veya açılan son sürümü yükleyin. Yardım almak için tanılamayı dışa aktarın ve dosyayı raporunuzla gönderin.",
+  "startup.recoveryHintLatest":
+    "MyBot verilerinizi açabilen daha eski bir sürüm bulamadı. Yeniden deneyin veya en son sürümü yükleyin. Yardım almak için tanılamayı dışa aktarın ve dosyayı raporunuzla gönderin.",
   "startup.recoveryRetry": "Yeniden dene",
-  "startup.recoveryPreviousVersion": "Önceki sürümü indir",
   "startup.recoveryExportDiagnostics": "Tanılamayı dışa aktar",
   "startup.recoveryOpenDataFolder": "Veri klasörünü aç",
   "startup.recoveryQuit": "Çık",

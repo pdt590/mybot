@@ -17,6 +17,9 @@ export const messages = {
   "startup.newerDataBody":
     "Una versione più recente di MyBot ha salvato i tuoi dati e questa versione ({version}) non può aprirli. Installa l’ultima versione per aprire i tuoi dati.\n\nI tuoi dati locali non sono stati reimpostati né sovrascritti.",
   "startup.newerDataQuit": "Esci",
+  "startup.newerDataLoopTitle": "L’ultima versione di MyBot non si è aperta",
+  "startup.newerDataLoopBody":
+    "Una versione più recente di MyBot ha salvato i tuoi dati e questa versione ({version}) non può aprirli. MyBot {loopVersion} si è fermato prima di aprirsi più volte di seguito, quindi non viene installato di nuovo.\n\nInstalla una versione più recente di {loopVersion} quando sarà disponibile. Per ricevere aiuto, apri la guida.\n\nI tuoi dati locali non sono stati reimpostati né sovrascritti.",
   "startup.recoveryWindowTitle": "Ripristino di MyBot",
   "startup.recoveryTitle": "MyBot non si è aperto",
   "startup.recoveryBody": {
@@ -26,8 +29,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "Riprova, oppure installa l’ultima versione che si è aperta. Per ricevere aiuto, esporta la diagnostica e invia il file con la tua segnalazione.",
+  "startup.recoveryHintLatest":
+    "MyBot non ha trovato una versione precedente che possa aprire i tuoi dati. Riprova, oppure installa l’ultima versione. Per ricevere aiuto, esporta la diagnostica e invia il file con la tua segnalazione.",
   "startup.recoveryRetry": "Riprova",
-  "startup.recoveryPreviousVersion": "Scarica versione precedente",
   "startup.recoveryExportDiagnostics": "Esporta diagnostica",
   "startup.recoveryOpenDataFolder": "Apri cartella dati",
   "startup.recoveryQuit": "Esci",

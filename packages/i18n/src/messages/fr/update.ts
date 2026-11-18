@@ -69,4 +69,10 @@ export const messages = {
     "Cette version n’a aucune note à afficher ici. Le journal des modifications complet affiche toutes les modifications.",
   "update.whatsNew.changelogFailed": "MyBot n’a pas pu ouvrir le journal des modifications.",
   "update.whatsNew.done": "Compris",
+  "update.required.title": "Mise à jour requise",
+  "update.required.description":
+    "MyBot {version} n’est plus pris en charge. Passez à la version {minimum} ou plus récente pour continuer.",
+  "update.required.download": "Télécharger MyBot",
+  "update.required.continue": "Continuer sans mettre à jour",
+  "update.required.failed": "La mise à jour ne s’est pas terminée.",
 } as const satisfies PartialTranslation<typeof source>;

@@ -93,6 +93,7 @@ export const messages = {
   "error.backend.channelCompactNotSupported":
     "Geen lid van dit kanaal kan op verzoek comprimeren. Leden die het ondersteunen, comprimeren hun context automatisch als die bijna vol is.",
   "error.backend.channelArchived": "Herstel dit kanaal voordat je berichten stuurt of taken wijzigt.",
+  "error.backend.channelArchiveRunning": "Stop het lopende werk in dit kanaal en verwijder het daarna.",
   "error.backend.channelReferenceUnavailable": "Het genoemde kanaalbericht is niet beschikbaar.",
   "error.backend.channelTaskNotFound": "Kanaaltaak niet gevonden.",
   "error.backend.channelTaskComplete": "Deze taak is al voltooid.",
@@ -126,6 +127,8 @@ export const messages = {
   "error.backend.memoryGone": "Deze herinnering bestaat niet meer.",
   "error.backend.routineGone": "Deze routine bestaat niet meer.",
   "error.backend.routineRunGone": "Deze routine-uitvoering bestaat niet meer.",
+  "error.backend.routineRunFailedNoReason":
+    "De run is gestopt met een fout, maar zonder reden. Open de run om te zien wat de agent deed.",
   "error.backend.turnNotStarted": "De aanbieder heeft deze beurt niet gestart.",
   "error.backend.routineResultConnectionOff":
     "Deze berichtenverbinding staat uit of is verwijderd. Kies een andere plek.",

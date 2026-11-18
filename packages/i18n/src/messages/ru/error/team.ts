@@ -75,9 +75,11 @@ export const messages = {
   "error.team.routineRunPlaceUnsupported": "Это подключение не может изменить, где выполняется регулярная задача.",
   "error.team.routinePauseReasonsUnsupported":
     "Это подключение не может показать, почему регулярная задача приостановлена.",
+  "error.team.activeQueuesUnsupported": "Это подключение не может показать очереди всех агентов.",
   "error.team.routinesOnceUnsupported": "Это подключение не может сохранить однократные регулярные задачи.",
   "error.team.routineRunCommandUnsupported": "Это подключение не может выдать команду запуска регулярной задачи.",
   "error.team.threadQueueUnsupported": "Это подключение не может показать очередь побочной ветки.",
+  "error.team.threadRequestsUnsupported": "Это подключение не может показать запросы побочной ветки к другим агентам.",
   "error.team.hostTurnLimitsUnsupported": "Это подключение не может показать или изменить ограничения веток сервера.",
   "error.team.usageLimitUnsupported": "Это подключение не может показать или изменить лимиты использования агентов.",
   "error.team.hermesImportUnsupported": "Это подключение не может импортировать профили Hermes с сервера.",

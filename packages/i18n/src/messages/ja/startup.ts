@@ -17,6 +17,9 @@ export const messages = {
   "startup.newerDataBody":
     "新しいバージョンの MyBot がデータを保存したため、このバージョン ({version}) では開けません。データを開くには最新バージョンをインストールしてください。\n\nローカルデータはリセットも上書きもされていません。",
   "startup.newerDataQuit": "終了",
+  "startup.newerDataLoopTitle": "最新の MyBot が開きませんでした",
+  "startup.newerDataLoopBody":
+    "新しいバージョンの MyBot がデータを保存したため、このバージョン ({version}) では開けません。MyBot {loopVersion} は開く前に何度も続けて停止したため、再インストールしません。\n\n{loopVersion} より新しいバージョンが公開されたら、それをインストールしてください。サポートが必要な場合は、ガイドを開いてください。\n\nローカルデータはリセットも上書きもされていません。",
   "startup.recoveryWindowTitle": "MyBot の復旧",
   "startup.recoveryTitle": "MyBot を開けませんでした",
   "startup.recoveryBody": {
@@ -25,8 +28,9 @@ export const messages = {
   },
   "startup.recoveryHint":
     "もう一度試すか、最後に開けたバージョンをインストールしてください。サポートが必要な場合は、診断情報を書き出し、そのファイルをレポートと一緒に送ってください。",
+  "startup.recoveryHintLatest":
+    "データを開ける以前のバージョンが見つかりませんでした。もう一度試すか、最新バージョンをインストールしてください。サポートが必要な場合は、診断情報を書き出し、そのファイルをレポートと一緒に送ってください。",
   "startup.recoveryRetry": "再試行",
-  "startup.recoveryPreviousVersion": "前のバージョンをダウンロード",
   "startup.recoveryExportDiagnostics": "診断情報を書き出す",
   "startup.recoveryOpenDataFolder": "データフォルダを開く",
   "startup.recoveryQuit": "終了",

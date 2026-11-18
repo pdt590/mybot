@@ -64,4 +64,10 @@ export const messages = {
     "Esta versão não tem notas para mostrar aqui. O histórico completo mostra todas as alterações.",
   "update.whatsNew.changelogFailed": "O MyBot não conseguiu abrir o registro de alterações.",
   "update.whatsNew.done": "Entendi",
+  "update.required.title": "Atualização necessária",
+  "update.required.description":
+    "O MyBot {version} não é mais compatível. Atualize para a versão {minimum} ou mais recente para continuar.",
+  "update.required.download": "Baixar o MyBot",
+  "update.required.continue": "Continuar sem atualizar",
+  "update.required.failed": "A atualização não terminou.",
 } as const satisfies PartialTranslation<typeof source>;

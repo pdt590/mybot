@@ -628,7 +628,7 @@ export const messages = {
   "server.update.path.container":
     "Na hoście Docker pobierz nowy obraz MyBot i utwórz kontener ponownie z tymi samymi woluminami danych. Najpierw poczekaj na zakończenie aktywnej pracy. Zachowaj istniejące woluminy, aby nie stracić danych.",
   "server.update.path.manual":
-    "Ta instalacja nie może sama się zastąpić. Poproś administratora hosta o zainstalowanie zgodnego wydania z github.com/nightly-labs/openbot/releases. Zachowaj istniejące dane MyBot.",
+    "Ta instalacja nie może sama się zastąpić. Poproś administratora hosta o zainstalowanie zgodnego wydania. Zachowaj istniejące dane MyBot.",
   "server.update.path.unavailable":
     "To jest kompilacja deweloperska. Użyj zainstalowanego wydania MyBot, aby sprawdzać aktualizacje.",
   "server.update.check": "Sprawdź aktualizacje",
