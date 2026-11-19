@@ -16,6 +16,7 @@ import { isString } from "@openbot/contracts/runtime-values";
 import { Deferred, Effect, Exit } from "effect";
 import { runCauseEffect } from "./effect-boundary";
 import { type McpOperationError, mcpCall, mcpFailure, mcpResult, mcpSync } from "./mcp-effects";
+import { mybotBrand } from "./mybot-brand";
 import type { DynamicToolResult } from "./protocol";
 import type { ProviderClientOperationError } from "./provider-client-effects";
 
@@ -390,7 +391,8 @@ export class LocalMcpBridge {
       { name: route.namespace.name, version: "0.1.0" },
       {
         capabilities: { tools: {} },
-        ...(route.namespace.description === undefined ? {} : { instructions: route.namespace.description }),
+        // MyBot: the server instructions, tool list and tool results name the app MyBot (`mybot-brand.ts`).
+        ...(route.namespace.description === undefined ? {} : { instructions: mybotBrand(route.namespace.description) }),
       },
     );
     // The client lists one set for all sessions of a shared token; a call is checked against its own session.
@@ -399,7 +401,7 @@ export class LocalMcpBridge {
       return {
         tools: listedTools(route).map((tool) => ({
           name: tool.name,
-          description: tool.description,
+          description: tool.description === undefined ? undefined : mybotBrand(tool.description),
           inputSchema: tool.inputSchema,
         })),
       };
@@ -471,7 +473,7 @@ export class LocalMcpBridge {
           const content: CallToolResult["content"] = [];
           for (const item of result.contentItems) {
             if (item.type === "inputText") {
-              content.push({ type: "text", text: item.text });
+              content.push({ type: "text", text: mybotBrand(item.text) });
               continue;
             }
             const [, mimeType, data] = item.imageUrl.match(/^data:([^;]+);base64,(.+)$/s) ?? [];

@@ -78,6 +78,7 @@ import type { McpOAuthAuthority } from "./mcp-oauth-provider";
 import type { McpOAuthProxySettingsStore } from "./mcp-oauth-proxy";
 import type { McpDropReporter, McpEndpointSource, McpServerSource, McpToolRuntimeSource } from "./mcp-provider-shapes";
 import { MuseAgentClient } from "./muse-client";
+import { brandProviderDrivers } from "./mybot-brand";
 import { openCodeAgentDefaultsEnv } from "./opencode-agent-defaults";
 import {
   CUSTOM_ENDPOINT_SILENCE_MS,
@@ -1960,6 +1961,8 @@ function discoveryFolder(agentId: string): string {
 /** What the runtime shows for the provider `acp`: there is no one CLI, only the saved agents. */
 const CUSTOM_AGENTS_CLI: AgentCliInfo = { executable: "", version: "", source: "system" };
 
+// MyBot: each provider client tells the agent that the app is MyBot (`mybot-brand.ts`).
+brandProviderDrivers(BUILT_IN_PROVIDER_DRIVERS);
 const PROVIDER_DRIVERS = new Map(BUILT_IN_PROVIDER_DRIVERS.map((driver) => [driver.id, driver]));
 
 export function requireProviderDriver(provider: AgentProviderId): BuiltInProviderDriver {

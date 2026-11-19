@@ -9,6 +9,7 @@ import { parse as parseYaml } from "yaml";
 import { causeHelpers } from "../backend/effect-boundary";
 import { isMissingFileError } from "../backend/file-errors";
 import { SKILL_OWNERSHIP_MARKER } from "../backend/home-skills";
+import { mybotBrand } from "../backend/mybot-brand";
 import { isPathInside } from "../backend/path-containment";
 
 const MANAGED_SKILL_SLUG = "openbot-site-hosting";
@@ -80,8 +81,9 @@ export class ManagedSkillService {
       const content = yield* managedIO(() => readFile(this.sourcePath, "utf8"));
       if (!content.startsWith(`---\nname: ${this.slug}\n`))
         return yield* new ManagedSkillFailure({ cause: new Error("The managed site hosting skill is invalid.") });
-      this.#content = content;
-      return content;
+      // MyBot: the skill that the agents read names the app MyBot.
+      this.#content = mybotBrand(content);
+      return this.#content;
     });
   }
 

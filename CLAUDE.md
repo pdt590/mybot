@@ -35,6 +35,31 @@ Do the sync on a branch, never directly on `main`. Every fork change has a `MyBo
 - Do not rename these (see "Do not rename" below): identifiers, `@openbot/*` packages, `openbot.db`,
   Team API headers, release asset names, log names, and API or analytics hosts.
 
+#### Text for the agents (do not edit it by hand)
+
+The agents must call the app MyBot, but leave "OpenBot" as upstream wrote it in the text that the
+agents read: system prompt (`developer-instructions.ts`), tool descriptions and results, turn notes
+(`delivery-content.ts`), messaging prompts, `setting-links.ts` and `resources/managed-skills/**`.
+Some of it is a marker that the code reads back from stored prompts (`HANDOFF_START`,
+`TEAMMATE_HEADER`), and editing hundreds of lines would conflict on every sync.
+
+`src/backend/mybot-brand.ts` renames it on the way to the provider instead:
+- `brandProviderDrivers` (called once in `provider-drivers.ts`) makes every provider client rename
+  each `request`, `respond` and `notify` that it sends.
+- The local MCP bridge (`local-mcp-bridge.ts`) renames the server instructions, tool descriptions
+  and tool results.
+- `ManagedSkillService` (`src/main/managed-skill-service.ts`) renames the skills that it writes.
+- `mybotBrand` keeps identifiers, paths (`~/OpenBot/...`), file and asset names (`OpenBot.exe`,
+  `OpenBot-<version>-...`), headers (`X-OpenBot-...`) and the lowercase `openbot.*` tool names. It
+  makes "an OpenBot" into "a MyBot", and it leaves `OPENBOT_COMMIT_TRAILER` exact.
+
+On each sync:
+- Check that these three hooks are still in place.
+- When upstream adds a new way to send text to a model, route it through `mybotBrand` or
+  `mybotBrandDeep`. Examples: a provider client that skips the drivers, a new MCP server of the app,
+  a prompt written to a file, or a side model call.
+- Run `bunx vitest run src/backend/mybot-brand.test.ts`.
+
 ### Step 2: hide links, purchases, prompts and ads
 
 Keep these hidden. Look for new upstream UI of the same kind and hide it too:
@@ -115,4 +140,5 @@ After a sync, run:
 - `bun run typecheck:renderer`
 - `bun run i18n:check`
 - `bunx biome check` on the changed files
+- `bunx vitest run src/backend/mybot-brand.test.ts`
 - `graphify update .`
