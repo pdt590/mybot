@@ -1787,6 +1787,8 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
     this.messaging = new MessagingThreads(store.database, mailbox, {
       schedule: (agentId) => this.#drain.scheduleDrain(agentId),
       queueChanged: (agentId) => this.#mailboxSync.emitQueue(agentId),
+      // MyBot: a new Telegram conversation of an agent's own bot shows in its thread list.
+      linksChanged: (agentId) => this.#tasks.changed(agentId),
       // A conversation in the messaging lane waits for that lane only. The others wait in the own chat's lane.
       // A turn that the provider started itself has no delivery, but the lane still waits for it.
       busy: (agentId, linkId) =>
@@ -6784,6 +6786,13 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
     this: AgentService,
     input: AgentTaskInput,
   ): Effect.fn.Return<void, AgentLifecycleFailed> {
+    // MyBot: a conversation of the agent's own Telegram bot only leaves the list. A turn there runs on
+    // and answers in Telegram.
+    const chat = this.#tasks.externalChat(input.agentId, input.taskId);
+    if (chat) {
+      this.#tasks.archiveExternalChat(chat);
+      return;
+    }
     // The provider ends a stopped turn a moment later, so the close waits for that end, for a time.
     const running = yield* lifecycleStep("find task", () => {
       const found = this.#tasks.require(input.agentId, input.taskId);
@@ -6812,6 +6821,12 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
   }).bind(this);
 
   reopenTask(input: AgentTaskInput): void {
+    // MyBot: an archived Telegram bot conversation.
+    const chat = this.#tasks.externalChat(input.agentId, input.taskId);
+    if (chat) {
+      this.#tasks.reopenExternalChat(chat.agentId, chat.threadId);
+      return;
+    }
     this.#tasks.reopen(this.#tasks.require(input.agentId, input.taskId));
     this.#drain.scheduleDrain(input.agentId);
   }
@@ -6835,10 +6850,13 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
     memberId: string,
     options?: ConversationMarkerExclusions,
   ): AgentTaskReadState {
-    const task = this.#tasks.require(input.agentId, input.taskId);
+    // MyBot: a conversation of the agent's own Telegram bot is listed with the side threads and counts
+    // its unread messages, so its read mark moves too. Without this, each mark failed, the unread count
+    // came back, and the open tab marked again in a loop that kept its tab redrawing.
+    const threadId = this.#tasks.readableThread(input.agentId, input.taskId);
     return {
-      taskId: task.taskId,
-      ...this.#reader.markThreadRead(memberId, task.threadId, input.throughMessageId, options),
+      taskId: input.taskId,
+      ...this.#reader.markThreadRead(memberId, threadId, input.throughMessageId, options),
     };
   }
 
@@ -6853,6 +6871,9 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
     this: AgentService,
     input: AgentTaskInput,
   ): Effect.fn.Return<void, AgentLifecycleFailed> {
+    // MyBot: a conversation of the agent's own Telegram bot goes with its link and execution thread.
+    const chat = this.#tasks.externalChat(input.agentId, input.taskId);
+    if (chat) return yield* this.#deleteExternalChat(chat);
     const { task, wasOpen } = yield* lifecycleStep("archive task", () => {
       const found = this.#tasks.require(input.agentId, input.taskId);
       if (this.#conversation.loadedExecutionSnapshot(found.threadId)?.activeTurnId)
@@ -6895,6 +6916,31 @@ export class AgentService extends EventEmitter<AgentServiceEvents> {
     this.#messagePins.messagesDeleted(task.agentId);
     this.#browser.unshareThread(task.threadId);
     this.#drain.scheduleDrain(task.agentId);
+  }).bind(this);
+
+  /**
+   * MyBot: deletes a conversation of the agent's own Telegram bot, as `deleteTask` deletes a side
+   * thread. Its messages stay in the Telegram chat, and the next one there starts a new conversation.
+   */
+  readonly #deleteExternalChat = Effect.fn("AgentService.deleteExternalChat")(function* (
+    this: AgentService,
+    chat: AgentThreadRecord,
+  ): Effect.fn.Return<void, AgentLifecycleFailed> {
+    const link = yield* lifecycleStep("find chat", () => {
+      const found = this.messaging.store.linkForThread(chat.threadId);
+      if (this.#conversation.loadedExecutionSnapshot(chat.threadId)?.activeTurnId)
+        throw new Error(sourceText("error.backend.threadStillRunning"));
+      return found;
+    });
+    if (!link) return;
+    this.#attention.expireDetached(chat.agentId, chat.threadId);
+    yield* this.#memoryReview.forgetThread(chat.agentId, chat.threadId);
+    yield* this.messaging
+      .deleteLink(link.linkId)
+      .pipe(Effect.mapError(({ cause }) => new AgentLifecycleFailed({ operation: "delete chat", cause })));
+    this.#tasks.reopenExternalChat(chat.agentId, chat.threadId);
+    this.#messagePins.messagesDeleted(chat.agentId);
+    this.#browser.unshareThread(chat.threadId);
   }).bind(this);
 
   /**

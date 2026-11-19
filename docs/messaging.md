@@ -225,6 +225,12 @@ messages by long polling, so no OpenBot service, no account and no public addres
 - With privacy mode on (the default for a new bot), a bot in a group sees only commands and replies to
   it. Turn it off with `/setprivacy` in @BotFather, or make the bot a group admin, so that a mention
   reaches the agent.
+- `/new` (or `/new@bot` in a group) starts a new conversation in that chat or topic: your running
+  request stops, and the next message starts a new thread, so the agent answers in a fresh session.
+  The earlier conversation stays in MyBot as its own read-only thread.
+- A Telegram conversation in the thread list can be archived or deleted like a side thread. An archived
+  one opens again when its chat sends a new message. A delete removes it from MyBot, with its agent
+  session, but not from Telegram: the next message there starts a new conversation.
 - Telegram keeps a message for 24 hours until this computer confirms it, so a message that comes while
   MyBot is off gets its answer when MyBot starts.
 - Only one program can poll a bot. When another MyBot, OpenBot or a script uses the same token, the

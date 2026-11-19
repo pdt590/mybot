@@ -4,7 +4,8 @@ import { type DynamicRecord, isDynamicRecord } from "@openbot/contracts/runtime-
 import { Effect } from "effect";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { MessagingAllowedSender, MessagingConnectionRecord } from "../messaging-store";
-import { type InboundMessage, TelegramCallError, type TransportSink } from "../messaging-types";
+import { type InboundMessage, NEW_CONVERSATION_TEXT, TelegramCallError, type TransportSink } from "../messaging-types";
+import { telegramPlacement } from "../telegram/telegram-updates";
 import { TelegramBotAccess } from "./telegram-bot-access";
 import { directTelegramGateway, TelegramBotApi, type TelegramFetch } from "./telegram-bot-api";
 import { telegramBotDriver } from "./telegram-bot-driver";
@@ -254,5 +255,26 @@ describe("TelegramBotTransport", () => {
     });
     const { states } = start([], memoryStore(), { deleteWebhook: refused });
     await vi.waitFor(() => expect(states).toContain("invalid_token"));
+  });
+});
+
+describe("/new", () => {
+  it("takes only the bare command", () => {
+    expect(NEW_CONVERSATION_TEXT.test("/new")).toBe(true);
+    expect(NEW_CONVERSATION_TEXT.test("/NEW")).toBe(true);
+    expect(NEW_CONVERSATION_TEXT.test("/new idea")).toBe(false);
+    expect(NEW_CONVERSATION_TEXT.test("/newest")).toBe(false);
+  });
+
+  it("keeps a late answer of the retired conversation in its chat, topic or reply chain", () => {
+    expect(telegramPlacement({ platformChannelId: OWNER, replyThreadId: "dm:new-1" })).toEqual(
+      telegramPlacement({ platformChannelId: OWNER, replyThreadId: "dm" }),
+    );
+    expect(telegramPlacement({ platformChannelId: GROUP, replyThreadId: "t5:new-1" })).toEqual(
+      telegramPlacement({ platformChannelId: GROUP, replyThreadId: "t5" }),
+    );
+    expect(telegramPlacement({ platformChannelId: GROUP, replyThreadId: "42:new-1" })).toEqual(
+      telegramPlacement({ platformChannelId: GROUP, replyThreadId: "42" }),
+    );
   });
 });

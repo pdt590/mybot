@@ -254,6 +254,8 @@ export type MessagingMentionResult = "none" | "started" | "skipped";
 export interface MessagingThreadsHooks {
   schedule(agentId: string): void;
   queueChanged(agentId: string): void;
+  /** MyBot: the conversations of an agent's own Telegram bot changed, such as after `/new`. */
+  linksChanged?(agentId: string): void;
   /** Whether a new message of this conversation waits for other work of the agent. */
   busy(agentId: string, linkId: string): boolean;
   interrupt(agentId: string, turnId: string, threadId: string): Effect.Effect<void, MessagingThreadFailed>;
@@ -1119,6 +1121,11 @@ export class MessagingThreads {
     return running?.delivery.turnId && origin ? { turnId: running.delivery.turnId, origin } : null;
   }
 
+  /** MyBot: tells the agent's thread list that its Telegram conversations changed. */
+  linksChanged(agentId: string): void {
+    this.#hooks.linksChanged?.(agentId);
+  }
+
   readonly stop = Effect.fn("MessagingThreads.stop")(function* (
     this: MessagingThreads,
     linkId: string,
@@ -1162,6 +1169,36 @@ export class MessagingThreads {
   awaitsTeammate(linkId: string): boolean {
     return this.#mailbox.pendingMessagingReturns(linkId) > 0;
   }
+
+  /**
+   * MyBot: deletes one conversation of an agent's own Telegram bot, with its mailbox messages, its
+   * execution thread and the thread's provider sessions. Work that is queued or running there stops
+   * the delete. The next message in that chat starts a new conversation.
+   */
+  readonly deleteLink = Effect.fn("MessagingThreads.deleteLink")(function* (
+    this: MessagingThreads,
+    linkId: string,
+  ): Effect.fn.Return<void, MessagingThreadFailed> {
+    const link = this.store.link(linkId);
+    if (!link) return;
+    const busy = () =>
+      this.#mailbox.unresolvedMessagingDeliveries(linkId).length > 0 ||
+      this.runningOrigin(linkId) !== null ||
+      this.awaitsTeammate(linkId);
+    yield* threadsStep(() => {
+      if (busy()) throw new Error(sourceText("error.backend.threadStillRunning"));
+    });
+    yield* this.#mailbox
+      .deleteTaskMessages(link.agentId, linkId, (message) => message.messaging?.linkId === linkId)
+      .pipe(toMessagingThreadFailed);
+    yield* this.#hooks.forgetThread(link.threadId).pipe(toMessagingThreadFailed);
+    yield* threadsStep(() => {
+      if (busy()) throw new Error(sourceText("error.backend.threadStillRunning"));
+      this.store.deleteLink(linkId);
+    });
+    this.#lastOrigins.delete(linkId);
+    this.linksChanged(link.agentId);
+  });
 
   readonly deleteForAgent = Effect.fn("MessagingThreads.deleteForAgent")(function* (
     this: MessagingThreads,

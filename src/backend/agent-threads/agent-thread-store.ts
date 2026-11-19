@@ -119,6 +119,8 @@ const SELECT_THREAD = "SELECT *, COALESCE(legacy_task_id, thread_id) AS task_id 
  */
 export class AgentThreadStore {
   readonly #database: OpenBotDatabase;
+  /** MyBot: whether `mybot_archived_chats` exists. */
+  #archivedChatsReady = false;
 
   constructor(database: OpenBotDatabase) {
     this.#database = database;
@@ -167,14 +169,19 @@ export class AgentThreadStore {
    * nothing that changes a side thread reaches it.
    */
   externalChats(agentId: string): AgentThreadRecord[] {
+    this.#ensureArchivedChats();
+    // An archived conversation lists after the open ones. A new message in it opens it again: it is
+    // archived only while its archive is not older than its last activity.
     return databaseRows(
       this.#database.connection
         .prepare(
-          `SELECT link.thread_id, link.title, link.created_at, link.updated_at
+          `SELECT link.thread_id, link.title, link.created_at, link.updated_at,
+             CASE WHEN archive.archived_at >= link.updated_at THEN archive.archived_at END AS archived_at
            FROM projection_messaging_threads AS link
            JOIN projection_messaging_connections AS connection ON connection.connection_id = link.connection_id
+           LEFT JOIN mybot_archived_chats AS archive ON archive.thread_id = link.thread_id
            WHERE link.agent_id = ? AND connection.platform = 'telegram_bot'
-           ORDER BY link.updated_at DESC, link.thread_id LIMIT ?`,
+           ORDER BY archived_at IS NOT NULL, link.updated_at DESC, link.thread_id LIMIT ?`,
         )
         .all(agentId, INPUT_LIMITS.agentTasks),
     ).map((row) => {
@@ -191,11 +198,38 @@ export class AgentThreadStore {
         error: null,
         createdAt: requiredStringColumn(row, "created_at"),
         updatedAt: requiredStringColumn(row, "updated_at"),
-        closedAt: null,
+        closedAt: optionalStringColumn(row, "archived_at"),
         branch: null,
         routineId: null,
       };
     });
+  }
+
+  /** MyBot: archives a conversation of the agent's own Telegram bot, until its next message. */
+  archiveExternalChat(threadId: string): void {
+    this.#ensureArchivedChats();
+    this.#database.connection
+      .prepare("INSERT OR REPLACE INTO mybot_archived_chats (thread_id, archived_at) VALUES (?, ?)")
+      .run(threadId, new Date().toISOString());
+  }
+
+  /** MyBot: opens an archived Telegram bot conversation again. */
+  reopenExternalChat(threadId: string): void {
+    this.#ensureArchivedChats();
+    this.#database.connection.prepare("DELETE FROM mybot_archived_chats WHERE thread_id = ?").run(threadId);
+  }
+
+  /**
+   * MyBot: the archive marks of the Telegram bot conversations. The fork keeps them in its own table,
+   * made here and not in a migration, so the upstream migration numbers stay free. A deleted
+   * conversation's mark is removed with it; a mark without a conversation is never read.
+   */
+  #ensureArchivedChats(): void {
+    if (this.#archivedChatsReady) return;
+    this.#database.connection.exec(
+      "CREATE TABLE IF NOT EXISTS mybot_archived_chats (thread_id TEXT PRIMARY KEY, archived_at TEXT NOT NULL)",
+    );
+    this.#archivedChatsReady = true;
   }
 
   /** MyBot: the agent of the Telegram bot conversation whose execution thread is `threadId`, or null. */

@@ -53,6 +53,11 @@ export interface InboundFile {
 /** One message that addresses OpenBot, in the same shape for every platform. */
 /** A message that stops the running request of its conversation instead of starting a new one. */
 export const CANCEL_TEXT = /^(cancel|stop)$/i;
+/**
+ * MyBot: a message that starts a new conversation with the agent of an own Telegram bot. The bot's own
+ * `@name` is already cut from a command, so `/new@bot` arrives as `/new`.
+ */
+export const NEW_CONVERSATION_TEXT = /^\/new$/i;
 
 /**
  * The chat text for the stored failure of a turn, or null for the general text. The platform is

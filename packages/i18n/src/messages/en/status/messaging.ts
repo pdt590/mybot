@@ -50,6 +50,8 @@ export const messages = defineMessages("status.messaging", {
   "status.messaging.telegramBotPairing":
     "This bot answers only the people that its owner allows. Ask the owner to approve the code {code} in MyBot.",
   "status.messaging.telegramBotGroupAllowed": "Hi! Mention me or reply to my messages, and the agent answers.",
+  "status.messaging.telegramBotNewConversation":
+    "New conversation started. The agent answers your next message in a fresh session.",
   // Text that MyBot posts from a linked WhatsApp number, and the WhatsApp Orchestrator agent.
   // WhatsApp users read the posts. Personal WhatsApp has no buttons, so a person answers with a number.
   "status.messaging.whatsappNoAgent": "No agent can answer here yet. Add the WhatsApp Orchestrator in MyBot.",

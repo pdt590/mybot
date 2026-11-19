@@ -78,6 +78,7 @@ import {
   type MessagingDriver,
   type MessagingIngress,
   type MessagingTransport,
+  NEW_CONVERSATION_TEXT,
   type RecentMessages,
   type StatusReaction,
   TelegramCallError,
@@ -1633,6 +1634,36 @@ export class MessagingService {
         yield* this.#react(live, message.target, message.platformMessageId, "stopped", true);
         return;
       }
+    }
+    // MyBot: `/new` in a chat of an agent's own Telegram bot ends the conversation of this place: its
+    // own running request stops, and the next message starts a new execution thread, so the agent
+    // answers it in a fresh session. The new link reads the chat only after this message.
+    if (
+      live.record.platform === "telegram_bot" &&
+      NEW_CONVERSATION_TEXT.test(message.text.trim()) &&
+      message.files.length === 0
+    ) {
+      if (existing) {
+        yield* this.#threads.stop(existing.linkId, message.authorId).pipe(toMessagingOperationFailed);
+        store.retireLink(existing.linkId);
+        const fresh = store.ensureLink({
+          connectionId: existing.connectionId,
+          agentId: existing.agentId,
+          platformChannelId: existing.platformChannelId,
+          threadKey: message.threadKey,
+          isDirect: existing.isDirect,
+          title: existing.title,
+        });
+        store.touch(fresh.linkId, message.platformMessageId);
+        this.#threads.linksChanged(existing.agentId);
+      }
+      yield* live.adapter
+        .post(message.target, { text: sourceText("status.messaging.telegramBotNewConversation") })
+        .pipe(
+          Effect.asVoid,
+          Effect.catch(() => Effect.sync(() => logger.warn("A Telegram bot notice was not sent."))),
+        );
+      return;
     }
     const { adapter } = live;
     // A slow lookup must not hold the message: past the deadline, the id stands for the name.

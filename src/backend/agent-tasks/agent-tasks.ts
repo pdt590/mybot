@@ -233,6 +233,23 @@ export class AgentTasks implements TaskLanes {
     return external.threadId;
   }
 
+  /** MyBot: the conversation of the agent's own Telegram bot that this task id names, or null. */
+  externalChat(agentId: string, taskId: string): AgentThreadRecord | null {
+    return this.#store.task(taskId) ? null : this.#store.externalChat(agentId, taskId);
+  }
+
+  /** MyBot: archives a Telegram bot conversation. Its next message opens it again. */
+  archiveExternalChat(chat: AgentThreadRecord): void {
+    this.#store.archiveExternalChat(chat.threadId);
+    this.changed(chat.agentId);
+  }
+
+  /** MyBot: opens an archived Telegram bot conversation again, or forgets the archive of a deleted one. */
+  reopenExternalChat(agentId: string, threadId: string): void {
+    this.#store.reopenExternalChat(threadId);
+    this.changed(agentId);
+  }
+
   /** Whether this agent has the task, open or closed. */
   has(agentId: string, taskId: string): boolean {
     return this.#store.task(taskId)?.agentId === agentId;

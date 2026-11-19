@@ -377,6 +377,51 @@ export class MessagingStore {
     return created;
   }
 
+  /**
+   * MyBot: ends an external conversation, so the next message of its place starts a new link with a new
+   * execution thread (a fresh agent session). The old link keeps its thread and history. Its key gets a
+   * `:new-<time>` suffix: a Telegram placement reads only the part before `:`, so a late answer of the
+   * old thread still lands in the same chat, topic or reply chain.
+   */
+  retireLink(linkId: string): void {
+    this.#database.connection
+      .prepare("UPDATE projection_messaging_threads SET thread_key = thread_key || ? WHERE link_id = ?")
+      .run(`:new-${Date.now()}`, linkId);
+  }
+
+  /**
+   * MyBot: removes one link with its execution thread and history, as `deleteForAgent` does for all the
+   * links of an agent. The next message of its place starts a new link. The caller releases the
+   * provider sessions of the thread first.
+   */
+  deleteLink(linkId: string): void {
+    const link = this.link(linkId);
+    if (!link) return;
+    this.#database.dispatch(
+      `messaging-link-deleted:${linkId}:${randomUUID()}`,
+      [
+        {
+          aggregateType: "messaging-link",
+          aggregateId: linkId,
+          eventType: "messaging.link-deleted",
+          payload: { agentId: link.agentId, threadId: link.threadId },
+        },
+      ],
+      (db) => {
+        deleteAggregateHistory(db, "messaging-thread", [linkId]);
+        deleteAggregateHistory(db, "thread", [link.threadId]);
+        deleteThreadAttachments(db, link.threadId);
+        db.prepare(
+          `DELETE FROM projection_messaging_pings
+           WHERE connection_id = ? AND platform_channel_id = ? AND thread_key = ?`,
+        ).run(link.connectionId, link.platformChannelId, link.threadKey);
+        db.prepare("DELETE FROM projection_messaging_threads WHERE link_id = ?").run(linkId);
+        db.prepare("DELETE FROM projection_threads WHERE thread_id = ?").run(link.threadId);
+        return null;
+      },
+    );
+  }
+
   /** Marks new activity, so the link lists first, and records what the agent has read. */
   touch(linkId: string, historyCursor?: string): void {
     const now = new Date().toISOString();

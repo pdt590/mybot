@@ -226,12 +226,6 @@ export function createAgentThreadTabs(options: AgentThreadTabsOptions) {
 
   /** Archives a thread. Its tab closes when the host archived it; the thread then shows in the archived list. */
   async function archive(agentId: string, id: string): Promise<void> {
-    // MyBot: a Telegram conversation only reads here; its tab just closes.
-    if (task(agentId, id)?.readOnly) {
-      if (storedTabs(agentId).side.includes(id)) closeSide(agentId, id);
-      else close(agentId, id);
-      return;
-    }
     if (!(await tasks.closeTask(agentId, id)) || !scopeIsCurrent()) return;
     if (storedTabs(agentId).side.includes(id)) closeSide(agentId, id);
     else close(agentId, id);
@@ -278,8 +272,7 @@ export function createAgentThreadTabs(options: AgentThreadTabsOptions) {
    */
   async function remove(agentId: string, id: string): Promise<void> {
     const entry = task(agentId, id);
-    // MyBot: a Telegram conversation is deleted with its bot, not here.
-    if (!entry || entry.readOnly || hidden().has(id)) return;
+    if (!entry || hidden().has(id)) return;
     const server = serverId();
     const before = storedTabs(agentId);
     const wasActive = activeId(agentId) === id;

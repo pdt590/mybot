@@ -1289,13 +1289,15 @@ export class MailboxStore {
     this: MailboxStore,
     agentId: string,
     taskId: string,
+    // MyBot: a Telegram bot conversation names its messages by link, not by task.
+    inThread: (message: StoredMessage) => boolean = (message) => message.taskId === taskId,
   ): Effect.fn.Return<void, StoredStateFailure> {
     try {
       // A teammate's answer to the thread is also in the teammate's own chat, so it stays.
       const teammateAnswer = (message: StoredMessage) =>
         message.sender.kind === "agent" && message.sender.agentId !== agentId;
       const found = () => {
-        const lane = this.#state.messages.filter((message) => message.taskId === taskId);
+        const lane = this.#state.messages.filter(inThread);
         const laneIds = new Set(lane.map((message) => message.id));
         // A task message has one recipient, the thread's agent.
         if (
@@ -1313,7 +1315,7 @@ export class MailboxStore {
       // The path checks wait, so they run before the state changes, as in `deleteStoredFile`.
       const managedPaths = new Map<string, string | null>();
       for (const message of this.#state.messages) {
-        if (message.taskId !== taskId || teammateAnswer(message)) continue;
+        if (!inThread(message) || teammateAnswer(message)) continue;
         for (const file of messageFiles(message)) {
           if (file.deletedAt || managedPaths.has(file.path)) continue;
           managedPaths.set(file.path, yield* this.#files.managedTransferFile(file.path).pipe(toStoredStateFailure));
