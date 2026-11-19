@@ -20,6 +20,10 @@ export const messages = {
   "computerUse.ready.description":
     "MyBot bu bilgisayardaki uygulamaları görebilir ve onlarla etkileşime girebilir. Bu sistem fazladan izin istemez.",
   "computerUse.openSettingsFailed.title": "Sistem Ayarları açılamadı",
+  "computerUse.restartRequired.title": "Yeniden başlatma gerekli",
+  "computerUse.restartRequired.description":
+    "macOS hâlâ tıklamayı ve yazmayı engelliyor. Yeniden başlattıktan sonra yine olursa MyBot'u Erişilebilirlik'ten kaldırıp yeniden ekleyin.",
+  "computerUse.restartRequired.action": "MyBot'u yeniden başlat",
   "computerUse.compact.title": "Bilgisayar Kullanımını etkinleştir",
   "computerUse.compact.description":
     "MyBot'un bu bilgisayardaki uygulamaları görmesine ve etkileşime girmesine izin verin.",

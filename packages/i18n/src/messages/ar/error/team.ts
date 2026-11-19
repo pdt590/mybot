@@ -53,6 +53,11 @@ export const messages = {
   "error.team.tooManySignInAttempts": "محاولات تسجيل دخول كثيرة جدًا. أعد المحاولة لاحقًا.",
   "error.team.clientUpdateRequired": "حدّث عميل MyBot هذا قبل الاتصال بهذا المضيف.",
   "error.team.hostUpdateRequired": "حدّث MyBot على المضيف قبل الاتصال.",
+  "error.team.serverSafeMode": "هذا الخادم في الوضع الآمن لأن MyBot لا يبدأ عليه.",
+  "error.team.serverSafeModeNewerDatabase":
+    "لا يستطيع MyBot {version} على هذا الخادم فتح بياناته، لأن إصدارًا أحدث من MyBot حفظها. يحل إصدار أحدث من MyBot على الخادم هذه المشكلة.",
+  "error.team.serverSafeModeStartFailed":
+    "توقف MyBot {version} على هذا الخادم بعد فشل بدئه مرات عديدة. يحل إصدار أحدث من MyBot على الخادم هذه المشكلة.",
   "error.team.sidebarLayoutUnavailable": "تخطيط الشريط الجانبي غير متاح.",
   "error.team.providersUnsupported": "إعدادات المزوّد غير مدعومة في هذا الاتصال.",
   "error.team.providerNotManaged": "لا يدير MyBot واجهة CLI لهذا المزوّد.",

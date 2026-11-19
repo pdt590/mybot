@@ -1,3 +1,4 @@
+import type { AgentProviderId } from "@openbot/contracts/agent-providers";
 import { chatVisualReply } from "@openbot/contracts/chat-visual";
 import type { AgentApproval, ConversationMessageSender, MessageReaction } from "@openbot/contracts/ipc";
 import { FEEDBACK_WITHDRAW_CAPABILITY } from "@openbot/contracts/team-protocol/feedback-withdraw-v1";
@@ -6,7 +7,7 @@ import { feedbackApproval } from "@openbot/team-client/feedback-approval";
 import { Button } from "@openbot/ui";
 import type { AgentMessage, ChatActionMarkerModel, MessageKind } from "@openbot/ui/data";
 import { ChannelActivityIndicator, type ChannelWorker } from "@openbot/ui/features/channels/ChannelActivityIndicator";
-import { AgentActivityIndicator } from "@openbot/ui/features/conversation/AgentActivity";
+import { AgentActivityIndicator, nextAgentActivityLabel } from "@openbot/ui/features/conversation/AgentActivity";
 import { AgentChatEmptyState } from "@openbot/ui/features/conversation/AgentChatEmptyState";
 import {
   type AgentStep,
@@ -24,6 +25,7 @@ import { ChatScrollRail, createChatScrollRail } from "@openbot/ui/features/conve
 import { ChatSearch } from "@openbot/ui/features/conversation/ChatSearch";
 import { ContextCompactionMarker, type ContextCompactionView } from "@openbot/ui/features/conversation/ContextUsage";
 import { dayMarkerLabel } from "@openbot/ui/features/conversation/chat-day-markers";
+import { CHAT_TIME_GAP_MS, continuesSenderRun } from "@openbot/ui/features/conversation/chat-grouping";
 import { markdownPlainText } from "@openbot/ui/features/conversation/MarkdownMessageText";
 import { ReplyReturnButton, ScrollToLatestButton } from "@openbot/ui/features/conversation/MessageNavigation";
 import {
@@ -48,8 +50,11 @@ import { useShowAgentSteps } from "../../agent-steps-preference";
 import { planItems, planTitle, replacedPlanIds } from "../../app-message-projection";
 import { useChatBubbleStyle } from "../../chat-bubble-style-preference";
 import { useCompactMessageActions } from "../../compact-message-actions-preference";
-import { currentDevicePlatform } from "../../send-shortcut-preference";
-import { remoteRoutineRecovery, serverSupportsCapability } from "../servers/server-capabilities";
+import {
+  remoteRoutineRecovery,
+  serverRoleCanAdminister,
+  serverSupportsCapability,
+} from "../servers/server-capabilities";
 import { speechModelReady } from "../speech/speech-model";
 import { recordingGone, speechReading, spokenReply } from "../speech/speech-playback";
 import {
@@ -65,7 +70,6 @@ import { groupedMessageIds } from "./agent-message-timeline";
 import { ChatVisualReply, shownVisualReply } from "./ChatVisualReply";
 import { ConversationBrowserTakeover } from "./ConversationBrowserTakeover";
 import { ConversationQuestionPrompt } from "./ConversationQuestionPrompt";
-import { continuesSenderRun } from "./chat-grouping";
 import { chatSearchCanOpen, chatSearchOpensMessage } from "./chat-search";
 import { ApprovalCard, preloadConversationCards, QuestionPromptBubble, UiBlockPrompt } from "./conversation-cards";
 import { useConversationController } from "./conversation-controller-context";
@@ -79,6 +83,7 @@ import { useMessageBackdropAction, watchAgentBackdrops } from "./message-backdro
 import { createMessageImageFiles } from "./message-image-files";
 import { RoutineChatCard } from "./RoutineChatCard";
 import { createChatWebhookRoutines, RoutineWebhookChatCard } from "./RoutineWebhookChatCard";
+import { createRoutineRunFailures, type RoutineRunFailureSource } from "./routine-run-failures";
 import { desktopChatEventRoutinesApi } from "./routine-webhooks-api";
 import { ServerInstallChatCard } from "./ServerInstallChatCard";
 import { SettingLinkChatCard } from "./SettingLinkChatCard";
@@ -86,6 +91,7 @@ import { SkillSuggestionChatCard, skillSuggestionOutcome } from "./SkillSuggesti
 import { PENDING_SEND_ID_PREFIX, pendingSendRetrySafe } from "./stores/pending-send-store";
 import { createSubagentDock } from "./subagent-dock";
 import { createTurnSteps, SUBAGENT_SPAN_PREFIX } from "./turn-steps";
+import { useTurnTrace } from "./turn-trace";
 
 /**
  * A message that renders only an action marker, with no bubble of its own. A routine instruction is
@@ -108,9 +114,6 @@ function frozenUiBlock(message: AgentMessage | undefined): ConversationUiBlock |
  * draw a card instead of a message row. None shows the header a run continues under, so none can
  * hold a run open.
  */
-/** In the agent chat, a separator with the time stands above a message that comes this long after the one before it. */
-const AGENT_CHAT_TIME_GAP_MS = 60 * 60 * 1000;
-
 function rowDrawsTime(message: AgentMessage): boolean {
   return (
     !markerOnlyMessage(message) &&
@@ -234,7 +237,7 @@ export function ConversationTimeline() {
     sideThreadOpen,
     messagePins,
   } = useConversationViewScope();
-  const { t, format, sourceText } = useText();
+  const { t, format } = useText();
   const controller = useConversationController();
   // A named function, not a ternary in the prop: the compiler wraps a ternary prop in a memo, and
   // the avatar reads it in a tracked effect, where a new memo halts the reactive system.
@@ -458,8 +461,15 @@ export function ConversationTimeline() {
       chatColor: member?.chatColor,
     };
   };
-  /** The reader's own chat color: the member of the server that is the reader. */
-  const ownChatColor = () => props.presence.members.find((member) => props.isOwnSender(member.id))?.chatColor;
+  /**
+   * The reader's own chat color. The account gives it, so it shows also on a computer with no server
+   * and no member list. An account service from before chat colors sends none; then the member of the
+   * server that is the reader gives it.
+   */
+  const ownChatColor = () =>
+    props.currentUserChatColor === undefined
+      ? props.presence.members.find((member) => props.isOwnSender(member.id))?.chatColor
+      : (props.currentUserChatColor ?? undefined);
   /** The agent messages of the chat by their exchange id, so a marker finds its text and its request. */
   const agentMessagesByExchangeId = createMemo(
     () =>
@@ -648,6 +658,31 @@ export function ConversationTimeline() {
       webhookRoutines.state.routines.find((candidate) => candidate.id === routineId);
     return routine?.runIn === "chat" ? undefined : props.threads?.routineThread(routineId);
   };
+  /**
+   * The run history of this agent, where a failed run keeps its reason. The browser client reads it
+   * through its runtime; the desktop reads it for this computer, or as an owner or admin of a joined
+   * server, as Agent settings > Routines does.
+   */
+  const routineRunFailureSource = createMemo(
+    (): RoutineRunFailureSource | undefined => {
+      const agentId = channel ? undefined : props.agent?.id;
+      const server = props.server;
+      if (!agentId) return undefined;
+      if (props.runtime) {
+        const routines = props.runtime.routines;
+        return routines ? { agentId, serverId: server?.id, listRuns: routines.listRoutineRuns } : undefined;
+      }
+      if (!server || !serverRoleCanAdminister(server)) return undefined;
+      return {
+        agentId,
+        serverId: server.id,
+        listRuns: (input) => window.openbot.agent.listRoutineRuns(input, server.id),
+      };
+    },
+    // A new adapter for the same agent and host is the same history: no new read.
+    { equals: (left, right) => left?.agentId === right?.agentId && left?.serverId === right?.serverId },
+  );
+  const routineRunFailure = createRoutineRunFailures(routineRunFailureSource, timelineMessages);
   // The plain marker of a webhook routine opens it too: the host lists those routines on their own.
   const availableRoutineIds = createMemo(() =>
     props.availableRoutineIds
@@ -678,6 +713,22 @@ export function ConversationTimeline() {
       ? mcpServers().find((config) => config.id === marker.mcpServerId && config.transport === "http")
       : undefined;
   const settingLinkMarker = (marker: ChatActionMarkerModel) => (marker.kind === "setting-link" ? marker : undefined);
+  /**
+   * Only the newest note of an expired sign-in offers Sign in: a later message shows the sign-in worked.
+   * The agent must still use that provider. OpenCode signs in with a key in settings, so its note has no
+   * button, as above the composer.
+   */
+  const signInAction = (message: AgentMessage | undefined) => {
+    const signIn = props.onSignInProvider;
+    const marker = message?.actionMarker;
+    return signIn &&
+      marker?.kind === "sign-in-failure" &&
+      marker.provider !== "opencode" &&
+      marker.provider === props.agent?.provider &&
+      props.messages.at(-1)?.id === message?.id
+      ? (provider: AgentProviderId) => void signIn(provider)
+      : undefined;
+  };
   /** An install command card, where this client can watch its server list. Elsewhere it keeps the marker. */
   const serverInstallCard = (marker: ChatActionMarkerModel) => {
     const watch = props.serverInstall;
@@ -727,26 +778,10 @@ export function ConversationTimeline() {
   const showAgentSteps = useShowAgentSteps();
   const compactActions = useCompactMessageActions();
   const bubbleStyle = useChatBubbleStyle();
-  const traceKeyboard = currentDevicePlatform() === "darwin" ? "mac" : "pc";
+  const turnTrace = useTurnTrace({ turnSteps, agentName: () => props.agent?.name, agents: () => props.agents });
   /** The trace that the steps row of an answer opens. A channel names the agent that answered. */
   const traceAbove = (messageId: string | undefined, agentName?: string): AgentStepsTrace => ({
-    spans: () =>
-      turnSteps.traceAbove(messageId, {
-        agent: agentName ?? props.agent?.name ?? t("chat.message.agentFallback"),
-        thinking: t("chat.trace.step.thinking"),
-        answer: t("chat.trace.step.answer"),
-        progress: sourceText,
-        message: (agents) => t("chat.trace.step.message", { agents }),
-        subagent: (title) => t("chat.trace.step.subagent", { title }),
-        reply: t("chat.trace.step.reply"),
-        agentNames: (ids) =>
-          format.list(
-            ids.map(
-              (id) => props.agents.find((candidate) => candidate.id === id)?.name ?? t("chat.message.agentFallback"),
-            ),
-          ),
-      }),
-    keyboard: traceKeyboard,
+    ...turnTrace(messageId, agentName),
     // The chat shows a subagent of the trace in the side panel, as its card in the chat does.
     canSelectSpan: (id) => id.startsWith(SUBAGENT_SPAN_PREFIX),
     onSelectSpan: (id) => {
@@ -799,6 +834,10 @@ export function ConversationTimeline() {
    * timeline for the queue tray, and the activity line shows only after a delay, so both are read here.
    * Its empty state plays a faint turn from the agent's own routine and skill.
    */
+  // The agent's turn ended, and its background work still runs: the provider starts a turn when it ends.
+  // Not shown: the detail names the wait. The indicator reads it only without a detail.
+  const backgroundWorkLabel = nextAgentActivityLabel();
+  const backgroundWorkSince = () => (props.activeTurnId ? undefined : props.backgroundWorkSince?.(null));
   const emptyAgent = createMemo(() =>
     !channel &&
     timelineMessages().length === 0 &&
@@ -819,7 +858,9 @@ export function ConversationTimeline() {
     props.routines?.find((routine) => routine.instruction.trim())?.instruction;
   // A skill of the agent's own: every agent has the managed OpenBot skills.
   const sampleSkillName = () =>
-    installedSkills().find((skill) => skill.enabled !== false && skill.origin !== "managed")?.name;
+    installedSkills().find(
+      (skill) => skill.enabled !== false && skill.origin !== "managed" && skill.problem === undefined,
+    )?.name;
   return (
     <>
       <span class="sr-only" role="status" aria-live="polite" aria-atomic="true">
@@ -957,7 +998,7 @@ export function ConversationTimeline() {
                     return dayMarkerLabel(previous?.createdAt, current.createdAt, {
                       t,
                       format,
-                      ...(channel || !compactActions() ? {} : { gapMs: AGENT_CHAT_TIME_GAP_MS }),
+                      ...(channel || !compactActions() ? {} : { gapMs: CHAT_TIME_GAP_MS }),
                     });
                   return previous === undefined ? (current.time ?? t("chat.day.now")) : null;
                 });
@@ -1156,6 +1197,7 @@ export function ConversationTimeline() {
                                                             onSelectAgent={props.onSelectAgent}
                                                             onOpenRoutine={openRoutineSettings}
                                                             openRoutineThread={openRoutineThread}
+                                                            routineRunFailure={routineRunFailure}
                                                             onOpenHostedSite={(url) => void openExternalMessageUrl(url)}
                                                             onOpenLink={(url) => void openExternalMessageUrl(url)}
                                                             onWithdrawFeedback={withdrawFeedback()}
@@ -1165,6 +1207,7 @@ export function ConversationTimeline() {
                                                             agentMessageText={agentMessageText}
                                                             instructions={changeMarkerActions.instructions}
                                                             onOpenInstructions={changeMarkerActions.onOpenInstructions}
+                                                            onSignInProvider={signInAction(message())}
                                                           />
                                                         }
                                                       >
@@ -1200,6 +1243,7 @@ export function ConversationTimeline() {
                                                     action={card().action}
                                                     routine={card().routine}
                                                     connected={webhookRoutines.state.connected}
+                                                    agentName={props.agent?.name}
                                                     secret={webhookRoutines.state.secrets[card().routine.id] ?? null}
                                                     onSecret={(secret) =>
                                                       webhookRoutines.setSecret(card().routine.id, secret)
@@ -1852,7 +1896,21 @@ export function ConversationTimeline() {
                   </Show>
                 }
               >
-                <Show when={renderedAgentActivity()}>
+                <Show
+                  when={renderedAgentActivity()}
+                  fallback={
+                    <Show when={backgroundWorkSince()}>
+                      {(since) => (
+                        <AgentActivityIndicator
+                          agent={props.agent}
+                          detail={t("chat.activity.backgroundWork")}
+                          label={backgroundWorkLabel}
+                          since={since()}
+                        />
+                      )}
+                    </Show>
+                  }
+                >
                   {(activity) => (
                     <AgentActivityIndicator
                       agent={activity().agent}

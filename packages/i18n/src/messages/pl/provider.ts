@@ -292,6 +292,8 @@ export const messages = {
   "provider.settings.versionDownloaded": "{version} · pobrana przez MyBot",
   "provider.settings.otherVersionInstalledByUser": "Nieużywana: {version} · zainstalowana przez Ciebie",
   "provider.settings.otherVersionDownloaded": "Nieużywana: {version} · pobrana przez MyBot",
+  "provider.settings.installedVersionIncomplete":
+    "Niektóre modele potrzebują części, której brakuje w tej wersji. Pobierz wersję MyBot, aby ich używać.",
   "provider.settings.useInstalledVersion": "Użyj zainstalowanej",
   "provider.settings.useDownloadedVersion": "Użyj wersji MyBot",
   "provider.settings.cache": "Pamięć podręczna",

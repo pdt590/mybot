@@ -89,12 +89,13 @@ import {
   openCodeModelName,
   openCodeSignInMessage,
 } from "./opencode-config";
-import { hasOpenCodeProviderKey, readOpenCodeGoUsage } from "./opencode-usage";
+import { hasOpenCodeProviderKey, readOpenCodeGoUsage, readOpenCodeRefusalStatus } from "./opencode-usage";
 import { PiAgentClient } from "./pi-client";
 import {
   antigravityStatePaths,
   COPILOT_CONFINED_ENV,
   clineStatePaths,
+  codexHomeDirectory,
   confineSpawnTarget,
   copilotHomeDirectory,
   copilotStatePaths,
@@ -1080,6 +1081,10 @@ export const BUILT_IN_PROVIDER_DRIVERS: readonly BuiltInProviderDriver[] = [
       },
       signOut: { argv: ["logout"], env: () => ({}), timeoutMs: 30_000 },
     },
+    // `codex login` writes `auth.json`, and so does each token refresh of any Codex process on this
+    // sign-in. An account that an update or a refresh by another process found signed out connects
+    // again without a click (#11713). A sign-in in the keychain writes no file, and is not watched.
+    signInFiles: () => [join(codexHomeDirectory(), "auth.json")],
     // Codex reads its list only at its start. The idle reread compares its start settings, so a model
     // that the user adds in `config.toml` comes without a restart from the user (#10268).
     catalog: { paged: true, modelFields: serviceTierFields, source: readCodexModelSource, relistWhileRunning: true },
@@ -1281,6 +1286,9 @@ export const BUILT_IN_PROVIDER_DRIVERS: readonly BuiltInProviderDriver[] = [
         // OpenCode 2.3.0 sends a provider's 403 as a missing sign-in, also with a saved key (#10166).
         providerKeyStored: (provider) =>
           Effect.runSync(hasOpenCodeProviderKey(provider, { ...process.env, ...context.agentEnvironment?.() })),
+        // OpenCode 2.2.5 sends a 401 and a 403 as the same `-32000`; its database keeps the status (#12281).
+        providerRefusalStatus: (sessionId) =>
+          Effect.runSync(readOpenCodeRefusalStatus(sessionId, { ...process.env, ...context.agentEnvironment?.() })),
         servesModel: context.servesModel,
         mcpServers: context.mcpServers,
         reportMcpDrops: context.reportMcpDrops,

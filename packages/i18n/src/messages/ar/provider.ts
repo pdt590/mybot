@@ -357,6 +357,8 @@ export const messages = {
   "provider.settings.versionDownloaded": "{version} · نزّله MyBot",
   "provider.settings.otherVersionInstalledByUser": "غير مستخدم: {version} · ثبّته أنت",
   "provider.settings.otherVersionDownloaded": "غير مستخدم: {version} · نزّله MyBot",
+  "provider.settings.installedVersionIncomplete":
+    "تحتاج بعض النماذج إلى جزء غير موجود في هذا الإصدار. نزّل إصدار MyBot لاستخدامها.",
   "provider.settings.useInstalledVersion": "استخدم الإصدار المثبّت",
   "provider.settings.useDownloadedVersion": "استخدم إصدار MyBot",
   "provider.settings.update": "تحديث",

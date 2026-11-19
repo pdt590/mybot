@@ -60,6 +60,7 @@ export const messages = {
   "account.update.downloadLabel": "Pobierz aktualizację. Dostępna nowa aktualizacja.",
   "account.update.available": "Dostępna nowa aktualizacja",
   "account.update.ready": "Aktualizacja gotowa",
+  "account.update.notInstalled": "Instalacja nieudana",
   "account.update.progress": "Postęp pobierania aktualizacji",
   "account.login.connectingTitle": "Łączenie z MyBot",
   "account.login.unavailableTitle": "Usługa niedostępna",

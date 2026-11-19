@@ -28,15 +28,46 @@ export function isMcpSubsystemDiagnostic(message: string): boolean {
  * Whether an MCP diagnostic says that the server refused the provider for want of a sign-in.
  *
  * Grok's `rmcp` worker writes `AuthRequired(…)` for an http server that answers 401 with an OAuth
- * challenge. Other CLIs write the status next to `HTTP` or `status`, or the word. Codex CLI 0.169.0
- * writes `The <name> MCP server is not logged in.` in its failed startup status (#9360). A bare
- * `401` is not enough: a port, an id or a line number can be 401.
+ * challenge, and Grok CLI 1.0.77 writes `error: Auth required, when send initialize request` in the
+ * detail of its `x.ai/mcp/server_status` for the same server. Other CLIs write the status next to
+ * `HTTP` or `status`, or the word. Codex CLI 0.169.0 writes `The <name> MCP server is not logged in.`
+ * in its failed startup status (#9360). A bare `401` is not enough: a port, an id or a line number
+ * can be 401.
  */
 export function isMcpSignInDiagnostic(message: string): boolean {
-  return /\bAuthRequired\b|\bunauthori[sz]ed\b|\bnot (?:authenticated|logged in)\b|\b(?:HTTP|status(?:\s+code)?)\W{0,3}401\b/i.test(
+  return /\bAuth ?Required\b|\bunauthori[sz]ed\b|\bnot (?:authenticated|logged in)\b|\b(?:HTTP|status(?:\s+code)?)\W{0,3}401\b/i.test(
     message,
   );
 }
+
+/**
+ * Whether an MCP diagnostic says that the provider did not start a server because its session was
+ * already closing. Grok CLI writes `session is closing (process scope already reclaimed); MCP server
+ * not started` when it reaches a server's start after the session closed. The server did not fail,
+ * and the next session starts it, so the line goes to the log only (#12320). The sentence is matched
+ * as Grok writes it, as `isMcpSubsystemDiagnostic` matches the `rmcp` worker's sentence.
+ */
+export function isMcpSessionClosingDiagnostic(message: string): boolean {
+  return /\bsession is closing \(process scope already reclaimed\)/u.test(message);
+}
+
+/** The kind of a provider's failed MCP start, as its text says it. */
+export type McpProviderFailureKind = "sign_in" | "timeout" | "failed";
+
+export function mcpProviderFailureKind(message: string): McpProviderFailureKind {
+  return isMcpSignInDiagnostic(message) ? "sign_in" : isMcpTimeoutDiagnostic(message) ? "timeout" : "failed";
+}
+
+/**
+ * The sentence for each kind of failed MCP start in a provider. A provider can report one failure on
+ * two paths, such as Grok's status notification and its stderr line. Both use this sentence, so the
+ * renderer, which shows one toast for each text, shows one.
+ */
+export const MCP_PROVIDER_FAILURE_TEXT = {
+  sign_in: "error.backend.mcpServerSignInForProvider",
+  timeout: "error.backend.mcpServerTimedOutInProvider",
+  failed: "error.backend.mcpServerFailedInProvider",
+} as const;
 
 /**
  * Whether an MCP diagnostic says that the server did not answer in time. A provider can wait less
@@ -44,7 +75,7 @@ export function isMcpSignInDiagnostic(message: string): boolean {
  * test and still time out in the provider. `deadline has elapsed` is the Rust `tokio` timeout text.
  * A bare `timeout` does not count: a server name or a quoted option such as `--timeout` can hold it.
  */
-export function isMcpTimeoutDiagnostic(message: string): boolean {
+function isMcpTimeoutDiagnostic(message: string): boolean {
   return /\btimed out\b|\bdeadline has elapsed\b/i.test(message);
 }
 
@@ -183,12 +214,14 @@ export function isUsageReadDiagnostic(message: string): boolean {
  * Grok's CLI runs `git` to read the repository state, and logs `ERROR git_cli: Command::output()
  * FAILED (spawn error) error=program not found` on stderr when `git` is not on the PATH, as on a
  * Windows computer without Git. Grok continues without the repository state. The user met the line
- * as a "Grok error" toast with nothing failing (#4789). It belongs in the log.
+ * as a "Grok error" toast with nothing failing (#4789). Grok CLI 1.0.89 writes the same failure as
+ * `ERROR git_cli: spawn failed error=program not found error_kind=NotFound` (#11788). It belongs in
+ * the log.
  *
  * Only a spawn failure counts. A `git` command that ran and failed stays visible.
  */
 export function isGitSpawnDiagnostic(message: string): boolean {
-  return /\bERROR\s+git_cli:\s+Command::output\(\) FAILED \(spawn error\)/.test(message);
+  return /\bERROR\s+git_cli:\s+(?:Command::output\(\) FAILED \(spawn error\)|spawn failed\b)/.test(message);
 }
 
 /**

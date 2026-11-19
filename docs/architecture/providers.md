@@ -768,6 +768,14 @@ expired one (#9095). OpenBot sends its saved key only to OpenCode Go, so with a 
 `error.provider.opencodeKeyRefused`. With no saved key, a refused key and a missing key look the
 same, and the text stays `error.provider.opencodeAuthRequired`.
 
+OpenCode 2.2.5 sends a 401 and a 403 as the same `-32000`, but it keeps the provider's status in the
+newest `session_message` row of the failed turn (`{"error":{"type":"provider.auth","status":403,…}}`).
+OpenCode Go answers a bad key with 401, and refuses a valid key with 403, for example when the Go
+plan is not active or the network is blocked. The client's `providerRefusalStatus` option reads that
+row read-only (`readOpenCodeRefusalStatus` in `opencode-usage.ts`), and with a saved key a 403 shows
+`error.provider.opencodeGoRequestRefused`, which does not ask for a new key (#12281). No row, another
+status, or a database that cannot be read keeps `error.provider.opencodeKeyRefused`.
+
 OpenCode 2.3.0 also sends each HTTP 401 and 403 of a provider as this `-32000`, with no status, also
 when a firewall blocks a VPN address (#10166). The client's `providerKeyStored` option then reads
 OpenCode's own store (`hasOpenCodeProviderKey` in `opencode-usage.ts`): an active `credential` row
@@ -1159,6 +1167,12 @@ empty model list and no error. `noModelsWhenSignedOut` reads that list as "sign-
 change with `session/set_model` does not write a file. Devin answers a lost session with `-32016`
 and `{ "cognition.ai/errorKind": "session_not_found" }`, which `DEVIN_ACP_FLAVOR` reads as a missing
 session.
+
+Devin CLI 3000.14.30821 keeps a session after a plain `session/close`, also in the background process
+that outlives OpenBot for about 10 minutes, and a later `session/load` keeps the MCP servers that the
+session got first. It advertises `sessionCapabilities.close._meta["cognition.ai/force"]`, so the ACP
+client sends that `_meta` with each `session/close`, and a forced close before it loads a session that
+it does not hold. The session then gets the new token of the OpenBot bridge (#12082).
 
 No frozen Team API protocol knows `devin`. The host hides Devin agents, models, status, and sign-in
 state from peers below protocol 8, and `providers-v8` carries it.

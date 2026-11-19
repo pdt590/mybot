@@ -240,6 +240,8 @@ export const messages = {
     "يمكن لهذا الوكيل استخدام عدد محدود فقط من خوادم MCP. لاستخدام هذا الخادم، أوقف خادم MCP لا يحتاجه الوكيل.",
   "error.backend.mcpRegistrationRefused":
     "لا يقبل خادم تسجيل الدخول MyBot كتطبيق بعد. حسابك ليس السبب. استخدم طريقة أخرى للاتصال، مثل خادم MCP محلي.",
+  "error.backend.mcpRegistrationUnavailable":
+    "لا يستطيع خادم تسجيل الدخول تسجيل MyBot كتطبيق. حسابك ليس السبب. للاتصال، احفظ هذا الخادم في المتجر، التطبيقات، ثم أضف إليه تطبيق تسجيل دخول.",
   "error.backend.mcpSignInAbandonedGeneric": "تم التخلي عن تسجيل الدخول.",
   "error.backend.mcpSignInForgotten": "تم نسيان تسجيل الدخول إلى MCP أثناء تشغيله.",
   "error.backend.mcpSignInAbandoned": "تم التخلي عن تسجيل الدخول إلى MCP.",
@@ -251,6 +253,7 @@ export const messages = {
     "يطلب هذا الخادم تسجيل الدخول، ولا يسجّل MyBot الدخول إلا عبر https. غيّر URL إلى {url}.",
   "error.backend.mcpSignInCancelled": "تم إلغاء تسجيل الدخول.",
   "error.backend.mcpSignInTimedOut": "لم يكتمل تسجيل الدخول في المتصفح.",
+  "error.backend.mcpSignInRefused": "رفضت صفحة تسجيل الدخول الوصول. سجّل الدخول مرة أخرى.",
   "error.backend.mcpSignInResponseTimedOut": "لم تصل استجابة تسجيل الدخول في الوقت المحدد.",
   "error.backend.mcpSignInMetadataUnreadable":
     "تعذّر على MyBot قراءة معلومات تسجيل الدخول لهذا الخادم. تحقق من عنوان الخادم وحاول مرة أخرى.",
@@ -261,6 +264,7 @@ export const messages = {
   "error.backend.mcpServerFailedToStart": "لم يبدأ الخادم: {reason}",
   "error.backend.mcpServerStartAbandoned":
     "توقف {provider} عن الانتظار قبل أن يبدأ الخادم، لذلك لا يحصل وكلاؤه على أدوات هذا الخادم.",
+  "error.backend.mcpServerStoppedDuringCall": "توقف خادم MCP قبل أن يرد على هذا الاستدعاء.",
   "error.backend.mcpToolSchemaRefused":
     "أداته {tool} لها صيغة إدخال لا يستطيع هذا المزوّد قراءتها. الوكلاء على مزوّدين آخرين ما زالوا يحصلون على الخادم.",
   "error.backend.mcpServerSignInForProvider":

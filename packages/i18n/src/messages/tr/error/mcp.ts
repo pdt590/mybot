@@ -8,6 +8,7 @@ export const messages = {
   "error.mcp.redirectRefused": "Oturum açma reddedildi. MyBot'a geri dönün ve tekrar deneyin.",
   "error.mcp.redirectNoSignIn": "Bunun için bekleyen bir oturum açma işlemi yok. Sona ermiş olabilir.",
   "error.mcp.redirectSignedIn": "MyBot oturumu açıldı. Bu pencereyi kapatabilirsiniz.",
+  "error.mcp.redirectNotSaved": "Oturum açma tamamlanmadı. Nedenini görmek için MyBot'a dönün.",
   "error.mcp.signInFileUnreadable": "MCP oturum açma dosyası okunamıyor.",
   "error.mcp.signInFileTooLarge": "MCP oturum açma dosyası çok büyük.",
   "error.mcp.unsupported": "MCP sunucuları bu sunucu tarafından desteklenmiyor.",
@@ -20,6 +21,7 @@ export const messages = {
     "Bu sunucu oturum açma uygulamalarını desteklemiyor. Ana makinedeki MyBot'u güncelleyin.",
   "error.mcp.redirectRelayed": "MyBot oturum açmayı sunucuya gönderdi. Bu pencereyi kapatabilirsiniz.",
   "error.mcp.relayEnded": "Bu oturum açma sona erdi. Yeniden başlatın.",
+  "error.mcp.signInLinkNotReady": "Giriş sayfası henüz açılmadı. Biraz sonra yeniden dene.",
   "error.mcp.relayNoState":
     "Sunucunun oturum açma sayfası dönüş adresini korumuyor, bu yüzden MyBot onu bu bilgisayarda açmaz.",
   "error.mcp.relayAddressInvalid": "Bu, bu oturum açmanın sonundaki adres değil. Tarayıcıdan tam adresi kopyalayın.",

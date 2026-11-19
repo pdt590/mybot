@@ -322,6 +322,8 @@ export const messages = {
   "provider.settings.versionDownloaded": "{version} · הורדה על ידי MyBot",
   "provider.settings.otherVersionInstalledByUser": "לא בשימוש: {version} · הותקנה על ידיך",
   "provider.settings.otherVersionDownloaded": "לא בשימוש: {version} · הורדה על ידי MyBot",
+  "provider.settings.installedVersionIncomplete":
+    "חלק מהמודלים צריכים רכיב שחסר בגרסה הזו. הורד את הגרסה של MyBot כדי להשתמש בהם.",
   "provider.settings.useInstalledVersion": "השתמש בגרסה המותקנת",
   "provider.settings.useDownloadedVersion": "השתמש בגרסה של MyBot",
   "provider.settings.update": "עדכון",

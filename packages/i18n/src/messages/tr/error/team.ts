@@ -53,6 +53,11 @@ export const messages = {
   "error.team.tooManySignInAttempts": "Çok fazla oturum açma denemesi. Daha sonra tekrar deneyin.",
   "error.team.clientUpdateRequired": "Bu ana makineye bağlanmadan önce bu MyBot istemcisini güncelleyin.",
   "error.team.hostUpdateRequired": "Bağlanmadan önce ana makinedeki MyBot'u güncelleyin.",
+  "error.team.serverSafeMode": "MyBot bu sunucuda başlamadığı için sunucu güvenli moddadır.",
+  "error.team.serverSafeModeNewerDatabase":
+    "Bu sunucudaki MyBot {version}, verilerini açamıyor çünkü onları daha yeni bir MyBot sürümü kaydetti. Sunucudaki daha yeni bir MyBot sürümü bunu düzeltir.",
+  "error.team.serverSafeModeStartFailed":
+    "Bu sunucudaki MyBot {version}, birçok kez başlatılamadıktan sonra durdu. Sunucudaki daha yeni bir MyBot sürümü bunu düzeltir.",
   "error.team.sidebarLayoutUnavailable": "Kenar çubuğu düzeni kullanılamıyor.",
   "error.team.providersUnsupported": "Sağlayıcı ayarları bu bağlantı tarafından desteklenmiyor.",
   "error.team.providerNotManaged": "MyBot bu sağlayıcının CLI aracını yönetmiyor.",

@@ -16,6 +16,8 @@ export const messages = {
   "error.messaging.telegramUnsupported": "このコンピューターは Telegram に接続できません。",
   "error.messaging.telegramRelayUnavailable":
     "MyBot はこのコンピューターから Telegram に接続できません。サインインし、このコンピューターに名前を付けてから、もう一度お試しください。",
+  "error.messaging.telegramRelayUnreachable":
+    "MyBot はこのコンピューターからサービスに接続できません。インターネット接続、VPN、プロキシ、またはファイアウォールを確認してから、もう一度お試しください。",
   "error.messaging.telegramServiceUnavailable":
     "MyBot は現在 Telegram に接続できません。しばらくしてからもう一度お試しください。",
   "error.messaging.whatsappNotConnected": "この WhatsApp 番号は接続されていません。",

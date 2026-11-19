@@ -67,6 +67,8 @@ import { currentText } from "@openbot/ui/text";
 import { errorReference, type UserErrorDetails } from "@openbot/user-errors";
 import { createEffect, createMemo, createSignal, createStore, onSettled } from "solid-js";
 import { toAgentProfile } from "../../app-message-projection";
+import { backgroundWorkKey } from "../conversation/background-work-key";
+import { messagePromptRequestKey, promptRequestKey } from "../conversation/conversation-keys";
 import {
   mergeConversationPage,
   missingReplyOriginals,
@@ -131,6 +133,8 @@ interface WebConversation {
 const LATEST_PAGE_SIZE = 50;
 /** The recently opened agents whose latest page a new page reads after the open one. */
 const PRELOADED_AGENTS = 3;
+/** While events stream, at most one event read of the unread state starts in this time. */
+const EVENT_READS_INTERVAL_MS = 1_000;
 
 /**
  * Releases the older pages of a conversation that is not open. Only the open conversation gets new
@@ -180,6 +184,11 @@ interface WebWorkspaceState {
   contextStates: Record<string, AgentContextState>;
   /** As `contextStates`, for each side thread, by thread id. */
   threadContextStates: Record<string, AgentContextState>;
+  /**
+   * When the background work of each chat started, by `backgroundWorkKey`, while it runs after its turn
+   * ended. The host's runtime snapshot sends it under `agent-background-work-v1`.
+   */
+  backgroundWork: Record<string, number>;
   browserTabs: BrowserTab[];
   activeBrowserTabId: string | null;
   browserControlState: BrowserControlState;
@@ -287,6 +296,7 @@ export function createWebWorkspace(
     takeovers: [],
     contextStates: {},
     threadContextStates: {},
+    backgroundWork: {},
     browserTabs: [],
     activeBrowserTabId: null,
     browserControlState: { sessions: [] },
@@ -565,6 +575,7 @@ export function createWebWorkspace(
           if (update.state !== "online") {
             draft.approvals = [];
             draft.contextStates = {};
+            draft.backgroundWork = {};
             draft.threadContextStates = {};
             draft.prompts = [];
             draft.progress = {};
@@ -650,6 +661,13 @@ export function createWebWorkspace(
             draft.threadContextStates = Object.fromEntries(
               (event.snapshot.threadContextStates ?? []).map((context) => [context.threadId, context]),
             );
+            // A host without `agent-background-work-v1` sends no list, so its chats show no waiting line.
+            draft.backgroundWork = Object.fromEntries(
+              (event.snapshot.backgroundWork ?? []).map((work) => [
+                backgroundWorkKey(work.agentId, work.taskId),
+                work.since,
+              ]),
+            );
           });
           readWholeApprovals();
         } else if (event.type === "prompt") {
@@ -689,10 +707,9 @@ export function createWebWorkspace(
         } else if (event.type === "turn-completed") {
           setState((draft) => {
             if (draft.progress[event.agentId]?.turnId === event.turnId) delete draft.progress[event.agentId];
-            draft.prompts = draft.prompts.filter(
-              (item) =>
-                item.agentId !== event.agentId || item.threadId !== event.threadId || item.turnId !== event.turnId,
-            );
+            // The host closes each question that ends with its turn with `agent-input-resolved` before
+            // this event. A question that is still here outlives its turn, and the user can answer it
+            // later; the Team API does not mark it (#11440).
             draft.approvals = draft.approvals.filter(
               (item) =>
                 item.agentId !== event.agentId || item.threadId !== event.threadId || item.turnId !== event.turnId,
@@ -777,7 +794,7 @@ export function createWebWorkspace(
           preferences.receiveServerPins(pinScope(), { items: event.items, updatedAt: event.updatedAt });
         // A changed chat can change the unread count of any agent, and the host tells a read on another
         // device only with an invalidation.
-        if (event.type === "conversation" || event.type === "conversation-invalidated") loadReads();
+        if (event.type === "conversation" || event.type === "conversation-invalidated") loadReadsSoon();
         // A read loads only the open conversation, so the events of other agents do not start one.
         const changed = changedConversation(event);
         if (changed !== undefined && changed === selectedId) void refresh();
@@ -1128,6 +1145,7 @@ export function createWebWorkspace(
             draft.queues = {};
             draft.approvals = [];
             draft.contextStates = {};
+            draft.backgroundWork = {};
             draft.threadContextStates = {};
             draft.prompts = [];
             draft.progress = {};
@@ -1258,6 +1276,7 @@ export function createWebWorkspace(
       draft.selectedId = null;
       draft.approvals = [];
       draft.contextStates = {};
+      draft.backgroundWork = {};
       draft.threadContextStates = {};
       draft.prompts = [];
       draft.progress = {};
@@ -1387,6 +1406,7 @@ export function createWebWorkspace(
       }
       draft.approvals = [];
       draft.contextStates = {};
+      draft.backgroundWork = {};
       draft.threadContextStates = {};
       draft.prompts = [];
       draft.takeovers = [];
@@ -1682,16 +1702,18 @@ export function createWebWorkspace(
         const merge = older ? "older" : old && !item.trimmed ? "latest" : "replace";
         // A part around an older message keeps its place. The latest page changes only its shown messages.
         const around = !older && merge === "latest" && item.around === true && page.pageInfo.hasOlder;
+        // By turn and request: an agent can count its request ids from the start again after a restart, so
+        // an old answered row must not close a new question that has the same id (#11440).
         const resolvedRequests = new Set(
           page.messages.flatMap((message) =>
-            message.questionPrompt?.resolution ? [String(message.questionPrompt.requestId)] : [],
+            message.questionPrompt?.resolution ? [messagePromptRequestKey(message)] : [],
           ),
         );
         draft.prompts = draft.prompts.filter(
           (prompt) =>
             prompt.agentId !== id ||
             prompt.threadId !== page.threadId ||
-            !resolvedRequests.has(String(prompt.requestId)),
+            !resolvedRequests.has(promptRequestKey(prompt.turnId, prompt.requestId)),
         );
         // A latest page that does not meet the loaded messages, after a long time with no connection,
         // replaces them: joined end to end, the two would hide the messages between with no sign.
@@ -1935,6 +1957,9 @@ export function createWebWorkspace(
   }
   let readsLoad: { generation: number; promise: Promise<void> } | null = null;
   let pendingReads = false;
+  /** When the last read started, and the event read that waits for its interval. */
+  let readsStartedAt = 0;
+  let readsTimer: ReturnType<typeof setTimeout> | null = null;
   /**
    * Reads the unread state of every agent chat. Event bursts coalesce: a call during a read schedules
    * one more read. A failed read keeps the counts that this tab has.
@@ -1946,6 +1971,7 @@ export function createWebWorkspace(
     const promise = (async () => {
       while (pendingReads && !disposed && current === generation) {
         pendingReads = false;
+        readsStartedAt = Date.now();
         const value = await runtime.conversationReads().catch(() => null);
         if (!value || disposed || current !== generation) continue;
         setState((draft) => {
@@ -1960,6 +1986,23 @@ export function createWebWorkspace(
   }
   function loadReads(): void {
     void readReads();
+  }
+  /**
+   * Reads the unread state after an event. Each read costs the host a query for each agent, so while
+   * events stream at most one read starts in `EVENT_READS_INTERVAL_MS`. The waiting read starts after
+   * the last event, so no change is lost.
+   */
+  function loadReadsSoon(): void {
+    if (readsTimer) return;
+    const wait = readsStartedAt + EVENT_READS_INTERVAL_MS - Date.now();
+    if (wait <= 0) {
+      loadReads();
+      return;
+    }
+    readsTimer = setTimeout(() => {
+      readsTimer = null;
+      loadReads();
+    }, wait);
   }
   async function resync() {
     const current = generation;
@@ -2224,6 +2267,8 @@ export function createWebWorkspace(
     return () => {
       disposed = true;
       generation += 1;
+      if (readsTimer) clearTimeout(readsTimer);
+      readsTimer = null;
       recovery.dispose();
       hostLifecycle.dispose();
       focusUse.dispose();

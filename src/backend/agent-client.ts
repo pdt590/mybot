@@ -98,6 +98,11 @@ export interface AgentClient {
    */
   holdsBackgroundWork?(externalThreadId: string): Effect.Effect<boolean, ProviderClientOperationError>;
   /**
+   * Whether the provider starts a turn by itself when the background work of this session ends, so
+   * the agent continues then. Optional, because most providers start no turn of their own.
+   */
+  wakesAfterBackgroundWork?(externalThreadId: string): Effect.Effect<boolean, ProviderClientOperationError>;
+  /**
    * Hides a thread that a replacement session took over, or that a deleted agent leaves, from the
    * provider's own thread list, and keeps its history readable. Optional, because only a provider
    * that shows its threads to the user in another app has a list to keep clean.
@@ -189,6 +194,33 @@ export class ProviderSessionBusyError extends ProviderTurnActiveError {
   constructor(providerName: string) {
     super(providerName);
     this.message = sourceText("error.provider.acpSessionBusy", { provider: providerName });
+  }
+}
+
+/**
+ * The provider process stopped, or did not answer, so it did not get this request. A request before
+ * `turn/start`, or a `turn/start` that was not written, ran nothing: the drain queues the message again
+ * for the next process (#11843). Other callers handle it as any failed request.
+ */
+export class ProviderStoppedError extends Error {
+  constructor(
+    readonly providerName: string,
+    message: string,
+  ) {
+    super(message);
+    this.name = "ProviderStoppedError";
+  }
+}
+
+/**
+ * The session does not offer the model that the turn asks for, so no prompt was sent. Antigravity can
+ * resume a session with a model list that leaves out a model it offered before (#11797). The caller
+ * moves the agent to a backup model, or shows this message.
+ */
+export class ProviderModelNotOfferedError extends Error {
+  constructor(providerName: string, model: string) {
+    super(sourceText("error.provider.acpModelNotOffered", { provider: providerName, model }));
+    this.name = "ProviderModelNotOfferedError";
   }
 }
 

@@ -25,12 +25,17 @@ interface AcpRetryNotice {
   readonly unreachable: boolean;
 }
 
+/**
+ * Why a model request failed: the agent could not connect to the model provider, the model server ran
+ * out of memory for the request, or the provider answered with another error or stopped answering.
+ */
+export type AcpRetryCause = "unreachable" | "outOfMemory" | "serverError";
+
 /** A session update that says that the agent sends a failed model request again (`AcpFlavor.retryUpdate`). */
 interface AcpRetryUpdate {
   /** The number of the retry: 1 for the first request after the failed one. */
   readonly attempt: number;
-  /** The agent could not connect to the model provider. Else the provider answered with an error or stopped answering. */
-  readonly unreachable: boolean;
+  readonly cause: AcpRetryCause;
 }
 
 /** The custom endpoint that serves a model, as a turn's error names it. Never a credential itself. */
@@ -92,7 +97,9 @@ export interface AcpFlavor {
    * writes a diagnostic that it redacts first, and `model` is the session's model. `endpoint` is the
    * custom endpoint that serves that model, or null. `savedKey` tells whether OpenBot sent a saved
    * API key for the provider of that model. `providerKeyStored` reads, at each call, whether the
-   * agent's own store has a key for a provider.
+   * agent's own store has a key for a provider. `label` is the agent's name for the user.
+   * `refusalStatus` reads the HTTP status of the provider refusal that the agent's own store keeps
+   * for this turn, or null.
    */
   turnFailure?(
     error: unknown,
@@ -103,6 +110,8 @@ export interface AcpFlavor {
     endpoint: AcpCustomEndpoint | null,
     savedKey: boolean,
     providerKeyStored: (provider: string) => boolean,
+    label: string,
+    refusalStatus: () => number | null,
   ): string;
   /**
    * The cause of a turn's failure that the agent names in a structured field, such as an error name
@@ -200,6 +209,11 @@ export interface AcpFlavor {
   /** How long a model discovery session stays open after discovery read it. Absent: it closes at once. */
   probeCloseDelayMs?: number;
   /**
+   * The categories of the select option that holds the reasoning effort. Absent: the protocol's
+   * `thought_level` only. The option then goes to the Effort menu, not to the provider settings.
+   */
+  effortCategories?: readonly string[];
+  /**
    * Each session gets a process of its own, and an idle session is closed by ending that process.
    * For an agent with `closeKeepsSession`, or one that shares MCP servers between its sessions.
    */
@@ -210,6 +224,11 @@ export interface AcpFlavor {
     failedSession(stderrLine: string): string | undefined;
     /** The start of an answer that is the failure text, when no stderr line came. */
     answerIsFailure: RegExp;
+    /**
+     * The number of the failed model request that an answer chunk reports while the agent tries it
+     * again, or `null`. The chunk is a status of the turn, not its answer and not yet its failure.
+     */
+    retryNotice?(text: string): number | null;
     /** The failure text of a model step that ended with neither text nor tool calls. */
     emptyOutputFailure?: RegExp;
     /**
@@ -271,6 +290,13 @@ export interface AcpFlavor {
    */
   thoughtsInsideAnswer?: true;
   /**
+   * The agent continues a dropped answer in a new model step of the same turn, so a thought after
+   * answer text, with no tool call between, does not end the answer. A tool call or the end of the
+   * turn still does. A line break joins the two parts when neither side has a space at the seam.
+   * `report` is the agent's notice of the dropped stream, which shows as a thought.
+   */
+  resumesAnswerAfterThought?: { report: RegExp };
+  /**
    * `session/prompt` stays open with no update while background tasks run, so a silent turn is not
    * stalled and OpenBot does not end it (`ACP_TURN_STALL_MS`). A prompt that gets no update at all
    * is sent again once, and then fails (`ACP_FIRST_UPDATE_MS`).
@@ -331,6 +357,12 @@ export interface AcpFlavor {
    * notice after the last output counts as activity: one retry gets the whole limit, not all of them.
    */
   modelRetryUpdate?: (update: SessionUpdate) => boolean;
+  /**
+   * How long a turn may send nothing before OpenBot ends it as stalled (`ACP_TURN_STALL_MS` when
+   * absent), for an agent that waits longer for a silent model stream than that and then gives a
+   * notice of its own. Only the turn's stall watch uses it, not the checks of a process that stopped.
+   */
+  turnStallMs?: number;
   /**
    * The tools that run a subagent and send no events of it, as the tool name or `<name>: <description>`.
    * Each call shows as a subagent with its task, state, and report.
@@ -419,6 +451,12 @@ export interface AcpFlavor {
    */
   signInLostChunk?: RegExp;
   /**
+   * The text for a session that the agent could not open because its server refused the saved
+   * sign-in or did not answer, or null for another error. The start asks once more, because the
+   * failure can be short, and then asks the user to sign in again.
+   */
+  signInUnusable?(error: RequestError): string | null;
+  /**
    * A whole answer chunk that tells that the plan is used up, sent as answer text in a turn that
    * then ends as a success. OpenBot fails the turn as a usage limit, so a backup model can take it.
    */
@@ -469,12 +507,14 @@ export interface AcpFlavor {
 export const DEFAULT_ACP_FLAVOR: AcpFlavor = {};
 
 /**
- * The billing wall of Cursor and GitHub Copilot when the account needs a payment method for more use
- * (#4556, #9808). As answer text, only the whole chunk matches, so an answer that quotes it stays an
- * answer. In an error, the text can be part of a longer message.
+ * GitHub Copilot's texts for a used-up plan: the billing wall when the account needs a payment
+ * method for more use (#9808), and the spent monthly quota, "Error: You have exceeded your monthly
+ * quota (Request ID: …)" (#12383). As answer text, only the whole chunk matches, so an answer that
+ * quotes it stays an answer. In an error, the text can be part of a longer message.
  */
-const PAYMENT_METHOD_WALL = /^\s*Add a payment method to continue\.?\s*$/u;
-const PAYMENT_METHOD_WALL_TEXT = /\bAdd a payment method to continue\b/u;
+const COPILOT_PLAN_USED_UP =
+  /^\s*(?:Add a payment method to continue\.?|Error: You have exceeded your monthly quota\b[^\n]*)\s*$/u;
+const COPILOT_PLAN_USED_UP_TEXT = /\bAdd a payment method to continue\b|\bexceeded your monthly quota\b/u;
 
 /** Cline CLI 3.0.68 runs a subagent with its `spawn_agent` tool: `{ systemPrompt, task }`, result `{ text }`. */
 export const CLINE_ACP_FLAVOR: AcpFlavor = {
@@ -495,8 +535,9 @@ export const COPILOT_ACP_FLAVOR: AcpFlavor = {
   turnFailure: copilotTurnFailure,
   // GitHub Copilot CLI 1.0.112 sent its billing wall as the whole answer, or as the turn's error. The
   // chat showed only "Add a payment method to continue", and no backup model took the turn (#9808).
-  planUsedUpChunk: PAYMENT_METHOD_WALL,
-  failureCause: (error) => (PAYMENT_METHOD_WALL_TEXT.test(errorText(error)) ? "usage_limit" : null),
+  // GitHub Copilot does the same with its spent monthly quota (#12383).
+  planUsedUpChunk: COPILOT_PLAN_USED_UP,
+  failureCause: (error) => (COPILOT_PLAN_USED_UP_TEXT.test(errorText(error)) ? "usage_limit" : null),
   // GitHub Copilot CLI 1.0.112 compacts its session by itself. The context meter said "This agent
   // does not compact its context." (#10643).
   compactsItself: true,
@@ -509,7 +550,7 @@ export const COPILOT_ACP_FLAVOR: AcpFlavor = {
  * and the effort, so the user's action is another model.
  */
 function copilotTurnFailure(_error: unknown, detail: string): string {
-  if (PAYMENT_METHOD_WALL_TEXT.test(detail))
+  if (COPILOT_PLAN_USED_UP_TEXT.test(detail))
     return sourceText("error.provider.acpPlanUsedUp", { provider: agentProviderName("copilot") });
   return /"thinking\.type\.enabled" is not supported for this model/u.test(detail)
     ? sourceText("error.provider.copilotThinkingRejected")
@@ -591,6 +632,10 @@ export const GROK_ACP_FLAVOR: AcpFlavor = {
     },
   },
   retryNotice: grokRetryNotice,
+  // Grok CLI 1.0.77 waits 10 minutes for a silent model stream, then sends an `idle_timeout` retry
+  // notice (`GROK_RETRY_TYPES`). A long step after many tool calls can send nothing for more than 5
+  // minutes, so OpenBot ended it as stalled while Grok still worked, and its reply came later (#12295).
+  turnStallMs: 12 * 60_000,
   turnFailure: grokTurnFailure,
 };
 
@@ -808,6 +853,12 @@ export const CURSOR_ACP_FLAVOR: AcpFlavor = {
   // again (#4614).
   signInLostChunk:
     /^\n\n(?:Please sign in to continue|Error: \[unauthenticated\] Backend rejected authentication\.[^\n]*)$/u,
+  // Cursor 2026.09.28-64d2043 and 2026.11.05-86047df open a session only when their server accepts the
+  // saved sign-in or key. A refused one and no connection give the same error (#7644).
+  signInUnusable: (error) =>
+    error.code === -32603 && isRecord(error.data) && error.data.message === "Failed to initialize session services"
+      ? sourceText("error.provider.cursorSignInUnusable")
+      : null,
   // Cursor sends a used-up plan as one chunk in the same form, and then ends the turn as a success
   // (#5668), and a plan that needs a payment method too (#4556). Only the full chunk matches, so an
   // answer that quotes the text stays an answer.
@@ -885,6 +936,10 @@ export const MISTRAL_ACP_FLAVOR: AcpFlavor = {
   // `config.toml`. In a confined process that file is protected, and the save fails with "Invalid
   // params" and "Layer 'user-toml': cannot write config file at <path>".
   configSetUnsaved: (error) => error.code === -32602 && error.message.includes("cannot write config file"),
+  // Vibe 3.1.0 to 3.1.2 sends the thinking level of the model as the option `thinking` with the
+  // category `thinking`, not the protocol's `thought_level` (#8056, mistralai/mistral-vibe#989).
+  // Its levels `off` to `max` are OpenBot's effort names. `thought_level` stays for a later Vibe.
+  effortCategories: ["thought_level", "thinking"],
   // Vibe 3.1.0 asks Mistral for the account's model catalogue when a session opens, and waits up to
   // 5 s for it. A close stops that request, and then nothing saves the catalogue for later sessions.
   probeCloseDelayMs: 5_000,
@@ -913,8 +968,38 @@ function customEmptyAnswerFailure({ answered }: { answered: boolean }, label: st
   return answered ? null : sourceText("error.provider.acpNoAnswer", { provider: label });
 }
 
+/**
+ * A custom agent's `refusal` stop reason names no cause, and agents use it for other things than
+ * blocked content: WorkBuddy sends it when its sign-in is missing (#8876). The chat showed only the
+ * word "refusal", and analytics counted blocked content.
+ */
+function customRefusal(error: unknown, detail: string, label: string): string {
+  return error === "refusal" ? sourceText("error.provider.acpRefusedNoReason", { provider: label }) : detail;
+}
+
+const customTurnFailure: NonNullable<AcpFlavor["turnFailure"]> = (
+  error,
+  detail,
+  _redact,
+  _log,
+  _model,
+  _endpoint,
+  _savedKey,
+  _providerKeyStored,
+  label,
+) => customRefusal(error, detail, label);
+
+function customFailureCause(error: unknown): CauseCode | null {
+  return error === "refusal" ? "unknown" : null;
+}
+
 /** Oh My Pi (`omp acp`). Its rules are here when they do not apply to every custom agent. */
-const OMP_ACP_FLAVOR: AcpFlavor = { sessionNotFound: ompSessionNotFound, emptyAnswerFailure: customEmptyAnswerFailure };
+const OMP_ACP_FLAVOR: AcpFlavor = {
+  sessionNotFound: ompSessionNotFound,
+  emptyAnswerFailure: customEmptyAnswerFailure,
+  turnFailure: customTurnFailure,
+  failureCause: customFailureCause,
+};
 
 /**
  * A custom agent without a flavor of its own. It keeps omp's rule: the rule needs the exact session
@@ -923,6 +1008,8 @@ const OMP_ACP_FLAVOR: AcpFlavor = { sessionNotFound: ompSessionNotFound, emptyAn
 const CUSTOM_ACP_FLAVOR: AcpFlavor = {
   sessionNotFound: ompSessionNotFound,
   emptyAnswerFailure: customEmptyAnswerFailure,
+  turnFailure: customTurnFailure,
+  failureCause: customFailureCause,
 };
 
 const CUSTOM_AGENT_FLAVORS: Readonly<Partial<Record<string, AcpFlavor>>> = {
@@ -942,8 +1029,9 @@ const CUSTOM_AGENT_FLAVORS: Readonly<Partial<Record<string, AcpFlavor>>> = {
     mcpServerLimit: HERMES_MCP_SERVER_LIMIT,
     setsConfigOnlyOnChange: true,
     resendsAnswer: true,
-    turnFailure: hermesTurnFailure,
-    failureCause: hermesFailureCause,
+    turnFailure: (error, detail, _redact, _log, _model, _endpoint, _savedKey, _providerKeyStored, label) =>
+      customRefusal(error, hermesTurnFailure(error, detail), label),
+    failureCause: (error, answer) => customFailureCause(error) ?? hermesFailureCause(error, answer),
     failureReport: HERMES_FAILURE_SUMMARY,
     catalogAsMcpTools: true,
   },

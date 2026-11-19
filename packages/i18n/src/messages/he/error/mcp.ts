@@ -7,6 +7,7 @@ export const messages = {
   "error.mcp.redirectRefused": "ההתחברות נדחתה. יש לחזור אל MyBot ולנסות שוב.",
   "error.mcp.redirectNoSignIn": "אין התחברות שממתינה לזה. ייתכן שהיא הסתיימה.",
   "error.mcp.redirectSignedIn": "MyBot מחובר. אפשר לסגור את החלון הזה.",
+  "error.mcp.redirectNotSaved": "ההתחברות לא הסתיימה. חזרו ל-MyBot כדי לראות למה.",
   "error.mcp.signInFileUnreadable": "לא ניתן לקרוא את קובץ ההתחברות של MCP.",
   "error.mcp.signInFileTooLarge": "קובץ ההתחברות של MCP גדול מדי.",
   "error.mcp.unsupported": "שרתי MCP אינם נתמכים בשרת הזה.",
@@ -16,6 +17,7 @@ export const messages = {
   "error.mcp.signInAppUnsupported": "השרת הזה אינו תומך באפליקציות התחברות. יש לעדכן את MyBot במארח.",
   "error.mcp.redirectRelayed": "MyBot שלח את ההתחברות לשרת. אפשר לסגור את החלון הזה.",
   "error.mcp.relayEnded": "ההתחברות הזו הסתיימה. יש להתחיל אותה מחדש.",
+  "error.mcp.signInLinkNotReady": "דף ההתחברות עוד לא נפתח. אפשר לנסות שוב בעוד רגע.",
   "error.mcp.relayNoState": "דף ההתחברות של השרת אינו מגן על כתובת החזרה שלו, ולכן MyBot אינו פותח אותו במחשב הזה.",
   "error.mcp.relayAddressInvalid": "זו אינה הכתובת שבסוף ההתחברות הזו. יש להעתיק את הכתובת המלאה מהדפדפן.",
 } as const satisfies PartialTranslation<typeof source>;

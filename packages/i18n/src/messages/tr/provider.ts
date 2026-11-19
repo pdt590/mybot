@@ -269,6 +269,8 @@ export const messages = {
   "provider.settings.versionDownloaded": "{version} · MyBot tarafından indirildi",
   "provider.settings.otherVersionInstalledByUser": "Kullanılmıyor: {version} · senin yüklediğin",
   "provider.settings.otherVersionDownloaded": "Kullanılmıyor: {version} · MyBot tarafından indirildi",
+  "provider.settings.installedVersionIncomplete":
+    "Bazı modeller bu sürümde olmayan bir bileşene ihtiyaç duyar. Bunları kullanmak için MyBot sürümünü indir.",
   "provider.settings.useInstalledVersion": "Yüklü sürümü kullan",
   "provider.settings.useDownloadedVersion": "MyBot sürümünü kullan",
   "provider.settings.cache": "Önbellek",

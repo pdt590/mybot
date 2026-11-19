@@ -3,7 +3,8 @@
 // temporary profile. Each client sends what its release sent and reads the reply with the frozen
 // decoder of its protocol, so a change of a released wire meaning fails here:
 // - v1: compatibility, the protocol gate, join, login, `bot`/`botId` wire keys and the event socket.
-// - v2: the WebRTC frames of a real `TeamWebRtcHostPeer`, from the signed handshake to an RPC.
+// - v2: the WebRTC frames of a real `TeamWebRtcHostPeer`, from the signed handshake to an RPC. An RPC
+//   with no protocol marker (a release before v0.7.0) gets `client_update_required`.
 // - v3: agent duplication, its idempotent retry, and the refused request shapes.
 // - v7 and v8: a v7 client on this host gets no v8 field; the v8 decoder reads the released v4-v7
 //   fixtures; the v7 decoder still refuses a provider that it does not know.
@@ -25,6 +26,7 @@
 //   speak, so a host that raises its minimum still connects, and the side that is too old is named.
 // Run: `bun scripts/team-api-legacy-clients-e2e.ts`.
 // Writes .openbot-build/team-api-legacy-clients-e2e/report.json.
+
 import assert from "node:assert/strict";
 import { generateKeyPairSync, randomBytes, randomUUID, sign, verify } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -70,11 +72,13 @@ import {
   teamCapabilitiesForProtocol,
   teamProtocolV2AuthenticationTranscript,
 } from "@openbot/contracts/team-protocol";
+import { AGENT_BACKGROUND_WORK_CAPABILITY } from "@openbot/contracts/team-protocol/agent-background-work-v1";
 import { AGENT_NOTIFICATION_LEVELS_CAPABILITY } from "@openbot/contracts/team-protocol/agent-notification-levels-v1";
 import { teamProtocolCapabilityLimit } from "@openbot/contracts/team-protocol/capability-limits";
 import {
   BROWSER_VAULT_SKIP_CAPABILITY,
   TEAM_USAGE_TERTIARY_CAPABILITY,
+  TEAM_WEB_CLIENT_PROTOCOL,
   TEAM_WEBRTC_CLIENT_PROTOCOL,
   teamWebRtcClientProtocol,
 } from "@openbot/contracts/team-protocol/current";
@@ -92,6 +96,7 @@ import {
   TEAM_PROTOCOL_V9,
   TEAM_PROTOCOL_V9_CAPABILITY_LIMIT,
 } from "@openbot/contracts/team-protocol/v9";
+import { TEAM_PROTOCOL_V10 } from "@openbot/contracts/team-protocol/v10";
 import { sourceText } from "@openbot/i18n/source";
 import { plugin } from "bun";
 import { Effect } from "effect";
@@ -246,6 +251,7 @@ const teamBrowser: TeamApiBrowser = {
   stopTeach: () => [],
   releaseUserControl: () => {},
   releaseUserControlHeldBy: () => {},
+  releaseUserControlRefused: () => {},
   close: unused,
   capturePreview: unused,
   setVisible: unused,
@@ -791,10 +797,15 @@ try {
   // agent that the member cannot see.
   const hostAgents = agents;
   const runtimeSnapshot = hostAgents.getRuntimeSnapshot.bind(hostAgents);
+  const sourceBackgroundWork = { agentId: source.id, taskId: null, since: 1_700_000_000_000 };
   hostAgents.getRuntimeSnapshot = () => ({
     ...runtimeSnapshot(),
     contextStates: [sourceContext, contextState(duplicate.copyId, "thread-copy")],
     threadContextStates: [sourceThreadContext, contextState(duplicate.copyId, "thread-copy-side")],
+    backgroundWork: [
+      sourceBackgroundWork,
+      { agentId: duplicate.copyId, taskId: "thread-copy", since: 1_700_000_000_000 },
+    ],
   });
 
   /** The first runtime snapshot on the event socket of a current client that declares `capabilities`. */
@@ -884,6 +895,51 @@ try {
     assert.ok(without.type === "event" && !JSON.stringify(without.payload).includes("contextStates"));
     const snapshot = record(wire.snapshot, "snapshot");
     const malformed = { ...wire, snapshot: { ...snapshot, contextStates: [{ botId: source.id, threadId: "t" }] } };
+    assert.equal(decodeTeamProtocolV8BaseCurrentEvent(malformed).kind, "invalid");
+    return { relayed: relayed.status, malformed: "invalid" };
+  });
+
+  await step(
+    "agent-background-work-v1: a v10 client gets the background work of each agent that it can see",
+    async () => {
+      const capabilities = teamCapabilitiesForProtocol(TEAM_PROTOCOL_V10);
+      assert.ok(capabilities.includes(AGENT_BACKGROUND_WORK_CAPABILITY), "A v10 client does not ask for it.");
+      assert.ok(
+        !teamCapabilitiesForProtocol(TEAM_PROTOCOL_V9).includes(AGENT_BACKGROUND_WORK_CAPABILITY),
+        "A protocol 9 client asks for agent-background-work-v1.",
+      );
+      await setCopyAccess("none");
+      try {
+        const wire = await currentRuntimeSnapshot(capabilities);
+        const decoded = decodeTeamProtocolV8BaseCurrentEvent(wire);
+        assert.ok(
+          decoded.kind === "known" && decoded.event.type === "runtime-snapshot",
+          `The v10 snapshot did not decode: ${JSON.stringify(wire)}.`,
+        );
+        assert.deepEqual(decoded.event.snapshot.backgroundWork, [sourceBackgroundWork], "Not the visible agent only.");
+        const without = await currentRuntimeSnapshot(
+          capabilities.filter((capability) => capability !== AGENT_BACKGROUND_WORK_CAPABILITY),
+        );
+        assert.ok(
+          !Object.hasOwn(record(without.snapshot, "snapshot"), "backgroundWork"),
+          "A client without it got it.",
+        );
+        return { backgroundWork: decoded.event.snapshot.backgroundWork?.length, without: "released" };
+      } finally {
+        await setCopyAccess("manage");
+      }
+    },
+  );
+
+  await step("agent-background-work-v1: a WebRTC event follows the capability; a bad value fails closed", async () => {
+    const wire = await currentRuntimeSnapshot(teamCapabilitiesForProtocol(TEAM_PROTOCOL_V10));
+    const relayed = decodeTeamProtocolV8CurrentEvent(createTeamProtocolV8Event(1, wire, { backgroundWork: true }));
+    assert.ok(relayed.status === "known" && relayed.event.type === "runtime-snapshot");
+    assert.ok(relayed.event.snapshot.backgroundWork?.some((work) => work.agentId === source.id));
+    const without = createTeamProtocolV8Event(2, wire, {});
+    assert.ok(without.type === "event" && !JSON.stringify(without.payload).includes("backgroundWork"));
+    const snapshot = record(wire.snapshot, "snapshot");
+    const malformed = { ...wire, snapshot: { ...snapshot, backgroundWork: [{ botId: source.id, since: "now" }] } };
     assert.equal(decodeTeamProtocolV8BaseCurrentEvent(malformed).kind, "invalid");
     return { relayed: relayed.status, malformed: "invalid" };
   });
@@ -1376,41 +1432,80 @@ try {
     ({ sessionId }) => ({ sessionId, confirmed: true }),
   );
 
-  await step("v2 RPC: `http.request` frames reach the host with the released body vocabulary", async () => {
-    const capabilities = record(fixture("v2/client-scope.json"), "fixture").capabilities;
-    assert.ok(Array.isArray(capabilities));
-    const call = async (method: "GET" | "POST", path: string, body: unknown = null) => {
-      const requestId = randomUUID();
-      const from = v2.bridge.sent.length;
-      v2.bridge.emit(
-        "data",
-        "peer-v2",
-        "rpc",
-        encodeTeamProtocolV2Frame(
-          createTeamProtocolV2Request(requestId, "http.request", { method, path, body, capabilities }),
-        ),
+  await step(
+    "v2 RPC: an unmarked `http.request` gets update required; a marked one keeps the released vocabulary",
+    async () => {
+      // A capability list with no protocol marker comes from a release before v0.7.0 (2026-09-09), which is
+      // outside the support window. The released v2 fixture sends such a list, and the v0.6 clients sent no list.
+      const unmarked = record(fixture("v2/client-scope.json"), "fixture").capabilities;
+      assert.ok(Array.isArray(unmarked));
+      // The earliest marked list: protocol 4, the first protocol of the support window.
+      const marked = [...teamCapabilitiesForProtocol(4)];
+      const call = async (
+        method: "GET" | "POST",
+        path: string,
+        capabilities: readonly unknown[] | undefined,
+        body: unknown = null,
+      ) => {
+        const requestId = randomUUID();
+        const from = v2.bridge.sent.length;
+        v2.bridge.emit(
+          "data",
+          "peer-v2",
+          "rpc",
+          encodeTeamProtocolV2Frame(
+            createTeamProtocolV2Request(requestId, "http.request", {
+              method,
+              path,
+              body,
+              ...(capabilities ? { capabilities } : {}),
+            }),
+          ),
+        );
+        return v2.bridge.rpcFrom(from, rpcResponse(requestId));
+      };
+      const refused = async (method: "GET" | "POST", path: string, capabilities: readonly unknown[] | undefined) => {
+        const frame = await call(method, path, capabilities, method === "POST" ? { operationId: randomUUID() } : null);
+        const error = "error" in frame ? frame.error : undefined;
+        assert.deepEqual(
+          error && { code: error.code, status: error.status, retryable: error.retryable, message: error.message },
+          {
+            code: "client_update_required",
+            status: 426,
+            retryable: false,
+            message: sourceText("error.team.clientUpdateRequired"),
+          },
+          `An unmarked ${method} ${path} was not refused: ${JSON.stringify(frame)}.`,
+        );
+      };
+      await refused("GET", "/v1/agents", unmarked);
+      await refused("GET", "/v1/agents", undefined);
+      await refused("GET", `/v1/agents/${source.id}/queue`, unmarked);
+      await refused("POST", `/v1/agents/${duplicate.copyId}/duplicate`, unmarked);
+      await refused("POST", `/v1/agents/${duplicate.copyId}/duplicate`, []);
+      const result = async (method: "GET" | "POST", path: string, body: unknown = null) => {
+        const frame = await call(method, path, marked, body);
+        assert.ok("result" in frame, `The marked ${method} ${path} frame failed: ${JSON.stringify(frame)}.`);
+        return record(frame.result, "RPC result");
+      };
+      const listed = await result("GET", "/v1/agents");
+      assert.equal(listed.status, 200);
+      const agents = decodeTeamProtocolV1HttpResponse("GET", "/v1/agents", 200, listed.body);
+      assert.ok(Array.isArray(agents) && agents.some((value) => record(value, "agent").id === source.id));
+      const queue = await result("GET", `/v1/agents/${source.id}/queue`);
+      assert.equal(record(queue.body, "queue").botId, source.id, "A protocol 4 queue lost its `botId` key.");
+      const duplicated = await result("POST", `/v1/agents/${duplicate.copyId}/duplicate`, {
+        operationId: randomUUID(),
+      });
+      assert.equal(duplicated.status, 201);
+      const decoded = record(
+        decodeTeamProtocolV3HttpResponse("POST", `/v1/agents/${duplicate.copyId}/duplicate`, 201, duplicated.body),
+        "duplicate",
       );
-      const frame = await v2.bridge.rpcFrom(from, rpcResponse(requestId));
-      assert.ok("result" in frame, `The ${method} ${path} frame failed: ${JSON.stringify(frame)}.`);
-      return record(frame.result, "RPC result");
-    };
-    const listed = await call("GET", "/v1/agents");
-    assert.equal(listed.status, 200);
-    const agentsOverV2 = decodeTeamProtocolV1HttpResponse("GET", "/v1/agents", 200, listed.body);
-    assert.ok(Array.isArray(agentsOverV2) && agentsOverV2.some((value) => record(value, "agent").id === source.id));
-    const queue = await call("GET", `/v1/agents/${source.id}/queue`);
-    assert.equal(record(queue.body, "queue").botId, source.id, "A v2 queue lost its `botId` key.");
-    const duplicateOverV2 = await call("POST", `/v1/agents/${duplicate.copyId}/duplicate`, {
-      operationId: randomUUID(),
-    });
-    assert.equal(duplicateOverV2.status, 201);
-    const decoded = record(
-      decodeTeamProtocolV3HttpResponse("POST", `/v1/agents/${duplicate.copyId}/duplicate`, 201, duplicateOverV2.body),
-      "duplicate",
-    );
-    assert.notEqual(record(decoded.bot, "bot").id, duplicate.copyId);
-    return { agents: agentsOverV2.length, queueKeys: Object.keys(record(queue.body, "queue")).sort() };
-  });
+      assert.notEqual(record(decoded.bot, "bot").id, duplicate.copyId);
+      return { refused: 5, agents: agents.length, queueKeys: Object.keys(record(queue.body, "queue")).sort() };
+    },
+  );
 
   await step("v8 RPC: a browser tab opened over WebRTC keeps its owner agent", async () => {
     // What a current desktop client sends when the user opens a tab in an agent's browser panel.
@@ -1496,7 +1591,8 @@ try {
     };
     // The bootstrap list of a protocol 9 client has the marker, so its first read is complete.
     const first = decodeTeamProtocolSupportV9(await compatibility(TEAM_BOOTSTRAP_CAPABILITIES));
-    assert.equal(first.protocol.maximum, TEAM_PROTOCOL_V9);
+    // The host speaks protocol 10 too. A protocol 9 client reads the maximum and stays on 9.
+    assert.equal(first.protocol.maximum, TEAM_PROTOCOL_V10);
     assert.ok(first.capabilities.includes(TEAM_LONG_CAPABILITY_LISTS_CAPABILITY), "The protocol 9 list has no marker.");
     // A protocol 9 request may carry more than 128 capabilities.
     const full = decodeTeamProtocolSupportV9(await compatibility(teamCapabilitiesForProtocol(TEAM_PROTOCOL_V9)));
@@ -1532,9 +1628,14 @@ try {
     const frame = await v2.bridge.rpcFrom(from, rpcResponse(requestId));
     assert.ok("result" in frame, `The compatibility frame failed: ${JSON.stringify(frame)}.`);
     const host = decodeTeamProtocolSupportV9(record(frame.result, "RPC result").body).protocol;
-    // This host is in the support window and advertises 1-9: it works as before, on protocol 9.
-    assert.deepEqual(host, { minimum: TEAM_PROTOCOL_V1, maximum: TEAM_PROTOCOL_V9 });
+    // This host advertises 1-10. A client of protocol 9, such as mobile, works as before, on protocol 9.
+    assert.deepEqual(host, { minimum: TEAM_PROTOCOL_V1, maximum: TEAM_PROTOCOL_V10 });
     assert.deepEqual(teamWebRtcClientProtocol(host), { protocol: TEAM_PROTOCOL_V9, update: null });
+    // The web client speaks protocol 10 with it.
+    assert.deepEqual(teamWebRtcClientProtocol(host, TEAM_WEB_CLIENT_PROTOCOL), {
+      protocol: TEAM_PROTOCOL_V10,
+      update: null,
+    });
     // A host that raised its minimum to 9 still serves a client that speaks 9.
     const raised = { minimum: TEAM_PROTOCOL_V9, maximum: TEAM_PROTOCOL_V9 };
     assert.deepEqual(teamWebRtcClientProtocol(raised), { protocol: TEAM_PROTOCOL_V9, update: null });

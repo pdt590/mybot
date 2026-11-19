@@ -52,6 +52,11 @@ export const messages = defineMessages("error.team", {
   "error.team.tooManySignInAttempts": "Too many sign-in attempts. Try again later.",
   "error.team.clientUpdateRequired": "Update this MyBot client before connecting to this host.",
   "error.team.hostUpdateRequired": "Update MyBot on the host before connecting.",
+  "error.team.serverSafeMode": "This server is in safe mode because MyBot on it does not start.",
+  "error.team.serverSafeModeNewerDatabase":
+    "MyBot {version} on this server cannot open its data, because a newer MyBot version saved it. A newer MyBot release on the server fixes this.",
+  "error.team.serverSafeModeStartFailed":
+    "MyBot {version} on this server stopped after it failed to start many times. A newer MyBot release on the server fixes this.",
   "error.team.sidebarLayoutUnavailable": "Sidebar layout is unavailable.",
   "error.team.providersUnsupported": "Provider settings are not supported by this connection.",
   "error.team.providerNotManaged": "MyBot does not manage this provider's CLI.",

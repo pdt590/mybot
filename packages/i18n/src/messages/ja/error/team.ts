@@ -53,6 +53,11 @@ export const messages = {
   "error.team.tooManySignInAttempts": "サインインの試行回数が多すぎます。しばらくしてから再試行してください。",
   "error.team.clientUpdateRequired": "このホストに接続する前に、この MyBot クライアントを更新してください。",
   "error.team.hostUpdateRequired": "接続する前に、ホストの MyBot を更新してください。",
+  "error.team.serverSafeMode": "このサーバーでは MyBot が起動しないため、セーフモードになっています。",
+  "error.team.serverSafeModeNewerDatabase":
+    "このサーバーの MyBot {version} はデータを開けません。より新しいバージョンの MyBot がデータを保存したためです。サーバーに新しい MyBot リリースを入れると解決します。",
+  "error.team.serverSafeModeStartFailed":
+    "このサーバーの MyBot {version} は、起動に何度も失敗したため停止しました。サーバーに新しい MyBot リリースを入れると解決します。",
   "error.team.sidebarLayoutUnavailable": "サイドバーのレイアウトを利用できません。",
   "error.team.providersUnsupported": "この接続ではプロバイダーの設定を利用できません。",
   "error.team.providerNotManaged": "MyBot はこのプロバイダーの CLI を管理していません。",

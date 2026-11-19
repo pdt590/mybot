@@ -20,6 +20,10 @@ export const messages = {
   "computerUse.ready.description":
     "MyBot kann Apps auf diesem Computer sehen und bedienen. Dieses System fordert keine zusätzliche Berechtigung an.",
   "computerUse.openSettingsFailed.title": "Systemeinstellungen konnten nicht geöffnet werden",
+  "computerUse.restartRequired.title": "Neustart erforderlich",
+  "computerUse.restartRequired.description":
+    "macOS blockiert weiterhin Klicks und Eingaben. Wenn das nach einem Neustart wieder passiert, entferne MyBot aus „Bedienungshilfen“ und füge es erneut hinzu.",
+  "computerUse.restartRequired.action": "MyBot neu starten",
   "computerUse.compact.title": "Computersteuerung aktivieren",
   "computerUse.compact.description": "Erlaube MyBot, Apps auf diesem Computer zu sehen und zu bedienen.",
   "computerUse.granted": "Erteilt",

@@ -54,6 +54,11 @@ export const messages = {
   "error.team.tooManySignInAttempts": "Слишком много попыток входа. Повторите попытку позже.",
   "error.team.clientUpdateRequired": "Обновите этот клиент MyBot, прежде чем подключаться к этому хосту.",
   "error.team.hostUpdateRequired": "Обновите MyBot на хосте, прежде чем подключаться.",
+  "error.team.serverSafeMode": "Этот сервер находится в безопасном режиме, потому что MyBot на нём не запускается.",
+  "error.team.serverSafeModeNewerDatabase":
+    "MyBot {version} на этом сервере не может открыть свои данные, потому что их сохранила более новая версия MyBot. Более новый выпуск MyBot на сервере устранит проблему.",
+  "error.team.serverSafeModeStartFailed":
+    "MyBot {version} на этом сервере остановлен после многих неудачных запусков. Более новый выпуск MyBot на сервере устранит проблему.",
   "error.team.sidebarLayoutUnavailable": "Структура боковой панели недоступна.",
   "error.team.providersUnsupported": "Это подключение не поддерживает настройки провайдеров.",
   "error.team.providerNotManaged": "MyBot не управляет CLI этого провайдера.",

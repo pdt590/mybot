@@ -54,6 +54,11 @@ export const messages = {
   "error.team.tooManySignInAttempts": "Te veel inlogpogingen. Probeer het later opnieuw.",
   "error.team.clientUpdateRequired": "Werk deze MyBot-client bij voordat je verbinding maakt met deze host.",
   "error.team.hostUpdateRequired": "Werk MyBot bij op de host voordat je verbinding maakt.",
+  "error.team.serverSafeMode": "Deze server staat in de veilige modus, omdat MyBot er niet start.",
+  "error.team.serverSafeModeNewerDatabase":
+    "MyBot {version} op deze server kan de gegevens niet openen, omdat een nieuwere MyBot-versie ze heeft opgeslagen. Een nieuwere MyBot-release op de server lost dit op.",
+  "error.team.serverSafeModeStartFailed":
+    "MyBot {version} op deze server is gestopt nadat het starten vaak is mislukt. Een nieuwere MyBot-release op de server lost dit op.",
   "error.team.sidebarLayoutUnavailable": "De indeling van de zijbalk is niet beschikbaar.",
   "error.team.providersUnsupported": "Deze verbinding ondersteunt geen instellingen voor aanbieders.",
   "error.team.providerNotManaged": "MyBot beheert de CLI van deze aanbieder niet.",

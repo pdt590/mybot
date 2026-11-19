@@ -270,6 +270,8 @@ export const messages = {
   "provider.settings.versionDownloaded": "{version} · scaricata da MyBot",
   "provider.settings.otherVersionInstalledByUser": "Non in uso: {version} · installata da te",
   "provider.settings.otherVersionDownloaded": "Non in uso: {version} · scaricata da MyBot",
+  "provider.settings.installedVersionIncomplete":
+    "Alcuni modelli richiedono un componente che manca in questa versione. Scarica la versione di MyBot per usarli.",
   "provider.settings.useInstalledVersion": "Usa quella installata",
   "provider.settings.useDownloadedVersion": "Usa quella di MyBot",
   "provider.settings.cache": "Cache",

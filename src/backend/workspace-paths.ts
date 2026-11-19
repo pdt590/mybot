@@ -27,7 +27,16 @@ export interface ResolvedWorkspaceFile extends ResolvedSharedFile {
 /** A line or column reference that agents write after a path: `:12`, `:12:3`, `#L12`, `#L12-L20`, `#L12C3`. */
 const LOCATION_SUFFIX = /(?::\d+(?::\d+)?|#L\d+(?:C\d+)?(?:-L?\d+(?:C\d+)?)?)$/u;
 
-export function sharedPathFromInput(sharedRoot: string, inputPath: string): string {
+/**
+ * Codex writes `C:/Users/…` as `/C:/Users/…`, as a file URL spells it (#12104). No Windows path starts
+ * with a separator before a drive letter, so a Windows host reads it without that separator.
+ */
+function withoutSlashBeforeDrive(path: string): string {
+  return process.platform === "win32" && /^[/\\][A-Za-z]:[/\\]/u.test(path) ? path.slice(1) : path;
+}
+
+export function sharedPathFromInput(sharedRoot: string, written: string): string {
+  const inputPath = withoutSlashBeforeDrive(written);
   const normalized = inputPath.replaceAll("\\", "/");
   // MyBot: `~/MyBot` is the root now; the `OpenBot` spellings stay for paths in older messages.
   for (const prefix of ["~/MyBot/Shared/", "MyBot/Shared/", "~/OpenBot/Shared/", "OpenBot/Shared/", "Shared/"]) {
@@ -45,7 +54,7 @@ export function sharedPathFromInput(sharedRoot: string, inputPath: string): stri
  * resolves somewhere else.
  */
 export function workspacePathFromInput(workspaceRoot: string, agentId: string, inputPath: string): string {
-  const decoded = decodePath(inputPath.trim());
+  const decoded = withoutSlashBeforeDrive(decodePath(inputPath.trim()));
   const normalized = decoded.replaceAll("\\", "/");
   const legacyId = legacyAgentId(agentId);
   for (const prefix of [

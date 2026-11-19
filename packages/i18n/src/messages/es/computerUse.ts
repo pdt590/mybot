@@ -20,6 +20,10 @@ export const messages = {
   "computerUse.ready.description":
     "MyBot puede ver las aplicaciones de este equipo e interactuar con ellas. Este sistema no solicita permisos adicionales.",
   "computerUse.openSettingsFailed.title": "No se pudieron abrir los Ajustes del Sistema",
+  "computerUse.restartRequired.title": "Hay que reiniciar",
+  "computerUse.restartRequired.description":
+    "macOS sigue bloqueando los clics y la escritura. Si vuelve a pasar tras reiniciar, quita MyBot de Accesibilidad y añádelo de nuevo.",
+  "computerUse.restartRequired.action": "Reiniciar MyBot",
   "computerUse.compact.title": "Activar el uso del equipo",
   "computerUse.compact.description": "Permite que MyBot vea las aplicaciones de este equipo e interactúe con ellas.",
   "computerUse.granted": "Concedido",

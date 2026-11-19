@@ -16,6 +16,8 @@ export const messages = {
   "error.messaging.telegramUnsupported": "Este equipo no puede conectarse a Telegram.",
   "error.messaging.telegramRelayUnavailable":
     "MyBot no puede acceder a Telegram en este equipo. Inicia sesión, ponle un nombre a este equipo e inténtalo de nuevo.",
+  "error.messaging.telegramRelayUnreachable":
+    "MyBot no puede conectarse a su servicio desde este equipo. Comprueba la conexión a internet, la VPN, el proxy o el cortafuegos, y vuelve a intentarlo.",
   "error.messaging.telegramServiceUnavailable": "MyBot no puede conectar Telegram ahora. Inténtalo de nuevo más tarde.",
   "error.messaging.whatsappNotConnected": "Este número de WhatsApp no está conectado.",
   "error.messaging.whatsappUnsupported": "Este equipo no puede conectarse a WhatsApp.",

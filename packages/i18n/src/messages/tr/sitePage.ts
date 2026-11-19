@@ -89,6 +89,8 @@ export const messages = {
   "sitePage.pricing.consent.statement": "{policy}, {terms} kabul ettiğimi beyan ederim.",
   "sitePage.pricing.consent.policy": "Gizlilik politikasını",
   "sitePage.pricing.consent.terms": "koşulları ve cayma hakkını",
+  "sitePage.pricing.consent.earlyStart":
+    "Barındırma hizmetinin 14 günlük cayma süresi bitmeden başlamasını talep ediyorum. Hizmet tamamen ifa edilmeden sözleşmeden cayarsam, cayma anına kadar sağlanan hizmetlerin bedelini ödemem gerektiğini ve hizmet tamamen ifa edildikten sonra cayma hakkımı kaybedeceğimi kabul ediyorum.",
   "sitePage.marketplace.agents.title": "Ajanlar — MyBot Pazaryeri",
   "sitePage.marketplace.agents.description":
     "Başkalarının MyBot'ta yaptığı ajanlar. Birini becerileri ve rutinleriyle birlikte MyBot'a ekle.",

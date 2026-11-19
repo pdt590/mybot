@@ -55,6 +55,7 @@ export const messages = {
   "account.update.downloadLabel": "Update downloaden. Nieuwe update beschikbaar.",
   "account.update.available": "Nieuwe update beschikbaar",
   "account.update.ready": "Update klaar",
+  "account.update.notInstalled": "Installatie mislukt",
   "account.update.progress": "Downloadvoortgang van update",
   "account.login.connectingTitle": "Verbinden met MyBot",
   "account.login.unavailableTitle": "Dienst niet beschikbaar",

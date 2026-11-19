@@ -20,6 +20,10 @@ export const messages = {
   "computerUse.ready.description":
     "MyBot может видеть приложения на этом компьютере и работать с ними. Эта система не запрашивает дополнительных разрешений.",
   "computerUse.openSettingsFailed.title": "Не удалось открыть «Системные настройки»",
+  "computerUse.restartRequired.title": "Нужен перезапуск",
+  "computerUse.restartRequired.description":
+    "macOS по-прежнему блокирует нажатия и ввод текста. Если это повторится после перезапуска, удалите MyBot из «Универсального доступа» и добавьте его снова.",
+  "computerUse.restartRequired.action": "Перезапустить MyBot",
   "computerUse.compact.title": "Включить управление компьютером",
   "computerUse.compact.description": "Позвольте MyBot видеть приложения на этом компьютере и работать с ними.",
   "computerUse.granted": "Разрешено",

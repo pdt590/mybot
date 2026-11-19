@@ -20,6 +20,10 @@ export const messages = defineMessages("computerUse", {
   "computerUse.ready.description":
     "MyBot can see and interact with apps on this computer. This system asks for no extra permission.",
   "computerUse.openSettingsFailed.title": "Couldn’t open System Settings",
+  "computerUse.restartRequired.title": "Restart needed",
+  "computerUse.restartRequired.description":
+    "macOS still blocks clicks and typing. If this comes back after a restart, remove MyBot from Accessibility and add it again.",
+  "computerUse.restartRequired.action": "Restart MyBot",
   "computerUse.compact.title": "Enable Computer Use",
   "computerUse.compact.description": "Let MyBot see and interact with apps on this computer.",
   "computerUse.granted": "Granted",

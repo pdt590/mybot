@@ -55,6 +55,7 @@ export const messages = {
   "account.update.downloadLabel": "Scarica l'aggiornamento. Nuovo aggiornamento disponibile.",
   "account.update.available": "Nuovo aggiornamento disponibile",
   "account.update.ready": "Aggiornamento pronto",
+  "account.update.notInstalled": "Installazione fallita",
   "account.update.progress": "Avanzamento del download dell'aggiornamento",
   "account.login.connectingTitle": "Connessione a MyBot",
   "account.login.unavailableTitle": "Servizio non disponibile",

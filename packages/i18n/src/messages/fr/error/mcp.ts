@@ -8,6 +8,7 @@ export const messages = {
   "error.mcp.redirectRefused": "La connexion a été refusée. Revenez à MyBot, puis réessayez.",
   "error.mcp.redirectNoSignIn": "Aucune connexion n’attend cette réponse. Elle est peut-être terminée.",
   "error.mcp.redirectSignedIn": "MyBot est connecté. Vous pouvez fermer cette fenêtre.",
+  "error.mcp.redirectNotSaved": "La connexion n’a pas abouti. Revenez dans MyBot pour en voir la raison.",
   "error.mcp.signInFileUnreadable": "Impossible de lire le fichier de connexion MCP.",
   "error.mcp.signInFileTooLarge": "Le fichier de connexion MCP est trop volumineux.",
   "error.mcp.unsupported": "Ce serveur ne prend pas en charge les serveurs MCP.",
@@ -20,6 +21,7 @@ export const messages = {
     "Ce serveur ne prend pas en charge les apps de connexion. Mettez à jour MyBot sur l’hôte.",
   "error.mcp.redirectRelayed": "MyBot a envoyé la connexion au serveur. Vous pouvez fermer cette fenêtre.",
   "error.mcp.relayEnded": "Cette connexion est terminée. Relancez-la.",
+  "error.mcp.signInLinkNotReady": "La page de connexion n’est pas encore ouverte. Réessayez dans un instant.",
   "error.mcp.relayNoState":
     "La page de connexion du serveur ne protège pas son adresse de retour : MyBot ne l’ouvre donc pas sur cet ordinateur.",
   "error.mcp.relayAddressInvalid":
