@@ -467,7 +467,6 @@ export const messages = {
   "settings.profile.share.copyFailed": "Görüntü kopyalanamadı.",
   "settings.profile.share.createFailed": "Görüntü oluşturulamadı.",
   "settings.profile.share.fileName": "openbot-activity.png",
-  // The text in the image to share.
   "settings.profile.share.caption": "MyBot ile son altı ayım",
   "settings.profile.activity.title": "Bu bilgisayardaki etkinlik",
   "settings.profile.activity.activeDays": {
@@ -477,7 +476,6 @@ export const messages = {
   "settings.profile.activity.empty": "Henüz etkinlik yok",
   "settings.profile.activity.loading": "Etkinlik yükleniyor…",
   "settings.profile.activity.loadFailed": "Etkinliğiniz yüklenemedi.",
-  // {tokens} is a short number, such as 1.2M.
   "settings.profile.activity.heatmapLabel": {
     one: "Son bir yılda {count} etkin günde {tokens} token",
     other: "Son bir yılda {count} etkin günde {tokens} token",
@@ -558,7 +556,6 @@ export const messages = {
   "settings.updates.autoInstall.title": "Güncellemeleri otomatik yükle",
   "settings.updates.autoInstall.description":
     "Ajanlar boştayken MyBot yeniden başlar ve indirilen güncellemeyi yükler. Sunucularınızın üyelerinin bağlantısı kısa bir süre kesilir.",
-  // Ajan çalışmadığında MyBot'u yeniden başlatın veya indirilmiş bir güncellemeyi yükleyin.
   "settings.updates.idleRestart.title": "MyBot'u yeniden başlat",
   "settings.updates.idleRestart.relaunchDescription":
     "MyBot hiçbir ajan çalışmadığında yeniden başlatılır. Yeni rutin çalıştırmaları o zamana kadar bekler.",
@@ -600,6 +597,7 @@ export const messages = {
   "settings.hostedServers.state.planEnded": "Plan sona erdi",
   "settings.hostedServers.state.creating": "Oluşturuluyor",
   "settings.hostedServers.state.starting": "Başlatılıyor",
+  "settings.hostedServers.state.restoring": "Geri yükleniyor",
   "settings.hostedServers.state.running": "Çalışıyor",
   "settings.hostedServers.state.stopping": "Durduruluyor",
   "settings.hostedServers.state.stopped": "Durduruldu",
@@ -610,6 +608,8 @@ export const messages = {
   "settings.hostedServers.paymentDescription": "Kurulum, Stripe ödemeyi onayladığında başlar.",
   "settings.hostedServers.planEndedDescription":
     "Plan sona erdi, bu nedenle sunucu durduruldu. Verileri kalır. Başlatmak için planı yenileyin.",
+  "settings.hostedServers.planEndedKeptUntil":
+    "Plan sona erdi, bu nedenle sunucu durduruldu. Verileri {date} tarihine kadar kalır. Başlatmak için planı bu tarihten önce yenileyin.",
   "settings.hostedServers.pay": "Ödeme sayfasını aç",
   "settings.hostedServers.payLabel": "{name} için ödeme sayfasını aç",
   "settings.hostedServers.renew": "Planı yenile",
@@ -655,7 +655,6 @@ export const messages = {
   "settings.hostedServers.plan.standard.summary": "Günlük rutinleri olan küçük bir ekip için.",
   "settings.hostedServers.plan.pro.name": "Pro",
   "settings.hostedServers.plan.pro.summary": "Çok sayıda ajan ve yoğun tarayıcı çalışması için.",
-  // The Voice tab: dictation models and the dictation language.
   "settings.voice.dictation.section": "Dikte",
   "settings.voice.model.parakeet.description": "Hızlı. Konuşulan dili 25 Avrupa dili arasında kendisi bulur.",
   "settings.voice.model.parakeetUnified.description":
@@ -723,6 +722,13 @@ export const messages = {
   "settings.voice.speech.sample": "Merhaba. Yanıtlarınız böyle duyulacak.",
   "settings.voice.speech.listenFailed": "Örnek oynatılamadı.",
   "settings.voice.live.section": "Canlı ses",
+  "settings.voice.talk.section": "Sesli konuşma",
+  "settings.voice.talkKey.title": "Bas konuş tuşu",
+  "settings.voice.talkKey.description": "Sesli konuşmada konuşmak için bu tuşları basılı tutun.",
+  "settings.voice.talkKey.change": "Bas konuş tuşunu değiştir",
+  "settings.voice.talkKey.recording": "Tuşlara basın",
+  "settings.voice.talkKey.refused": "Bir tuş daha ekleyin",
+  "settings.voice.talkKey.reset": "Sıfırla",
   "settings.voice.live.signIn": "Canlı sesi kullanmak için ChatGPT hesabınızla Codex'e giriş yapın.",
   "settings.transfer.title": "Bu sunucuyu başka bir bilgisayara taşıyın",
   "settings.transfer.lede": "Ajanlarınız, becerileri, rutinleri, bellekleri ve dosyaları tek bir dosyada toplanır.",

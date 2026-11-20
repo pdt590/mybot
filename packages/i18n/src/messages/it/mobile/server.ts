@@ -111,8 +111,10 @@ export const messages = {
   "mobile.server.hosted.soldOut": "Esaurito",
   "mobile.server.hosted.serverPlan": "{plan} · {interval}",
   "mobile.server.hosted.serverPlanEnds": "{plan} · {interval} · Termina il {date}",
+  "mobile.server.hosted.serverDataKept": "{plan} · Dati conservati fino al {date}",
   "mobile.server.hosted.state.payment": "In attesa di pagamento",
   "mobile.server.hosted.state.setup": "Configurazione",
+  "mobile.server.hosted.state.restoring": "Ripristino dei dati",
   "mobile.server.hosted.state.starting": "Avvio",
   "mobile.server.hosted.state.running": "In esecuzione",
   "mobile.server.hosted.state.stopped": "Arrestato",
@@ -1476,7 +1478,6 @@ export const messages = {
   "mobile.server.audit.roleMemberAdded": "Aggiunto {member} a {role}",
   "mobile.server.audit.roleMemberRemoved": "Rimosso {member} da {role}",
   "mobile.server.audit.agentLevel": "{agent} per {role}: {change}",
-  // Server settings › Import agents: Grok Bot and Hermes exports (`agent-import-v1`).
   "mobile.server.settings.importAgents": "Importa agenti",
   "mobile.server.route.import": "Importa agenti",
   "mobile.server.import.unsupported": "Aggiorna MyBot su questo server per importare qui gli agenti.",
@@ -1549,7 +1550,6 @@ export const messages = {
   "mobile.server.import.channel": "Canale",
   "mobile.server.import.notImportedTitle": "Non importati",
   "mobile.server.import.resultWarnings": "Alcuni elementi non sono stati spostati",
-  // Server settings › Transfer: the whole server to or from a transfer file (`instance-transfer-v1`).
   "mobile.server.settings.transfer": "Trasferimento",
   "mobile.server.route.transfer": "Trasferimento",
   "mobile.server.route.transferExport": "Esporta",

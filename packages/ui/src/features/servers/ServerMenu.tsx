@@ -29,7 +29,6 @@ import {
   serverStatusLabels,
 } from "./ServerRail";
 
-/** Where the desktop app lists servers: the rail beside the sidebar, or the menu on the server name. */
 export type ServerView = "rail" | "menu";
 
 // MyBot: hides "Add remote server", "New server on this computer" and "New server on another computer".
@@ -42,7 +41,6 @@ const SERVER_VIEW_LABELS = {
   menu: "server.menu.layoutMenu",
 } as const satisfies Record<ServerView, AppTextKey>;
 
-// The rail is a strip at the left edge. The menu opens from the server name, as a switcher does.
 const SERVER_VIEW_ICONS = { rail: PanelLeft, menu: ChevronsUpDown } as const satisfies Record<
   ServerView,
   typeof PanelLeft
@@ -55,20 +53,11 @@ export interface ServerMenuProps extends ServerActionCallbacks {
   onViewChange: (view: ServerView) => void;
   onSelect: (serverId: string) => void;
   onAdd?: () => void;
-  /** True when `onAdd` opens the hosted server plans, where the user can also join with an invite. */
   addCreatesServer?: boolean | undefined;
-  /** Opens the dialog that creates a server on this computer. Without it, the menu does not show the item. */
   onCreateLocal?: (() => void) | undefined;
-  /** Opens the dialog with the command that installs a server on another computer. Without it, the menu does not show the item. */
   onInstallServer?: (() => void) | undefined;
-  /** The server on this computer while the user hides it. Without it, the menu does not show the item. */
   hiddenLocal?: HiddenLocalServer | undefined;
-  /** The compact sidebar hides the server name. The rail stays visible then. */
   compact?: boolean;
-  /**
-   * The form for the page rail: the trigger is the logo of the open server, with the name as a
-   * tooltip, and the menu opens beside it. The value must not change while the menu is mounted.
-   */
   rail?: boolean;
 }
 
@@ -86,20 +75,12 @@ function CheckCircle(props: { checked: boolean }) {
   );
 }
 
-// The app mounts a new sidebar title when the active server changes. The last shown server lets
-// the new title animate from the old name and logo.
 let lastShown: { id: string | undefined; name: string } | undefined;
 
-/**
- * The server name on the sidebar title, or the server logo in the page rail. Its menu sets the server view. In the menu view, it also
- * lists the servers and the actions of the active server. A click or Enter on a server
- * row selects that server. Hover or the arrow key on a row opens all actions of that server.
- */
 export function ServerMenu(props: ServerMenuProps) {
   const { t } = useText();
   const [menuOpen, setMenuOpen] = createSignal(false);
   const rail = untrack(() => props.rail === true);
-  // The context menu of the server name opens from this hidden anchor.
   let anchor: HTMLElement | undefined;
   let trigger: HTMLElement | undefined;
   const activeServer = () => props.servers.find((server) => server.active);
@@ -108,7 +89,6 @@ export function ServerMenu(props: ServerMenuProps) {
     const server = activeServer();
     return server ? serverHostedSleep(server) : null;
   };
-  /** The name, or why the server does not answer while it sleeps or wakes. */
   const triggerTitle = () => {
     const sleep = activeSleep();
     if (sleep === "sleeping") return t("server.sleep.tooltipSleeping", { name: props.serverName });
@@ -133,8 +113,6 @@ export function ServerMenu(props: ServerMenuProps) {
     if (!server.active) props.onSelect(server.id);
   }
 
-  // A row is a submenu trigger, and Kobalte opens the submenu on Enter and Space. This listener
-  // runs before the delegated handlers, so these keys select the server as a click does.
   function selectOnKey(row: HTMLElement, server: () => ServerSummary): void {
     row.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
@@ -173,7 +151,6 @@ export function ServerMenu(props: ServerMenuProps) {
         else openActions(bounds.left, bounds.bottom);
       }}
     >
-      {/* Keyed by server, so the logo of a newly selected server springs in. */}
       <For each={activeServers()} keyed={(server) => server.id}>
         {(server) => {
           const id = untrack(() => server().id);
@@ -248,7 +225,6 @@ export function ServerMenu(props: ServerMenuProps) {
                 </Show>
               }
             >
-              {/* A heading only: each row names its server. A menu cannot hold a fieldset. */}
               <div class="ui-menu-label" aria-hidden="true">
                 {t("server.rail.label")}
               </div>
@@ -348,8 +324,6 @@ export function ServerMenu(props: ServerMenuProps) {
                 {(server) => (
                   <>
                     <DropdownMenu.Separator />
-                    {/* Mute and notifications are in the submenu of each server row. The page rail opens
-                        Usage and Routines of the active server. */}
                     <ServerActionItems
                       menu={DropdownMenu}
                       server={server()}
@@ -409,7 +383,6 @@ export function ServerMenu(props: ServerMenuProps) {
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
-      {/* A sibling, not a parent: inside a menu root, Kobalte makes the dropdown a submenu without a focus trap. */}
       <ContextMenu.Root modal={false}>
         <ContextMenu.Trigger
           hidden

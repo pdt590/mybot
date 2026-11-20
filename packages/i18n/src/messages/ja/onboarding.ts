@@ -88,6 +88,16 @@ export const messages = {
   "onboarding.choice.subscription": "自分の AI サブスクリプションを使う",
   "onboarding.choice.subscriptionDetail": "ChatGPT、Claude、Grok",
   "onboarding.choice.startFreeInstead": "代わりに無料のモデルを使う",
+  "onboarding.existing.title": "おかえりなさい。",
+  "onboarding.existing.description":
+    "このアカウントはすでに MyBot を使っています。サーバーを開いてここで続けましょう。",
+  "onboarding.existing.open": "{name} を開く",
+  "onboarding.existing.openDetail": "エージェントとチャットをここで開きます。",
+  "onboarding.existing.offlineDetail": "現在オフラインです。電源が入ると開きます。",
+  "onboarding.existing.startNew": "このコンピューターで新しく始める",
+  "onboarding.existing.startNewDetail":
+    "ここで新しいチームを作ります。サーバーのエージェントとチャットはそのまま残ります。",
+  "onboarding.existing.openFailed": "MyBot は {name} を開けませんでした。",
   "onboarding.consent.notice": "続行すると、{terms}に同意し、{privacy}を確認したものとみなされます。",
   "onboarding.consent.analyticsTitle": "MyBot の改善に協力する",
   "onboarding.consent.analyticsDetail": "使用状況をアカウントと共有します。チャットやファイルは送信しません。",

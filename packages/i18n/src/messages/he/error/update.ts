@@ -9,6 +9,7 @@ export const messages = {
   "error.update.installFailed": "לא ניתן להתקין את העדכון. יש לצאת מ-MyBot, לפתוח אותו מחדש ולנסות שוב.",
   "error.update.notInstalled": "ההפעלה מחדש האחרונה לא התקינה את העדכון. יש להפעיל מחדש כדי לנסות שוב.",
   "error.update.downloadFailed": "לא ניתן להוריד את העדכון. יש לנסות שוב.",
+  "error.update.signatureNotConfirmed": "MyBot לא הצליח לאמת את העדכון. יש לנסות שוב.",
   "error.update.checkFailed": "לא ניתן לבדוק אם יש עדכונים. יש לנסות שוב.",
   "error.update.checkStalled": "בדיקת העדכונים הפסיקה להגיב. יש לנסות שוב.",
   "error.update.checkOffline": "לא ניתן להתחבר לשירות העדכונים. יש לבדוק את חיבור האינטרנט ולנסות שוב.",

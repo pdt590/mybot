@@ -1,9 +1,8 @@
 import { defineMessages } from "../../../message";
 
 export const messages = defineMessages("error.import", {
-  // Agent import errors and warnings.
   "error.import.manifestNotJson": "{manifest} is not valid JSON.",
-  "error.import.notAgentExport": "{manifest} is not an MyBot agent export.",
+  "error.import.notAgentExport": "{manifest} is not a MyBot agent export.",
   "error.import.newerExportSkill": "This export was made by a newer export skill. Update MyBot and try again.",
   "error.import.noAgents": "The export contains no agents.",
   "error.import.tooManyAgents": "The export contains more than {limit} agents.",
@@ -52,7 +51,6 @@ export const messages = defineMessages("error.import", {
     '{name}: the server already has the skill "{skill}", so the agent uses that skill. Ask an admin to update it.',
   "error.import.skillRenamed":
     '{name}: the name of the skill "{skill}" is too similar to the name of another skill, so it is saved as "{renamed}".',
-  // Hermes Agent import from a folder on this computer.
   "error.import.hermesNoProfiles":
     "This folder has no Hermes profiles. Choose the Hermes folder, which holds config.yaml or SOUL.md.",
   "error.import.hermesClosed": "The Hermes profiles are no longer open. Read them again.",
@@ -64,10 +62,9 @@ export const messages = defineMessages("error.import", {
     "It has code that it did not have when the profiles were read. Read them again to allow it.",
   "error.import.hermesLinkNotSaved":
     "{name}: MyBot could not save which agent came from this profile, so the next import adds it as a new agent.",
-  // Instance transfer between two MyBot computers.
   "error.import.transferRemoteTooLarge":
     "A transfer file for a joined server must be under 100 MB. Turn off workspace files, or export fewer agents.",
-  "error.import.transferNotFile": "This file is not an MyBot transfer file.",
+  "error.import.transferNotFile": "This file is not a MyBot transfer file.",
   "error.import.transferNewer": "A newer version of MyBot made this file. Update MyBot and try again.",
   "error.import.transferEmpty": "The file contains no agents and no settings.",
   "error.import.transferTooLarge":
@@ -130,7 +127,6 @@ export const messages = defineMessages("error.import", {
     "{name}: you always allowed this agent on the other computer. Here it asks first until you allow it again.",
   "error.import.transferFolders":
     "{name}: it used {number} folders outside its workspace. Add them again in its settings, in Folders.",
-  // A transfer file that goes to or from a joined server in parts.
   "error.import.transferPartsClosed": "The transfer with the server stopped. Try again.",
   "error.import.transferPartInvalid": "Part of the transfer file did not arrive correctly. Try again.",
   "error.import.transferStepFailed": "This server did not save it.",

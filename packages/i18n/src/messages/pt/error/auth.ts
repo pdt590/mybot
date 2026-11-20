@@ -4,6 +4,7 @@ import type { messages as source } from "../../en/error/auth";
 export const messages = {
   "error.auth.serviceUnavailable":
     "O MyBot não conseguiu acessar o serviço de contas. Verifique se a API está em execução e tente novamente.",
+  "error.auth.sessionTimeout": "O MyBot não respondeu a tempo. Verifique sua conexão com a internet e tente novamente.",
   "error.auth.networkBlocked":
     "Um firewall ou proxy desta rede impediu o MyBot de acessar {host}. Peça ao administrador da rede para permitir {host} e tente novamente.",
   "error.auth.signInFirst": "Entre no MyBot primeiro.",

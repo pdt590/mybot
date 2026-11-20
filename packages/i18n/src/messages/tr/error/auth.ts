@@ -2,9 +2,10 @@ import type { PartialTranslation } from "../../../message";
 import type { messages as source } from "../../en/error/auth";
 
 export const messages = {
-  // MyBot hesap servisinden gelen hatalar.
   "error.auth.serviceUnavailable":
     "MyBot hesap hizmetine ulaşamadı. API'nin çalıştığını kontrol edin, ardından tekrar deneyin.",
+  "error.auth.sessionTimeout":
+    "MyBot zamanında yanıt vermedi. İnternet bağlantınızı kontrol edin, ardından yeniden deneyin.",
   "error.auth.networkBlocked":
     "Bu ağdaki bir güvenlik duvarı veya proxy, MyBot'un {host} adresine ulaşmasını engelledi. Ağ yöneticinizden {host} adresine izin vermesini isteyin, ardından tekrar deneyin.",
   "error.auth.signInFirst": "Önce MyBot'ta oturum açın.",

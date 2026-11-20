@@ -4,6 +4,8 @@ import type { messages as source } from "../../en/error/auth";
 export const messages = {
   "error.auth.serviceUnavailable":
     "MyBot nie może połączyć się z usługą kont. Sprawdź, czy API działa, i spróbuj ponownie.",
+  "error.auth.sessionTimeout":
+    "MyBot nie odpowiedział na czas. Sprawdź połączenie z internetem, a potem spróbuj ponownie.",
   "error.auth.networkBlocked":
     "Zapora lub serwer proxy w tej sieci blokuje połączenie MyBot z {host}. Poproś administratora sieci o zezwolenie na {host} i spróbuj ponownie.",
   "error.auth.signInFirst": "Najpierw zaloguj się do MyBot.",

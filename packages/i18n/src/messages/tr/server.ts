@@ -80,7 +80,6 @@ export const messages = {
   "server.join.account": "Hesap",
   "server.join.emailBound": "Bu davet yalnızca e-posta alıcısı için geçerlidir.",
   "server.join.unknownDate": "Bilinmiyor",
-  // Sunucu çubuğundaki artı düğmesinin açtığı iletişim kutusu. {price} "€20" gibi biçimlendirilmiş bir tutardır.
   "server.add.title": "MyBot'u harici bir sunucuda 7/24 çalıştırın",
   "server.add.description":
     "MyBot Sunucuları, bilgisayarınız kapalıyken bile ajanlarınızı ve rutinlerinizi çalışır durumda tutar. Altyapı ve bakımla biz ilgileniriz; sunucunuz teknik bir kurulum gerektirmeden kullanıma hazır olur.",
@@ -102,12 +101,9 @@ export const messages = {
   "server.add.license.includedTrial": "Dahil: {license}, {date} tarihine kadar ücretsiz",
   "server.add.billedMonthly": "Aylık faturalandırılır",
   "server.add.billedYearly": "Yıllık {price} faturalandırılır",
-  // {amount} "€120" gibi biçimlendirilmiş bir tutardır. Yıllık fiyatın ardından gelir.
   "server.add.yearlySaving": "{amount} tasarruf",
-  // Görsel olarak gizli. Yıllık faturalandırmada üzeri çizili aylık fiyattan önce gelir.
   "server.add.regularPrice": "Normal fiyat {price}",
   "server.add.choosePlan": "{plan} planını seç",
-  // Planların altındaki alt bilgi; planların karşılamadığı gereksinimler içindir.
   "server.add.custom.title": "Daha fazla güce veya özel bir çözüme mi ihtiyacınız var?",
   "server.add.custom.description":
     "Özel altyapı, ek depolama alanı veya iş akışınıza göre uyarlanmış özellikler edinin.",
@@ -147,26 +143,22 @@ export const messages = {
   "server.install.setUpWithAgent": "Bir ajanla kur",
   "server.install.sshAgentPrompt":
     "Linux sunucuma SSH ile bağlan ve MyBot'u sunucu olarak oraya kur.\n\nSSH adresi (user@host):",
-  // Hesap maksimum sayıda barındırılan sunucuya sahip olduğunda gösterilir. Planlar devre dışıdır.
   "server.add.limit.title": "Bu hesap maksimum sunucu sayısına ulaştı",
   "server.add.limit.description": {
     one: "Bir hesap en fazla {count} ücretli sunucuya sahip olabilir. Sunucu eklemek için önce birini silin.",
     other: "Bir hesap en fazla {count} ücretli sunucuya sahip olabilir. Sunucu eklemek için önce birini silin.",
   },
-  // Kullanıcının birini silebileceği, hesabın barındırılan sunucular listesini açar.
   "server.add.limit.manage": "Sunucuları yönet",
   "server.upgrade.title": "Ajanlarınızın alanı tükeniyor",
   "server.upgrade.description":
     "{server} üzerinde az boş alan kaldı. Ajanlarınızın kesintisiz çalışmaya devam etmesi için planınızı yükseltin.",
   "server.upgrade.used": "{total} alanın {used} kadarı kullanılıyor",
   "server.hosted.progressTitle": "{name} kuruluyor",
-  // Kurulum tarayıcıdaki Stripe sayfasında ilk ödemeyi bekler.
   "server.hosted.paymentTitle": "Ödemeyi tarayıcınızda tamamlayın",
   "server.hosted.paymentDescription": "Kurulum, Stripe ödemeyi onayladığında başlar.",
   "server.hosted.openPayment": "Ödeme sayfasını tekrar aç",
   "server.hosted.openingPayment": "Açılıyor…",
   "server.hosted.paymentFailed": "Ödeme sayfası açılamadı.",
-  // Yeni bir sunucunun adı. {number} bir sayıdır (örneğin 2).
   "server.hosted.defaultName": "Bulut sunucusu",
   "server.hosted.defaultNameNumbered": "Bulut sunucusu {number}",
   "server.hosted.step.create": "Makineyi oluştur",
@@ -176,6 +168,7 @@ export const messages = {
   "server.hosted.detail.create.copy": "MyBot makineye kopyalanıyor",
   "server.hosted.detail.create.key": "Tek seferlik oturum açma anahtarı ekleniyor",
   "server.hosted.detail.start.boot": "Makine açılıyor",
+  "server.hosted.detail.start.restore": "Veriler geri yükleniyor",
   "server.hosted.detail.start.app": "MyBot başlatılıyor",
   "server.hosted.detail.start.wait": "MyBot'un yanıt vermesi bekleniyor",
   "server.hosted.detail.connect.signIn": "Sizin adınıza oturum açılıyor",
@@ -554,7 +547,6 @@ export const messages = {
   "server.settings.providersDescription": "Bu sunucuyu çalıştıran bilgisayarın yapay zeka sağlayıcılarını yönetin.",
   "server.settings.providersSwitchNote": "Yapay zeka sağlayıcılarını yönetmek için {name} sunucusuna geçin.",
   "server.settings.providersSwitch": "Bu sunucuya geç",
-  // Sunucu Ayarları > Güncellemeler: Katılınan bir sunucunun ana makinesinin MyBot güncellemesi. {name} sunucudur.
   "server.settings.updatesTitle": "Güncellemeler",
   "server.settings.updatesDescription": "Bu sunucuyu çalıştıran bilgisayardaki MyBot'u güncelleyin.",
   "server.update.hostTitle": "{name} üzerinde MyBot",
@@ -562,7 +554,6 @@ export const messages = {
   "server.update.status.idle": "En son sürümü bulmak için güncellemeleri denetleyin.",
   "server.update.status.checking": "Güncellemeler denetleniyor…",
   "server.update.status.available": "{version} sürümü mevcut.",
-  // {progress} %42 gibi bir yüzdedir.
   "server.update.status.downloading": "{version} indiriliyor · {progress}",
   "server.update.status.downloadingUnknown": "{version} indiriliyor…",
   "server.update.status.ready": "{version} indirildi.",
@@ -615,7 +606,6 @@ export const messages = {
   "server.update.restarting": "Yeniden başlatılıyor…",
   "server.update.loadFailed": "{name} güncelleme durumu yüklenemedi.",
   "server.update.hostAction": "Ana makineyi güncelle",
-  // Güncelleme iletişim kutusu: indirme, yeniden başlatma ve sunucunun tekrar çevrim içi olması.
   "server.update.dialog.offerTitle": "{name} sunucusunu MyBot {version} sürümüne güncelle",
   "server.update.dialog.offerDescription":
     "{name}, MyBot {current} kullanıyor. Önce güncellemeyi indirir, ardından yeniden başlar.",
@@ -655,10 +645,8 @@ export const messages = {
   "server.update.dialog.cancelRestart": "Yeniden başlatmayı iptal et",
   "server.update.dialog.later": "Daha sonra",
   "server.update.dialog.hide": "Gizle",
-  // Kullanıcının gizlediği bir güncelleme iletişim kutusunun bildirimi.
   "server.update.dialog.hiddenTitle": "{name} için güncelleme",
   "server.update.dialog.show": "Göster",
-  // Yeniden başlatmanın beklediği işlemler, "{reasons} bekleniyor" içinde yer alır.
   "server.update.reason.agentTurn": "bir ajan turu",
   "server.update.reason.queuedDelivery": "kuyruktaki bir mesaj",
   "server.update.reason.drainTask": "arka plan ajan çalışması",
@@ -672,7 +660,6 @@ export const messages = {
   "server.update.reason.updateOperation": "başka bir güncelleme adımı",
   "server.update.reason.initialization": "MyBot'un başlatılması",
   "server.update.reason.other": "diğer çalışmalar",
-  // Katılınan bir sunucu bir güncellemeye yeniden başladığında her üyeye bir bildirim. {name} sunucudur.
   "server.restartNotice.waitingTitle": "{name}, bir güncellemeyi yüklemek için yeniden başlatılacak",
   "server.restartNotice.waitingVersionTitle": "{name}, MyBot {version} sürümünü yüklemek için yeniden başlatılacak",
   "server.restartNotice.waitingDescription":

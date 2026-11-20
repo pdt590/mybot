@@ -275,6 +275,12 @@ export const messages = {
     "{provider} לא הצליח להפעיל את שרת ה-MCP {name}. הכלים שלו אינם זמינים ל-{provider}. {provider} מפעיל את השרת בעצמו, ולכן בדיקת החיבור ב-MyBot יכולה לעבור. יש להתחיל צ׳אט חדש כדי לנסות שוב.",
   "error.backend.mcpServerTimedOutInProvider":
     "{provider} לא הצליח להפעיל את שרת ה-MCP {name}, כי השרת לא ענה בזמן. יש להתחיל צ׳אט חדש כדי לנסות שוב.",
+  "error.backend.mcpServerUnavailableInProvider":
+    "{provider} לא הצליח להפעיל את שרת ה-MCP {name}, כי השרת לא זמין כרגע. יש להמתין כמה דקות ואז להתחיל צ׳אט חדש כדי לנסות שוב.",
+  "error.backend.mcpServerUnreachableInProvider":
+    "{provider} לא הצליח להגיע לשרת ה-MCP {name}. יש לפתוח את {name} בחנות, אפליקציות, ולוודא שהכתובת שלו נכונה ושהשרת פועל. לאחר מכן יש להתחיל צ׳אט חדש כדי לנסות שוב.",
+  "error.backend.githubToolsNotStarted":
+    "{provider} לא הצליח לקבל את כלי GitHub, כי GitHub לא ענה. יש לפתוח את GitHub בחנות, אפליקציות, ולחבר אותו שוב אם הוא מבקש. לאחר מכן יש להתחיל צ׳אט חדש כדי לנסות שוב.",
   "error.backend.mcpOAuthProxyUnavailable":
     "MyBot לא הצליח להפעיל את חיבור ההתחברות המקומי שלו עבור השרת הזה. יש להפעיל מחדש את MyBot ולנסות שוב.",
   "error.backend.mcpOAuthSignInNeeded": "ההתחברות לשרת ה-MCP הזה הסתיימה. המשתמש צריך להתחבר אליו שוב ב-MyBot.",
@@ -343,9 +349,9 @@ export const messages = {
   "error.backend.takeoverInactive": "השתלטות הדפדפן הזו אינה פעילה עוד.",
   "error.backend.authSubmitting": "שליחת האימות כבר מתבצעת.",
   "error.backend.apiKeySaveFailed": "MyBot לא הצליח לשמור את מפתח ה-API. יש לנסות שוב.",
-  "error.backend.apiKeyNotAllowed": "רק בעל השרת או מנהל יכולים להזין מפתח API.",
   "error.backend.apiKeySaving": "מפתח ה-API כבר נשמר.",
-  "error.backend.vaultItemNotAllowed": "רק בעל השרת או מנהל יכולים להוסיף פריט לכספת.",
+  "error.backend.apiKeyAnswerUnreadable":
+    "MyBot לא הצליח לקרוא את מפתח ה-API. יש להזין מפתח של עד 8,000 תווים ולבחור מי יכול להשתמש בו.",
   "error.backend.vaultItemSaving": "פריט הכספת כבר נשמר.",
   "error.backend.authRequestInactive": "בקשת האימות המאובטח הזו אינה פעילה עוד.",
   "error.backend.secureAuthUnavailable": "אימות מאובטח אינו זמין.",
@@ -383,7 +389,7 @@ export const messages = {
   "error.backend.popupLoadFailed": "החלון הקופץ לא נטען. יש לנסות להתחבר שוב מהדף המקורי.",
   "error.backend.browserTabNotFound": "לשונית הדפדפן לא נמצאה.",
   "error.backend.authActive": "אימות כבר פעיל.",
-  "error.backend.authHttpsRequired": "אימות מאובטח דורש HTTPS.",
+  "error.backend.authWebPageRequired": "אימות מאובטח דורש HTTP/HTTPS.",
   "error.backend.authDigitsRange": "קודי אימות דורשים 4–12 ספרות.",
   "error.backend.authExpired": "תוקף בקשת האימות פג.",
   "error.backend.authDigitsRequired": "יש להזין את מספר הספרות המבוקש.",

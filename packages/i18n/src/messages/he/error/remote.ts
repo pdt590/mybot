@@ -22,6 +22,8 @@ export const messages = {
   "error.remote.screenRecordingDenied": "המארח לא אישר ל-MyBot להקליט את המסך שלו. יש לאשר הקלטת מסך במארח ולנסות שוב.",
   "error.remote.windowsSessionDisconnected":
     "הסשן של Windows במארח מנותק, ולכן אין מסך לשיתוף. יש להיכנס ל-Windows במסך של המארח ולנסות שוב.",
+  "error.remote.macScreenLocked":
+    "ה-Mac נעול, ולכן אינו יכול לשתף את המסך שלו. יש לבטל את נעילת ה-Mac במסך שלו ולנסות שוב.",
   "error.remote.streamTooSlowLowerQuality":
     "החיבור למארח איטי מדי בשביל התמונה. יש לנסות שוב: החיבור הבא ישתמש באיכות נמוכה יותר.",
   "error.remote.streamTooSlow": "החיבור למארח איטי מדי בשביל התמונה. יש להשתמש ברשת מהירה יותר ולנסות שוב.",
@@ -181,6 +183,8 @@ export const messages = {
   "error.remote.relayUnavailable": "Signal לא שלח שרתי ממסר לחיבור הזה. יש לנסות שוב מאוחר יותר.",
   "error.remote.iceFailed": "לא ניתן היה ליצור חיבור ישיר למארח. חומת אש, VPN או שרת proxy יכולים לחסום אותו.",
   "error.remote.iceDisconnected": "החיבור הישיר למארח אבד.",
+  "error.remote.webrtcBlocked":
+    "המכשיר הזה חוסם את החיבור ש-MyBot צריך. אם מצב נעילה מופעל, כבה אותו עבור MyBot בהגדרות > פרטיות ואבטחה > מצב נעילה.",
   "error.remote.directoryUnreachable": "MyBot לא הצליח להגיע לשירות MyBot. יש לבדוק את החיבור.",
   "error.remote.directoryTimeout": "שירות MyBot לא ענה בזמן. יש לנסות שוב.",
   "error.remote.inviteAlreadyUsed": "ההזמנה הזו כבר נוצלה. יש לבקש הזמנה חדשה.",

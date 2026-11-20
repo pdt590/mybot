@@ -122,7 +122,7 @@ function start(
   const bot = fakeBotApi(batches, answers);
   const driver = telegramBotDriver({ access, fetch: bot.fetchImpl });
   const credentials = { botToken: TOKEN, botId: BOT_ID, botUsername: "agent_bot" };
-  driver.createAdapter(credentials, { rateLimited: () => undefined });
+  driver.createAdapter(credentials, { connectionId: "connection-1", rateLimited: () => undefined });
   const transport = driver.createTransport(credentials, {
     workspaceId: BOT_ID,
     workspaceName: "@agent_bot",

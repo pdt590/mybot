@@ -1,7 +1,6 @@
 import { defineMessages } from "../../../message";
 
 export const messages = defineMessages("error.update", {
-  // Updater state the user reads.
   "error.update.unsupported": "Updates are available in installed desktop builds.",
   "error.update.notReady": "An update is not ready to install.",
   "error.update.restartFailed": "MyBot could not restart to install the update.",
@@ -9,6 +8,7 @@ export const messages = defineMessages("error.update", {
   "error.update.installFailed": "Could not install the update. Quit and reopen MyBot, then try again.",
   "error.update.notInstalled": "The last restart did not install the update. Restart to try again.",
   "error.update.downloadFailed": "Could not download the update. Try again.",
+  "error.update.signatureNotConfirmed": "MyBot could not verify the update. Try again.",
   "error.update.checkFailed": "Could not check for updates. Try again.",
   "error.update.checkStalled": "The update check stopped responding. Try again.",
   "error.update.checkOffline": "Could not reach the update service. Check your internet connection, then try again.",
@@ -29,7 +29,6 @@ export const messages = defineMessages("error.update", {
     "MyBot cannot install the update because its AppImage file was moved, renamed or replaced. Quit MyBot, then open the AppImage file again.",
   "error.update.appImageReadOnly":
     "MyBot cannot install updates in the folder of its AppImage file. Quit MyBot, move the AppImage file to a folder in your home folder, then open it and install the update again.",
-  // A joined server's admin reads these from the host.
   "error.update.remoteDisabled": "Updates from server admins are turned off on this computer.",
   "error.update.restartStarted": "MyBot is already restarting to install the update.",
   "error.update.alreadyRestarting": "MyBot is already restarting.",

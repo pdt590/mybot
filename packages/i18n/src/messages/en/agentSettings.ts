@@ -153,7 +153,7 @@ export const messages = defineMessages("agentSettings", {
   "agentSettings.runtime.fullAccessNote":
     "The agent runs with full computer access from its workspace and the shared folder.",
   "agentSettings.runtime.askNote":
-    "It asks you before it uses an MyBot tool or publishes a site, and when its provider asks for approval.",
+    "It asks you before it uses a MyBot tool or publishes a site, and when its provider asks for approval.",
   "agentSettings.runtime.fullNote": "It acts without asking, except for questions it puts to you.",
 
   "agentSettings.access.workspace": "Workspace only",
@@ -174,11 +174,12 @@ export const messages = defineMessages("agentSettings", {
     "This choice is only for you and applies on all your devices. When the server is muted or set to Nothing, this agent stays silent too.",
 
   "agentSettings.newChat.title": "New chat",
-  "agentSettings.newChat.description": "The agent forgets this chat. Its setup stays.",
+  "agentSettings.newChat.description":
+    "The agent starts fresh and can still look up this chat when it needs to. Its setup stays.",
   "agentSettings.newChat.button": "Start",
   "agentSettings.newChat.confirmTitle": "Start a new chat with {name}?",
   "agentSettings.newChat.confirmDescription":
-    "The agent forgets this chat. The messages stay visible above a divider. The instructions, model, tools, memories, workspace, and browser do not change.",
+    "The agent starts fresh and can still look up this chat when it needs to. The messages stay visible above a divider. The instructions, model, tools, memories, workspace, and browser do not change.",
   "agentSettings.newChat.confirm": "Start new chat",
   "agentSettings.newChat.failed": "Could not start a new chat.",
   "agentSettings.deleteHistory.title": "Delete history",

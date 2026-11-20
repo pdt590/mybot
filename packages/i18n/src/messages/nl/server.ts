@@ -178,6 +178,7 @@ export const messages = {
   "server.hosted.detail.create.copy": "MyBot naar de machine kopiëren",
   "server.hosted.detail.create.key": "Eenmalige inlogsleutel toevoegen",
   "server.hosted.detail.start.boot": "Machine aanzetten",
+  "server.hosted.detail.start.restore": "Gegevens herstellen",
   "server.hosted.detail.start.app": "MyBot starten",
   "server.hosted.detail.start.wait": "Wachten tot MyBot antwoordt",
   "server.hosted.detail.connect.signIn": "Inloggen als jou",

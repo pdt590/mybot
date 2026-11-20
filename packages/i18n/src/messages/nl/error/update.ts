@@ -10,6 +10,7 @@ export const messages = {
   "error.update.notInstalled":
     "Bij de laatste herstart is de update niet geïnstalleerd. Start opnieuw om het nog eens te proberen.",
   "error.update.downloadFailed": "Kan de update niet downloaden. Probeer het opnieuw.",
+  "error.update.signatureNotConfirmed": "MyBot kan de update niet verifiëren. Probeer het opnieuw.",
   "error.update.checkFailed": "Kan niet controleren op updates. Probeer het opnieuw.",
   "error.update.checkStalled": "De controle op updates reageert niet meer. Probeer het opnieuw.",
   "error.update.checkOffline":

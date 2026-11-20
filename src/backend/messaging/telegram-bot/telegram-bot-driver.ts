@@ -76,7 +76,7 @@ export class TelegramBotChats {
   readonly api: TelegramBotApi;
   readonly botId: string;
   botUsername: string;
-  options: MessagingDriverOptions = { rateLimited: () => undefined };
+  options: MessagingDriverOptions = { connectionId: "", rateLimited: () => undefined };
   readonly #upstream: MessagingDriver;
   readonly #adapters = new Map<string, MessagingAdapter>();
 
@@ -101,6 +101,7 @@ export class TelegramBotChats {
     if (known) return known;
     // The upstream adapter reads `options` when it is rate limited, so a later `options` still counts.
     const adapter = this.#upstream.createAdapter(this.#values(chatId, title), {
+      connectionId: this.options.connectionId,
       rateLimited: (retryAt) => this.options.rateLimited(retryAt),
     });
     this.#adapters.set(chatId, adapter);

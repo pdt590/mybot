@@ -4,6 +4,7 @@ import type { messages as source } from "../../en/error/auth";
 export const messages = {
   "error.auth.serviceUnavailable":
     "تعذّر على MyBot الوصول إلى خدمة الحساب. تحقّق من أن الواجهة البرمجية API تعمل، ثم أعد المحاولة.",
+  "error.auth.sessionTimeout": "لم يستجب MyBot في الوقت المحدد. تحقق من اتصالك بالإنترنت، ثم حاول مرة أخرى.",
   "error.auth.networkBlocked":
     "منع جدار حماية أو وكيل شبكة في هذه الشبكة MyBot من الوصول إلى {host}. اطلب من مسؤول الشبكة السماح بـ {host}، ثم أعد المحاولة.",
   "error.auth.signInFirst": "سجّل الدخول إلى MyBot أولًا.",

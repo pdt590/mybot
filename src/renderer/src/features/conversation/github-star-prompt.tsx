@@ -11,16 +11,10 @@ const PROMPTS_DISABLED: boolean = true;
 
 let shownThisSession = false;
 
-/** True after the star toast showed in this app session. Other prompts then wait for a later one. */
 export function githubStarPromptShownThisSession(): boolean {
   return shownThisSession;
 }
 
-/**
- * Count one message that the user sent to an agent on this device. The third one asks for a star on
- * GitHub, one time only. The toast has no timer: it stays until the user answers or closes it.
- * Blocked storage counts nothing, so a user never gets the question on each start.
- */
 export function noteAgentMessageSent(): void {
   // MyBot: the GitHub star prompt is disabled.
   if (PROMPTS_DISABLED) return;
@@ -36,7 +30,6 @@ export function noteAgentMessageSent(): void {
   if (sent < SENDS_BEFORE_PROMPT) return;
   shownThisSession = true;
 
-  // Sonner renders the content more than once, so the answer lives here and not in the toast.
   const [thanked, setThanked] = createSignal(false);
   const close = () => toast.dismiss(TOAST_ID);
   const star = () => {

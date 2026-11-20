@@ -23,6 +23,8 @@ export const messages = {
     "Host nie zezwolił MyBot na nagrywanie ekranu. Przyznaj na hoście uprawnienie do nagrywania ekranu, a następnie spróbuj ponownie.",
   "error.remote.windowsSessionDisconnected":
     "Sesja Windows na hoście jest rozłączona, więc nie ma ekranu do udostępnienia. Zaloguj się do Windows na ekranie hosta, a następnie spróbuj ponownie.",
+  "error.remote.macScreenLocked":
+    "Mac jest zablokowany, więc nie może udostępnić ekranu. Odblokuj Maca na jego ekranie, a następnie spróbuj ponownie.",
   "error.remote.streamTooSlowLowerQuality":
     "Połączenie z hostem jest zbyt wolne, aby pokazać obraz. Spróbuj ponownie: następne połączenie użyje niższej jakości.",
   "error.remote.streamTooSlow":
@@ -188,6 +190,8 @@ export const messages = {
   "error.remote.iceFailed":
     "Nie udało się nawiązać bezpośredniego połączenia z hostem. Może je blokować zapora, VPN lub serwer proxy.",
   "error.remote.iceDisconnected": "Bezpośrednie połączenie z hostem zostało utracone.",
+  "error.remote.webrtcBlocked":
+    "To urządzenie blokuje połączenie, którego potrzebuje MyBot. Jeśli tryb blokady jest włączony, wyłącz go dla MyBot w Ustawienia > Prywatność i ochrona > Tryb blokady.",
   "error.remote.directoryUnreachable": "MyBot nie mógł połączyć się z usługą MyBot. Sprawdź połączenie.",
   "error.remote.directoryTimeout": "Usługa MyBot nie odpowiedziała na czas. Spróbuj ponownie.",
   "error.remote.inviteAlreadyUsed": "To zaproszenie zostało już użyte. Poproś o nowe zaproszenie.",

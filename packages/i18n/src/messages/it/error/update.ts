@@ -9,6 +9,7 @@ export const messages = {
   "error.update.installFailed": "Impossibile installare l'aggiornamento. Chiudi e riapri MyBot, poi riprova.",
   "error.update.notInstalled": "L'ultimo riavvio non ha installato l'aggiornamento. Riavvia per riprovare.",
   "error.update.downloadFailed": "Impossibile scaricare l'aggiornamento. Riprova.",
+  "error.update.signatureNotConfirmed": "MyBot non è riuscito a verificare l'aggiornamento. Riprova.",
   "error.update.checkFailed": "Impossibile cercare aggiornamenti. Riprova.",
   "error.update.checkStalled": "La ricerca di aggiornamenti ha smesso di rispondere. Riprova.",
   "error.update.checkOffline":

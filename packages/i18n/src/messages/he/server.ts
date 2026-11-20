@@ -181,6 +181,7 @@ export const messages = {
   "server.hosted.detail.create.copy": "מעתיק את MyBot למכונה",
   "server.hosted.detail.create.key": "מוסיף מפתח התחברות חד-פעמי",
   "server.hosted.detail.start.boot": "מדליק את המכונה",
+  "server.hosted.detail.start.restore": "משחזר נתונים",
   "server.hosted.detail.start.app": "מפעיל את MyBot",
   "server.hosted.detail.start.wait": "ממתין ש-MyBot יענה",
   "server.hosted.detail.connect.signIn": "מתחבר בשמך",

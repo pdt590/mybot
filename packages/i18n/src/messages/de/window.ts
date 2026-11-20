@@ -5,4 +5,8 @@ export const messages = {
   "window.localHostTitle": "Lokaler MyBot-Host",
   "window.localClientTitle": "Lokaler MyBot-Client",
   "window.computerUsePermissionTitle": "Computersteuerung aktivieren",
+  "window.rendererStoppedTitle": "MyBot funktioniert nicht mehr",
+  "window.rendererStoppedBody":
+    "Das Fenster wurde mehrmals beendet. Deine Chats sind gespeichert, und deine Agenten arbeiten weiter.",
+  "window.rendererStoppedReload": "Neu laden",
 } as const satisfies PartialTranslation<typeof source>;

@@ -329,7 +329,7 @@ export const messages = defineMessages("mobile.agent", {
   "mobile.agent.access.autoApproveLocked": "Turbo mode is on for this host, so every agent auto-approves.",
   "mobile.agent.access.workspaceNote": "The agent works in its workspace and the shared folder on the host.",
   "mobile.agent.access.askNote":
-    "The agent asks you before it uses an MyBot tool or publishes a site, and when its provider asks for approval.",
+    "The agent asks you before it uses a MyBot tool or publishes a site, and when its provider asks for approval.",
   "mobile.agent.access.fullNote": "The agent acts without asking, except for questions it puts to you.",
   "mobile.agent.access.fullTitle": "Give this agent full access?",
   "mobile.agent.access.askTitle": "Let this agent work outside its workspace?",
@@ -411,10 +411,11 @@ export const messages = defineMessages("mobile.agent", {
     "This server cannot keep your own notification level for an agent. Update MyBot on the computer that runs it.",
   "mobile.agent.newChat.title": "New chat",
   "mobile.agent.newChat.starting": "Starting new chat…",
-  "mobile.agent.newChat.footer": "The agent forgets this chat. Its setup stays.",
+  "mobile.agent.newChat.footer":
+    "The agent starts fresh and can still look up this chat when it needs to. Its setup stays.",
   "mobile.agent.newChat.confirmTitle": "Start a new chat with {name}?",
   "mobile.agent.newChat.confirmBody":
-    "The agent forgets this chat. The messages stay visible above a divider. The instructions, model, tools, memories, workspace, and browser do not change.",
+    "The agent starts fresh and can still look up this chat when it needs to. The messages stay visible above a divider. The instructions, model, tools, memories, workspace, and browser do not change.",
   "mobile.agent.newChat.confirm": "Start new chat",
   "mobile.agent.newChat.failed": "Could not start a new chat",
   "mobile.agent.newChat.failedBody": "The host could not start a new chat.",

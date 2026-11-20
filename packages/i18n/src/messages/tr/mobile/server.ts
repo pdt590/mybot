@@ -115,8 +115,10 @@ export const messages = {
   "mobile.server.hosted.soldOut": "Tükendi",
   "mobile.server.hosted.serverPlan": "{plan} · {interval}",
   "mobile.server.hosted.serverPlanEnds": "{plan} · {interval} · {date} tarihinde sona erer",
+  "mobile.server.hosted.serverDataKept": "{plan} · Veriler {date} tarihine kadar kalır",
   "mobile.server.hosted.state.payment": "Ödeme bekleniyor",
   "mobile.server.hosted.state.setup": "Kuruluyor",
+  "mobile.server.hosted.state.restoring": "Geri yükleniyor",
   "mobile.server.hosted.state.starting": "Başlatılıyor",
   "mobile.server.hosted.state.running": "Çalışıyor",
   "mobile.server.hosted.state.stopped": "Durduruldu",
@@ -1477,7 +1479,6 @@ export const messages = {
   "mobile.server.audit.roleMemberAdded": "{member}, {role} rolüne eklendi",
   "mobile.server.audit.roleMemberRemoved": "{member}, {role} rolünden çıkarıldı",
   "mobile.server.audit.agentLevel": "{role} için {agent}: {change}",
-  // Server settings › Import agents: Grok Bot and Hermes exports (`agent-import-v1`).
   "mobile.server.settings.importAgents": "Ajanları içe aktar",
   "mobile.server.route.import": "Ajanları içe aktar",
   "mobile.server.import.unsupported": "Ajanları buradan içe aktarmak için bu sunucudaki MyBot'u güncelleyin.",
@@ -1550,7 +1551,6 @@ export const messages = {
   "mobile.server.import.channel": "Kanal",
   "mobile.server.import.notImportedTitle": "İçe aktarılmadı",
   "mobile.server.import.resultWarnings": "Bazı öğeler taşınmadı",
-  // Server settings › Transfer: the whole server to or from a transfer file (`instance-transfer-v1`).
   "mobile.server.settings.transfer": "Aktarım",
   "mobile.server.route.transfer": "Aktarım",
   "mobile.server.route.transferExport": "Dışa aktar",

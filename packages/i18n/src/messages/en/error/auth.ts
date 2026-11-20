@@ -1,9 +1,9 @@
 import { defineMessages } from "../../../message";
 
 export const messages = defineMessages("error.auth", {
-  // Errors from the MyBot account service.
   "error.auth.serviceUnavailable":
     "MyBot could not reach the account service. Check that the API is running, then try again.",
+  "error.auth.sessionTimeout": "MyBot did not answer in time. Check your internet connection, then try again.",
   "error.auth.networkBlocked":
     "A firewall or proxy on this network blocked MyBot from reaching {host}. Ask your network administrator to allow {host}, then try again.",
   "error.auth.signInFirst": "Sign in to MyBot first.",
@@ -25,7 +25,6 @@ export const messages = defineMessages("error.auth", {
     "The connection ended before MyBot confirmed delivery. Check delivery to avoid sending another code.",
   "error.auth.deliveryUnknown":
     "MyBot could not confirm whether the sign-in code was sent. Check delivery before sending again.",
-  // Company sign-in, which the company's provider does in the browser.
   "error.auth.companySignInFailed": "The company sign-in did not finish. Try again.",
   "error.auth.companySignInCancelled": "The company sign-in was cancelled.",
   "error.auth.companySignInTimeout": "The company sign-in took too long. Open the sign-in page again.",

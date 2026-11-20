@@ -168,6 +168,7 @@ export const messages = {
   "server.hosted.detail.create.copy": "Copiando o MyBot para a máquina",
   "server.hosted.detail.create.key": "Adicionando uma chave de login de uso único",
   "server.hosted.detail.start.boot": "Ligando a máquina",
+  "server.hosted.detail.start.restore": "Restaurando dados",
   "server.hosted.detail.start.app": "Iniciando o MyBot",
   "server.hosted.detail.start.wait": "Aguardando a resposta do MyBot",
   "server.hosted.detail.connect.signIn": "Entrando com sua conta",
