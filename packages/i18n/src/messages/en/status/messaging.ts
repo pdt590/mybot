@@ -32,9 +32,12 @@ export const messages = defineMessages("status.messaging", {
   "status.messaging.integrationsSection": "Integrations",
   "status.messaging.signInReceived": "MyBot received the Slack install. You can close this tab.",
   "status.messaging.signInUnknown": "MyBot did not start this Slack install. Start it again in MyBot.",
-  "status.messaging.telegramNoAgent": "No agent can answer here yet. Add the Telegram Orchestrator in MyBot.",
+  "status.messaging.telegramNoAgent":
+    "No agent can answer here yet. In MyBot, open Marketplace > Apps > Telegram and click Add agent.",
   "status.messaging.telegramLinked":
     "MyBot is connected to this chat. Mention {bot} or reply to a message of MyBot to ask the agents.",
+  "status.messaging.telegramNotLinked":
+    "MyBot is not connected to this chat. To connect it, open the MyBot app, go to Marketplace → Apps → Telegram, and select Add to a group or Open a direct chat.",
   "status.messaging.telegramOrchestratorName": "Telegram Orchestrator",
   "status.messaging.telegramOrchestratorTitle": "Answers in Telegram and asks the team",
   // MyBot: text that an agent's own Telegram bot posts. Telegram users read it.

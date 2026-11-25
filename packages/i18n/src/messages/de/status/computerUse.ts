@@ -9,6 +9,8 @@ export const messages = {
   "status.computerUse.driverStopped": "Der Treiber für die Computersteuerung wurde gestoppt.",
   "status.computerUse.unsupported": "Die Computersteuerung ist unter macOS, Windows und Linux verfügbar.",
   "status.computerUse.driverMissing": "Diese Version von MyBot enthält keinen Treiber für die Computersteuerung.",
+  "status.computerUse.inputRefused":
+    "Auf diesem Desktop kann MyBot in anderen Apps nicht tippen oder klicken. Bitte den Agenten bei Aufgaben auf Websites, den MyBot-Browser zu verwenden.",
   "status.computerUse.progressActing": "Eine App auf diesem Computer wird verwendet…",
   "status.computerUse.progressDeciding": "Der nächste Schritt in der App wird bestimmt…",
 } as const satisfies PartialTranslation<typeof source>;

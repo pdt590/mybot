@@ -103,6 +103,9 @@ export const messages = {
   "mobile.marketplace.app.stepOpen": "Откройте страницу входа {name}.",
   "mobile.marketplace.app.stepAllow": "Войдите и разрешите доступ.",
   "mobile.marketplace.app.stepReturn": "Вернитесь сюда. {name} подключится на вашем сервере.",
+  "mobile.marketplace.app.stepBlank": "Последняя страница не загрузится. Так и должно быть.",
+  "mobile.marketplace.app.stepCopy": "Нажмите на адресную строку и скопируйте весь адрес.",
+  "mobile.marketplace.app.stepPaste": "Вернитесь в MyBot и вставьте адрес ниже.",
   "mobile.marketplace.app.openSignIn": "Открыть вход",
   "mobile.marketplace.app.keySecure": "Ключ передаётся только на ваш сервер по зашифрованному соединению.",
   "mobile.marketplace.app.connecting": "Подключение",
@@ -119,8 +122,6 @@ export const messages = {
     "Этому приложению нужен вход в браузере. Обновите MyBot на сервере или подключите приложение на компьютере.",
   "mobile.marketplace.app.waiting": "Ожидание страницы входа…",
   "mobile.marketplace.app.openAgain": "Снова открыть страницу входа",
-  "mobile.marketplace.app.pasteHint":
-    "В конце страница открывает адрес, который не загружается. Скопируйте этот адрес и вставьте его ниже.",
   "mobile.marketplace.app.pasteLabel": "Адрес после входа",
   "mobile.marketplace.app.pasteInvalid": "Этот адрес не является концом этого входа.",
   "mobile.marketplace.app.finishSignIn": "Завершить вход",

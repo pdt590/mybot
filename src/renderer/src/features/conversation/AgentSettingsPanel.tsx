@@ -84,6 +84,7 @@ interface AgentSettingsPanelProps
   onOpenApps?: (() => void) | undefined;
   onWidthChange: (width: number) => void;
   skillSelectionRequest?: { skillId: string } | null | undefined;
+  onSkillsClosed?: (() => void) | undefined;
   instructionsFile?: AgentInstructionsCalls | undefined;
   instructionsRequest?: { agentId: string } | null | undefined;
   settingReveal?: AgentSettingReveal | null | undefined;
@@ -752,6 +753,7 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
           selectionRequest={props.skillSelectionRequest}
           agentId={props.agent.id}
           agentName={props.agent.name}
+          agentProvider={props.agent.provider}
           open={draft.skills.open}
           skillsMode={skillsMode()}
           serverId={props.skillsServerId}
@@ -771,11 +773,12 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
                 }
               : undefined
           }
-          onOpenChange={(open) =>
+          onOpenChange={(open) => {
             setDraft((state) => {
               state.skills.open = open;
-            })
-          }
+            });
+            if (!open) props.onSkillsClosed?.();
+          }}
           onCountChange={(count) =>
             setDraft((state) => {
               state.skills.count = count;

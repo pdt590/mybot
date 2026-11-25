@@ -5,7 +5,7 @@ export const messages = {
   "error.mcp.redirectByName": "Этот адрес недоступен по имени.",
   "error.mcp.redirectNotSignIn": "Этот адрес не относится ко входу.",
   "error.mcp.redirectRefused": "Вход отклонён. Вернитесь в MyBot и повторите попытку.",
-  "error.mcp.redirectNoSignIn": "Нет входа, который ждал бы этого. Возможно, он уже завершён.",
+  "error.mcp.redirectNoSignIn": "Этот вход больше не активен. Вернитесь в MyBot и начните вход заново.",
   "error.mcp.redirectSignedIn": "MyBot выполнил вход. Это окно можно закрыть.",
   "error.mcp.redirectNotSaved": "Вход не завершён. Вернитесь в MyBot, чтобы узнать причину.",
   "error.mcp.signInFileUnreadable": "Файл входа MCP не читается.",

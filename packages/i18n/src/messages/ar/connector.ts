@@ -406,7 +406,8 @@ export const messages = {
   "connector.whatsapp.numbersTitle": "الأرقام",
   "connector.whatsapp.linkNumber": "ربط رقم",
   "connector.whatsapp.ownNumberNote": "تصل دردشة «مراسلة نفسك» والأشخاص الذين تسمح لهم إلى MyBot.",
-  "connector.whatsapp.dedicatedNote": "يصل الأشخاص الذين تسمح لهم إلى MyBot. يحصل الآخرون على رمز ليعطوه لك.",
+  "connector.whatsapp.dedicatedNote":
+    "تصل دردشة «مراسلة نفسك» والأشخاص الذين تسمح لهم إلى MyBot. يحصل الآخرون على رمز ليعطوه لك.",
   "connector.whatsapp.helpLoggedOut": "أزال WhatsApp هذا الحاسوب من الأجهزة المرتبطة. اربط الرقم مرة أخرى.",
   "connector.whatsapp.helpLoggedOutHost": "أزال WhatsApp هذا الخادم من الأجهزة المرتبطة. اربط الرقم مرة أخرى.",
   "connector.whatsapp.helpError": "لا يستطيع MyBot الوصول إلى WhatsApp على هذا الرقم. أعد الربط، أو اقطع اتصال الرقم.",
@@ -428,7 +429,7 @@ export const messages = {
     "يمكن فقط لدردشة «مراسلة نفسك» والأشخاص الذين تسمح لهم المراسلة. لا يتلقى الآخرون أي رد. عند إيقافه، يرد MyBot على الأشخاص غير المعروفين برمز.",
   "connector.whatsapp.workingMessage": "رسالة «جارٍ العمل على ذلك…»",
   "connector.whatsapp.workingMessageDescription":
-    "يرسلها MyBot أثناء عمل الوكيل، ثم يستبدلها بالإجابة. ويرسل أيضًا رسالة انتظار عندما ينتظر طلبٌ طلبًا سابقًا. أوقفها لإرسال الإجابة فقط.",
+    "يرسلها MyBot أثناء عمل الوكيل، ثم يستبدلها بالإجابة. ويرسل أيضًا رسالة انتظار عندما ينتظر طلبٌ طلبًا سابقًا. على الرقم الشخصي، تصل هذه الرسائل إلى دردشة «مراسلة نفسك» فقط. أوقفها لإرسال الإجابة فقط.",
   "connector.whatsapp.statusReactions": "تفاعلات الحالة",
   "connector.whatsapp.statusReactionsDescription":
     "يتفاعل MyBot بـ 👀 عند وصول رسالة، وبـ ✅ عندما تصبح الإجابة جاهزة. أوقفها لعدم إرسال أي تفاعلات.",
@@ -501,6 +502,9 @@ export const messages = {
   "connector.whatsapp.sendersLimit": "يمكن لرقم واحد أن يسمح بما يصل إلى {count} من جهات الاتصال والمجموعات.",
   "connector.whatsapp.senderGroup": "مجموعة",
   "connector.whatsapp.removeSender": "إزالة",
+  "connector.whatsapp.senderAccess": "صلاحية {name}",
+  "connector.whatsapp.senderReplies": "يمكنه إسناد العمل",
+  "connector.whatsapp.senderReadOnly": "للقراءة فقط",
   "connector.whatsapp.addContact": "إضافة جهة اتصال",
   "connector.whatsapp.addGroup": "إضافة مجموعة",
   "connector.whatsapp.contactTitle": "إضافة جهة اتصال",

@@ -5,7 +5,8 @@ export const messages = {
   "error.mcp.redirectByName": "Diese Adresse ist nicht über ihren Namen erreichbar.",
   "error.mcp.redirectNotSignIn": "Diese Adresse gehört nicht zu einer Anmeldung.",
   "error.mcp.redirectRefused": "Die Anmeldung wurde abgelehnt. Kehre zu MyBot zurück und versuche es erneut.",
-  "error.mcp.redirectNoSignIn": "Keine Anmeldung wartet darauf. Sie wurde möglicherweise bereits beendet.",
+  "error.mcp.redirectNoSignIn":
+    "Diese Anmeldung ist nicht mehr aktiv. Geh zurück zu MyBot und starte die Anmeldung erneut.",
   "error.mcp.redirectSignedIn": "MyBot ist angemeldet. Du kannst dieses Fenster schließen.",
   "error.mcp.redirectNotSaved": "Die Anmeldung wurde nicht abgeschlossen. Gehe zurück zu MyBot, um den Grund zu sehen.",
   "error.mcp.signInFileUnreadable": "Die MCP-Anmeldedatei ist nicht lesbar.",

@@ -5,7 +5,7 @@ export const messages = {
   "error.mcp.redirectByName": "Este endereço não pode ser acessado pelo nome.",
   "error.mcp.redirectNotSignIn": "Este endereço não faz parte de um login.",
   "error.mcp.redirectRefused": "O login foi recusado. Volte ao MyBot e tente novamente.",
-  "error.mcp.redirectNoSignIn": "Nenhum login está aguardando isto. Ele pode ter terminado.",
+  "error.mcp.redirectNoSignIn": "Este login não está mais ativo. Volte ao MyBot e inicie o login novamente.",
   "error.mcp.redirectSignedIn": "O MyBot está conectado. Você pode fechar esta janela.",
   "error.mcp.redirectNotSaved": "O login não foi concluído. Volte ao MyBot para ver o motivo.",
   "error.mcp.signInFileUnreadable": "O arquivo de login MCP não pode ser lido.",

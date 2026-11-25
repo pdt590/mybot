@@ -35,9 +35,11 @@ export const messages = {
   "status.messaging.signInReceived": "MyBot hat die Slack-Installation empfangen. Du kannst diesen Tab schließen.",
   "status.messaging.signInUnknown": "MyBot hat diese Slack-Installation nicht gestartet. Starte sie erneut in MyBot.",
   "status.messaging.telegramNoAgent":
-    "Hier kann noch kein Agent antworten. Füge den Telegram-Orchestrator in MyBot hinzu.",
+    "Hier kann noch kein Agent antworten. Öffne in MyBot Marktplatz > Apps > Telegram und klicke auf Agenten hinzufügen.",
   "status.messaging.telegramLinked":
     "MyBot ist mit diesem Chat verbunden. Erwähne {bot} oder antworte auf eine Nachricht von MyBot, um die Agenten zu fragen.",
+  "status.messaging.telegramNotLinked":
+    "MyBot ist nicht mit diesem Chat verbunden. Öffne zum Verbinden die MyBot-App, gehe zu Marketplace → Apps → Telegram und wähle „Zu Gruppe hinzufügen“ oder „Direkten Chat öffnen“.",
   "status.messaging.telegramOrchestratorName": "Telegram-Orchestrator",
   "status.messaging.telegramOrchestratorTitle": "Antwortet in Telegram und fragt das Team",
   "status.messaging.whatsappNoAgent":

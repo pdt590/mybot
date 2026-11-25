@@ -357,7 +357,7 @@ export const messages = {
   "connector.whatsapp.ownNumberNote":
     "Votre discussion « Message à vous-même » et les personnes que vous autorisez joignent MyBot.",
   "connector.whatsapp.dedicatedNote":
-    "Les personnes que vous autorisez joignent MyBot. Les autres reçoivent un code à vous transmettre.",
+    "Votre discussion « Message à vous-même » et les personnes que vous autorisez joignent MyBot. Les autres reçoivent un code à vous transmettre.",
   "connector.whatsapp.helpLoggedOut":
     "WhatsApp a retiré cet ordinateur des appareils connectés. Associez à nouveau le numéro.",
   "connector.whatsapp.helpLoggedOutHost":
@@ -382,7 +382,7 @@ export const messages = {
     "Seules votre discussion « Message à vous-même » et les personnes que vous autorisez peuvent écrire. Les autres ne reçoivent pas de réponse. Désactivé, MyBot répond aux inconnus avec un code.",
   "connector.whatsapp.workingMessage": "Message « En cours… »",
   "connector.whatsapp.workingMessageDescription":
-    "MyBot l’envoie pendant que l’agent travaille, puis le remplace par la réponse. Une demande qui attend une demande précédente reçoit aussi un message d’attente. Désactivez pour n’envoyer que la réponse.",
+    "MyBot l’envoie pendant que l’agent travaille, puis le remplace par la réponse. Une demande qui attend une demande précédente reçoit aussi un message d’attente. Avec un numéro personnel, seule votre discussion « Message à vous-même » reçoit ces messages. Désactivez pour n’envoyer que la réponse.",
   "connector.whatsapp.statusReactions": "Réactions d’état",
   "connector.whatsapp.statusReactionsDescription":
     "MyBot réagit avec 👀 quand un message arrive et avec ✅ quand la réponse est prête. Désactivez pour n’envoyer aucune réaction.",
@@ -460,6 +460,9 @@ export const messages = {
   "connector.whatsapp.sendersLimit": "Un numéro peut autoriser jusqu’à {count} contacts et groupes.",
   "connector.whatsapp.senderGroup": "Groupe",
   "connector.whatsapp.removeSender": "Retirer",
+  "connector.whatsapp.senderAccess": "Accès de {name}",
+  "connector.whatsapp.senderReplies": "Peut confier du travail",
+  "connector.whatsapp.senderReadOnly": "Lecture seule",
   "connector.whatsapp.addContact": "Ajouter un contact",
   "connector.whatsapp.addGroup": "Ajouter un groupe",
   "connector.whatsapp.contactTitle": "Ajouter un contact",

@@ -5,7 +5,8 @@ export const messages = {
   "error.mcp.redirectByName": "このアドレスには名前でアクセスできません。",
   "error.mcp.redirectNotSignIn": "このアドレスはサインインの一部ではありません。",
   "error.mcp.redirectRefused": "サインインが拒否されました。MyBot に戻って、もう一度お試しください。",
-  "error.mcp.redirectNoSignIn": "これを待っているサインインはありません。すでに終了した可能性があります。",
+  "error.mcp.redirectNoSignIn":
+    "このサインインは有効ではなくなりました。MyBot に戻って、もう一度サインインを開始してください。",
   "error.mcp.redirectSignedIn": "MyBot にサインインしました。このウィンドウは閉じてもかまいません。",
   "error.mcp.redirectNotSaved": "サインインは完了しませんでした。MyBot に戻って理由を確認してください。",
   "error.mcp.signInFileUnreadable": "MCP のサインインファイルを読み取れません。",

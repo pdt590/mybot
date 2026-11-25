@@ -33,8 +33,11 @@ export const messages = {
   "status.messaging.integrationsSection": "التكاملات",
   "status.messaging.signInReceived": "استلم MyBot تثبيت Slack. يمكنك إغلاق علامة التبويب هذه.",
   "status.messaging.signInUnknown": "لم يبدأ MyBot تثبيت Slack هذا. ابدأه مرة أخرى في MyBot.",
-  "status.messaging.telegramNoAgent": "لا يوجد وكيل يستطيع الإجابة هنا بعد. أضف Telegram Orchestrator في MyBot.",
+  "status.messaging.telegramNoAgent":
+    "لا يوجد وكيل يستطيع الإجابة هنا بعد. في MyBot، افتح المتجر > التطبيقات > Telegram وانقر على إضافة وكيل.",
   "status.messaging.telegramLinked": "MyBot متصل بهذه الدردشة. اذكر {bot} أو ردّ على رسالة من MyBot لسؤال الوكلاء.",
+  "status.messaging.telegramNotLinked":
+    "MyBot غير متصل بهذه الدردشة. لربطه، افتح تطبيق MyBot وانتقل إلى المتجر ← التطبيقات ← Telegram، ثم اختر «إضافة إلى مجموعة» أو «فتح دردشة مباشرة».",
   "status.messaging.telegramOrchestratorName": "Telegram Orchestrator",
   "status.messaging.telegramOrchestratorTitle": "يجيب في Telegram ويسأل الفريق",
   "status.messaging.whatsappNoAgent": "لا يوجد وكيل يستطيع الإجابة هنا بعد. أضف WhatsApp Orchestrator في MyBot.",

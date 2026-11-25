@@ -240,7 +240,7 @@ describe("TelegramBotTransport", () => {
 
   it("allows a group that an allowed person adds, and leaves one that a stranger adds", async () => {
     const store = memoryStore();
-    store.senders.push({ id: OWNER, kind: "contact", name: "Owner" });
+    store.senders.push({ id: OWNER, kind: "contact", name: "Owner", readOnly: false });
     const allowed = start([[botAdded(1, OWNER)]], store);
     await vi.waitFor(() => expect(allowed.access.allowedGroup(BOT_ID, GROUP)).toBe(true));
 

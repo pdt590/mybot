@@ -35,9 +35,11 @@ export const messages = {
   "status.messaging.signInReceived": "MyBot Slack kurulumunu aldı. Bu sekmeyi kapatabilirsiniz.",
   "status.messaging.signInUnknown": "MyBot bu Slack kurulumunu başlatmadı. MyBot içinde tekrar başlatın.",
   "status.messaging.telegramNoAgent":
-    "Henüz burada yanıt verebilecek bir ajan yok. MyBot'ta Telegram Düzenleyicisini ekleyin.",
+    "Henüz burada yanıt verebilecek bir ajan yok. MyBot'ta Pazar yeri > Uygulamalar > Telegram'ı açın ve Ajan ekle'ye tıklayın.",
   "status.messaging.telegramLinked":
     "MyBot bu sohbete bağlandı. Ajanlara sormak için {bot} adını anın veya MyBot'un bir mesajını yanıtlayın.",
+  "status.messaging.telegramNotLinked":
+    'MyBot bu sohbete bağlı değil. Bağlamak için MyBot uygulamasını açın, Pazaryeri → Uygulamalar → Telegram\'a gidin ve "Bir gruba ekle" veya "Doğrudan sohbet aç" seçeneğini seçin.',
   "status.messaging.telegramOrchestratorName": "Telegram Düzenleyicisi",
   "status.messaging.telegramOrchestratorTitle": "Telegram'da yanıt verir ve ekibe sorar",
   "status.messaging.whatsappNoAgent":

@@ -20,7 +20,6 @@ export const messages = {
   "webClient.login.responseInvalid": "Oturum açma yanıtı geçersiz.",
   "webClient.pane.navigation": "Çalışma alanı gezintisi",
   "webClient.pane.chat": "Sohbet",
-  "webClient.pane.routines": "Rutinler",
   "webClient.pane.workspace": "Çalışma alanı",
   "webClient.phoneApp.title": "MyBot uygulamasını kullanın",
   "webClient.phoneApp.description": "Telefonda MyBot en iyi uygulamada çalışır. Aynı e-posta ile giriş yapın.",
@@ -37,7 +36,8 @@ export const messages = {
     "Bu tarayıcıdan ajanlarınızla sohbet etmek için barındırılan bir sunucu oluşturun. MyBot'u bilgisayarınızda da çalıştırabilir veya bir davetle bir sunucuya katılabilirsiniz.",
   "webClient.connect.stepInstall": "Bilgisayarınıza MyBot'u yükleyin ve açın.",
   "webClient.connect.stepSignIn": "E-posta adresinizle oturum açın.",
-  "webClient.connect.stepRemote": "Uzaktan erişimi açın.",
+  "webClient.connect.stepRemote":
+    "MyBot'ta Sunucu ayarları > Üyeler bölümünü açın ve Bu sunucuyu yayımla seçeneğini etkinleştirin.",
   "webClient.notice.download": "MyBot'u indir",
   "webClient.notice.createServer": "Barındırılan sunucu oluştur",
   "webClient.notice.join": "Davet ile katıl",

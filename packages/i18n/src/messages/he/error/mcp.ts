@@ -5,7 +5,7 @@ export const messages = {
   "error.mcp.redirectByName": "הכתובת הזו אינה נגישה לפי שם.",
   "error.mcp.redirectNotSignIn": "הכתובת הזו אינה חלק מהתחברות.",
   "error.mcp.redirectRefused": "ההתחברות נדחתה. יש לחזור אל MyBot ולנסות שוב.",
-  "error.mcp.redirectNoSignIn": "אין התחברות שממתינה לזה. ייתכן שהיא הסתיימה.",
+  "error.mcp.redirectNoSignIn": "ההתחברות הזו כבר לא פעילה. אפשר לחזור ל-MyBot ולהתחיל את ההתחברות מחדש.",
   "error.mcp.redirectSignedIn": "MyBot מחובר. אפשר לסגור את החלון הזה.",
   "error.mcp.redirectNotSaved": "ההתחברות לא הסתיימה. חזרו ל-MyBot כדי לראות למה.",
   "error.mcp.signInFileUnreadable": "לא ניתן לקרוא את קובץ ההתחברות של MCP.",

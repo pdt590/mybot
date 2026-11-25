@@ -39,6 +39,7 @@ asarUnpack:
   - out/main/agent-database-host.js
   - out/main/voice-transcription-host.js
   - out/main/voice-speech-host.js
+  - out/main/process-launcher-host.js
   - node_modules/effect/**/*
   - node_modules/@koromix/koffi-*/**/*
 extraResources:
@@ -120,6 +121,11 @@ mac:
     NSMicrophoneUsageDescription: MyBot uses the microphone to transcribe voice prompts locally on this Mac.
     NSScreenCaptureUsageDescription: MyBot captures the screen so an agent can see the app windows you ask it to control.
     NSAppleEventsUsageDescription: MyBot sends Automation events so an agent can control the apps you ask it to control.
+    NSCalendarsFullAccessUsageDescription: MyBot lets the commands that an agent runs read and change your calendar events.
+    NSCalendarsWriteOnlyAccessUsageDescription: MyBot lets the commands that an agent runs add events to your calendars.
+    NSCalendarsUsageDescription: MyBot lets the commands that an agent runs use your calendars.
+    NSRemindersFullAccessUsageDescription: MyBot lets the commands that an agent runs read and change your reminders.
+    NSRemindersUsageDescription: MyBot lets the commands that an agent runs use your reminders.
     NSUserActivityTypes:
       - NSUserActivityTypeBrowsingWeb
   target:

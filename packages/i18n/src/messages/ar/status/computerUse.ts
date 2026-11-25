@@ -8,6 +8,8 @@ export const messages = {
   "status.computerUse.driverStopped": "توقف مشغّل التحكم في الحاسوب.",
   "status.computerUse.unsupported": "التحكم في الحاسوب متاح على macOS وWindows وLinux.",
   "status.computerUse.driverMissing": "لا يتضمن هذا الإصدار من MyBot مشغّل التحكم في الحاسوب.",
+  "status.computerUse.inputRefused":
+    "على سطح المكتب هذا، لا يستطيع MyBot الكتابة أو النقر في التطبيقات الأخرى. لمهام المواقع، اطلب من الوكيل استخدام متصفح MyBot.",
   "status.computerUse.progressActing": "جارٍ استخدام تطبيق على هذا الحاسوب…",
   "status.computerUse.progressDeciding": "جارٍ تحديد الخطوة التالية في التطبيق…",
 } as const satisfies PartialTranslation<typeof source>;

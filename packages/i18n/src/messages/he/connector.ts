@@ -346,7 +346,8 @@ export const messages = {
   "connector.whatsapp.numbersTitle": "מספרים",
   "connector.whatsapp.linkNumber": "קישור מספר",
   "connector.whatsapp.ownNumberNote": "הצ'אט ״הודעה לעצמך״ והאנשים שאישרת יכולים להגיע ל-MyBot.",
-  "connector.whatsapp.dedicatedNote": "האנשים שאישרת יכולים להגיע ל-MyBot. אנשים אחרים מקבלים קוד שיש למסור לך.",
+  "connector.whatsapp.dedicatedNote":
+    "הצ'אט ״הודעה לעצמך״ והאנשים שאישרת יכולים להגיע ל-MyBot. אנשים אחרים מקבלים קוד שיש למסור לך.",
   "connector.whatsapp.helpLoggedOut": "WhatsApp הסיר את המחשב הזה מהמכשירים המקושרים. יש לקשר את המספר שוב.",
   "connector.whatsapp.helpLoggedOutHost": "WhatsApp הסיר את השרת הזה מהמכשירים המקושרים. יש לקשר את המספר שוב.",
   "connector.whatsapp.helpError": "MyBot לא מצליח להגיע ל-WhatsApp במספר הזה. יש לחבר מחדש או לנתק את המספר.",
@@ -368,7 +369,7 @@ export const messages = {
     "רק הצ'אט ״הודעה לעצמך״ והאנשים שאישרת יכולים לכתוב. אנשים אחרים לא מקבלים תשובה. כשהאפשרות כבויה, MyBot משיב לאנשים לא מוכרים עם קוד.",
   "connector.whatsapp.workingMessage": "הודעת ״עובד על זה…״",
   "connector.whatsapp.workingMessageDescription":
-    "MyBot שולח אותה בזמן שהסוכן עובד, ואז מחליף אותה בתשובה. בקשה שממתינה לבקשה קודמת מקבלת גם הודעת המתנה. יש לכבות כדי לשלוח רק את התשובה.",
+    "MyBot שולח אותה בזמן שהסוכן עובד, ואז מחליף אותה בתשובה. בקשה שממתינה לבקשה קודמת מקבלת גם הודעת המתנה. במספר אישי, רק הצ'אט ״הודעה לעצמך״ מקבל את ההודעות האלה. יש לכבות כדי לשלוח רק את התשובה.",
   "connector.whatsapp.statusReactions": "תגובות סטטוס",
   "connector.whatsapp.statusReactionsDescription":
     "MyBot מגיב עם 👀 כשהודעה מגיעה ועם ✅ כשהתשובה מוכנה. יש לכבות כדי לא לשלוח תגובות.",
@@ -441,6 +442,9 @@ export const messages = {
   "connector.whatsapp.sendersLimit": "מספר אחד יכול לאשר עד {count} אנשי קשר וקבוצות.",
   "connector.whatsapp.senderGroup": "קבוצה",
   "connector.whatsapp.removeSender": "הסרה",
+  "connector.whatsapp.senderAccess": "גישה עבור {name}",
+  "connector.whatsapp.senderReplies": "יכול לתת משימות",
+  "connector.whatsapp.senderReadOnly": "קריאה בלבד",
   "connector.whatsapp.addContact": "הוספת איש קשר",
   "connector.whatsapp.addGroup": "הוספת קבוצה",
   "connector.whatsapp.contactTitle": "הוספת איש קשר",

@@ -18,6 +18,8 @@ export interface HelpMenuProps {
   onOpenDiscord?: () => void;
   onReportProblem?: () => void;
   onSendFeedback?: () => void;
+  onOpenCreditsExplainer?: () => void;
+  onOpenCreditPrices?: () => void;
 }
 
 function releaseDate(value: string): Date {
@@ -28,6 +30,7 @@ function releaseDate(value: string): Date {
 export function HelpMenu(props: HelpMenuProps) {
   const { t, format } = useText();
   const [open, setOpen] = createSignal(false);
+  // MyBot: no credits explainer, because MyBot sells no credits.
   return (
     <DropdownMenu.Root
       placement="right-end"

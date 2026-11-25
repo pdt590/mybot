@@ -35,9 +35,11 @@ export const messages = {
   "status.messaging.signInReceived": "MyBot получил установку Slack. Эту вкладку можно закрыть.",
   "status.messaging.signInUnknown": "MyBot не начинал эту установку Slack. Начните её заново в MyBot.",
   "status.messaging.telegramNoAgent":
-    "Пока нет агента, который мог бы здесь ответить. Добавьте Оркестратора Telegram в MyBot.",
+    "Пока нет агента, который мог бы здесь ответить. В MyBot откройте Маркетплейс > Приложения > Telegram и нажмите «Добавить агента».",
   "status.messaging.telegramLinked":
     "MyBot подключён к этому чату. Упомяните {bot} или ответьте на сообщение MyBot, чтобы обратиться к агентам.",
+  "status.messaging.telegramNotLinked":
+    "MyBot не подключён к этому чату. Чтобы подключить его, откройте приложение MyBot, перейдите в Каталог → Приложения → Telegram и выберите «Добавить в группу» или «Открыть личный чат».",
   "status.messaging.telegramOrchestratorName": "Оркестратор Telegram",
   "status.messaging.telegramOrchestratorTitle": "Отвечает в Telegram и обращается к команде",
   "status.messaging.whatsappNoAgent":
