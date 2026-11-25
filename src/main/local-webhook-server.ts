@@ -202,11 +202,9 @@ export class LocalWebhookServer implements HostWebhookRelay {
       );
       this.#config = next;
       const moved = previous.bindAddress !== next.bindAddress || previous.port !== next.port;
-      if (moved && this.#server) {
+      if (moved) {
         this.#close();
         yield* Effect.promise(() => this.#apply());
-      } else if (moved) {
-        this.#problem = null;
       }
       if (localWebhookBaseUrl(previous) !== localWebhookBaseUrl(next)) this.#options.onAddressChanged?.();
       logger.info("The webhook server settings changed.");
@@ -221,6 +219,11 @@ export class LocalWebhookServer implements HostWebhookRelay {
 
   connected(): boolean {
     return this.#listening;
+  }
+
+  /** Settles when the listener that is opening now listens or fails; at once when none is opening. */
+  opened(): Promise<void> {
+    return this.#opening ?? Promise.resolve();
   }
 
   setEnabled(enabled: boolean): void {

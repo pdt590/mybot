@@ -107,7 +107,9 @@ does not have. Keep it this way on each sync:
 - The webhook trigger is offered in `workflow-model.ts` and `AgentRoutinesSettings.tsx`. When upstream
   changes how a route gets its URL or how a delivery reaches `HostEventsService.receive`, update the
   listener. When upstream adds a new header set, add it to the listener too.
-- Run `bunx vitest run src/main/local-webhook-server.test.ts src/main/ipc/webhook-server-settings.test.ts`.
+- Run `bun scripts/local-webhook-e2e.ts` (real HTTP against the listener and a real workflow; it writes
+  `.openbot-build/local-webhook-e2e/report.json`) and `bunx vitest run src/main/ipc/webhook-server-settings.test.ts`
+  (the renderer-to-main payload check).
 
 ### Folders and install names (already MyBot)
 
