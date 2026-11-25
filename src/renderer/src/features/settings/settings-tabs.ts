@@ -286,6 +286,8 @@ export function settingsTabShown(
   if (tab === "billing") return false;
   // MyBot: no referral program (it pays in upstream plans).
   if (tab === "referral") return false;
+  // MyBot: no Mobile Connect tab (it pairs phones through the upstream mobile app).
+  if (tab === "mobile-connect") return false;
   if (tab === "dynamic-island") return dynamicIslandSettingsShown(window.platform, window.chatWindow);
   if (tab === "agent-dock") return window.platform !== undefined && !window.chatWindow;
   return true;

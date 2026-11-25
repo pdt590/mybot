@@ -267,6 +267,9 @@ const SECTION_ROWS: Partial<Record<Section, readonly AppTextKey[]>> = {
   experimental: ["server.settings.experimentalCrm"],
 };
 
+// MyBot: off, so the "Server settings unavailable" toast never renders.
+const MYBOT_SHOW_LOAD_ERROR_TOAST: boolean = false;
+
 const NAV_SECTIONS: ReadonlyArray<{ value: Section; icon: typeof Settings; group?: AppTextKey }> = [
   { value: "general", icon: Settings },
   { value: "providers", icon: Sparkles },
@@ -663,7 +666,13 @@ export function ServerSettingsModal(props: ServerSettingsModalProps) {
         restoreFocusTarget={props.restoreFocusTarget}
         onContentElement={(element) => setModalElement(element)}
         floatingContent={
-          <Show when={props.loadError && (section() === "general" || section() === "members")}>
+          // MyBot: the "Server settings unavailable" toast is hidden. MyBot has no hosted
+          // sign-in, so the load always failed with "Sign in is required."
+          <Show
+            when={
+              MYBOT_SHOW_LOAD_ERROR_TOAST && props.loadError && (section() === "general" || section() === "members")
+            }
+          >
             <Alert
               ref={measureToast}
               class="server-settings-error-toast"

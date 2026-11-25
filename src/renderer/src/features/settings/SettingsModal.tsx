@@ -182,7 +182,10 @@ export function SettingsModal(props: SettingsModalProps) {
   createEffect(
     () => {
       const tab = props.open ? props.openTab : undefined;
-      return tab === "hosted-servers" || tab === "billing" || tab === "referral" ? "general" : tab;
+      // MyBot: the hidden Mobile Connect tab opens General instead.
+      return tab === "hosted-servers" || tab === "billing" || tab === "referral" || tab === "mobile-connect"
+        ? "general"
+        : tab;
     },
     (tab) => {
       if (!tab) return;
@@ -218,7 +221,7 @@ export function SettingsModal(props: SettingsModalProps) {
         (value === "agent-dock" && agentDockShown()) ||
         value === "computer-use" ||
         value === "profile" ||
-        value === "mobile-connect" ||
+        // MyBot: no "mobile-connect" (the tab is hidden).
         value === "updates"
       ) {
         setActiveTab(value);
