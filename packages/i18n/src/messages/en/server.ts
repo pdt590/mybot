@@ -345,6 +345,30 @@ export const messages = defineMessages("server", {
   "server.routineFeed.turnOffDescription":
     "The current URL stops working. If you turn the feed on again, it gets a new URL.",
   "server.routineFeed.agentsLoadFailed": "Could not load the agents.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Webhook server",
+  "server.webhookServer.loading": "Loading the webhook server",
+  "server.webhookServer.description":
+    "Webhook triggers on this computer receive their events here. For senders on the internet, put a tunnel in front of this computer, for example cloudflared or Tailscale Funnel, and enter its address as the public address.",
+  "server.webhookServer.listening": "On. It listens on {address}.",
+  "server.webhookServer.idle": "Off. It starts when a routine or a workflow has a webhook trigger.",
+  "server.webhookServer.portInUse": "Port {port} is in use by another program. Choose another port.",
+  "server.webhookServer.unavailable": "This computer cannot listen on {address}. Check the address.",
+  "server.webhookServer.baseUrl": "Webhook URLs start with",
+  "server.webhookServer.publicUrl": "Public address",
+  "server.webhookServer.publicUrlHint":
+    "The address that senders use, for example https://hooks.example.com. Leave it empty to use the local address.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Listen on",
+  "server.webhookServer.bindLocal": "This computer only",
+  "server.webhookServer.bindAll": "All networks",
+  "server.webhookServer.bindAllHint":
+    "Other devices on your networks can reach the server. Each request still needs the routine's signing secret.",
+  "server.webhookServer.port": "Port",
+  "server.webhookServer.publicUrlInvalid": "Enter an http or https address without a query or a fragment.",
+  "server.webhookServer.portInvalid": "Enter a port from 1 to 65535.",
+  "server.webhookServer.save": "Save",
+  "server.webhookServer.saved": "Saved. Each webhook trigger has its new URL.",
   "server.settings.nameTooShort": "Enter at least {limit} characters.",
   "server.settings.nameTooLong": "Use no more than {limit} characters.",
   "server.settings.actionFailedTitle": "Server action failed",

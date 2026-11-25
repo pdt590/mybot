@@ -287,9 +287,9 @@ export const messages = {
   "routine.webhook.copyUrl": "Endpunkt kopieren",
   "routine.webhook.urlAfterSave": "Speichere die Routine, um ihren Endpunkt und ihr Signaturgeheimnis zu erhalten.",
   "routine.webhook.urlPending": "Endpunkt wird erstellt…",
-  "routine.webhook.urlPendingOffline": "Wird angezeigt, wenn sich der Host mit dem Relay verbindet.",
+  "routine.webhook.urlPendingOffline": "Wird angezeigt, sobald der Webhook-Server läuft.",
   "routine.webhook.relayOffline":
-    "Der Host ist offline. Anfragen an diesen Endpunkt schlagen fehl, bis er sich verbindet.",
+    "Der Webhook-Server läuft nicht. Anfragen an diesen Endpunkt schlagen fehl, bis er startet.",
   "routine.webhook.events": "Ereignisse",
   "routine.webhook.filterEvents": "Ereignisse filtern",
   "routine.webhook.eventsAll": "Alle Ereignisse",

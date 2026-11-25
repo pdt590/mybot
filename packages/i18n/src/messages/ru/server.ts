@@ -343,6 +343,30 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "Текущий URL перестанет работать. Если вы снова включите ленту, она получит новый URL.",
   "server.routineFeed.agentsLoadFailed": "Не удалось загрузить агентов.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Сервер вебхуков",
+  "server.webhookServer.loading": "Загрузка сервера вебхуков",
+  "server.webhookServer.description":
+    "Триггеры вебхуков на этом компьютере получают здесь свои события. Для отправителей из интернета поставьте перед этим компьютером туннель, например cloudflared или Tailscale Funnel, и укажите его адрес как публичный адрес.",
+  "server.webhookServer.listening": "Включён. Слушает {address}.",
+  "server.webhookServer.idle": "Выключен. Запускается, когда у рутины или рабочего процесса есть триггер вебхука.",
+  "server.webhookServer.portInUse": "Порт {port} занят другой программой. Выберите другой порт.",
+  "server.webhookServer.unavailable": "Этот компьютер не может слушать {address}. Проверьте адрес.",
+  "server.webhookServer.baseUrl": "URL вебхуков начинаются с",
+  "server.webhookServer.publicUrl": "Публичный адрес",
+  "server.webhookServer.publicUrlHint":
+    "Адрес, который используют отправители, например https://hooks.example.com. Оставьте пустым, чтобы использовать локальный адрес.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Слушать на",
+  "server.webhookServer.bindLocal": "Только этот компьютер",
+  "server.webhookServer.bindAll": "Все сети",
+  "server.webhookServer.bindAllHint":
+    "Другие устройства в ваших сетях смогут обращаться к серверу. Каждому запросу всё равно нужен секрет подписи рутины.",
+  "server.webhookServer.port": "Порт",
+  "server.webhookServer.publicUrlInvalid": "Введите адрес http или https без запроса и фрагмента.",
+  "server.webhookServer.portInvalid": "Введите порт от 1 до 65535.",
+  "server.webhookServer.save": "Сохранить",
+  "server.webhookServer.saved": "Сохранено. У каждого триггера вебхука новый URL.",
   "server.settings.nameTooShort": "Введите не менее {limit} символов.",
   "server.settings.nameTooLong": "Используйте не более {limit} символов.",
   "server.settings.actionFailedTitle": "Не удалось выполнить действие с сервером",

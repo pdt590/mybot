@@ -367,6 +367,30 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "يتوقف عنوان URL الحالي عن العمل. إذا شغّلت الموجز مرة أخرى، فسيحصل على عنوان جديد.",
   "server.routineFeed.agentsLoadFailed": "تعذّر تحميل الوكلاء.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "خادم webhook",
+  "server.webhookServer.loading": "جارٍ تحميل خادم webhook",
+  "server.webhookServer.description":
+    "تتلقى مشغّلات webhook على هذا الكمبيوتر أحداثها هنا. لتلقي الطلبات من مرسلين على الإنترنت، ضع نفقًا أمام هذا الكمبيوتر، مثل cloudflared أو Tailscale Funnel، وأدخل عنوانه كعنوان عام.",
+  "server.webhookServer.listening": "يعمل. يستمع على {address}.",
+  "server.webhookServer.idle": "متوقف. يبدأ عندما يكون لروتين أو لسير عمل مشغّل webhook.",
+  "server.webhookServer.portInUse": "المنفذ {port} مستخدم من برنامج آخر. اختر منفذًا آخر.",
+  "server.webhookServer.unavailable": "لا يستطيع هذا الكمبيوتر الاستماع على {address}. تحقق من العنوان.",
+  "server.webhookServer.baseUrl": "تبدأ عناوين URL لـ webhook بـ",
+  "server.webhookServer.publicUrl": "العنوان العام",
+  "server.webhookServer.publicUrlHint":
+    "العنوان الذي يستخدمه المرسلون، مثل https://hooks.example.com. اتركه فارغًا لاستخدام العنوان المحلي.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "الاستماع على",
+  "server.webhookServer.bindLocal": "هذا الكمبيوتر فقط",
+  "server.webhookServer.bindAll": "كل الشبكات",
+  "server.webhookServer.bindAllHint":
+    "يمكن للأجهزة الأخرى في شبكاتك الوصول إلى الخادم. ومع ذلك يحتاج كل طلب إلى سر التوقيع الخاص بالروتين.",
+  "server.webhookServer.port": "المنفذ",
+  "server.webhookServer.publicUrlInvalid": "أدخل عنوان http أو https بدون استعلام وبدون جزء.",
+  "server.webhookServer.portInvalid": "أدخل منفذًا من 1 إلى 65535.",
+  "server.webhookServer.save": "حفظ",
+  "server.webhookServer.saved": "تم الحفظ. لكل مشغّل webhook عنوان URL جديد.",
   "server.settings.nameTooShort": "أدخل {limit} حرف على الأقل.",
   "server.settings.nameTooLong": "استخدم {limit} حرف كحد أقصى.",
   "server.settings.actionFailedTitle": "فشل إجراء الخادم",

@@ -284,9 +284,9 @@ export const messages = {
   "routine.webhook.copyUrl": "Uç noktayı kopyala",
   "routine.webhook.urlAfterSave": "Uç noktasını ve imzalama gizli anahtarını almak için rutini kaydedin.",
   "routine.webhook.urlPending": "Uç nokta oluşturuluyor…",
-  "routine.webhook.urlPendingOffline": "Ana makine aktarıcıya bağlandığında gösterilir.",
+  "routine.webhook.urlPendingOffline": "Webhook sunucusu başladığında gösterilir.",
   "routine.webhook.relayOffline":
-    "Ana makine çevrim dışı. Bağlanana kadar bu uç noktaya gelen istekler başarısız olur.",
+    "Webhook sunucusu çalışmıyor. Başlayana kadar bu uç noktaya gelen istekler başarısız olur.",
   "routine.webhook.events": "Olaylar",
   "routine.webhook.filterEvents": "Olayları filtrele",
   "routine.webhook.eventsAll": "Tüm olaylar",

@@ -1009,9 +1009,10 @@ export function AgentRoutinesSettings(props: AgentRoutinesSettingsProps) {
               </label>
               <section class="agent-routine-when" aria-labelledby="agent-routine-when-heading">
                 <h3 id="agent-routine-when-heading">{t("routine.settings.whenToRun")}</h3>
-                {/* MyBot: no webhook trigger. Its address comes from the upstream account service, which
-                    needs a signed-in account and a registered host; only the schedule is offered. */}
-                <Show when={false}>
+                {/* A host with events offers both triggers, so the choice is always in view.
+                    MyBot: the webhook trigger is back; the app itself takes the deliveries
+                    (`src/main/local-webhook-server.ts`). */}
+                <Show when={props.port.events}>
                   <fieldset class="agent-routine-trigger-kind">
                     <legend class="sr-only">{t("routine.trigger.kind")}</legend>
                     <Button

@@ -131,6 +131,8 @@ import { telegramBotIpcHandlers } from "./ipc/telegram-bot-handlers";
 import { updateIpcHandlers } from "./ipc/update-handlers";
 import { vaultIpcHandlers } from "./ipc/vault-handlers";
 import { voiceIpcHandlers } from "./ipc/voice-handlers";
+// MyBot: the app's own webhook server.
+import { webhookServerIpcHandlers } from "./ipc/webhook-server-handlers";
 import { workflowIpcHandlers } from "./ipc/workflow-handlers";
 import { KeepAwake } from "./keep-awake";
 import { stopAppImageCrashpadHandlerAtExit } from "./linux-appimage-crashpad";
@@ -804,6 +806,7 @@ function registerIpcHandlers({
   hostedServers,
   localServers,
   routineFeed,
+  webhookServer,
   events,
   customProviderChanges,
   customAgentChanges,
@@ -947,6 +950,7 @@ function registerIpcHandlers({
     ...licenseIpcHandlers({ license }),
     ...creditsIpcHandlers({ credits }),
     ...routineFeedIpcHandlers({ routineFeed }),
+    ...webhookServerIpcHandlers({ webhookServer }),
     ...eventsIpcHandlers({ events, remoteServers }),
     ...hostedServerIpcHandlers({ hostedServers }),
     ...localServerIpcHandlers({ localServers }),

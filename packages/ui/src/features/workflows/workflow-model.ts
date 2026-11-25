@@ -41,8 +41,8 @@ export interface WorkflowFeatures {
 
 export const WORKFLOW_FEATURES_V1: WorkflowFeatures = {
   kinds: WORKFLOW_NODE_KINDS.filter((kind) => kind !== "image" && kind !== "asset"),
-  // MyBot: no webhook trigger. Its address needs the upstream account service and a registered host.
-  triggers: ["manual", "schedule"],
+  // MyBot: the webhook trigger is back; the app itself takes the deliveries (`src/main/local-webhook-server.ts`).
+  triggers: ["manual", "schedule", "webhook"],
   outputs: ["notify", "channel"],
   uploads: false,
   presence: false,

@@ -348,6 +348,30 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "De huidige URL werkt niet meer. Als je de feed weer aanzet, krijgt hij een nieuwe URL.",
   "server.routineFeed.agentsLoadFailed": "Kan de agents niet laden.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Webhookserver",
+  "server.webhookServer.loading": "Webhookserver laden",
+  "server.webhookServer.description":
+    "Webhooktriggers op deze computer krijgen hier hun gebeurtenissen. Voor afzenders op internet zet je een tunnel voor deze computer, bijvoorbeeld cloudflared of Tailscale Funnel, en vul je het adres daarvan in als openbaar adres.",
+  "server.webhookServer.listening": "Aan. Hij luistert op {address}.",
+  "server.webhookServer.idle": "Uit. Hij start als een routine of een workflow een webhooktrigger heeft.",
+  "server.webhookServer.portInUse": "Poort {port} is in gebruik door een ander programma. Kies een andere poort.",
+  "server.webhookServer.unavailable": "Deze computer kan niet luisteren op {address}. Controleer het adres.",
+  "server.webhookServer.baseUrl": "Webhook-URL's beginnen met",
+  "server.webhookServer.publicUrl": "Openbaar adres",
+  "server.webhookServer.publicUrlHint":
+    "Het adres dat afzenders gebruiken, bijvoorbeeld https://hooks.example.com. Laat het leeg om het lokale adres te gebruiken.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Luisteren op",
+  "server.webhookServer.bindLocal": "Alleen deze computer",
+  "server.webhookServer.bindAll": "Alle netwerken",
+  "server.webhookServer.bindAllHint":
+    "Andere apparaten op je netwerken kunnen de server bereiken. Elk verzoek heeft nog steeds het ondertekeningsgeheim van de routine nodig.",
+  "server.webhookServer.port": "Poort",
+  "server.webhookServer.publicUrlInvalid": "Vul een http- of https-adres in zonder query en zonder fragment.",
+  "server.webhookServer.portInvalid": "Vul een poort in van 1 tot 65535.",
+  "server.webhookServer.save": "Opslaan",
+  "server.webhookServer.saved": "Opgeslagen. Elke webhooktrigger heeft zijn nieuwe URL.",
   "server.settings.nameTooShort": "Voer minstens {limit} tekens in.",
   "server.settings.nameTooLong": "Gebruik niet meer dan {limit} tekens.",
   "server.settings.actionFailedTitle": "Serveractie mislukt",

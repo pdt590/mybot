@@ -108,6 +108,8 @@ export * from "./ipc-team-host";
 export * from "./ipc-telegram-bot";
 export * from "./ipc-vault";
 export * from "./ipc-voice";
+// MyBot: the app's own webhook server.
+export * from "./ipc-webhook-server";
 export * from "./ipc-workflow-answer-paths";
 export * from "./ipc-workflow-answers";
 export * from "./ipc-workflow-discord";

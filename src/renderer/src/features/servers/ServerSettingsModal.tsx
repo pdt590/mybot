@@ -104,6 +104,8 @@ import { type ServerTransferOptions, ServerTransferPanel } from "./ServerTransfe
 import type { ServerTurnLimitsOptions } from "./ServerTurnLimitsSetting";
 import { type ServerUpdateOptions, ServerUpdatePanel } from "./ServerUpdatePanel";
 import type { ServerVoiceModelOptions } from "./ServerVoiceModelSetting";
+// MyBot: the app's own webhook server.
+import { type ServerWebhookServerOptions, ServerWebhookServerPanel } from "./ServerWebhookServerPanel";
 import { PROVIDER_SEARCH_NAMES, serverCanAdminister, serverRoleCanAdminister } from "./server-capabilities";
 import type { ServerSettingsSectionHost } from "./server-settings-section";
 
@@ -163,6 +165,8 @@ export interface ServerSettingsModalProps {
   serverAudit?: ServerAuditOptions | undefined;
   agentDefaults?: ServerAgentDefaultsOptions | undefined;
   routineFeed?: ServerRoutineFeedOptions | undefined;
+  // MyBot: the app's own webhook server, in the Routines tab of this computer.
+  webhookServer?: ServerWebhookServerOptions | undefined;
   browserProfiles?: ServerBrowserProfilesOptions | undefined;
   vault?: ServerVaultOptions | undefined;
   crm?: CrmHost | undefined;
@@ -446,7 +450,7 @@ export function ServerSettingsModal(props: ServerSettingsModalProps) {
       case "transfer":
         return Boolean(props.instanceTransfer);
       case "routines":
-        return Boolean(props.routineFeed);
+        return Boolean(props.routineFeed || props.webhookServer);
       case "browser-profiles":
         return Boolean(props.browserProfiles);
       case "experimental":
@@ -951,18 +955,32 @@ export function ServerSettingsModal(props: ServerSettingsModalProps) {
             </Tabs.Content>
           )}
         </Show>
-        <Show when={props.routineFeed}>
-          {(routineFeed) => (
-            <Tabs.Content value="routines" class="settings-modal-tab-panel server-settings-panel" data-tab="routines">
-              <ServerRoutineFeedPanel
-                {...routineFeed()}
-                busy={busy}
-                run={run}
-                menuMount={modalElement}
-                showCopyError={host.showCopyError}
-              />
-            </Tabs.Content>
-          )}
+        <Show when={props.routineFeed || props.webhookServer}>
+          <Tabs.Content value="routines" class="settings-modal-tab-panel server-settings-panel" data-tab="routines">
+            <Show when={props.routineFeed}>
+              {(routineFeed) => (
+                <ServerRoutineFeedPanel
+                  {...routineFeed()}
+                  busy={busy}
+                  run={run}
+                  menuMount={modalElement}
+                  showCopyError={host.showCopyError}
+                />
+              )}
+            </Show>
+            {/* MyBot: the app's own webhook server. */}
+            <Show when={props.webhookServer}>
+              {(webhookServer) => (
+                <ServerWebhookServerPanel
+                  {...webhookServer()}
+                  busy={busy}
+                  run={run}
+                  menuMount={modalElement}
+                  showCopyError={host.showCopyError}
+                />
+              )}
+            </Show>
+          </Tabs.Content>
         </Show>
         <Show when={props.browserProfiles}>
           {(browserProfiles) => (

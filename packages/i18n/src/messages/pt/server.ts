@@ -335,6 +335,30 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "A URL atual para de funcionar. Se você ligar o feed de novo, ele terá uma nova URL.",
   "server.routineFeed.agentsLoadFailed": "Não foi possível carregar os agentes.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Servidor de webhooks",
+  "server.webhookServer.loading": "Carregando o servidor de webhooks",
+  "server.webhookServer.description":
+    "Os gatilhos de webhook deste computador recebem seus eventos aqui. Para remetentes na internet, coloque um túnel na frente deste computador, por exemplo cloudflared ou Tailscale Funnel, e informe o endereço dele como endereço público.",
+  "server.webhookServer.listening": "Ligado. Escuta em {address}.",
+  "server.webhookServer.idle": "Desligado. Inicia quando uma rotina ou um fluxo de trabalho tem um gatilho de webhook.",
+  "server.webhookServer.portInUse": "A porta {port} está sendo usada por outro programa. Escolha outra porta.",
+  "server.webhookServer.unavailable": "Este computador não pode escutar em {address}. Verifique o endereço.",
+  "server.webhookServer.baseUrl": "As URLs de webhook começam com",
+  "server.webhookServer.publicUrl": "Endereço público",
+  "server.webhookServer.publicUrlHint":
+    "O endereço que os remetentes usam, por exemplo https://hooks.example.com. Deixe vazio para usar o endereço local.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Escutar em",
+  "server.webhookServer.bindLocal": "Só este computador",
+  "server.webhookServer.bindAll": "Todas as redes",
+  "server.webhookServer.bindAllHint":
+    "Outros dispositivos das suas redes podem alcançar o servidor. Cada solicitação ainda precisa do segredo de assinatura da rotina.",
+  "server.webhookServer.port": "Porta",
+  "server.webhookServer.publicUrlInvalid": "Informe um endereço http ou https sem consulta e sem fragmento.",
+  "server.webhookServer.portInvalid": "Informe uma porta de 1 a 65535.",
+  "server.webhookServer.save": "Salvar",
+  "server.webhookServer.saved": "Salvo. Cada gatilho de webhook tem sua nova URL.",
   "server.settings.nameTooShort": "Digite pelo menos {limit} caracteres.",
   "server.settings.nameTooLong": "Use no máximo {limit} caracteres.",
   "server.settings.actionFailedTitle": "Falha na ação do servidor",

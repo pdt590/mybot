@@ -47,16 +47,17 @@ const IGNORED_TEXT = {
   inactive: "routine.webhook.testIgnoredInactive",
 } as const satisfies Record<NonNullable<WebhookTestResult["reason"]>, AppTextKey>;
 
+// MyBot: the example signs with MyBot's own headers (`X-MyBot-*`), which the app's webhook server reads.
 function curlExample(url: string): string {
   return [
     `BODY='{"type":"order.created","data":{"order":{"status":"paid"}}}'`,
     "TS=$(date +%s); ID=$(openssl rand -hex 16)",
-    `SIG=$(printf '%s.%s.%s' "$TS" "$ID" "$BODY" | openssl dgst -sha256 -hmac "$OPENBOT_WEBHOOK_SECRET" | sed 's/^.* //')`,
+    `SIG=$(printf '%s.%s.%s' "$TS" "$ID" "$BODY" | openssl dgst -sha256 -hmac "$MYBOT_WEBHOOK_SECRET" | sed 's/^.* //')`,
     `curl -X POST "${url}" \\`,
     `  -H "Content-Type: application/json" \\`,
-    `  -H "X-OpenBot-Timestamp: $TS" \\`,
-    `  -H "X-OpenBot-Delivery-Id: $ID" \\`,
-    `  -H "X-OpenBot-Signature: sha256=$SIG" \\`,
+    `  -H "X-MyBot-Timestamp: $TS" \\`,
+    `  -H "X-MyBot-Delivery-Id: $ID" \\`,
+    `  -H "X-MyBot-Signature: sha256=$SIG" \\`,
     `  --data "$BODY"`,
   ].join("\n");
 }

@@ -327,6 +327,32 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "現在の URL は使えなくなります。フィードを再びオンにすると、新しい URL になります。",
   "server.routineFeed.agentsLoadFailed": "エージェントを読み込めませんでした。",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Webhook サーバー",
+  "server.webhookServer.loading": "Webhook サーバーを読み込み中",
+  "server.webhookServer.description":
+    "このコンピューターの Webhook トリガーは、ここでイベントを受け取ります。インターネット上の送信元から受け取るには、cloudflared や Tailscale Funnel などのトンネルをこのコンピューターの前に置き、そのアドレスを公開アドレスに入力してください。",
+  "server.webhookServer.listening": "オン。{address} で待ち受けています。",
+  "server.webhookServer.idle": "オフ。ルーティンかワークフローに Webhook トリガーがあると起動します。",
+  "server.webhookServer.portInUse": "ポート {port} は別のプログラムが使用しています。別のポートを選んでください。",
+  "server.webhookServer.unavailable":
+    "このコンピューターは {address} で待ち受けできません。アドレスを確認してください。",
+  "server.webhookServer.baseUrl": "Webhook URL の先頭",
+  "server.webhookServer.publicUrl": "公開アドレス",
+  "server.webhookServer.publicUrlHint":
+    "送信元が使うアドレスです（例: https://hooks.example.com）。空欄にするとローカルのアドレスを使います。",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "待ち受け先",
+  "server.webhookServer.bindLocal": "このコンピューターのみ",
+  "server.webhookServer.bindAll": "すべてのネットワーク",
+  "server.webhookServer.bindAllHint":
+    "ネットワーク上のほかのデバイスからサーバーに届きます。それでも各リクエストにはルーティンの署名シークレットが必要です。",
+  "server.webhookServer.port": "ポート",
+  "server.webhookServer.publicUrlInvalid":
+    "クエリやフラグメントのない http または https のアドレスを入力してください。",
+  "server.webhookServer.portInvalid": "1 から 65535 までのポートを入力してください。",
+  "server.webhookServer.save": "保存",
+  "server.webhookServer.saved": "保存しました。各 Webhook トリガーに新しい URL が付きました。",
   "server.settings.nameTooShort": "{limit} 文字以上で入力してください。",
   "server.settings.nameTooLong": "{limit} 文字以内で入力してください。",
   "server.settings.actionFailedTitle": "サーバーの操作に失敗しました",

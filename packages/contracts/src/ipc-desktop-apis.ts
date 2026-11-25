@@ -60,6 +60,8 @@ export type ReferralDesktopApi = GroupApi<IpcEndpoints["referral"]>;
 export type CreditsDesktopApi = GroupApi<IpcEndpoints["credits"]>;
 export type LicenseDesktopApi = GroupApi<IpcEndpoints["license"]>;
 export type RoutineFeedDesktopApi = GroupApi<IpcEndpoints["routineFeed"]>;
+/** MyBot: the app's own webhook server. */
+export type WebhookServerDesktopApi = GroupApi<IpcEndpoints["webhookServer"]>;
 
 export type HostedServersDesktopApi = GroupApi<IpcEndpoints["hostedServers"]>;
 

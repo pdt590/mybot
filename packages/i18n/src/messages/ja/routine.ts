@@ -275,9 +275,9 @@ export const messages = {
   "routine.webhook.copyUrl": "エンドポイントをコピー",
   "routine.webhook.urlAfterSave": "エンドポイントと署名シークレットを取得するには、ルーティンを保存してください。",
   "routine.webhook.urlPending": "エンドポイントを作成しています…",
-  "routine.webhook.urlPendingOffline": "ホストがリレーに接続すると表示されます。",
+  "routine.webhook.urlPendingOffline": "Webhook サーバーが起動すると表示されます。",
   "routine.webhook.relayOffline":
-    "ホストはオフラインです。接続するまで、このエンドポイントへのリクエストは失敗します。",
+    "Webhook サーバーが動作していません。起動するまで、このエンドポイントへのリクエストは失敗します。",
   "routine.webhook.events": "イベント",
   "routine.webhook.filterEvents": "イベントを絞り込む",
   "routine.webhook.eventsAll": "すべてのイベント",

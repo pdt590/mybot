@@ -625,3 +625,26 @@
   text-align: end;
   font-variant-numeric: tabular-nums;
 }
+
+/* MyBot: the app's own webhook server (ServerWebhookServerPanel). */
+.server-settings-webhook-server {
+  display: flex;
+  flex-direction: column;
+  gap: var(--openbot-space-3);
+}
+
+.server-settings-webhook-server-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--openbot-space-3);
+}
+
+.server-settings-webhook-server-row > .ui-field:first-child {
+  flex: 1;
+  min-width: 12rem;
+}
+
+.server-settings-webhook-server-port {
+  width: 7rem;
+}

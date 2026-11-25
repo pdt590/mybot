@@ -336,6 +336,31 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "La URL actual deja de funcionar. Si activas la fuente de nuevo, tendrá una URL nueva.",
   "server.routineFeed.agentsLoadFailed": "No se pudieron cargar los agentes.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Servidor de webhooks",
+  "server.webhookServer.loading": "Cargando el servidor de webhooks",
+  "server.webhookServer.description":
+    "Los disparadores de webhook de este equipo reciben aquí sus eventos. Para remitentes en internet, pon un túnel delante de este equipo, por ejemplo cloudflared o Tailscale Funnel, y escribe su dirección como dirección pública.",
+  "server.webhookServer.listening": "Activado. Escucha en {address}.",
+  "server.webhookServer.idle":
+    "Desactivado. Se inicia cuando una rutina o un flujo de trabajo tiene un disparador de webhook.",
+  "server.webhookServer.portInUse": "Otro programa está usando el puerto {port}. Elige otro puerto.",
+  "server.webhookServer.unavailable": "Este equipo no puede escuchar en {address}. Revisa la dirección.",
+  "server.webhookServer.baseUrl": "Las URL de webhook empiezan por",
+  "server.webhookServer.publicUrl": "Dirección pública",
+  "server.webhookServer.publicUrlHint":
+    "La dirección que usan los remitentes, por ejemplo https://hooks.example.com. Déjala vacía para usar la dirección local.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Escuchar en",
+  "server.webhookServer.bindLocal": "Solo este equipo",
+  "server.webhookServer.bindAll": "Todas las redes",
+  "server.webhookServer.bindAllHint":
+    "Otros dispositivos de tus redes pueden llegar al servidor. Cada solicitud sigue necesitando el secreto de firma de la rutina.",
+  "server.webhookServer.port": "Puerto",
+  "server.webhookServer.publicUrlInvalid": "Escribe una dirección http o https sin consulta ni fragmento.",
+  "server.webhookServer.portInvalid": "Escribe un puerto del 1 al 65535.",
+  "server.webhookServer.save": "Guardar",
+  "server.webhookServer.saved": "Guardado. Cada disparador de webhook tiene su nueva URL.",
   "server.settings.nameTooShort": "Introduce al menos {limit} caracteres.",
   "server.settings.nameTooLong": "Usa como máximo {limit} caracteres.",
   "server.settings.actionFailedTitle": "Error en la acción del servidor",

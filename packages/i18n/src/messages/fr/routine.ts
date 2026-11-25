@@ -287,9 +287,9 @@ export const messages = {
   "routine.webhook.urlAfterSave":
     "Enregistrez la routine pour obtenir son point de terminaison et son secret de signature.",
   "routine.webhook.urlPending": "Création du point de terminaison…",
-  "routine.webhook.urlPendingOffline": "Affiché quand l’hôte se connecte au relais.",
+  "routine.webhook.urlPendingOffline": "Affiché quand le serveur de webhooks démarre.",
   "routine.webhook.relayOffline":
-    "L’hôte est hors ligne. Les requêtes vers ce point de terminaison échouent jusqu’à sa connexion.",
+    "Le serveur de webhooks ne tourne pas. Les requêtes vers ce point de terminaison échouent jusqu’à son démarrage.",
   "routine.webhook.events": "Événements",
   "routine.webhook.filterEvents": "Filtrer les événements",
   "routine.webhook.eventsAll": "Tous les événements",

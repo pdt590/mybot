@@ -2,15 +2,15 @@ import type { RoutineLimitPolicy, RoutineRunPlace } from "@openbot/contracts/ipc
 import { type EventFilter, type EventRoutine, isEventFilter } from "@openbot/contracts/ipc-events";
 import { type DynamicRecord, isString } from "@openbot/contracts/runtime-values";
 import { WEBHOOK_DELIVERY_BODY_BYTES_LIMIT } from "@openbot/contracts/signal-protocol/messages";
-import {
-  WEBHOOK_DELIVERY_ID_HEADER,
-  WEBHOOK_MAX_CLOCK_SKEW_SECONDS,
-  WEBHOOK_SIGNATURE_HEADER,
-  WEBHOOK_TIMESTAMP_HEADER,
-} from "@openbot/contracts/signal-protocol/webhook-route";
+import { WEBHOOK_MAX_CLOCK_SKEW_SECONDS } from "@openbot/contracts/signal-protocol/webhook-route";
 import { createOpenBotLogger } from "@openbot/logging";
 import { RoutineInputError } from "@openbot/team-client/routine-schedule";
 import { Effect } from "effect";
+import {
+  MYBOT_WEBHOOK_DELIVERY_ID_HEADER,
+  MYBOT_WEBHOOK_SIGNATURE_HEADER,
+  MYBOT_WEBHOOK_TIMESTAMP_HEADER,
+} from "../mybot-webhook-headers";
 import type { RoutineOperationFailed } from "./routine-scheduler";
 
 export const CREATE_WEBHOOK_ROUTINE_TOOL = "create_webhook_routine";
@@ -45,11 +45,12 @@ const WEBHOOK_REQUEST_FORMAT = {
   contentType: "application/json",
   body: '{ "type": string, "occurredAt"?: ISO 8601 date-time, "data"?: any JSON value }',
   bodyLimitBytes: WEBHOOK_DELIVERY_BODY_BYTES_LIMIT,
+  // MyBot: the app's own webhook server reads the `x-mybot-*` headers.
   headers: {
-    [WEBHOOK_TIMESTAMP_HEADER]: `Unix time in seconds. It must be within ${WEBHOOK_MAX_CLOCK_SKEW_SECONDS} seconds of the host clock.`,
-    [WEBHOOK_DELIVERY_ID_HEADER]:
+    [MYBOT_WEBHOOK_TIMESTAMP_HEADER]: `Unix time in seconds. It must be within ${WEBHOOK_MAX_CLOCK_SKEW_SECONDS} seconds of the host clock.`,
+    [MYBOT_WEBHOOK_DELIVERY_ID_HEADER]:
       "A unique ID for each event, up to 256 characters: a letter or a digit first, then letters, digits, '.', '_', ':' or '-'. A repeat of an ID is a duplicate.",
-    [WEBHOOK_SIGNATURE_HEADER]:
+    [MYBOT_WEBHOOK_SIGNATURE_HEADER]:
       "sha256=<hex HMAC-SHA256 of '<timestamp>.<delivery ID>.<exact body bytes>', keyed with the signing secret>",
   },
   responses: {

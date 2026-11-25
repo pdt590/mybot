@@ -340,6 +340,30 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "Die aktuelle URL funktioniert dann nicht mehr. Wenn du den Feed wieder aktivierst, bekommt er eine neue URL.",
   "server.routineFeed.agentsLoadFailed": "Agenten konnten nicht geladen werden.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Webhook-Server",
+  "server.webhookServer.loading": "Webhook-Server wird geladen",
+  "server.webhookServer.description":
+    "Webhook-Trigger auf diesem Computer empfangen ihre Ereignisse hier. Für Absender im Internet stellst du einen Tunnel vor diesen Computer, zum Beispiel cloudflared oder Tailscale Funnel, und trägst seine Adresse als öffentliche Adresse ein.",
+  "server.webhookServer.listening": "An. Er lauscht auf {address}.",
+  "server.webhookServer.idle": "Aus. Er startet, wenn eine Routine oder ein Workflow einen Webhook-Trigger hat.",
+  "server.webhookServer.portInUse": "Port {port} wird von einem anderen Programm belegt. Wähle einen anderen Port.",
+  "server.webhookServer.unavailable": "Dieser Computer kann nicht auf {address} lauschen. Prüfe die Adresse.",
+  "server.webhookServer.baseUrl": "Webhook-URLs beginnen mit",
+  "server.webhookServer.publicUrl": "Öffentliche Adresse",
+  "server.webhookServer.publicUrlHint":
+    "Die Adresse, die Absender verwenden, zum Beispiel https://hooks.example.com. Leer lassen, um die lokale Adresse zu verwenden.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Lauschen auf",
+  "server.webhookServer.bindLocal": "Nur dieser Computer",
+  "server.webhookServer.bindAll": "Alle Netzwerke",
+  "server.webhookServer.bindAllHint":
+    "Andere Geräte in deinen Netzwerken können den Server erreichen. Jede Anfrage braucht trotzdem das Signaturgeheimnis der Routine.",
+  "server.webhookServer.port": "Port",
+  "server.webhookServer.publicUrlInvalid": "Gib eine http- oder https-Adresse ohne Abfrage und ohne Fragment ein.",
+  "server.webhookServer.portInvalid": "Gib einen Port von 1 bis 65535 ein.",
+  "server.webhookServer.save": "Speichern",
+  "server.webhookServer.saved": "Gespeichert. Jeder Webhook-Trigger hat seine neue URL.",
   "server.settings.nameTooShort": "Gib mindestens {limit} Zeichen ein.",
   "server.settings.nameTooLong": "Verwende höchstens {limit} Zeichen.",
   "server.settings.actionFailedTitle": "Serveraktion fehlgeschlagen",

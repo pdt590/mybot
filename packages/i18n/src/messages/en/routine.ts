@@ -284,8 +284,8 @@ export const messages = defineMessages("routine", {
   "routine.webhook.copyUrl": "Copy endpoint",
   "routine.webhook.urlAfterSave": "Save the routine to get its endpoint and signing secret.",
   "routine.webhook.urlPending": "Making the endpoint…",
-  "routine.webhook.urlPendingOffline": "Shown when the host connects to the relay.",
-  "routine.webhook.relayOffline": "The host is offline. Requests to this endpoint fail until it connects.",
+  "routine.webhook.urlPendingOffline": "Shown when the webhook server starts.",
+  "routine.webhook.relayOffline": "The webhook server is not running. Requests to this endpoint fail until it starts.",
   "routine.webhook.events": "Events",
   "routine.webhook.filterEvents": "Filter events",
   "routine.webhook.eventsAll": "All events",
@@ -333,7 +333,7 @@ export const messages = defineMessages("routine", {
   "routine.webhook.stepSecretHint":
     "The sender signs each request with this secret. MyBot rejects a request without a valid signature.",
   "routine.webhook.howToSign": "How to sign a request",
-  "routine.webhook.howToSignHint": "Keep the secret in OPENBOT_WEBHOOK_SECRET on the sender. Do not put it in code.",
+  "routine.webhook.howToSignHint": "Keep the secret in MYBOT_WEBHOOK_SECRET on the sender. Do not put it in code.",
   "routine.webhook.stepTest": "Send a test event",
   "routine.webhook.stepTestHint":
     "MyBot signs an event that matches this routine and receives it as a real request. The routine runs one time.",

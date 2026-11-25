@@ -344,6 +344,30 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "Obecny URL przestanie działać. Jeśli ponownie włączysz subskrypcję, otrzyma nowy URL.",
   "server.routineFeed.agentsLoadFailed": "Nie udało się wczytać agentów.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Serwer webhooków",
+  "server.webhookServer.loading": "Wczytywanie serwera webhooków",
+  "server.webhookServer.description":
+    "Wyzwalacze webhooków na tym komputerze odbierają tutaj swoje zdarzenia. Dla nadawców w internecie postaw tunel przed tym komputerem, na przykład cloudflared lub Tailscale Funnel, i wpisz jego adres jako adres publiczny.",
+  "server.webhookServer.listening": "Włączony. Nasłuchuje na {address}.",
+  "server.webhookServer.idle": "Wyłączony. Uruchamia się, gdy rutyna lub przepływ pracy ma wyzwalacz webhooka.",
+  "server.webhookServer.portInUse": "Port {port} jest zajęty przez inny program. Wybierz inny port.",
+  "server.webhookServer.unavailable": "Ten komputer nie może nasłuchiwać na {address}. Sprawdź adres.",
+  "server.webhookServer.baseUrl": "Adresy URL webhooków zaczynają się od",
+  "server.webhookServer.publicUrl": "Adres publiczny",
+  "server.webhookServer.publicUrlHint":
+    "Adres, którego używają nadawcy, na przykład https://hooks.example.com. Zostaw puste, aby użyć adresu lokalnego.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Nasłuchuj na",
+  "server.webhookServer.bindLocal": "Tylko ten komputer",
+  "server.webhookServer.bindAll": "Wszystkie sieci",
+  "server.webhookServer.bindAllHint":
+    "Inne urządzenia w twoich sieciach mogą połączyć się z serwerem. Każde żądanie nadal wymaga sekretu podpisu rutyny.",
+  "server.webhookServer.port": "Port",
+  "server.webhookServer.publicUrlInvalid": "Wpisz adres http lub https bez zapytania i bez fragmentu.",
+  "server.webhookServer.portInvalid": "Wpisz port od 1 do 65535.",
+  "server.webhookServer.save": "Zapisz",
+  "server.webhookServer.saved": "Zapisano. Każdy wyzwalacz webhooka ma nowy adres URL.",
   "server.settings.nameTooShort": "Minimalna liczba znaków: {limit}.",
   "server.settings.nameTooLong": "Maksymalna liczba znaków: {limit}.",
   "server.settings.actionFailedTitle": "Działanie serwera nie powiodło się",

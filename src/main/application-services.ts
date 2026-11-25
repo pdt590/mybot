@@ -336,6 +336,7 @@ import { LocalSignInWindows } from "./local-sign-in-window";
 import { localSkillLearner } from "./local-skill-learner";
 import { LocalSkillLibrary } from "./local-skill-library";
 import { localSkillTools } from "./local-skill-tools";
+import { LOCAL_WEBHOOK_SERVER_FILE, LocalWebhookServer } from "./local-webhook-server";
 import { createLoginItem } from "./login-item";
 import { LogoColorService } from "./logo-color-service";
 import type { MacHapticFeedback } from "./mac-haptic-feedback";
@@ -518,7 +519,6 @@ import { spawnVoiceSpeechHost } from "./voice-speech-host-process";
 import { VoiceSpeechService } from "./voice-speech-service";
 import { spawnVoiceTranscriptionHost } from "./voice-transcription-host-process";
 import { VoiceTranscriptionService } from "./voice-transcription-service";
-import { WebhookRelay } from "./webhook-relay";
 import { WindowsTopmostKeeper } from "./windows-topmost-keeper";
 import { createWorkflowFileExporter, type WorkflowFileExporter } from "./workflow-file-export";
 import { WorkflowFoldersService } from "./workflow-folders-service";
@@ -784,6 +784,8 @@ export interface ApplicationServices {
   credits: CreditsDesktopService;
   hostedServers: HostedServerDesktopService;
   routineFeed: RoutineFeedServer;
+  // MyBot: the app's own webhook server.
+  webhookServer: LocalWebhookServer;
   events: HostEventsService;
   eventsRuntime: HostEventsRuntime;
   webhookPrincipal: () => string | null;
@@ -2795,24 +2797,13 @@ export async function createApplicationServices({
   teardown.push(TEARDOWN_ORDER.machineAlerts, "the machine alert check", () => machineAlerts.close());
   ingressHostId = () => teamStore.getIdentity()?.serverId ?? null;
   signalIngress.reconnect();
-  const webhookRelay = new WebhookRelay({
-    account: centralAuth,
-    ingress: signalIngress,
-    hostId: () => teamStore.getIdentity()?.serverId ?? null,
-    ensureHost: () => {
-      const hostId = teamStore.getIdentity()?.serverId;
-      if (hostId && centralAuth.hostSiteCredential(hostId)) return Effect.void;
-      return host
-        .register()
-        .pipe(
-          Effect.catch((failure) =>
-            Effect.sync(() =>
-              logger.warn("This host could not be registered for webhooks.", toLogValue(failure.cause)),
-            ),
-          ),
-        );
-    },
+  // MyBot: the app is the webhook server (`local-webhook-server.ts`). Upstream's `WebhookRelay` needs the Signal
+  // relay and a host registered with the upstream account service.
+  const webhookRelay = new LocalWebhookServer({
+    path: join(app.getPath("userData"), LOCAL_WEBHOOK_SERVER_FILE),
+    onAddressChanged: () => eventsRuntime.syncRoutes({ all: true }),
   });
+  await Effect.runPromise(webhookRelay.load());
   const webhookPrincipal = (): string | null => {
     if (localServerChild) {
       const hostId = teamStore.getIdentity()?.serverId;
@@ -2838,7 +2829,7 @@ export async function createApplicationServices({
     onDelivery: (report) => reportWebhookDelivery?.(report),
   });
   const eventsRuntime = new HostEventsRuntime(events);
-  signalIngress.handleWebhooks((input) => events.receive(input));
+  webhookRelay.handle((input) => events.receive(input));
   githubRelay.handle({
     deliver: (delivery) => receiveGitHubDelivery(workflowRuntime, delivery),
     offline: (from, to) =>
@@ -4544,6 +4535,7 @@ export async function createApplicationServices({
     credits,
     hostedServers,
     routineFeed,
+    webhookServer: webhookRelay,
     events,
     eventsRuntime,
     webhookPrincipal,

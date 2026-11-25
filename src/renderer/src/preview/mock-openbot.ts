@@ -276,6 +276,8 @@ import { createMockTeam, type MockTeamOptions } from "./mock-team";
 import { createMockTelegramBot } from "./mock-telegram-bot";
 import { createMockVault } from "./mock-vault";
 import { createMockVoice, type MockVoiceOptions } from "./mock-voice";
+// MyBot: the app's own webhook server.
+import { createMockWebhookServer } from "./mock-webhook-server";
 import { type MockWorkflowSeed, mockWorkflows } from "./mock-workflows";
 
 export interface MockOpenBotOptions
@@ -1767,6 +1769,7 @@ export function createMockOpenBot(options: MockOpenBotOptions = {}): MockOpenBot
     license: createMockLicense(),
     credits: createMockCredits(),
     routineFeed: createMockRoutineFeed(),
+    webhookServer: createMockWebhookServer(),
     hostedServers: createMockHostedServers(billingPlans),
     customProviders: {
       list: async () => clone(customProviders),

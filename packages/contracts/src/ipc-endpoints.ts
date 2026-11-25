@@ -663,6 +663,8 @@ import type {
   VoiceTranscriptionInput,
   VoiceTranscriptionResult,
 } from "./ipc-voice";
+// MyBot: the app's own webhook server.
+import type { WebhookServerSettings, WebhookServerStatus } from "./ipc-webhook-server";
 import type { WorkflowFileSaveResult } from "./ipc-workflow-file";
 import type { WorkflowFolderAction, WorkflowFoldersSnapshot } from "./ipc-workflow-folders";
 import type {
@@ -1423,6 +1425,11 @@ export const IPC_ENDPOINTS = {
     replace: request<ReplaceHostedSiteInput, HostedSiteSummary>()("hosted-sites:replace"),
     delete: scopedRequest<DeleteHostedSiteInput, void, "required">()("hosted-sites:delete"),
   },
+  // MyBot: the app's own webhook server, on this computer only.
+  webhookServer: {
+    status: request<undefined, WebhookServerStatus>()("webhook-server:status"),
+    save: request<WebhookServerSettings, WebhookServerStatus>()("webhook-server:save"),
+  },
   routineFeed: {
     get: request<undefined, RoutineFeed>()("routine-feed:get"),
     create: request<undefined, RoutineFeed>()("routine-feed:create"),
@@ -2128,6 +2135,8 @@ export const IPC_GROUP_PATHS = {
   vault: "vault",
   hostedSites: "hostedSites",
   routineFeed: "routineFeed",
+  // MyBot: the app's own webhook server.
+  webhookServer: "webhookServer",
   workflows: "workflows",
   crm: "crm",
   routineResults: "routineResults",

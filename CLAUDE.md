@@ -89,6 +89,26 @@ Keep these hidden. Look for new upstream UI of the same kind and hide it too:
 - Automatic updates are off (`APP_UPDATES_DISABLED` in `src/main/application-services.ts` and
   `src/main/newer-database-recovery.ts`). The upstream release feed would replace MyBot.
 
+### Webhook server (MyBot's own)
+
+The app itself takes the deliveries of webhook triggers. Upstream's path (Signal relay at
+`signal.openbot.run`, routes registered with the upstream account service) needs sign-in, which MyBot
+does not have. Keep it this way on each sync:
+- `LocalWebhookServer` (`src/main/local-webhook-server.ts`) is the `HostWebhookRelay` in
+  `application-services.ts`, in place of upstream's `WebhookRelay`. `webhook-relay.ts` stays unused and
+  unchanged.
+- The signature headers are `x-mybot-timestamp`, `x-mybot-delivery-id` and `x-mybot-signature`
+  (`src/backend/mybot-webhook-headers.ts`), plus the Standard Webhooks and Svix headers. The listener
+  refuses `x-openbot-*`. The agent tool (`webhook-routine-tool.ts`) and the curl example
+  (`RoutineWebhookTrigger.tsx`) name the MyBot headers and `MYBOT_WEBHOOK_SECRET`. Leave the
+  `x-openbot-*` constants in `@openbot/contracts/signal-protocol/webhook-route` alone: the relay reads them.
+- The settings are in `<userData>/mybot-webhook-server.json`. The panel is in Server settings > Routines
+  (`ServerWebhookServerPanel.tsx`), through the `webhookServer` IPC group (`ipc-webhook-server.ts`).
+- The webhook trigger is offered in `workflow-model.ts` and `AgentRoutinesSettings.tsx`. When upstream
+  changes how a route gets its URL or how a delivery reaches `HostEventsService.receive`, update the
+  listener. When upstream adds a new header set, add it to the listener too.
+- Run `bunx vitest run src/main/local-webhook-server.test.ts src/main/ipc/webhook-server-settings.test.ts`.
+
 ### Folders and install names (already MyBot)
 
 - `productName` is `MyBot` in `package.json` and `electron-builder.yml`. This sets the install folder,

@@ -327,8 +327,9 @@ export const messages = {
   "routine.webhook.copyUrl": "Копировать эндпоинт",
   "routine.webhook.urlAfterSave": "Сохраните регулярную задачу, чтобы получить эндпоинт и секрет подписи.",
   "routine.webhook.urlPending": "Создаём эндпоинт…",
-  "routine.webhook.urlPendingOffline": "Появится, когда хост подключится к ретранслятору.",
-  "routine.webhook.relayOffline": "Хост не в сети. Запросы к этому эндпоинту не проходят, пока он не подключится.",
+  "routine.webhook.urlPendingOffline": "Появится, когда запустится сервер вебхуков.",
+  "routine.webhook.relayOffline":
+    "Сервер вебхуков не запущен. Запросы к этому эндпоинту не проходят, пока он не запустится.",
   "routine.webhook.events": "События",
   "routine.webhook.filterEvents": "Фильтр событий",
   "routine.webhook.eventsAll": "Все события",

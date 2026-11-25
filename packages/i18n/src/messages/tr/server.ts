@@ -331,6 +331,31 @@ export const messages = {
   "server.routineFeed.turnOffTitle": "Takvim akışı kapatılsın mı?",
   "server.routineFeed.turnOffDescription": "Geçerli URL çalışmayı durdurur. Akışı yeniden açarsanız yeni bir URL alır.",
   "server.routineFeed.agentsLoadFailed": "Ajanlar yüklenemedi.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Webhook sunucusu",
+  "server.webhookServer.loading": "Webhook sunucusu yükleniyor",
+  "server.webhookServer.description":
+    "Bu bilgisayardaki webhook tetikleyicileri olaylarını burada alır. İnternetteki gönderenler için bu bilgisayarın önüne cloudflared veya Tailscale Funnel gibi bir tünel koyun ve adresini genel adres olarak girin.",
+  "server.webhookServer.listening": "Açık. {address} adresini dinliyor.",
+  "server.webhookServer.idle": "Kapalı. Bir rutin veya iş akışında webhook tetikleyicisi olduğunda başlar.",
+  "server.webhookServer.portInUse":
+    "{port} bağlantı noktası başka bir program tarafından kullanılıyor. Başka bir bağlantı noktası seçin.",
+  "server.webhookServer.unavailable": "Bu bilgisayar {address} adresini dinleyemiyor. Adresi kontrol edin.",
+  "server.webhookServer.baseUrl": "Webhook URL'leri şununla başlar",
+  "server.webhookServer.publicUrl": "Genel adres",
+  "server.webhookServer.publicUrlHint":
+    "Gönderenlerin kullandığı adres, örneğin https://hooks.example.com. Yerel adresi kullanmak için boş bırakın.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "Dinlenecek adres",
+  "server.webhookServer.bindLocal": "Yalnızca bu bilgisayar",
+  "server.webhookServer.bindAll": "Tüm ağlar",
+  "server.webhookServer.bindAllHint":
+    "Ağlarınızdaki diğer cihazlar sunucuya ulaşabilir. Yine de her istek rutinin imzalama sırrını gerektirir.",
+  "server.webhookServer.port": "Bağlantı noktası",
+  "server.webhookServer.publicUrlInvalid": "Sorgu ve parça içermeyen bir http veya https adresi girin.",
+  "server.webhookServer.portInvalid": "1 ile 65535 arasında bir bağlantı noktası girin.",
+  "server.webhookServer.save": "Kaydet",
+  "server.webhookServer.saved": "Kaydedildi. Her webhook tetikleyicisinin yeni URL'si var.",
   "server.settings.nameTooShort": "En az {limit} karakter girin.",
   "server.settings.nameTooLong": "En fazla {limit} karakter kullanın.",
   "server.settings.actionFailedTitle": "Sunucu eylemi başarısız oldu",

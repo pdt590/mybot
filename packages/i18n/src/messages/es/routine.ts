@@ -285,9 +285,9 @@ export const messages = {
   "routine.webhook.copyUrl": "Copiar endpoint",
   "routine.webhook.urlAfterSave": "Guarda la rutina para obtener su endpoint y secreto de firma.",
   "routine.webhook.urlPending": "Creando el endpoint…",
-  "routine.webhook.urlPendingOffline": "Se muestra cuando el host se conecta al servidor de retransmisión.",
+  "routine.webhook.urlPendingOffline": "Se muestra cuando se inicia el servidor de webhooks.",
   "routine.webhook.relayOffline":
-    "El host está desconectado. Las solicitudes a este endpoint fallan hasta que se conecte.",
+    "El servidor de webhooks no está en marcha. Las solicitudes a este endpoint fallan hasta que se inicie.",
   "routine.webhook.events": "Eventos",
   "routine.webhook.filterEvents": "Filtrar eventos",
   "routine.webhook.eventsAll": "Todos los eventos",

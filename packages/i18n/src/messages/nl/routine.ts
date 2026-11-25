@@ -271,9 +271,8 @@ export const messages = {
   "routine.webhook.copyUrl": "Endpoint kopiëren",
   "routine.webhook.urlAfterSave": "Sla de routine op om het endpoint en ondertekeningsgeheim te krijgen.",
   "routine.webhook.urlPending": "Endpoint maken…",
-  "routine.webhook.urlPendingOffline": "Wordt getoond als de host verbinding maakt met de relay.",
-  "routine.webhook.relayOffline":
-    "De host is offline. Verzoeken aan dit endpoint mislukken tot de host verbinding maakt.",
+  "routine.webhook.urlPendingOffline": "Wordt getoond als de webhookserver start.",
+  "routine.webhook.relayOffline": "De webhookserver draait niet. Verzoeken naar dit endpoint mislukken tot hij start.",
   "routine.webhook.events": "Events",
   "routine.webhook.filterEvents": "Events filteren",
   "routine.webhook.eventsAll": "Alle events",
@@ -321,7 +320,7 @@ export const messages = {
   "routine.webhook.stepSecretHint":
     "De afzender ondertekent elk verzoek met dit geheim. MyBot weigert een verzoek zonder geldige handtekening.",
   "routine.webhook.howToSign": "Een verzoek ondertekenen",
-  "routine.webhook.howToSignHint": "Bewaar het geheim in OPENBOT_WEBHOOK_SECRET bij de afzender. Zet het niet in code.",
+  "routine.webhook.howToSignHint": "Bewaar het geheim in MYBOT_WEBHOOK_SECRET bij de afzender. Zet het niet in code.",
   "routine.webhook.stepTest": "Stuur een testevent",
   "routine.webhook.stepTestHint":
     "MyBot ondertekent een event dat bij deze routine past en ontvangt het als echt verzoek. De routine draait één keer.",

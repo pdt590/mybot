@@ -95,6 +95,8 @@ import {
   // MyBot: the answers of an agent's own Telegram bot.
   decodeTelegramBotStatus,
   decodeTestCompanySignInResult,
+  // MyBot: the answers of the app's own webhook server.
+  decodeWebhookServerStatus,
   decodeWorkspaceDirectory,
   type EventEndpoint,
   type GroupApi,
@@ -1149,6 +1151,11 @@ const openbotApi: OpenBotDesktopApi = {
     get: decodeRoutineFeed,
     create: decodeRoutineFeed,
     remove: decodeRoutineFeed,
+  }),
+  // MyBot: the app's own webhook server.
+  webhookServer: bridgeGroup(IPC_ENDPOINTS.webhookServer, {
+    status: decodeWebhookServerStatus,
+    save: decodeWebhookServerStatus,
   }),
   billing: bridgeGroup(IPC_ENDPOINTS.billing, {
     getState: decodeBillingState,

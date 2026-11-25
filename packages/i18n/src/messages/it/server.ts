@@ -332,6 +332,30 @@ export const messages = {
   "server.routineFeed.turnOffDescription":
     "L'URL attuale smette di funzionare. Se riattivi il feed, avrà un nuovo URL.",
   "server.routineFeed.agentsLoadFailed": "Impossibile caricare gli agenti.",
+  // MyBot: the app's own webhook server.
+  "server.webhookServer.title": "Server webhook",
+  "server.webhookServer.loading": "Caricamento del server webhook",
+  "server.webhookServer.description":
+    "I trigger webhook di questo computer ricevono qui i loro eventi. Per mittenti su internet, metti un tunnel davanti a questo computer, per esempio cloudflared o Tailscale Funnel, e inserisci il suo indirizzo come indirizzo pubblico.",
+  "server.webhookServer.listening": "Attivo. È in ascolto su {address}.",
+  "server.webhookServer.idle": "Spento. Si avvia quando una routine o un workflow ha un trigger webhook.",
+  "server.webhookServer.portInUse": "La porta {port} è usata da un altro programma. Scegli un'altra porta.",
+  "server.webhookServer.unavailable": "Questo computer non può ascoltare su {address}. Controlla l'indirizzo.",
+  "server.webhookServer.baseUrl": "Gli URL webhook iniziano con",
+  "server.webhookServer.publicUrl": "Indirizzo pubblico",
+  "server.webhookServer.publicUrlHint":
+    "L'indirizzo che usano i mittenti, per esempio https://hooks.example.com. Lascialo vuoto per usare l'indirizzo locale.",
+  "server.webhookServer.publicUrlPlaceholder": "https://hooks.example.com",
+  "server.webhookServer.bindAddress": "In ascolto su",
+  "server.webhookServer.bindLocal": "Solo questo computer",
+  "server.webhookServer.bindAll": "Tutte le reti",
+  "server.webhookServer.bindAllHint":
+    "Gli altri dispositivi delle tue reti possono raggiungere il server. Ogni richiesta richiede comunque il segreto di firma della routine.",
+  "server.webhookServer.port": "Porta",
+  "server.webhookServer.publicUrlInvalid": "Inserisci un indirizzo http o https senza query né frammento.",
+  "server.webhookServer.portInvalid": "Inserisci una porta da 1 a 65535.",
+  "server.webhookServer.save": "Salva",
+  "server.webhookServer.saved": "Salvato. Ogni trigger webhook ha il suo nuovo URL.",
   "server.settings.nameTooShort": "Inserisci almeno {limit} caratteri.",
   "server.settings.nameTooLong": "Usa al massimo {limit} caratteri.",
   "server.settings.actionFailedTitle": "Azione del server non riuscita",

@@ -275,8 +275,8 @@ export const messages = {
   "routine.webhook.copyUrl": "엔드포인트 복사",
   "routine.webhook.urlAfterSave": "루틴을 저장하면 엔드포인트와 서명 시크릿을 받을 수 있어요.",
   "routine.webhook.urlPending": "엔드포인트를 만드는 중…",
-  "routine.webhook.urlPendingOffline": "호스트가 릴레이에 연결되면 표시돼요.",
-  "routine.webhook.relayOffline": "호스트가 오프라인이에요. 연결될 때까지 이 엔드포인트로 보낸 요청은 실패해요.",
+  "routine.webhook.urlPendingOffline": "웹훅 서버가 시작되면 표시돼요.",
+  "routine.webhook.relayOffline": "웹훅 서버가 실행 중이 아니에요. 시작될 때까지 이 엔드포인트로 보낸 요청은 실패해요.",
   "routine.webhook.events": "이벤트",
   "routine.webhook.filterEvents": "이벤트 필터",
   "routine.webhook.eventsAll": "모든 이벤트",
@@ -324,7 +324,7 @@ export const messages = {
   "routine.webhook.stepSecretHint":
     "발신자는 이 시크릿으로 모든 요청에 서명해요. MyBot은 올바른 서명이 없는 요청을 거부해요.",
   "routine.webhook.howToSign": "요청에 서명하는 방법",
-  "routine.webhook.howToSignHint": "발신자의 OPENBOT_WEBHOOK_SECRET에 시크릿을 보관하세요. 코드에는 넣지 마세요.",
+  "routine.webhook.howToSignHint": "발신자의 MYBOT_WEBHOOK_SECRET에 시크릿을 보관하세요. 코드에는 넣지 마세요.",
   "routine.webhook.stepTest": "테스트 이벤트 보내기",
   "routine.webhook.stepTestHint":
     "MyBot이 이 루틴과 일치하는 이벤트에 서명하고 실제 요청처럼 받아요. 루틴은 한 번 실행돼요.",

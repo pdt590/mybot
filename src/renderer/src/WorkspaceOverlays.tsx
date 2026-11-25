@@ -963,6 +963,8 @@ function ServerSettings() {
               ? { api: appPort().routineFeed, listAgents: () => appPort().agent.listAgents(server().id) }
               : undefined
           }
+          // MyBot: the app's own webhook server, on this computer.
+          webhookServer={server().kind === "local" ? { api: appPort().webhookServer } : undefined}
           browserProfiles={
             serverCanAdminister(server(), BROWSER_PROFILES_CAPABILITY)
               ? { store: browserProfiles(), listAgents: () => appPort().agent.listAgents(server().id) }
