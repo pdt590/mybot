@@ -41,7 +41,8 @@ import {
 
 export type ServerView = "rail" | "menu";
 
-// MyBot: hides "Add remote server", "New server on this computer" and "New server on another computer".
+// MyBot: hides "Add remote server" and "New server on another computer". "New server on this computer"
+// stays: it runs without an account (see PROPOSAL-server.md).
 const SERVER_ADD_ITEMS_HIDDEN: boolean = true;
 
 const SERVER_VIEWS: readonly ServerView[] = ["rail", "menu"];
@@ -387,8 +388,8 @@ export function ServerMenu(props: ServerMenuProps) {
                 </For>
                 <HiddenServerFolderItem servers={props.hiddenServers ?? []} />
               </div>
-              {/* MyBot: "Add remote server", "New server on this computer" and "New server on another
-                  computer" are hidden (SERVER_ADD_ITEMS_HIDDEN). */}
+              {/* MyBot: "Add remote server" and "New server on another computer" are hidden
+                  (SERVER_ADD_ITEMS_HIDDEN). */}
               <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onAdd}>
                 <DropdownMenu.Item class="server-menu-add" onSelect={() => props.onAdd?.()}>
                   <span class="server-menu-add-circle" aria-hidden="true">
@@ -397,7 +398,7 @@ export function ServerMenu(props: ServerMenuProps) {
                   <span>{t(addServerLabel(props))}</span>
                 </DropdownMenu.Item>
               </Show>
-              <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onCreateLocal}>
+              <Show when={props.onCreateLocal}>
                 {(onCreateLocal) => (
                   <DropdownMenu.Item class="server-menu-add" onSelect={() => onCreateLocal()()}>
                     <span class="server-menu-add-circle" aria-hidden="true">

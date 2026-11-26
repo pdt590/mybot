@@ -21,7 +21,8 @@ import { type ServerActionCallbacks, ServerActionItems, serverMuteDescription } 
 import { ServerPlanCount, serverPlanDaysLeft, serverPlanStatusLabels } from "./ServerPlanEnd";
 
 const SERVER_RAIL_TOOLTIP_OPEN_DELAY = 150;
-// MyBot: hides "Add remote server", "New server on this computer" and "New server on another computer".
+// MyBot: hides "Add remote server" and "New server on another computer". "New server on this computer"
+// stays: it runs without an account (see PROPOSAL-server.md).
 const SERVER_ADD_ITEMS_HIDDEN: boolean = true;
 
 const SERVER_STATE_LABELS = {
@@ -534,7 +535,7 @@ function ServerRailAddMenu(props: {
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content aria-label={t("server.rail.add")}>
-              {/* MyBot: the three "add server" items are hidden (SERVER_ADD_ITEMS_HIDDEN). */}
+              {/* MyBot: "Add remote server" and "New server on another computer" are hidden (SERVER_ADD_ITEMS_HIDDEN). */}
               <Show when={!SERVER_ADD_ITEMS_HIDDEN}>
                 <DropdownMenu.Item class="server-menu-add" onSelectAfterClose={props.onAdd}>
                   <span class="server-menu-add-circle" aria-hidden="true">
@@ -543,7 +544,7 @@ function ServerRailAddMenu(props: {
                   <span>{t(props.addLabel)}</span>
                 </DropdownMenu.Item>
               </Show>
-              <Show when={!SERVER_ADD_ITEMS_HIDDEN && props.onCreateLocal}>
+              <Show when={props.onCreateLocal}>
                 {(onCreateLocal) => (
                   <DropdownMenu.Item class="server-menu-add" onSelectAfterClose={onCreateLocal()}>
                     <span class="server-menu-add-circle" aria-hidden="true">

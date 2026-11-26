@@ -206,7 +206,7 @@ import {
   cacheExpiryCompactionControl,
   createCacheExpiryCompactionPreferenceStore,
 } from "./cache-expiry-compaction-preference-store";
-import { type CentralAuthManager, isHostNotOnAccount } from "./central-auth-manager";
+import { type CentralAuthManager, isHostNotOnAccount, LOCAL_ACCOUNT_USER } from "./central-auth-manager";
 import { type ChannelFolders, createChannelFolders } from "./channel-folders";
 import { ChatVisualPreviewer } from "./chat-visual-preview";
 import {
@@ -526,6 +526,8 @@ import { sizeWorkflowPicture } from "./workflow-picture-size";
 
 /** MyBot: the app never checks for, downloads or installs an update. */
 const APP_UPDATES_DISABLED: boolean = true;
+/** MyBot: a server on this computer keeps its members itself, not in an account directory. */
+const LOCAL_SERVER_HAS_ACCOUNT_DIRECTORY: boolean = false;
 const logger = createOpenBotLogger("application-services");
 const SETUP_FILE = "openbot-setup-v2.json";
 const ANALYTICS_PREFERENCE_FILE = "openbot-analytics-preference-v1.json";
@@ -3555,13 +3557,19 @@ export async function createApplicationServices({
     createRemoteInvite: (hostId, input) => centralAuth.createRemoteInvite(hostId, input).pipe(toRemoteWorkflowError),
     listRemoteInvites: (hostId) => centralAuth.listRemoteInvites(hostId).pipe(toRemoteWorkflowError),
     revokeRemoteInvite: (inviteId) => centralAuth.revokeRemoteInvite(inviteId).pipe(toRemoteWorkflowError),
-    listRemoteMembers: localServerChild
-      ? () => localServerMembers.list()
-      : (hostId) => centralAuth.listRemoteMembers(hostId).pipe(toRemoteWorkflowError),
-    updateRemoteMember: (hostId, membershipId, role, reactivate) =>
-      centralAuth.updateRemoteMember(hostId, membershipId, role, reactivate).pipe(toRemoteWorkflowError),
-    removeRemoteMember: (hostId, membershipId) =>
-      centralAuth.removeRemoteMember(hostId, membershipId).pipe(toRemoteWorkflowError),
+    // MyBot: a server on this computer is never registered with an account (no sign-in), so it has no
+    // account directory. Without these three, HostService reads and changes its own member store.
+    ...(LOCAL_SERVER_HAS_ACCOUNT_DIRECTORY || !localServerChild
+      ? {
+          listRemoteMembers: localServerChild
+            ? () => localServerMembers.list()
+            : (hostId: string) => centralAuth.listRemoteMembers(hostId).pipe(toRemoteWorkflowError),
+          updateRemoteMember: (hostId: string, membershipId: string, role: "admin" | "member", reactivate?: boolean) =>
+            centralAuth.updateRemoteMember(hostId, membershipId, role, reactivate).pipe(toRemoteWorkflowError),
+          removeRemoteMember: (hostId: string, membershipId: string) =>
+            centralAuth.removeRemoteMember(hostId, membershipId).pipe(toRemoteWorkflowError),
+        }
+      : {}),
     updateRemoteHostLogo: (hostId, image, version) =>
       centralAuth.updateRemoteHostLogo(hostId, image, version).pipe(toRemoteWorkflowError),
     updateRemoteHostAppearance: (hostId, appearance) =>
@@ -3908,6 +3916,9 @@ export async function createApplicationServices({
           account: {
             accountId: () => {
               const state = centralAuth.getState();
+              // MyBot: the local account has no account service, so a server on this computer is never
+              // registered, published or removed there (no calls to api.openbot.run).
+              if (state.status === "signed_in" && state.user.id === LOCAL_ACCOUNT_USER.id) return null;
               return state.status === "signed_in" ? state.user.id : null;
             },
             register: (input) => centralAuth.registerRemoteHost(input).pipe(Effect.asVoid, toRemoteWorkflowError),
