@@ -273,6 +273,8 @@ const SECTION_ROWS: Partial<Record<Section, readonly AppTextKey[]>> = {
 
 // MyBot: off, so the "Server settings unavailable" toast never renders.
 const MYBOT_SHOW_LOAD_ERROR_TOAST: boolean = false;
+// MyBot: off, so the Members tab is hidden and nothing opens it.
+const MYBOT_SHOW_MEMBERS_TAB: boolean = false;
 
 const NAV_SECTIONS: ReadonlyArray<{ value: Section; icon: typeof Settings; group?: AppTextKey }> = [
   { value: "general", icon: Settings },
@@ -374,7 +376,11 @@ export function ServerSettingsModal(props: ServerSettingsModalProps) {
     return props.crm;
   }
   const availableInitialSection = (): Section | null =>
-    props.initialSection === "updates" && !props.hostUpdate ? null : (props.initialSection ?? null);
+    (props.initialSection === "updates" && !props.hostUpdate) ||
+    // MyBot: a request for the hidden Members tab opens General.
+    (props.initialSection === "members" && !MYBOT_SHOW_MEMBERS_TAB)
+      ? null
+      : (props.initialSection ?? null);
   const published = () => (local() ? props.hostStatus?.phase === "online" : props.server.state === "online");
 
   async function run(key: string, action: () => Promise<void>): Promise<boolean> {
@@ -421,8 +427,10 @@ export function ServerSettingsModal(props: ServerSettingsModalProps) {
   const sectionSupported = (value: Section): boolean => {
     switch (value) {
       case "general":
-      case "members":
         return true;
+      // MyBot: the Members tab is hidden (MYBOT_SHOW_MEMBERS_TAB).
+      case "members":
+        return MYBOT_SHOW_MEMBERS_TAB;
       case "personality":
         return Boolean(personalityOptions());
       case "agents":
@@ -579,14 +587,16 @@ export function ServerSettingsModal(props: ServerSettingsModalProps) {
   createEffect(
     () => section() === "roles" && !roles.available(),
     (gone) => {
-      if (gone) setSection("members");
+      // MyBot: General, since the Members tab is hidden.
+      if (gone) setSection(MYBOT_SHOW_MEMBERS_TAB ? "members" : "general");
     },
   );
 
   createEffect(
     () => section() === "audit" && !audit.available(),
     (gone) => {
-      if (gone) setSection("members");
+      // MyBot: General, since the Members tab is hidden.
+      if (gone) setSection(MYBOT_SHOW_MEMBERS_TAB ? "members" : "general");
     },
   );
 
@@ -639,7 +649,8 @@ export function ServerSettingsModal(props: ServerSettingsModalProps) {
         value === "agents" ||
         value === "memory" ||
         value === "vault" ||
-        value === "members" ||
+        // MyBot: the hidden Members tab is never selected.
+        (value === "members" && MYBOT_SHOW_MEMBERS_TAB) ||
         value === "roles" ||
         value === "audit" ||
         value === "desktop" ||

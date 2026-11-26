@@ -1,4 +1,4 @@
-import { BookMarked, Bot, CalendarClock, Hash, Server, Sparkles, Store, UsersRound } from "@openbot/ui";
+import { BookMarked, Bot, CalendarClock, Hash, Server, Sparkles, Store } from "@openbot/ui";
 import type {
   GlobalSearchAction,
   GlobalSearchFile,
@@ -170,14 +170,7 @@ export function useGlobalSearchSources(open: () => boolean) {
             icon: Server,
             run: () => openServerSettings(server.id, globalSearchOpener(), "general"),
           },
-          {
-            id: "server:members",
-            label: t("server.settings.membersTitle"),
-            detail: server.name,
-            group: "settings",
-            icon: UsersRound,
-            run: () => openServerSettings(server.id, globalSearchOpener(), "members"),
-          },
+          // MyBot: no "server:members" result, since the Members tab of Server settings is hidden.
         );
         if (
           serverCanAdminister(server, "agent-memory-limit-v1") &&
