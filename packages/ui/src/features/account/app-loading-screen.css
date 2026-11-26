@@ -103,10 +103,6 @@
     animation: none;
   }
 
-  .app-loading[data-scene="quiet"] .ui-plush-eyes {
-    animation-delay: 0ms;
-  }
-
   .app-loading[data-scene="quiet"] .ui-plush-ball {
     animation: ui-plush-ball-bounce 1.2s ease-in-out infinite;
   }

@@ -402,3 +402,33 @@ Rules:
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
 - After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
 - A committed graphify-out/graph.json is rewritten whole on every build, so a large diff to it in a pull request is expected. Do not flag it as churn or suggest skipping the graph rebuild or its hooks.
+
+## MyBot logo and app icons
+
+MyBot uses one logo image everywhere. To replace it, change every place below, not only the icons.
+
+1. Get a square PNG or JPEG of at least 1024 x 1024 (1600 x 1600 is best). Windows needs 256 px,
+   macOS 1024 px and the `build/icon-*.png` files 1600 px; a smaller image is upscaled and blurs.
+2. Run `python scripts/mybot-logo.py <image>` (Python 3 with Pillow). It rewrites:
+   - the window, taskbar, exe, shortcut, installer and Linux icons: `build/icon-{production,dev,preview}.png`
+     and `.ico`, `build/icon.ico`, `build/icon-production.icns`, `build/icon-*-macos-safe-area.png`
+     and all of `build/logo-colors/` (every logo color is the same image)
+   - `packages/brand/src/mybot-logo-image.ts`: the image of `AppLogo` (`packages/brand/src/AppLogo.tsx`).
+     `AppLogo` is the logo of sign-in, language, update, What's new, server dialogs, the dynamic
+     island, the template share card, and of `PlushMascot`/`PlushLoader` (`packages/ui/src/plush-loader.tsx`):
+     the quiet startup screen (Startup animation off), loading states, global search and toasts.
+   - `packages/ui/src/assets/mybot-logo.png`: the round logo at the top of the rail (`PageRail.tsx`).
+3. These read the same image and need no change: the startup recovery window
+   (`src/main/start-recovery-plush.ts`, from `@openbot/brand/mybot-logo-image`) and the tray and
+   notification icons (from `build/icon-*.png` at run time).
+4. Not covered: the macOS 26 icon (`build/macos/Assets.car` and `build/icon-production.icon`) is made
+   with Xcode on a Mac. The photo avatars of agents and the startup pile are separate
+   (`packages/ui/src/assets/mybot-avatars/`, `@openbot/brand/mybot-photo-avatars`).
+5. Check: `bun run typecheck:renderer`, `bun run typecheck:node`, `bun scripts/ui-foundation-check.ts`,
+   then `bun run dist:win` and look at the exe icon in `dist/win-unpacked/MyBot.exe`.
+6. A running app keeps its old icon until it restarts. A development build tints its window icon
+   with the worktree color (`tintDevelopmentIcon`), so it does not show the real colors there.
+
+On an upstream sync, keep these in place: `AppLogo` draws `MYBOT_LOGO_IMAGE`, `PlushMascot` draws
+`AppLogo`, `recoveryPlushSvg` draws `MYBOT_LOGO_IMAGE`, and the rail logo is `mybot-logo.png`. When
+upstream adds a new drawn logo, mascot or plush image that stands for the app, route it to `AppLogo`.

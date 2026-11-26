@@ -8,6 +8,7 @@
     "./bloub-avatar": "./src/bloub-avatar.ts",
     "./bloub-avatar-motion": "./src/bloub-avatar-motion.ts",
     "./mybot-photo-avatars": "./src/mybot-photo-avatars.ts",
+    "./mybot-logo-image": "./src/mybot-logo-image.ts",
     "./chat-colors": "./src/chat-colors.ts",
     "./chat-backdrop-scenes": "./src/chat-backdrop-scenes.ts",
     "./logo.css": "./src/logo.css",

@@ -1,10 +1,8 @@
+import { AppLogo } from "@openbot/brand";
 import { For } from "solid-js";
 import ballLilac from "./assets/plush/ball-lilac.webp";
 import ballMint from "./assets/plush/ball-mint.webp";
 import ballPink from "./assets/plush/ball-pink.webp";
-import bodyLilac from "./assets/plush/body-lilac.webp";
-import eyeLeft from "./assets/plush/eye-left.webp";
-import eyeRight from "./assets/plush/eye-right.webp";
 import { cx } from "./utils";
 
 export type PlushMascotFace = "idle" | "wide" | "wink" | "happy";
@@ -14,12 +12,9 @@ const BALLS = [ballLilac, ballMint, ballPink];
 export function PlushMascot(props: { face?: PlushMascotFace; class?: string }) {
   return (
     <span class={cx("ui-plush-mascot", props.class)} data-face={props.face ?? "idle"} aria-hidden="true">
+      {/* MyBot: the MyBot logo in place of the plush body and eyes. */}
       <span class="ui-plush-body">
-        <img class="ui-plush-body-image" src={bodyLilac} alt="" draggable={false} />
-        <span class="ui-plush-eyes">
-          <img class="ui-plush-eye" data-side="left" src={eyeLeft} alt="" draggable={false} />
-          <img class="ui-plush-eye" data-side="right" src={eyeRight} alt="" draggable={false} />
-        </span>
+        <AppLogo variant="production" class="ui-plush-body-image" />
       </span>
     </span>
   );

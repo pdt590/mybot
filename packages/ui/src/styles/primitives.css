@@ -2099,30 +2099,6 @@ html.ui-textarea-resizing {
   -webkit-user-drag: none;
 }
 
-.ui-plush-eyes,
-.ui-plush-eye {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  max-width: none;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-.ui-plush-eye {
-  transform-origin: 35.6% 48.1%;
-  transition: scale var(--openbot-duration-overlay) var(--openbot-ease-out);
-}
-
-.ui-plush-eye[data-side="right"] {
-  transform-origin: 64.4% 48.1%;
-}
-
-.ui-plush-mascot[data-face="wide"] .ui-plush-eye {
-  scale: 1.18;
-}
-
 .ui-plush-balls {
   display: flex;
   gap: calc(var(--ui-plush-size) * 0.08);
@@ -2147,28 +2123,8 @@ html.ui-textarea-resizing {
     animation: ui-plush-breathe 3.2s ease-in-out 600ms infinite;
   }
 
-  .ui-plush-eye {
-    animation: ui-plush-blink 5.2s ease-in-out 1.8s infinite;
-  }
-
-  .ui-plush-eyes {
-    animation: ui-plush-look 6s ease-in-out 2.2s infinite;
-  }
-
-  .ui-plush-mascot[data-face="wink"] .ui-plush-eye[data-side="left"] {
-    animation: ui-plush-wink 600ms var(--openbot-ease-out);
-  }
-
-  .ui-plush-mascot[data-face="happy"] .ui-plush-eye {
-    animation: ui-plush-squint 220ms var(--openbot-ease-out) forwards;
-  }
-
   .ui-plush-loader > .ui-plush-mascot {
     animation: ui-plush-pop-in 520ms var(--openbot-ease-out) both;
-  }
-
-  .ui-plush-loader .ui-plush-eyes {
-    animation: ui-plush-follow 1.2s ease-in-out 700ms infinite;
   }
 
   .ui-plush-ball {

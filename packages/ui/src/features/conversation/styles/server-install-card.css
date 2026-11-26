@@ -57,10 +57,6 @@
   overflow: visible;
 }
 
-.server-install-card-tile:is([data-step="starting"], [data-step="connected"], [data-step="offline"]) .ui-plush-eye {
-  animation: ui-plush-squint 220ms var(--openbot-ease-out) forwards;
-}
-
 .server-install-card-tile:is([data-step="starting"], [data-step="connected"], [data-step="offline"])
   .server-install-card-loader {
   animation: server-install-pop-out 420ms var(--openbot-ease-out) 200ms forwards;
