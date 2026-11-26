@@ -28,6 +28,14 @@
   height: var(--openbot-icon-lg);
 }
 
+/* MyBot: the round logo image. */
+.window-rail-logo .mybot-rail-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--openbot-radius-pill);
+  object-fit: cover;
+}
+
 .window-rail-group {
   display: flex;
   flex-direction: column;

@@ -1,4 +1,4 @@
-import { AppLogo, type AppLogoVariant, ProviderLogo } from "@openbot/brand";
+import { type AppLogoVariant, ProviderLogo } from "@openbot/brand";
 import { usageTone } from "@openbot/team-client/plan-limits";
 import {
   Bot,
@@ -29,6 +29,7 @@ import { type AccountUsageProviderRow, accountUsageRowKey } from "@openbot/ui/fe
 import { useText } from "@openbot/ui/text";
 import { Dynamic, type JSX } from "@solidjs/web";
 import { createMemo, createSignal, For, onSettled, Show } from "solid-js";
+import mybotLogo from "../../assets/mybot-logo.png";
 import { CreditIcon } from "../credits/CreditIcon";
 import { CreditsRailChip } from "../credits/CreditsRailChip";
 
@@ -621,8 +622,8 @@ function RailItemsMenu(props: {
 function RailLogo(props: { variant: AppLogoVariant; href: string | undefined }) {
   return (
     <div class="window-rail-logo">
-      {/* MyBot: the logo is not a link to the website. */}
-      <AppLogo variant={props.variant} />
+      {/* MyBot: the logo is not a link to the website, and it is the MyBot logo image. */}
+      <img class="app-logo mybot-rail-logo" src={mybotLogo} alt="" draggable={false} data-variant={props.variant} />
     </div>
   );
 }
