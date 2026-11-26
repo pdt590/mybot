@@ -1,4 +1,4 @@
-import type { PlushCharacterId } from "@norbert_bodziony/bloub/plush";
+import { MYBOT_PHOTO_AVATAR_IDS, type MybotPhotoAvatarId } from "@openbot/brand/mybot-photo-avatars";
 import { clamp } from "../../utils";
 
 type CrewPilePhase = "intro" | "live" | "exit";
@@ -10,7 +10,7 @@ export interface CrewFace {
 
 export interface CrewMember {
   id: string;
-  character: PlushCharacterId;
+  photo: MybotPhotoAvatarId;
   size: number;
   cy: number;
   w: number;
@@ -49,14 +49,10 @@ interface CrewBody {
   face: CrewFace;
 }
 
-const CHARACTERS = [
-  { character: "yoshi", cy: 0.499, w: 0.647, h: 0.401 },
-  { character: "nexo", cy: 0.501, w: 0.612, h: 0.608 },
-  { character: "malu", cy: 0.5, w: 0.626, h: 0.622 },
-  { character: "fred", cy: 0.499, w: 0.625, h: 0.596 },
-  { character: "vita", cy: 0.502, w: 0.632, h: 0.595 },
-  { character: "cloe", cy: 0.448, w: 0.603, h: 0.565 },
-] as const satisfies readonly { character: PlushCharacterId; cy: number; w: number; h: number }[];
+// MyBot: the crew is the photo avatars, round bodies drawn at PHOTO_SHARE of each member's box.
+const PHOTO_SHARE = 0.66;
+const CHARACTERS = MYBOT_PHOTO_AVATAR_IDS.map((photo) => ({ photo, cy: 0.5, w: PHOTO_SHARE, h: PHOTO_SHARE }));
+const FIRST_CHARACTER = { photo: MYBOT_PHOTO_AVATAR_IDS[0], cy: 0.5, w: PHOTO_SHARE, h: PHOTO_SHARE };
 
 const CREW_SIZE = 168;
 const CREW_RADIUS = (0.25 * CREW_SIZE * CHARACTERS.reduce((sum, body) => sum + body.w + body.h, 0)) / CHARACTERS.length;
@@ -147,12 +143,12 @@ function createCrew(random: () => number, pit: CrewPit): CrewMember[] {
   const count = clamp(Math.round((FILL.density * pit.width * pit.floor) / CREW_AREA), FILL.minCount, FILL.maxCount);
   const dropWindow = 0.12 + count * 0.05;
   const crew = Array.from({ length: count }, (_, index): CrewMember => {
-    const body = CHARACTERS[Math.floor(random() * CHARACTERS.length)] ?? CHARACTERS[0];
+    const body = CHARACTERS[Math.floor(random() * CHARACTERS.length)] ?? FIRST_CHARACTER;
     const size = Math.round(CREW_SIZE * between(random, 0.86, 1.12));
     const side = Math.max(0, pit.width / 2 - size * 0.42);
     return {
-      id: `${body.character}-${index}`,
-      character: body.character,
+      id: `${body.photo}-${index}`,
+      photo: body.photo,
       size,
       cy: body.cy,
       w: body.w,

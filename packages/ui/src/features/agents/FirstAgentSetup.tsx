@@ -1,4 +1,4 @@
-import type { ExpressionId } from "@norbert_bodziony/bloub";
+import { MYBOT_PHOTO_AVATAR_IDS, mybotPhotoSeed } from "@openbot/brand/mybot-photo-avatars";
 import { agentProviderDescriptor } from "@openbot/contracts/agent-providers";
 import { INPUT_LIMITS } from "@openbot/contracts/input-limits";
 import type {
@@ -17,18 +17,10 @@ import type {
 import type { AppTextKey, AppTranslate } from "@openbot/i18n";
 import { Button, Field, Input, Textarea } from "@openbot/ui";
 import { createSignal, For, onSettled, Show } from "solid-js";
-import {
-  AVATAR_COLOR_CHOICES,
-  avatarHeadColor,
-  avatarSeedForFace,
-  isAvatarColorChoice,
-  type SupportedAvatarSilhouetteId,
-} from "../../bloub-avatar";
 import { ProviderModelPicker } from "../../components/ProviderModelPicker";
 import { currentText, useText } from "../../text";
 import { prefersReducedMotion } from "../../utils";
 import { AgentAvatar } from "./AgentAvatar";
-import { avatarColorChoiceLabel } from "./avatar-hue-label";
 import { InstructionsLimit, instructionsTooLong } from "./InstructionsLimit";
 
 export interface FirstAgentDraft {
@@ -77,29 +69,14 @@ export interface FirstAgentSetupProps {
   onCancel?: (() => void) | undefined;
 }
 
-const FIRST_AGENT_FACES: ReadonlyArray<{ shape: SupportedAvatarSilhouetteId; expression: ExpressionId }> = [
-  { shape: "cercle", expression: "attentif" },
-  { shape: "squircle", expression: "curieux" },
-  { shape: "triangle", expression: "neutre" },
-  { shape: "hexagone", expression: "surpris" },
-  { shape: "carre", expression: "attentif" },
-  { shape: "galet", expression: "curieux" },
-  { shape: "pentagone", expression: "neutre" },
-  { shape: "capsule", expression: "attentif" },
-  { shape: "losange", expression: "curieux" },
-  { shape: "nuage", expression: "surpris" },
-  { shape: "squircle", expression: "neutre" },
-  { shape: "cercle", expression: "curieux" },
-];
-
-export const FIRST_AGENT_AVATAR_SEEDS = FIRST_AGENT_FACES.map((face) => avatarSeedForFace("first-bot", face));
+// MyBot: new agents pick one of the photo avatars, not a plush face.
+export const FIRST_AGENT_AVATAR_SEEDS = MYBOT_PHOTO_AVATAR_IDS.map((id) => mybotPhotoSeed(id));
 
 const SUGGESTION_MOMENTUM_FRICTION = 0.88;
 const SUGGESTION_MOMENTUM_MINIMUM = 0.01;
 const SUGGESTION_MOMENTUM_MAXIMUM = 1.75;
 const SUGGESTION_DRAG_THRESHOLD = 8;
 const MOTION_FRAME_DURATION = 1000 / 60;
-const FACE_CHOICE_EYE_SCALE = 1.25;
 
 export function createFirstAgentDraft(random: () => number = Math.random): FirstAgentDraft {
   const index = Math.min(FIRST_AGENT_AVATAR_SEEDS.length - 1, Math.floor(random() * FIRST_AGENT_AVATAR_SEEDS.length));
@@ -320,10 +297,6 @@ export function FirstAgentSetup(props: FirstAgentSetupProps) {
     }, 0);
   }
 
-  function automaticColor(): boolean {
-    return props.value.avatarHue === null && (props.value.avatarColor ?? null) === null;
-  }
-
   function updateDraft(updates: Partial<FirstAgentDraft>): void {
     if (props.submitting) return;
     const next = { ...props.value, ...updates };
@@ -427,45 +400,7 @@ export function FirstAgentSetup(props: FirstAgentSetupProps) {
             />
           </div>
 
-          <fieldset class="first-agent-avatar-fieldset first-agent-color-fieldset" disabled={props.submitting}>
-            <legend class="sr-only">{t("agent.setup.color")}</legend>
-            <div class="first-agent-color-options">
-              <Button
-                variant="ghost"
-                type="button"
-                size="sm"
-                class="first-agent-color-choice"
-                aria-label={t("agent.setup.colorAutomatic")}
-                aria-pressed={automaticColor() ? "true" : "false"}
-                data-cuelume-tap="select"
-                onClick={() => updateDraft({ avatarHue: null, avatarColor: null })}
-              >
-                <span
-                  class="first-agent-color-swatch"
-                  style={{ background: avatarHeadColor(props.value.avatarSeed, null) }}
-                />
-              </Button>
-              <For each={AVATAR_COLOR_CHOICES}>
-                {(option) => (
-                  <Button
-                    variant="ghost"
-                    type="button"
-                    size="sm"
-                    class="first-agent-color-choice"
-                    aria-label={t("agent.setup.colorOption", { color: t(avatarColorChoiceLabel(option)) })}
-                    aria-pressed={
-                      isAvatarColorChoice(option, props.value.avatarHue, props.value.avatarColor) ? "true" : "false"
-                    }
-                    data-cuelume-tap="select"
-                    onClick={() => updateDraft({ avatarHue: option.hue, avatarColor: option.color })}
-                  >
-                    <span class="first-agent-color-swatch" style={{ background: option.swatch }} />
-                  </Button>
-                )}
-              </For>
-            </div>
-          </fieldset>
-
+          {/* MyBot: no color choice, the photo avatars have their own colors. */}
           <fieldset class="first-agent-avatar-fieldset first-agent-face-fieldset" disabled={props.submitting}>
             <legend class="sr-only">{t("agent.setup.face")}</legend>
             <div class="first-agent-face-options">
@@ -479,7 +414,7 @@ export function FirstAgentSetup(props: FirstAgentSetupProps) {
                     aria-label={t("agent.setup.faceOption", { number: index() + 1 })}
                     aria-pressed={props.value.avatarSeed === seed ? "true" : "false"}
                     data-cuelume-tap="select"
-                    onClick={() => updateDraft({ avatarSeed: seed })}
+                    onClick={() => updateDraft({ avatarSeed: seed, avatarHue: null, avatarColor: null })}
                   >
                     <AgentAvatar
                       seed={seed}
@@ -487,7 +422,6 @@ export function FirstAgentSetup(props: FirstAgentSetupProps) {
                       color={props.value.avatarColor ?? null}
                       motion="idle"
                       animationOffset={index() * 0.16}
-                      eyeScale={FACE_CHOICE_EYE_SCALE}
                     />
                   </Button>
                 )}

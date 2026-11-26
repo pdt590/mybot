@@ -244,15 +244,9 @@
   max-width: none;
 }
 
-.avatar-eyes-grid .avatar-face-choice {
-  height: 46px;
-}
-
-.avatar-eyes-grid .agent-avatar {
-  --agent-avatar-optical-offset: calc(38px * -0.14);
-
-  width: 38px;
-  height: 38px;
+/* MyBot: the photo avatars sit above the plush shapes, in the same 5-column grid. */
+.avatar-photo-grid {
+  padding-bottom: 4px;
 }
 
 .avatar-color-grid {

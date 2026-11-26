@@ -1,16 +1,6 @@
-import type { BotExpression, ExpressionId } from "@norbert_bodziony/bloub";
-import { PLUSH_CHARACTER_BY_ID, PlushBot } from "@norbert_bodziony/bloub/plush";
 import { createEffect, createSignal, For, onSettled, untrack } from "solid-js";
-import type { CrewFace, CrewFilm, CrewMember, CrewPile } from "./crew-pile";
-
-function restFace(member: CrewMember): BotExpression | undefined {
-  return PLUSH_CHARACTER_BY_ID.get(member.character)?.face;
-}
-
-function crewExpression(member: CrewMember, face: CrewFace): BotExpression | ExpressionId {
-  if (face.happy) return "heureux";
-  return restFace(member) ?? "neutre";
-}
+import { mybotPhotoUrl } from "../agents/mybot-photo-avatars";
+import type { CrewFace, CrewFilm, CrewPile } from "./crew-pile";
 
 interface CrewRig {
   plush: HTMLElement;
@@ -247,13 +237,6 @@ export function CrewPileStage(props: CrewPileStageProps) {
         <For each={crew()}>
           {(member, position) => {
             const index = untrack(position);
-            const [face, setFace] = createSignal(pile.startFaces[index]);
-            faces[index] = (next) => setFace(next);
-            const crewState = () => face()?.state ?? "idle";
-            const expression = () => {
-              const current = face();
-              return current ? crewExpression(member, current) : (restFace(member) ?? "neutre");
-            };
             return (
               <div
                 ref={(element) => {
@@ -273,15 +256,13 @@ export function CrewPileStage(props: CrewPileStageProps) {
                   class="app-loading-squash"
                   style={{ "transform-origin": `50% ${(member.cy + member.h / 2) * 100}%` }}
                 >
-                  <PlushBot
-                    character={member.character}
-                    state={crewState()}
-                    expression={expression()}
-                    size={member.size}
-                    initialPhase={index * 0.7}
-                    autoPause={false}
-                    paused={true}
-                    ariaLabel=""
+                  {/* MyBot: the photo avatars fall into the pile in place of the plush crew. */}
+                  <img
+                    class="app-loading-photo"
+                    src={mybotPhotoUrl(member.photo) ?? ""}
+                    alt=""
+                    draggable={false}
+                    style={{ width: `${member.w * 100}%`, height: `${member.h * 100}%` }}
                   />
                 </div>
               </div>

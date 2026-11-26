@@ -1,5 +1,12 @@
 import type { ExpressionId } from "@norbert_bodziony/bloub";
 import {
+  MYBOT_PHOTO_AVATAR_IDS,
+  mybotPhotoIdFromSeed,
+  mybotPhotoSeed,
+  mybotPhotoSeedForKey,
+  randomMybotPhotoSeed,
+} from "@openbot/brand/mybot-photo-avatars";
+import {
   agentProviderDescriptor,
   agentProviderName,
   agentSteersTurns,
@@ -72,11 +79,9 @@ import {
 import { normalizeAvatarFile } from "@openbot/ui/avatar-image";
 import {
   AVATAR_COLOR_CHOICES,
-  AVATAR_EXPRESSIONS,
   AVATAR_STYLES,
   type AvatarColorChoice,
   type AvatarStyle,
-  avatarDefaultSeed,
   avatarHueForColor,
   avatarSeedForFace,
   avatarStyleForSeed,
@@ -412,9 +417,13 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
 
   const agentForeignProvider = () => foreignProvider(props.agent.provider);
   const knownProvider = () => (agentForeignProvider() === undefined ? draft.runtime.provider : undefined);
-  const avatarFace = createMemo(() => bloubAvatarProfile(draft.avatar.seed, null));
+  // MyBot: a photo avatar has no plush face, so the plush choices preview the agent's own plush.
+  const photoSelected = () => !avatarUrl() && mybotPhotoIdFromSeed(draft.avatar.seed) !== null;
+  const plushSeed = () => (mybotPhotoIdFromSeed(draft.avatar.seed) ? props.agent.id : draft.avatar.seed);
+  const avatarFace = createMemo(() => bloubAvatarProfile(plushSeed(), null));
   const avatarStyle = createMemo(() => avatarStyleForSeed(draft.avatar.seed));
-  const avatarResetSeed = createMemo(() => avatarDefaultSeed(props.agent.id, avatarStyle()));
+  // MyBot: "Reset to ID" picks the photo that the agent ID maps to.
+  const avatarResetSeed = createMemo(() => mybotPhotoSeedForKey(props.agent.id));
   const avatarColorSelected = (choice: AvatarColorChoice) =>
     isAvatarColorChoice(choice, draft.avatar.hue, draft.avatar.color);
   const automaticColorSelected = () => draft.avatar.hue === null && draft.avatar.color === null;
@@ -711,6 +720,14 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
       });
       if (avatarFileInput) avatarFileInput.value = "";
     }
+  }
+
+  async function selectPhotoAvatar(seed: string): Promise<void> {
+    if (avatarUrl() && !(await setCustomAvatar(null))) return;
+    setDraft((state) => {
+      state.avatar.seed = seed;
+    });
+    await saveAgentPatch({ avatarSeed: seed });
   }
 
   async function selectGeneratedAvatar(seed: string, color: string): Promise<void> {
@@ -1126,12 +1143,7 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
                               variant="outline"
                               type="button"
                               label={t("agentSettings.avatar.resetToId")}
-                              onClick={() =>
-                                void selectGeneratedAvatar(
-                                  avatarResetSeed(),
-                                  bloubAvatarProfile(props.agent.id, null).color,
-                                )
-                              }
+                              onClick={() => void selectPhotoAvatar(avatarResetSeed())}
                             >
                               <RotateCcw aria-hidden="true" />
                             </IconButton>
@@ -1140,13 +1152,38 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
                             variant="outline"
                             type="button"
                             label={t("agentSettings.avatar.shuffle")}
-                            onClick={() => void selectAvatarFace(randomAvatarFace(avatarFace()))}
+                            onClick={() => void selectPhotoAvatar(randomMybotPhotoSeed(Math.random, draft.avatar.seed))}
                           >
                             <Shuffle aria-hidden="true" />
                           </IconButton>
                         </div>
                       </div>
                     </div>
+                    {/* MyBot: the photo avatars come first; Plush and Flat change only the plush choices below. */}
+                    <fieldset
+                      class="avatar-face-grid avatar-shape-grid avatar-photo-grid"
+                      aria-label={t("agentSettings.avatar.photosLabel")}
+                    >
+                      <For each={MYBOT_PHOTO_AVATAR_IDS}>
+                        {(id, index) => {
+                          const seed = mybotPhotoSeed(id);
+                          const selected = () => !avatarUrl() && draft.avatar.seed === seed;
+                          return (
+                            <Button
+                              variant="ghost"
+                              type="button"
+                              class={["avatar-face-choice", { "avatar-choice-selected": selected() }]}
+                              aria-label={t("agentSettings.avatar.photoOption", { number: index() + 1 })}
+                              aria-pressed={selected() ? "true" : "false"}
+                              data-cuelume-tap="select"
+                              onClick={() => void selectPhotoAvatar(seed)}
+                            >
+                              <AgentAvatar seed={seed} transition="cut" />
+                            </Button>
+                          );
+                        }}
+                      </For>
+                    </fieldset>
                     <fieldset class="avatar-face-grid avatar-shape-grid" aria-label={t("agentSettings.avatar.shapes")}>
                       <For each={SUPPORTED_AVATAR_SILHOUETTES}>
                         {(shape, index) => (
@@ -1155,15 +1192,20 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
                             type="button"
                             class={[
                               "avatar-face-choice",
-                              { "avatar-choice-selected": !avatarUrl() && avatarFace().shape === shape },
+                              {
+                                "avatar-choice-selected":
+                                  !avatarUrl() && !photoSelected() && avatarFace().shape === shape,
+                              },
                             ]}
                             aria-label={t("agentSettings.avatar.shapeOption", { number: index() + 1 })}
-                            aria-pressed={!avatarUrl() && avatarFace().shape === shape ? "true" : "false"}
+                            aria-pressed={
+                              !avatarUrl() && !photoSelected() && avatarFace().shape === shape ? "true" : "false"
+                            }
                             data-cuelume-tap="select"
                             onClick={() => void selectAvatarFace({ shape })}
                           >
                             <AgentAvatar
-                              seed={draft.avatar.seed}
+                              seed={plushSeed()}
                               hue={draft.avatar.hue}
                               color={draft.avatar.color}
                               shape={shape}
@@ -1173,39 +1215,7 @@ export default function AgentSettingsPanel(props: AgentSettingsPanelProps) {
                         )}
                       </For>
                     </fieldset>
-                    <div class="avatar-editor-divider" />
-                    <div class="avatar-editor-heading">
-                      <span>{t("agentSettings.avatar.eyes")}</span>
-                    </div>
-                    <fieldset
-                      class="avatar-face-grid avatar-eyes-grid"
-                      aria-label={t("agentSettings.avatar.eyesLabel")}
-                    >
-                      <For each={AVATAR_EXPRESSIONS}>
-                        {(expression, index) => (
-                          <Button
-                            variant="ghost"
-                            type="button"
-                            class={[
-                              "avatar-face-choice",
-                              { "avatar-choice-selected": !avatarUrl() && avatarFace().expression === expression },
-                            ]}
-                            aria-label={t("agentSettings.avatar.eyesOption", { number: index() + 1 })}
-                            aria-pressed={!avatarUrl() && avatarFace().expression === expression ? "true" : "false"}
-                            data-cuelume-tap="select"
-                            onClick={() => void selectAvatarFace({ expression })}
-                          >
-                            <AgentAvatar
-                              seed={draft.avatar.seed}
-                              hue={draft.avatar.hue}
-                              color={draft.avatar.color}
-                              expression={expression}
-                              transition="cut"
-                            />
-                          </Button>
-                        )}
-                      </For>
-                    </fieldset>
+                    {/* MyBot: no eyes choice. */}
                     <div class="avatar-editor-divider" />
                     <div class="avatar-editor-heading">
                       <span>{t("agentSettings.avatar.color")}</span>
@@ -1801,18 +1811,3 @@ const ACCESS_LABEL = {
   ask: "agentSettings.access.ask",
   full: "agentSettings.access.full",
 } as const satisfies Record<AgentPermissionLevel, AppTextKey>;
-
-function randomAvatarFace(current: { shape: SupportedAvatarSilhouetteId; expression: ExpressionId }): {
-  shape: SupportedAvatarSilhouetteId;
-  expression: ExpressionId;
-} {
-  return {
-    shape: randomOther(SUPPORTED_AVATAR_SILHOUETTES, current.shape),
-    expression: randomOther(AVATAR_EXPRESSIONS, current.expression),
-  };
-}
-
-function randomOther<T>(items: readonly T[], current: T): T {
-  const others = items.filter((item) => item !== current);
-  return others[Math.floor(Math.random() * others.length)] ?? current;
-}

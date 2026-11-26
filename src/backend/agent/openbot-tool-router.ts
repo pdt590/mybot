@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { basename } from "node:path";
+import { randomMybotPhotoSeed } from "@openbot/brand/mybot-photo-avatars";
 import { attachmentMimeTypeForName } from "@openbot/contracts/attachment-files";
 import {
   CHAT_BACKDROP_ITEM_TYPE,
@@ -3515,7 +3516,8 @@ export class OpenBotToolRouter {
             name: args.name,
             description: args.description,
             initialMessage: args.initialMessage,
-            avatarSeed: args.avatarSeed ?? randomUUID(),
+            // MyBot: a new agent gets a photo avatar unless the caller picks a seed.
+            avatarSeed: args.avatarSeed ?? randomMybotPhotoSeed(),
             avatarHue: hue,
             ...(requested
               ? {

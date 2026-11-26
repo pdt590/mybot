@@ -48,9 +48,19 @@
 }
 
 .app-loading-squash {
+  display: grid;
   width: 100%;
   height: 100%;
+  place-items: center;
   will-change: transform;
+}
+
+/* MyBot: a round photo avatar in place of the plush. */
+.app-loading-photo {
+  display: block;
+  border-radius: var(--openbot-radius-pill);
+  object-fit: cover;
+  box-shadow: 0 6px 18px var(--openbot-shadow-menu);
 }
 
 .app-loading-status {

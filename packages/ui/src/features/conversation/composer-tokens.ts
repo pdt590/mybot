@@ -5,6 +5,7 @@ import { usesTouchLayout } from "@openbot/ui/utils";
 import { createStaticAvatarSvg } from "../../bloub-avatar";
 import type { ComposerAgent, ComposerBrowserTab, ComposerMcpServer, ComposerSkill, ComposerThread } from "../../data";
 import { currentText } from "../../text";
+import { mybotPhotoUrlForSeed } from "../agents/mybot-photo-avatars";
 import { appendAttachmentReferenceVisual } from "./AttachmentReference";
 import { tabTitle } from "./composer-picker";
 
@@ -117,9 +118,11 @@ export function createMentionToken(agent: ComposerAgent): HTMLSpanElement {
   token.setAttribute("aria-label", currentText().t("composer.token.agent", { name: agent.name }));
   const avatar = document.createElement("span");
   avatar.className = `composer-mention-avatar agent-avatar-motion-hover ${referenceChipClasses.icon}`;
-  if (agent.avatarUrl) {
+  // MyBot: the photo avatar that the seed names counts as an uploaded photo here.
+  const photoUrl = agent.avatarUrl || mybotPhotoUrlForSeed(agent.avatarSeed);
+  if (photoUrl) {
     const image = document.createElement("img");
-    image.src = agent.avatarUrl;
+    image.src = photoUrl;
     image.alt = "";
     image.draggable = false;
     image.addEventListener("error", () => {

@@ -16,6 +16,7 @@ import type { AgentProfile } from "../../data";
 import { documentFocused } from "../../document-focus";
 import { documentStillFaces } from "../../document-rendering";
 import { observeOnScreen } from "../../on-screen";
+import { mybotPhotoUrlForSeed } from "./mybot-photo-avatars";
 
 const AVATAR_FPS = 80;
 const BACKGROUND_AVATAR_FPS = 30;
@@ -105,7 +106,10 @@ export function AgentAvatar(props: AgentAvatarProps) {
     props.color !== undefined || props.hue !== undefined ? (props.color ?? null) : (props.agent?.avatarColor ?? null),
   );
   const motion = () => props.motion ?? "hover";
-  const url = createMemo(() => (props.url !== undefined ? props.url : (props.agent?.avatarUrl ?? null)));
+  // MyBot: an uploaded photo first, then the photo avatar that the seed names, then the plush.
+  const url = createMemo(
+    () => (props.url !== undefined ? props.url : (props.agent?.avatarUrl ?? null)) ?? mybotPhotoUrlForSeed(seed()),
+  );
   const mood = (): AvatarMood => props.mood ?? "idle";
   const [imageFailed, setImageFailed] = createSignal(false);
   createEffect(

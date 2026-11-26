@@ -83,21 +83,14 @@
   padding: 0;
 }
 
-.first-agent-color-options {
+/* MyBot: a 7 x 3 grid of the photo avatars. */
+.first-agent-face-options {
   display: grid;
-  grid-template-columns: repeat(9, 28px);
+  grid-template-columns: repeat(7, 40px);
   justify-content: center;
   gap: var(--openbot-space-1);
 }
 
-.first-agent-face-options {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--openbot-space-0-5);
-}
-
-.ui-button.first-agent-color-choice,
 .ui-button.first-agent-face-choice {
   box-sizing: border-box;
   width: 28px;
@@ -111,18 +104,14 @@
 
 .ui-button.first-agent-face-choice {
   display: grid;
-  width: 33px;
-  height: 33px;
-  flex-basis: 33px;
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
   place-items: center;
   padding: 0;
-}
-
-.ui-button.first-agent-color-choice {
   border-radius: var(--openbot-radius-pill);
 }
 
-.ui-button.first-agent-color-choice:hover:not(:disabled),
 .ui-button.first-agent-face-choice:hover:not(:disabled) {
   background: var(--openbot-hover);
 }
@@ -132,24 +121,9 @@
   box-shadow: 0 0 0 2px var(--openbot-accent-soft);
 }
 
-.first-agent-color-swatch {
-  display: block;
-  width: 18px;
-  height: 18px;
-  border: 1px solid var(--openbot-border-strong);
-  border-radius: var(--openbot-radius-pill);
-}
-
-.first-agent-color-choice[aria-pressed="true"] .first-agent-color-swatch {
-  outline: 1px solid var(--openbot-accent-text);
-  outline-offset: 4px;
-}
-
 .first-agent-face-choice .agent-avatar {
-  --agent-avatar-optical-offset: -3.25px;
-
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
 }
 
 .first-agent-fields {
@@ -353,8 +327,8 @@
   }
 
   .first-agent-face-options {
+    grid-template-columns: repeat(auto-fill, 40px);
     gap: var(--openbot-space-0-5);
-    flex-wrap: wrap;
   }
 
   .first-agent-suggestions {
@@ -368,7 +342,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .first-agent-color-choice,
   .first-agent-face-choice {
     transition: none;
   }
